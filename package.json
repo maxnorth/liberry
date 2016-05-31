@@ -1,0 +1,28 @@
+{
+  "name": "pattern-library",
+  "version": "1.0.0",
+  "description": "A framework for building web dev pattern libraries.",
+  "main": "build.js",
+  "dependencies": {
+    "angular2": "*",
+    "async": "*",
+    "crypto": "*",
+    "es6-shim": "*",
+    "gulp": "^3.9.1",
+    "gulp-clean": "^0.3.2",
+    "jsonfile": "^2.3.1",
+    "reflect-metadata": "*",
+    "rxjs": "*",
+    "symbol-observable": "*",
+    "systemjs-builder": "*",
+    "typescript": "*",
+    "zone": "*",
+    "zone.js": "*"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Max",
+  "license": "ISC"
+}

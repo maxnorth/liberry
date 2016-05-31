@@ -1,0 +1,10 @@
+i'm thinking that the repeaters templates will each get built into a component, and then there will be either
+one master 'repeater' component or a repeater manager component per repeater component
+
+pro/contra repeater manager per repeater
+priority: functionality. is anything lost by going the single dynamic repeater manager path?
+there may be some efficiency concern? every repeater gets repeated - every repetition containing another repeater means the repeatermanager
+dynamically bootstrapping so many components on the fly. worth trying out and seeing what happens.
+other potential loss - custom selectors? 
+
+should the sort be associated with the repeater or the thing being repeated?
