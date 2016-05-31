@@ -23,7 +23,7 @@ function buildLibraryMetadata(path, metadata) {
             
             var jsonResult = jsonfile.readFileSync(path +"/"+ item.file);
             
-            if (item.name === parentFolder(path) + "-config") {
+            if (item.name === "items-config") {
                 extend(metadata.items, jsonResult);
             }
             else {

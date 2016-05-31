@@ -1,5 +1,5 @@
 i'm thinking that the repeaters templates will each get built into a component, and then there will be either
-one master 'repeater' component or a repeater manager component per repeater component
+one master 'repeater' manager component or a repeater manager component per repeater component
 
 pro/contra repeater manager per repeater
 priority: functionality. is anything lost by going the single dynamic repeater manager path?
