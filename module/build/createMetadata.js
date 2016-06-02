@@ -50,7 +50,7 @@ function run(targetPath, resultPath) {
       }
 
       if (!asChild) {
-        console.log(metadata);
+        //console.log(metadata);
         return metadata.items;
       }
 

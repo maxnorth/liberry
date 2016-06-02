@@ -50,4 +50,5 @@ gulp.task("clean", function() {
 
 gulp.task("metadata", createMetadata.bind(createMetadata, "ExampleStructure", "module/app/resources/metadata.ts"));
 
-//gulp.watch("module/**/*", ['default']);
+gulp.watch("module/**/*", ['default']);
+gulp.watch("ExampleStructure/**/*", ['default']);
