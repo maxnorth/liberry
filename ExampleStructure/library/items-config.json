@@ -1,5 +1,5 @@
 {
-    "property": "hey!",
+    "templates": "hey!",
     "patterns": {
         "other": "yo"
     }

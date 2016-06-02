@@ -24989,66 +24989,7 @@ $__System.registerDynamic("2e", [], true, function($__require, exports, module) 
   return module.exports;
 });
 
-$__System.registerDynamic("d1", ["d2"], true, function($__require, exports, module) {
-  "use strict";
-  ;
-  var define,
-      global = this,
-      GLOBAL = this;
-  var __extends = (this && this.__extends) || function(d, b) {
-    for (var p in b)
-      if (b.hasOwnProperty(p))
-        d[p] = b[p];
-    function __() {
-      this.constructor = d;
-    }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-  };
-  var Subscription_1 = $__require('d2');
-  var SubjectSubscription = (function(_super) {
-    __extends(SubjectSubscription, _super);
-    function SubjectSubscription(subject, observer) {
-      _super.call(this);
-      this.subject = subject;
-      this.observer = observer;
-      this.isUnsubscribed = false;
-    }
-    SubjectSubscription.prototype.unsubscribe = function() {
-      if (this.isUnsubscribed) {
-        return;
-      }
-      this.isUnsubscribed = true;
-      var subject = this.subject;
-      var observers = subject.observers;
-      this.subject = null;
-      if (!observers || observers.length === 0 || subject.isUnsubscribed) {
-        return;
-      }
-      var subscriberIndex = observers.indexOf(this.observer);
-      if (subscriberIndex !== -1) {
-        observers.splice(subscriberIndex, 1);
-      }
-    };
-    return SubjectSubscription;
-  }(Subscription_1.Subscription));
-  exports.SubjectSubscription = SubjectSubscription;
-  return module.exports;
-});
-
-$__System.registerDynamic("d3", [], true, function($__require, exports, module) {
-  "use strict";
-  ;
-  var define,
-      global = this,
-      GLOBAL = this;
-  function throwError(e) {
-    throw e;
-  }
-  exports.throwError = throwError;
-  return module.exports;
-});
-
-$__System.registerDynamic("d4", [], true, function($__require, exports, module) {
+$__System.registerDynamic("d1", [], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -25075,7 +25016,7 @@ $__System.registerDynamic("d4", [], true, function($__require, exports, module) 
   return module.exports;
 });
 
-$__System.registerDynamic("d5", ["d6", "d7", "d2", "d1", "d8", "d3", "d4"], true, function($__require, exports, module) {
+$__System.registerDynamic("d2", ["d3"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -25090,190 +25031,196 @@ $__System.registerDynamic("d5", ["d6", "d7", "d2", "d1", "d8", "d3", "d4"], true
     }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
   };
-  var Observable_1 = $__require('d6');
-  var Subscriber_1 = $__require('d7');
-  var Subscription_1 = $__require('d2');
-  var SubjectSubscription_1 = $__require('d1');
-  var rxSubscriber_1 = $__require('d8');
-  var throwError_1 = $__require('d3');
-  var ObjectUnsubscribedError_1 = $__require('d4');
+  var Subscription_1 = $__require('d3');
+  var SubjectSubscription = (function(_super) {
+    __extends(SubjectSubscription, _super);
+    function SubjectSubscription(subject, subscriber) {
+      _super.call(this);
+      this.subject = subject;
+      this.subscriber = subscriber;
+      this.isUnsubscribed = false;
+    }
+    SubjectSubscription.prototype.unsubscribe = function() {
+      if (this.isUnsubscribed) {
+        return;
+      }
+      this.isUnsubscribed = true;
+      var subject = this.subject;
+      var observers = subject.observers;
+      this.subject = null;
+      if (!observers || observers.length === 0 || subject.isStopped || subject.isUnsubscribed) {
+        return;
+      }
+      var subscriberIndex = observers.indexOf(this.subscriber);
+      if (subscriberIndex !== -1) {
+        observers.splice(subscriberIndex, 1);
+      }
+    };
+    return SubjectSubscription;
+  }(Subscription_1.Subscription));
+  exports.SubjectSubscription = SubjectSubscription;
+  return module.exports;
+});
+
+$__System.registerDynamic("d4", ["d5", "d6", "d3", "d1", "d2", "d7"], true, function($__require, exports, module) {
+  "use strict";
+  ;
+  var define,
+      global = this,
+      GLOBAL = this;
+  var __extends = (this && this.__extends) || function(d, b) {
+    for (var p in b)
+      if (b.hasOwnProperty(p))
+        d[p] = b[p];
+    function __() {
+      this.constructor = d;
+    }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+  };
+  var Observable_1 = $__require('d5');
+  var Subscriber_1 = $__require('d6');
+  var Subscription_1 = $__require('d3');
+  var ObjectUnsubscribedError_1 = $__require('d1');
+  var SubjectSubscription_1 = $__require('d2');
+  var rxSubscriber_1 = $__require('d7');
+  var SubjectSubscriber = (function(_super) {
+    __extends(SubjectSubscriber, _super);
+    function SubjectSubscriber(destination) {
+      _super.call(this, destination);
+      this.destination = destination;
+    }
+    return SubjectSubscriber;
+  }(Subscriber_1.Subscriber));
+  exports.SubjectSubscriber = SubjectSubscriber;
   var Subject = (function(_super) {
     __extends(Subject, _super);
-    function Subject(destination, source) {
+    function Subject() {
       _super.call(this);
-      this.destination = destination;
-      this.source = source;
       this.observers = [];
       this.isUnsubscribed = false;
       this.isStopped = false;
-      this.hasErrored = false;
-      this.dispatching = false;
-      this.hasCompleted = false;
-      this.source = source;
+      this.hasError = false;
+      this.thrownError = null;
     }
+    Subject.prototype[rxSubscriber_1.$$rxSubscriber] = function() {
+      return new SubjectSubscriber(this);
+    };
     Subject.prototype.lift = function(operator) {
-      var subject = new Subject(this.destination || this, this);
+      var subject = new AnonymousSubject(this, this);
       subject.operator = operator;
       return subject;
     };
-    Subject.prototype.add = function(subscription) {
-      return Subscription_1.Subscription.prototype.add.call(this, subscription);
-    };
-    Subject.prototype.remove = function(subscription) {
-      Subscription_1.Subscription.prototype.remove.call(this, subscription);
-    };
-    Subject.prototype.unsubscribe = function() {
-      Subscription_1.Subscription.prototype.unsubscribe.call(this);
-    };
-    Subject.prototype._subscribe = function(subscriber) {
-      if (this.source) {
-        return this.source.subscribe(subscriber);
-      } else {
-        if (subscriber.isUnsubscribed) {
-          return;
-        } else if (this.hasErrored) {
-          return subscriber.error(this.errorValue);
-        } else if (this.hasCompleted) {
-          return subscriber.complete();
-        }
-        this.throwIfUnsubscribed();
-        var subscription = new SubjectSubscription_1.SubjectSubscription(this, subscriber);
-        this.observers.push(subscriber);
-        return subscription;
-      }
-    };
-    Subject.prototype._unsubscribe = function() {
-      this.source = null;
-      this.isStopped = true;
-      this.observers = null;
-      this.destination = null;
-    };
     Subject.prototype.next = function(value) {
-      this.throwIfUnsubscribed();
-      if (this.isStopped) {
-        return;
+      if (this.isUnsubscribed) {
+        throw new ObjectUnsubscribedError_1.ObjectUnsubscribedError();
       }
-      this.dispatching = true;
-      this._next(value);
-      this.dispatching = false;
-      if (this.hasErrored) {
-        this._error(this.errorValue);
-      } else if (this.hasCompleted) {
-        this._complete();
+      if (!this.isStopped) {
+        var observers = this.observers;
+        var len = observers.length;
+        var copy = observers.slice();
+        for (var i = 0; i < len; i++) {
+          copy[i].next(value);
+        }
       }
     };
     Subject.prototype.error = function(err) {
-      this.throwIfUnsubscribed();
-      if (this.isStopped) {
-        return;
+      if (this.isUnsubscribed) {
+        throw new ObjectUnsubscribedError_1.ObjectUnsubscribedError();
       }
+      this.hasError = true;
+      this.thrownError = err;
       this.isStopped = true;
-      this.hasErrored = true;
-      this.errorValue = err;
-      if (this.dispatching) {
-        return;
+      var observers = this.observers;
+      var len = observers.length;
+      var copy = observers.slice();
+      for (var i = 0; i < len; i++) {
+        copy[i].error(err);
       }
-      this._error(err);
+      this.observers.length = 0;
     };
     Subject.prototype.complete = function() {
-      this.throwIfUnsubscribed();
-      if (this.isStopped) {
-        return;
+      if (this.isUnsubscribed) {
+        throw new ObjectUnsubscribedError_1.ObjectUnsubscribedError();
       }
       this.isStopped = true;
-      this.hasCompleted = true;
-      if (this.dispatching) {
-        return;
+      var observers = this.observers;
+      var len = observers.length;
+      var copy = observers.slice();
+      for (var i = 0; i < len; i++) {
+        copy[i].complete();
       }
-      this._complete();
+      this.observers.length = 0;
+    };
+    Subject.prototype.unsubscribe = function() {
+      this.isStopped = true;
+      this.isUnsubscribed = true;
+      this.observers = null;
+    };
+    Subject.prototype._subscribe = function(subscriber) {
+      if (this.isUnsubscribed) {
+        throw new ObjectUnsubscribedError_1.ObjectUnsubscribedError();
+      } else if (this.hasError) {
+        subscriber.error(this.thrownError);
+        return Subscription_1.Subscription.EMPTY;
+      } else if (this.isStopped) {
+        subscriber.complete();
+        return Subscription_1.Subscription.EMPTY;
+      } else {
+        this.observers.push(subscriber);
+        return new SubjectSubscription_1.SubjectSubscription(this, subscriber);
+      }
     };
     Subject.prototype.asObservable = function() {
-      var observable = new SubjectObservable(this);
+      var observable = new Observable_1.Observable();
+      observable.source = this;
       return observable;
     };
-    Subject.prototype._next = function(value) {
-      if (this.destination) {
-        this.destination.next(value);
-      } else {
-        this._finalNext(value);
-      }
-    };
-    Subject.prototype._finalNext = function(value) {
-      var index = -1;
-      var observers = this.observers.slice(0);
-      var len = observers.length;
-      while (++index < len) {
-        observers[index].next(value);
-      }
-    };
-    Subject.prototype._error = function(err) {
-      if (this.destination) {
-        this.destination.error(err);
-      } else {
-        this._finalError(err);
-      }
-    };
-    Subject.prototype._finalError = function(err) {
-      var index = -1;
-      var observers = this.observers;
-      this.observers = null;
-      this.isUnsubscribed = true;
-      if (observers) {
-        var len = observers.length;
-        while (++index < len) {
-          observers[index].error(err);
-        }
-      }
-      this.isUnsubscribed = false;
-      this.unsubscribe();
-    };
-    Subject.prototype._complete = function() {
-      if (this.destination) {
-        this.destination.complete();
-      } else {
-        this._finalComplete();
-      }
-    };
-    Subject.prototype._finalComplete = function() {
-      var index = -1;
-      var observers = this.observers;
-      this.observers = null;
-      this.isUnsubscribed = true;
-      if (observers) {
-        var len = observers.length;
-        while (++index < len) {
-          observers[index].complete();
-        }
-      }
-      this.isUnsubscribed = false;
-      this.unsubscribe();
-    };
-    Subject.prototype.throwIfUnsubscribed = function() {
-      if (this.isUnsubscribed) {
-        throwError_1.throwError(new ObjectUnsubscribedError_1.ObjectUnsubscribedError());
-      }
-    };
-    Subject.prototype[rxSubscriber_1.$$rxSubscriber] = function() {
-      return new Subscriber_1.Subscriber(this);
-    };
     Subject.create = function(destination, source) {
-      return new Subject(destination, source);
+      return new AnonymousSubject(destination, source);
     };
     return Subject;
   }(Observable_1.Observable));
   exports.Subject = Subject;
-  var SubjectObservable = (function(_super) {
-    __extends(SubjectObservable, _super);
-    function SubjectObservable(source) {
+  var AnonymousSubject = (function(_super) {
+    __extends(AnonymousSubject, _super);
+    function AnonymousSubject(destination, source) {
       _super.call(this);
+      this.destination = destination;
       this.source = source;
     }
-    return SubjectObservable;
-  }(Observable_1.Observable));
+    AnonymousSubject.prototype.next = function(value) {
+      var destination = this.destination;
+      if (destination && destination.next) {
+        destination.next(value);
+      }
+    };
+    AnonymousSubject.prototype.error = function(err) {
+      var destination = this.destination;
+      if (destination && destination.error) {
+        this.destination.error(err);
+      }
+    };
+    AnonymousSubject.prototype.complete = function() {
+      var destination = this.destination;
+      if (destination && destination.complete) {
+        this.destination.complete();
+      }
+    };
+    AnonymousSubject.prototype._subscribe = function(subscriber) {
+      var source = this.source;
+      if (source) {
+        return this.source.subscribe(subscriber);
+      } else {
+        return Subscription_1.Subscription.EMPTY;
+      }
+    };
+    return AnonymousSubject;
+  }(Subject));
+  exports.AnonymousSubject = AnonymousSubject;
   return module.exports;
 });
 
-$__System.registerDynamic("d9", ["da", "d6"], true, function($__require, exports, module) {
+$__System.registerDynamic("d8", ["d9", "d5"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -25288,8 +25235,8 @@ $__System.registerDynamic("d9", ["da", "d6"], true, function($__require, exports
     }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
   };
-  var root_1 = $__require('da');
-  var Observable_1 = $__require('d6');
+  var root_1 = $__require('d9');
+  var Observable_1 = $__require('d5');
   var PromiseObservable = (function(_super) {
     __extends(PromiseObservable, _super);
     function PromiseObservable(promise, scheduler) {
@@ -25388,13 +25335,13 @@ $__System.registerDynamic("d9", ["da", "d6"], true, function($__require, exports
   return module.exports;
 });
 
-$__System.registerDynamic("db", ["da"], true, function($__require, exports, module) {
+$__System.registerDynamic("da", ["d9"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
       global = this,
       GLOBAL = this;
-  var root_1 = $__require('da');
+  var root_1 = $__require('d9');
   function toPromise(PromiseCtor) {
     var _this = this;
     if (!PromiseCtor) {
@@ -25422,32 +25369,7 @@ $__System.registerDynamic("db", ["da"], true, function($__require, exports, modu
   return module.exports;
 });
 
-$__System.registerDynamic("dc", ["da"], true, function($__require, exports, module) {
-  "use strict";
-  ;
-  var define,
-      global = this,
-      GLOBAL = this;
-  var root_1 = $__require('da');
-  var Symbol = root_1.root.Symbol;
-  if (typeof Symbol === 'function') {
-    if (Symbol.observable) {
-      exports.$$observable = Symbol.observable;
-    } else {
-      if (typeof Symbol.for === 'function') {
-        exports.$$observable = Symbol.for('observable');
-      } else {
-        exports.$$observable = Symbol('observable');
-      }
-      Symbol.observable = exports.$$observable;
-    }
-  } else {
-    exports.$$observable = '@@observable';
-  }
-  return module.exports;
-});
-
-$__System.registerDynamic("dd", [], true, function($__require, exports, module) {
+$__System.registerDynamic("db", [], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -25459,7 +25381,7 @@ $__System.registerDynamic("dd", [], true, function($__require, exports, module) 
   return module.exports;
 });
 
-$__System.registerDynamic("de", [], true, function($__require, exports, module) {
+$__System.registerDynamic("dc", [], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -25472,7 +25394,7 @@ $__System.registerDynamic("de", [], true, function($__require, exports, module) 
   return module.exports;
 });
 
-$__System.registerDynamic("df", [], true, function($__require, exports, module) {
+$__System.registerDynamic("dd", [], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -25485,13 +25407,13 @@ $__System.registerDynamic("df", [], true, function($__require, exports, module) 
   return module.exports;
 });
 
-$__System.registerDynamic("e0", ["e1"], true, function($__require, exports, module) {
+$__System.registerDynamic("de", ["df"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
       global = this,
       GLOBAL = this;
-  var errorObject_1 = $__require('e1');
+  var errorObject_1 = $__require('df');
   var tryCatchTarget;
   function tryCatcher() {
     try {
@@ -25510,7 +25432,7 @@ $__System.registerDynamic("e0", ["e1"], true, function($__require, exports, modu
   return module.exports;
 });
 
-$__System.registerDynamic("e1", [], true, function($__require, exports, module) {
+$__System.registerDynamic("df", [], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -25520,7 +25442,7 @@ $__System.registerDynamic("e1", [], true, function($__require, exports, module) 
   return module.exports;
 });
 
-$__System.registerDynamic("e2", [], true, function($__require, exports, module) {
+$__System.registerDynamic("e0", [], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -25551,18 +25473,18 @@ $__System.registerDynamic("e2", [], true, function($__require, exports, module) 
   return module.exports;
 });
 
-$__System.registerDynamic("d2", ["dd", "de", "df", "e0", "e1", "e2"], true, function($__require, exports, module) {
+$__System.registerDynamic("d3", ["db", "dc", "dd", "de", "df", "e0"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
       global = this,
       GLOBAL = this;
-  var isArray_1 = $__require('dd');
-  var isObject_1 = $__require('de');
-  var isFunction_1 = $__require('df');
-  var tryCatch_1 = $__require('e0');
-  var errorObject_1 = $__require('e1');
-  var UnsubscriptionError_1 = $__require('e2');
+  var isArray_1 = $__require('db');
+  var isObject_1 = $__require('dc');
+  var isFunction_1 = $__require('dd');
+  var tryCatch_1 = $__require('de');
+  var errorObject_1 = $__require('df');
+  var UnsubscriptionError_1 = $__require('e0');
   var Subscription = (function() {
     function Subscription(unsubscribe) {
       this.isUnsubscribed = false;
@@ -25656,7 +25578,7 @@ $__System.registerDynamic("d2", ["dd", "de", "df", "e0", "e1", "e2"], true, func
   return module.exports;
 });
 
-$__System.registerDynamic("e3", [], true, function($__require, exports, module) {
+$__System.registerDynamic("e1", [], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -25673,7 +25595,7 @@ $__System.registerDynamic("e3", [], true, function($__require, exports, module) 
   return module.exports;
 });
 
-$__System.registerDynamic("d7", ["df", "d2", "d8", "e3"], true, function($__require, exports, module) {
+$__System.registerDynamic("d6", ["dd", "d3", "e1", "d7"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -25688,10 +25610,10 @@ $__System.registerDynamic("d7", ["df", "d2", "d8", "e3"], true, function($__requ
     }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
   };
-  var isFunction_1 = $__require('df');
-  var Subscription_1 = $__require('d2');
-  var rxSubscriber_1 = $__require('d8');
-  var Observer_1 = $__require('e3');
+  var isFunction_1 = $__require('dd');
+  var Subscription_1 = $__require('d3');
+  var Observer_1 = $__require('e1');
+  var rxSubscriber_1 = $__require('d7');
   var Subscriber = (function(_super) {
     __extends(Subscriber, _super);
     function Subscriber(destinationOrNext, error, complete) {
@@ -25725,6 +25647,9 @@ $__System.registerDynamic("d7", ["df", "d2", "d8", "e3"], true, function($__requ
           break;
       }
     }
+    Subscriber.prototype[rxSubscriber_1.$$rxSubscriber] = function() {
+      return this;
+    };
     Subscriber.create = function(next, error, complete) {
       var subscriber = new Subscriber(next, error, complete);
       subscriber.syncErrorThrowable = false;
@@ -25764,9 +25689,6 @@ $__System.registerDynamic("d7", ["df", "d2", "d8", "e3"], true, function($__requ
     Subscriber.prototype._complete = function() {
       this.destination.complete();
       this.unsubscribe();
-    };
-    Subscriber.prototype[rxSubscriber_1.$$rxSubscriber] = function() {
-      return this;
     };
     return Subscriber;
   }(Subscription_1.Subscription));
@@ -25871,7 +25793,7 @@ $__System.registerDynamic("d7", ["df", "d2", "d8", "e3"], true, function($__requ
   return module.exports;
 });
 
-$__System.registerDynamic("da", [], true, function($__require, exports, module) {
+$__System.registerDynamic("d9", [], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -25895,33 +25817,37 @@ $__System.registerDynamic("da", [], true, function($__require, exports, module) 
   return module.exports;
 });
 
-$__System.registerDynamic("d8", ["da"], true, function($__require, exports, module) {
+$__System.registerDynamic("d7", ["d9"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
       global = this,
       GLOBAL = this;
-  var root_1 = $__require('da');
+  var root_1 = $__require('d9');
   var Symbol = root_1.root.Symbol;
   exports.$$rxSubscriber = (typeof Symbol === 'function' && typeof Symbol.for === 'function') ? Symbol.for('rxSubscriber') : '@@rxSubscriber';
   return module.exports;
 });
 
-$__System.registerDynamic("e4", ["d7", "d8"], true, function($__require, exports, module) {
+$__System.registerDynamic("e2", ["d6", "d7"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
       global = this,
       GLOBAL = this;
-  var Subscriber_1 = $__require('d7');
-  var rxSubscriber_1 = $__require('d8');
+  var Subscriber_1 = $__require('d6');
+  var rxSubscriber_1 = $__require('d7');
   function toSubscriber(nextOrObserver, error, complete) {
-    if (nextOrObserver && typeof nextOrObserver === 'object') {
+    if (nextOrObserver) {
       if (nextOrObserver instanceof Subscriber_1.Subscriber) {
         return nextOrObserver;
-      } else if (typeof nextOrObserver[rxSubscriber_1.$$rxSubscriber] === 'function') {
+      }
+      if (nextOrObserver[rxSubscriber_1.$$rxSubscriber]) {
         return nextOrObserver[rxSubscriber_1.$$rxSubscriber]();
       }
+    }
+    if (!nextOrObserver && !error && !complete) {
+      return new Subscriber_1.Subscriber();
     }
     return new Subscriber_1.Subscriber(nextOrObserver, error, complete);
   }
@@ -25929,15 +25855,49 @@ $__System.registerDynamic("e4", ["d7", "d8"], true, function($__require, exports
   return module.exports;
 });
 
-$__System.registerDynamic("d6", ["da", "dc", "e4"], true, function($__require, exports, module) {
+$__System.registerDynamic("e3", [], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
       global = this,
       GLOBAL = this;
-  var root_1 = $__require('da');
-  var observable_1 = $__require('dc');
-  var toSubscriber_1 = $__require('e4');
+  module.exports = function symbolObservablePonyfill(root) {
+    var result;
+    var Symbol = root.Symbol;
+    if (typeof Symbol === 'function') {
+      if (Symbol.observable) {
+        result = Symbol.observable;
+      } else {
+        result = Symbol('observable');
+        Symbol.observable = result;
+      }
+    } else {
+      result = '@@observable';
+    }
+    return result;
+  };
+  return module.exports;
+});
+
+$__System.registerDynamic("e4", ["e3"], true, function($__require, exports, module) {
+  "use strict";
+  ;
+  var define,
+      global = this,
+      GLOBAL = this;
+  module.exports = $__require('e3')(global || window || this);
+  return module.exports;
+});
+
+$__System.registerDynamic("d5", ["d9", "e2", "e4"], true, function($__require, exports, module) {
+  "use strict";
+  ;
+  var define,
+      global = this,
+      GLOBAL = this;
+  var root_1 = $__require('d9');
+  var toSubscriber_1 = $__require('e2');
+  var $$observable = $__require('e4');
   var Observable = (function() {
     function Observable(subscribe) {
       this._isScalar = false;
@@ -25954,7 +25914,11 @@ $__System.registerDynamic("d6", ["da", "dc", "e4"], true, function($__require, e
     Observable.prototype.subscribe = function(observerOrNext, error, complete) {
       var operator = this.operator;
       var sink = toSubscriber_1.toSubscriber(observerOrNext, error, complete);
-      sink.add(operator ? operator.call(sink, this) : this._subscribe(sink));
+      if (operator) {
+        operator.call(sink, this);
+      } else {
+        sink.add(this._subscribe(sink));
+      }
       if (sink.syncErrorThrowable) {
         sink.syncErrorThrowable = false;
         if (sink.syncErrorThrown) {
@@ -25993,7 +25957,7 @@ $__System.registerDynamic("d6", ["da", "dc", "e4"], true, function($__require, e
     Observable.prototype._subscribe = function(subscriber) {
       return this.source.subscribe(subscriber);
     };
-    Observable.prototype[observable_1.$$observable] = function() {
+    Observable.prototype[$$observable] = function() {
       return this;
     };
     Observable.create = function(subscribe) {
@@ -26005,7 +25969,7 @@ $__System.registerDynamic("d6", ["da", "dc", "e4"], true, function($__require, e
   return module.exports;
 });
 
-$__System.registerDynamic("7", ["6", "2e", "d5", "d9", "db", "d6"], true, function($__require, exports, module) {
+$__System.registerDynamic("7", ["6", "2e", "d4", "d8", "da", "d5"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -26025,12 +25989,12 @@ $__System.registerDynamic("7", ["6", "2e", "d5", "d9", "db", "d6"], true, functi
   var promise_1 = $__require('2e');
   exports.PromiseWrapper = promise_1.PromiseWrapper;
   exports.PromiseCompleter = promise_1.PromiseCompleter;
-  var Subject_1 = $__require('d5');
-  var PromiseObservable_1 = $__require('d9');
-  var toPromise_1 = $__require('db');
-  var Observable_1 = $__require('d6');
+  var Subject_1 = $__require('d4');
+  var PromiseObservable_1 = $__require('d8');
+  var toPromise_1 = $__require('da');
+  var Observable_1 = $__require('d5');
   exports.Observable = Observable_1.Observable;
-  var Subject_2 = $__require('d5');
+  var Subject_2 = $__require('d4');
   exports.Subject = Subject_2.Subject;
   var TimerWrapper = (function() {
     function TimerWrapper() {}
@@ -31810,7 +31774,7 @@ $__System.register("c2", [], function(exports_1, context_1) {
     return {
         setters:[],
         execute: function() {
-            exports_1("metadata", metadata = { "library": { "patterns": { "name": "patterns", "title": "Patterns", "path": "/patterns", "items": { "banners": {}, "style-guide": { "name": "style-guide", "title": "Style Guide", "path": "/patterns/style-guide", "items": { "colors": { "name": "colors", "title": "Colors", "path": "/patterns/style-guide/colors", "items": { "primary": { "name": "primary", "title": "Primary", "path": "/patterns/style-guide/colors/primary", "items": { "primary-dark": { "name": "primary-dark", "title": "Primary Dark", "path": "/patterns/style-guide/colors/primary/primary-dark", "Hex": "#5CA156", "RGB": "92 161 86" }, "primary-darker": { "name": "primary-darker", "title": "Primary Darker", "path": "/patterns/style-guide/colors/primary/primary-darker", "Hex": "#528F4D", "RGB": "82 143 77" }, "primary": { "name": "primary", "title": "Primary", "path": "/patterns/style-guide/colors/primary/primary", "Hex": "#66B360", "RGB": "102 179 96" } } }, "secondary": { "name": "secondary", "title": "Secondary", "path": "/patterns/style-guide/colors/secondary", "items": { "background-dark": { "name": "background-dark", "title": "Background Dark", "path": "/patterns/style-guide/colors/secondary/background-dark", "Hex": "#000000", "RGB": "0 0 0" }, "background-light": { "name": "background-light", "title": "Background Light", "path": "/patterns/style-guide/colors/secondary/background-light", "Hex": "#DDDDDD", "RGB": "221 221 221" }, "background-lighter": { "name": "background-lighter", "title": "Background Lighter", "path": "/patterns/style-guide/colors/secondary/background-lighter", "Hex": "#EEEEEE", "RGB": "238 238 238" } } } } }, "icons": { "name": "icons", "title": "Icons", "path": "/patterns/style-guide/icons", "items": { "account": { "name": "account", "title": "Account", "path": "/patterns/style-guide/icons/account" } } } } } } }, "sorters": { "name": "sorters", "title": "Sorters", "path": "/sorters", "banners": ["banner2", "banner1"] }, "templates": { "name": "templates", "title": "Templates", "path": "/templates", "items": { "template1": { "name": "template1", "title": "Template 1", "path": "/templates/template1", "html": "<span>test 3!!!</span>\r\n" } } }, "test": { "name": "test", "title": "Test", "path": "/test", "html": "a string of content!!!\r\n" } }, "site": { "pages": { "name": "pages", "title": "Pages", "path": "/pages", "index": { "name": "index", "title": "Index", "path": "/pages/index", "html": "" }, "info": { "name": "info", "title": "Info", "path": "/pages/info", "html": "" }, "notes": { "name": "notes", "title": "Notes", "path": "/pages/notes", "txt": "" }, "patterns": { "name": "patterns", "title": "Patterns", "path": "/pages/patterns", "html": "" }, "readme": { "name": "readme", "title": "Readme", "path": "/pages/readme", "html": "<main-template>\r\n    <markdown>\r\n        This is the readme for the Pattern Library project\r\n        \r\n        \r\n        Repeaters\r\n        What does a repeater repeat?\r\n        \r\n            There are 4 ways to use a repeater.\r\n            -by specifying it on the repeater\r\n                angular 2 makes javascript variables available to your html. \r\n                in this case, we are repeating on the *items* javascript object\r\n                <example-repeater (on)=\"items\"></example-repeater>\r\n                or we can repeat on an object referenced by name from the library.\r\n                <example-repeater example-repeater (on)=\"patterns.example\"></example-repeater>\r\n            -by specifying what it should repeat in a configuration file\r\n            -by context. it will use the items property of the repeater it is inside of\r\n            \r\n        The Pages folder defines site structure of your pattern library\r\n        \r\n        \r\n        \r\n        \r\n        \r\n    </markdown>\r\n</main-template>" } }, "repeaters": { "name": "repeaters", "title": "Repeaters", "path": "/repeaters", "colorCards": { "name": "colorCards", "title": "Color Cards", "path": "/repeaters/colorCards", "html": "<div class=\"color-card\">\r\n\t<div class=\"brand {{name}}\"></div>\r\n\t<p>Hex: {{Hex}}</p>\r\n\t<p>RGB: {{RGB}}</p>\r\n\t<p>SCSS: $brand-{{name}}</p>\r\n</div>\r\n" }, "colors": { "name": "colors", "title": "Colors", "path": "/repeaters/colors", "html": "<section class=\"{{name}}-colors\">\r\n\t<h3>{{title}} Colors</h3>\r\n\t<hr>\r\n\t<div class=\"color-wrapper\">\r\n\t\t<template repeater=\"colorCards\"></template>\r\n\t</div>\r\n</section>\r\n" }, "icons": { "name": "icons", "title": "Icons", "path": "/repeaters/icons", "html": "<div class=\"icon-preview\">\r\n\t<h4>{{title}}</h4>\r\n\t<i class=\"exc-icon-{{name}}\"></i>\r\n\t<pre><code><i class=\"exc-icon-{{name}}\"></i></code></pre>\r\n</div>\r\n" }, "navRail": { "name": "navRail", "title": "Nav Rail", "path": "/repeaters/navRail", "html": "<li><a href=\"#{{name}}\">{{title}}</a></li>\r\n" }, "notes": { "name": "notes", "title": "Notes", "path": "/repeaters/notes", "txt": "i'm thinking that the repeaters templates will each get built into a component, and then there will be either\r\none master 'repeater' manager component or a repeater manager component per repeater component\r\n\r\npro/contra repeater manager per repeater\r\npriority: functionality. is anything lost by going the single dynamic repeater manager path?\r\nthere may be some efficiency concern? every repeater gets repeated - every repetition containing another repeater means the repeatermanager\r\ndynamically bootstrapping so many components on the fly. worth trying out and seeing what happens.\r\nother potential loss - custom selectors? \r\n\r\nshould the sort be associated with the repeater or the thing being repeated?" }, "pattern": { "name": "pattern", "title": "Pattern", "path": "/repeaters/pattern", "html": "<p>Pattern example - Title: {{title}}, Name: {{name}}</p>\n" } }, "templates": { "name": "templates", "title": "Templates", "path": "/templates", "main": { "name": "main", "title": "Main", "path": "/templates/main", "html": "<div>\r\n    <div>\r\n        banner content\r\n    </div>\r\n    <content></content>\r\n</div>" }, "notes": { "name": "notes", "title": "Notes", "path": "/templates/notes", "txt": "i think the config for this folder could be used to set selectors for templates" }, "patternDisplay": { "name": "patternDisplay", "title": "Pattern Display", "path": "/templates/patternDisplay", "html": "<template name=\"pattern-area\">\r\n    <markdown content=\"library.patterns/{{url.hash}}\"></markdown>\r\n    <repeater name=\"pattern\"></repeater>\r\n</template>" } } } });
+            exports_1("metadata", metadata = { "library": { "templates": { "name": "templates", "title": "Templates", "path": "/templates", "items": { "template1": { "name": "template1", "title": "Template 1", "path": "/templates/template1", "html": "<span>test 3!!!</span>\n" } } }, "patterns": { "other": "yo", "name": "patterns", "title": "Patterns", "path": "/patterns", "items": { "banners": { "name": "banners", "title": "Banners", "path": "/patterns/banners", "items": { "banner1": { "name": "banner1", "title": "Banner 1", "path": "/patterns/banners/banner1", "html": "test 1!!!!" }, "banner2": { "name": "banner2", "title": "Banner 2", "path": "/patterns/banners/banner2", "html": "test 2!!!!" } } }, "columns": { "name": "columns", "title": "Columns", "path": "/patterns/columns" }, "style-guide": { "name": "style-guide", "title": "Style Guide", "path": "/patterns/style-guide", "items": { "colors": { "name": "colors", "title": "Colors", "path": "/patterns/style-guide/colors", "items": { "primary": { "name": "primary", "title": "Primary", "path": "/patterns/style-guide/colors/primary", "items": { "primary-dark": { "name": "primary-dark", "title": "Primary Dark", "path": "/patterns/style-guide/colors/primary/primary-dark", "Hex": "#5CA156", "RGB": "92 161 86" }, "primary-darker": { "name": "primary-darker", "title": "Primary Darker", "path": "/patterns/style-guide/colors/primary/primary-darker", "Hex": "#528F4D", "RGB": "82 143 77" }, "primary": { "name": "primary", "title": "Primary", "path": "/patterns/style-guide/colors/primary/primary", "Hex": "#66B360", "RGB": "102 179 96" } } }, "secondary": { "name": "secondary", "title": "Secondary", "path": "/patterns/style-guide/colors/secondary", "items": { "background-dark": { "name": "background-dark", "title": "Background Dark", "path": "/patterns/style-guide/colors/secondary/background-dark", "Hex": "#000000", "RGB": "0 0 0" }, "background-light": { "name": "background-light", "title": "Background Light", "path": "/patterns/style-guide/colors/secondary/background-light", "Hex": "#DDDDDD", "RGB": "221 221 221" }, "background-lighter": { "name": "background-lighter", "title": "Background Lighter", "path": "/patterns/style-guide/colors/secondary/background-lighter", "Hex": "#EEEEEE", "RGB": "238 238 238" } } }, "ternary": { "name": "ternary", "title": "Ternary", "path": "/patterns/style-guide/colors/ternary", "items": { "bla": { "name": "bla", "title": "Bla", "path": "/patterns/style-guide/colors/ternary/bla", "Hex": 12345, "RGB": "bla" } } } } }, "icons": { "name": "icons", "title": "Icons", "path": "/patterns/style-guide/icons", "items": { "account": { "name": "account", "title": "Account", "path": "/patterns/style-guide/icons/account" } } } } } } }, "sorters": { "name": "sorters", "title": "Sorters", "path": "/sorters", "banners": ["banner2", "banner1"] }, "test": { "name": "test", "title": "Test", "path": "/test", "html": "a string of content!!!\n" } }, "site": { "pages": { "name": "pages", "title": "Pages", "path": "/pages", "index": { "name": "index", "title": "Index", "path": "/pages/index", "html": "" }, "info": { "name": "info", "title": "Info", "path": "/pages/info", "html": "" }, "notes": { "name": "notes", "title": "Notes", "path": "/pages/notes", "txt": "" }, "patterns": { "name": "patterns", "title": "Patterns", "path": "/pages/patterns", "html": "" }, "readme": { "name": "readme", "title": "Readme", "path": "/pages/readme", "html": "<main-template>\n    <markdown>\n        This is the readme for the Pattern Library project\n        \n        \n        Repeaters\n        What does a repeater repeat?\n        \n            There are 4 ways to use a repeater.\n            -by specifying it on the repeater\n                angular 2 makes javascript variables available to your html. \n                in this case, we are repeating on the *items* javascript object\n                <example-repeater (on)=\"items\"></example-repeater>\n                or we can repeat on an object referenced by name from the library.\n                <example-repeater example-repeater (on)=\"patterns.example\"></example-repeater>\n            -by specifying what it should repeat in a configuration file\n            -by context. it will use the items property of the repeater it is inside of\n            \n        The Pages folder defines site structure of your pattern library\n        \n        \n        \n        \n        \n    </markdown>\n</main-template>" } }, "repeaters": { "name": "repeaters", "title": "Repeaters", "path": "/repeaters", "colorCards": { "name": "colorCards", "title": "Color Cards", "path": "/repeaters/colorCards", "html": "<div class=\"color-card\">\n\t<div class=\"brand {{name}}\"></div>\n\t<p>Hex: {{Hex}}</p>\n\t<p>RGB: {{RGB}}</p>\n\t<p>SCSS: $brand-{{name}}</p>\n</div>\n" }, "colors": { "name": "colors", "title": "Colors", "path": "/repeaters/colors", "html": "<section class=\"{{name}}-colors\">\n\t<h3>{{title}} Colors</h3>\n\t<hr>\n\t<div class=\"color-wrapper\">\n\t\t<template repeater=\"colorCards\"></template>\n\t</div>\n</section>\n" }, "icons": { "name": "icons", "title": "Icons", "path": "/repeaters/icons", "html": "<div class=\"icon-preview\">\n\t<h4>{{title}}</h4>\n\t<i class=\"exc-icon-{{name}}\"></i>\n\t<pre><code><i class=\"exc-icon-{{name}}\"></i></code></pre>\n</div>\n" }, "navRail": { "name": "navRail", "title": "Nav Rail", "path": "/repeaters/navRail", "html": "<li><a href=\"#{{name}}\">{{title}}</a></li>\n" }, "notes": { "name": "notes", "title": "Notes", "path": "/repeaters/notes", "txt": "i'm thinking that the repeaters templates will each get built into a component, and then there will be either\none master 'repeater' manager component or a repeater manager component per repeater component\n\npro/contra repeater manager per repeater\npriority: functionality. is anything lost by going the single dynamic repeater manager path?\nthere may be some efficiency concern? every repeater gets repeated - every repetition containing another repeater means the repeatermanager\ndynamically bootstrapping so many components on the fly. worth trying out and seeing what happens.\nother potential loss - custom selectors? \n\nshould the sort be associated with the repeater or the thing being repeated?" }, "pattern": { "name": "pattern", "title": "Pattern", "path": "/repeaters/pattern", "html": "<p>Pattern example - Title: {{title}}, Name: {{name}}</p>\n" } }, "templates": { "name": "templates", "title": "Templates", "path": "/templates", "main": { "name": "main", "title": "Main", "path": "/templates/main", "html": "<div>\n    <div>\n        banner content\n    </div>\n    <content></content>\n</div>" }, "notes": { "name": "notes", "title": "Notes", "path": "/templates/notes", "txt": "i think the config for this folder could be used to set selectors for templates" }, "patternDisplay": { "name": "patternDisplay", "title": "Pattern Display", "path": "/templates/patternDisplay", "html": "<template name=\"pattern-area\">\n    <markdown content=\"library.patterns/{{url.hash}}\"></markdown>\n    <repeater name=\"pattern\"></repeater>\n</template>" } } } });
         }
     }
 });

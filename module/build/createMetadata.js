@@ -1,6 +1,6 @@
 var fs = require("fs");
 var jsonfile = require("jsonfile");
-var merge = require("merge");
+var merge = require("deepmerge");
 var changeCase = require("change-case");
 
 function run(targetPath, resultPath) {
@@ -22,26 +22,25 @@ function run(targetPath, resultPath) {
               //   metadata.items[item.name] = {};
               // }
               //console.log(item.relativePath)
-              extend(metadata.items[item.name], createMetadata(metadataType, path + "/" + item.name, item.path, metadataType === "library"));
+              metadata.items[item.name] = extend(metadata.items[item.name], createMetadata(metadataType, path + "/" + item.name, item.path, metadataType === "library"));
           }
           else if (item.type === "json") {
               var jsonResult = jsonfile.readFileSync(path +"/"+ item.file);
 
               if (item.name === "items-config") {
-                  extend(metadata.items, jsonResult);
+                  metadata.items = metadata.items || {};
+                  metadata.items = extend(metadata.items, jsonResult);
               }
               else {
                   addItem(metadata, item.name, item.path);
-                  extend(metadata.items[item.name], jsonResult);
+                  metadata.items[item.name] = extend(metadata.items[item.name], jsonResult);
               }
           }
           else {
               //parse as string, assign to object with extension as property name
               try {
                 addItem(metadata, item.name, item.path);
-                if (item.path.indexOf("banners") > 0) console.log(item.name, metadata);
                 metadata.items[item.name][item.type] = fs.readFileSync(path +"/"+ item.file, 'utf8');
-                if (item.path.indexOf("banners") > 0) console.log(item.name, metadata);
               }
               catch (error) {
                 //throw error;
@@ -80,7 +79,7 @@ function run(targetPath, resultPath) {
       parent.items = {};
     }
     parent.items[key] = parent.items[key] || {};
-    extend(parent.items[key], {
+    parent.items[key] = extend(parent.items[key], {
       name: key,
       title: changeCase.title(key.replace(/-/, " ")),
       path: path
@@ -131,6 +130,7 @@ function run(targetPath, resultPath) {
     library: createMetadata("library", targetPath + "/library"),
     site: createMetadata("site", targetPath + "/site")
   }));
+  //console.log(createMetadata("library", targetPath + "/library"));
 }
 
 module.exports = run;

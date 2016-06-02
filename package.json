@@ -6,11 +6,13 @@
   "dependencies": {
     "angular2": "*",
     "async": "*",
+    "change-case": "^2.3.1",
     "crypto": "*",
     "es6-shim": "*",
     "gulp": "^3.9.1",
     "gulp-clean": "^0.3.2",
     "jsonfile": "^2.3.1",
+    "merge": "^1.2.0",
     "reflect-metadata": "*",
     "rxjs": "*",
     "symbol-observable": "*",
