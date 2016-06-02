@@ -31,6 +31,9 @@ gulp.task('default', ["clean", "metadata"], function() {
         typescriptOptions: {
             emitDecoratorMetadata: true,
             experimentalDecorators: true
+        },
+        map: {
+          //"app/resources/metadata": "app/metadata"
         }
     });
 

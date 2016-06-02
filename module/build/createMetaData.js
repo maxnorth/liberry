@@ -1,26 +1,28 @@
 var fs = require("fs");
 var jsonfile = require("jsonfile");
 var merge = require("merge");
+var changeCase = require("change-case");
 
 function run(targetPath, resultPath) {
 
-  function createMetadata(metadataType, path, asChild) {
+  function createMetadata(metadataType, path, relativePath, asChild) {
       var metadata = {};
-
-      var items = getDirectoryItems(path);
-
-      if (items.length > 0 && typeof(metadata.items) !== "object") {
-          metadata.items = {};
-      }
+      relativePath = relativePath || "";
+      var items = getDirectoryItems(path, relativePath);
+      // if (items.length > 0 && typeof(metadata.items) !== "object") {
+      //     metadata.items = {};
+      // }
 
       for (var i in items) {
           var item = items[i];
 
           if (item.type === "folder") {
-              if (!metadata.items[item.name]) {
-                metadata.items[item.name] = {};
-              }
-              extend(metadata.items[item.name], createMetadata(metadataType, path + "/" + item.name, metadataType === "library"));
+              addItem(metadata, item.name, item.path);
+              // if (!metadata.items[item.name]) {
+              //   metadata.items[item.name] = {};
+              // }
+              //console.log(item.relativePath)
+              extend(metadata.items[item.name], createMetadata(metadataType, path + "/" + item.name, item.path, metadataType === "library"));
           }
           else if (item.type === "json") {
               var jsonResult = jsonfile.readFileSync(path +"/"+ item.file);
@@ -29,15 +31,17 @@ function run(targetPath, resultPath) {
                   extend(metadata.items, jsonResult);
               }
               else {
-                  metadata.items[item.name] = metadata.items[item.name] || {};
+                  addItem(metadata, item.name, item.path);
                   extend(metadata.items[item.name], jsonResult);
               }
           }
           else {
               //parse as string, assign to object with extension as property name
               try {
-                if (!metadata.items[item.name]) metadata.items[item.name] = {};
+                addItem(metadata, item.name, item.path);
+                if (item.path.indexOf("banners") > 0) console.log(item.name, metadata);
                 metadata.items[item.name][item.type] = fs.readFileSync(path +"/"+ item.file, 'utf8');
+                if (item.path.indexOf("banners") > 0) console.log(item.name, metadata);
               }
               catch (error) {
                 //throw error;
@@ -71,7 +75,19 @@ function run(targetPath, resultPath) {
     return typeof(value) === "object";
   }
 
-  function getDirectoryItems(path) {
+  function addItem(parent, key, path) {
+    if (!parent.items) {
+      parent.items = {};
+    }
+    parent.items[key] = parent.items[key] || {};
+    extend(parent.items[key], {
+      name: key,
+      title: changeCase.title(key.replace(/-/, " ")),
+      path: path
+    });
+  }
+
+  function getDirectoryItems(path, relativePath) {
       var files = fs.readdirSync(path),
           items = [];
 
@@ -94,6 +110,7 @@ function run(targetPath, resultPath) {
           item.name = isFolder ? file : file.slice(0, extensionIndex);
           item.type = isFolder ? "folder" : (extensionIndex > -1 ? file.slice(extensionIndex + 1, Infinity) : undefined);
           item.file = file;
+          item.path = relativePath + "/" + item.name;
 
           items.push(item);
       }

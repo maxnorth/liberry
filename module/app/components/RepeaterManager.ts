@@ -1,7 +1,7 @@
 import {Directive, Input, TemplateRef, ViewContainerRef, ComponentResolver, HostListener, ChangeDetectorRef} from "angular2/core";
 import {metadata} from "app/resources/metadata";
 import {objectPath} from "app/utilities/objectPath";
-
+console.log("this is metadata", metadata);
 var site = metadata.site,
     library = metadata.library;
 

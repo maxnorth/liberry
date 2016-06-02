@@ -1,6 +1,6 @@
-
 //alternative
-export var library { 
+export var metadata {
+  library {
     patterns: {
         name: "patterns",
         title: "Patterns",
@@ -11,7 +11,7 @@ export var library {
                 title: "Banners",
                 path: "patterns/banners"
                 items: {
-                    "banner1": { 
+                    "banner1": {
                         name: "banner1",
                         title: "Banner 1",
                         path: "patterns/banners/banner1",
@@ -19,7 +19,7 @@ export var library {
                             <span>test1!!!!</span>
                         `
                     },
-                    "banner2": { 
+                    "banner2": {
                         name: "banner2",
                         title: "Banner 2",
                         path: "patterns/banners/banner2",
@@ -112,7 +112,7 @@ export var library {
                             name: "account",
                             title: "Account",
                             path: "patterns/style-guide/icons/account",
-                            
+
                         }
                     }
                 }
@@ -124,21 +124,22 @@ export var library {
         _title: "Templates"
     },
     sorters: {
-        
-    }
-}
 
-export var site = {
+    }
+},
+
+//export var
+site {
     pages: {
         index: {
             path: "index",
-            template: `
+            html: `
                 <span>here's your page</span>
             `
         },
         readme: {
             path: "readme",
-            template: `
+            html: `
                 <span>here's your page</span>
             `
         }
@@ -147,21 +148,21 @@ export var site = {
         pattern: {
             name: "pattern",
             title: "Pattern"
-            template: `
+            html: `
                 <p>Pattern example - Title: {{title}}, Name: {{name}}</p>
             `
         },
         navRail: {
             name: "navRail",
             title: "Nav Rail",
-            template: `
+            html: `
                 <li><a href="#{{name}}">{{title}}</a></li>
             `
         },
         colors: {
             name: "colors",
             title: "Colors",
-            template: `
+            html: `
                 <section class="{{name}}-colors">
                 	<h3>{{title}} Colors</h3>
                 	<hr>
@@ -174,7 +175,7 @@ export var site = {
         colorCards: {
             name: "colorCards",
             title: "Color Cards",
-            template: `
+            html: `
                 <div class="color-card">
                 	<div class="brand {{name}}"></div>
                 	<p>Hex: {{Hex}}</p>
@@ -186,10 +187,10 @@ export var site = {
         icons: {
             name: "icons",
             title: "Icons",
-            template: `
+            html: `
                 <div class="icon-preview">
                 	<h4>{{title}}</h4>
-                	<i class="exc-icon-{{name}}"></i>							
+                	<i class="exc-icon-{{name}}"></i>
                 	<pre><code><i class="exc-icon-{{name}}"></i></code></pre>
                 </div>
             `
@@ -198,7 +199,7 @@ export var site = {
     templates: {
         main: {
             name: "main",
-            template: `
+            html: `
                 <div>
                     <div>
                         main content
@@ -209,7 +210,7 @@ export var site = {
         },
         patternDisplay: {
             name: "patternDisplay",
-            template: `
+            html: `
                 <template name="main">
                     <markdown content="library.patterns/{{url.hash}}"></markdown>
                     <repeater name="pattern"></repeater>
