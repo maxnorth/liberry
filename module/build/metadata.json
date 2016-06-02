@@ -1,0 +1,79 @@
+{
+  "items": {
+    "property":"hey!",
+    "patterns": {
+      "other":"yo",
+      "items": {
+        "banners": {
+          "items": {
+            "banner1": {
+              "html":"test 1!!!!"
+            },
+            "banner2": {
+              "html":"test 2!!!!"
+            }
+          }
+        },"style-guide": {
+          "items": {
+            "colors": {
+              "items": {
+                "primary": {
+                  "items": {
+                    "primary-dark": {
+                      "Hex":"#5CA156",
+                      "RGB":"92 161 86"
+                    },
+                    "primary-darker": {
+                      "Hex":"#528F4D",
+                      "RGB":"82 143 77"
+                    },
+                    "primary": {
+                      "Hex":"#66B360",
+                      "RGB":"102 179 96"
+                    }
+                  }
+                },
+                "secondary": {
+                  "items": {
+                    "background-dark": {
+                      "Hex":"#000000",
+                      "RGB":"0 0 0"
+                    },
+                    "background-light": {
+                      "Hex":"#DDDDDD",
+                      "RGB":"221 221 221"
+                    },
+                    "background-lighter": {
+                      "Hex":"#EEEEEE",
+                      "RGB":"238 238 238"
+                    }
+                  }
+                }
+              }
+            },
+            "icons": {
+              "items": {
+                "account": {}
+              }
+            }
+          }
+        }
+      },
+      "html":"this is html!!!\r\n",
+      "patternsJson":"yeaaa"
+    },
+    "sorters": {
+      "banners": ["banner2","banner1"]
+    },
+    "templates": {
+      "items": {
+        "template1": {
+          "html":"<span>test 3!!!</span>\r\n"
+        }
+      }
+    },
+    "test": {
+      "html":"a string of content!!!\r\n"
+    }
+  }
+}

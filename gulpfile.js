@@ -2,11 +2,12 @@ var gulp = require("gulp");
 var clean = require("gulp-clean");
 var Builder = require("systemjs-builder");
 global.ts = require("typescript");
+createMetadata = require("./module/build/createMetadata");
 
-gulp.task('default', ["clean"], function() {
-    
+gulp.task('default', ["clean", "metadata"], function() {
+
     var builder = new Builder();
-    
+
     builder.config({
         packages: {
           'module': {
@@ -32,9 +33,9 @@ gulp.task('default', ["clean"], function() {
             experimentalDecorators: true
         }
     });
-    
+
     builder.buildStatic("module/app/bootstrap.ts", "app.js", {
-        // minify: true, 
+        // minify: true,
         // sourceMaps: true
     });
 });
@@ -44,4 +45,6 @@ gulp.task("clean", function() {
     .pipe(clean());
 })
 
-gulp.watch("module/**/*", ['default']);
+gulp.task("metadata", createMetadata.bind(createMetadata, "ExampleStructure", "module/app/resources/metadata.ts"));
+
+//gulp.watch("module/**/*", ['default']);
