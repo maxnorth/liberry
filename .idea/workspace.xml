@@ -2,14 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b015dd07-4443-4abe-bbe4-7456778c7368" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/app/components/TemplateComponents.ts" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ExampleStructure/site/templates/main.html" afterPath="$PROJECT_DIR$/ExampleStructure/site/templates/main.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app.js" afterPath="$PROJECT_DIR$/app.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/module/app/PatternLibraryRoot.ts" afterPath="$PROJECT_DIR$/module/app/PatternLibraryRoot.ts" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/module/app/bootstrap.ts" afterPath="$PROJECT_DIR$/module/app/bootstrap.ts" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/module/app/components/RepeaterManager.ts" afterPath="$PROJECT_DIR$/module/app/components/RepeaterManager.ts" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/module/app/resources/metadata.ts" afterPath="$PROJECT_DIR$/module/app/resources/metadata.ts" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/module/app/templates/PatternLibraryRoot.html" afterPath="$PROJECT_DIR$/module/app/templates/PatternLibraryRoot.html" />
     </list>
     <ignored path="AIS-Pattern-Library.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -120,11 +113,11 @@
         <entry file="file://$PROJECT_DIR$/app.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="-1573">
-              <caret line="31776" column="9" selection-start-line="31776" selection-start-column="9" selection-end-line="31776" selection-end-column="9" />
+              <caret line="31777" column="9" selection-start-line="31777" selection-start-column="9" selection-end-line="31777" selection-end-column="9" />
               <folding>
-                <marker date="1465011978481" expanded="true" signature="1238325:1238347" ph="{...}" />
-                <marker date="1465011978481" expanded="true" signature="1238325:1238353" ph="{...}" />
-                <marker date="1465011978481" expanded="true" signature="1238325:1238355" ph="{...}" />
+                <marker date="1465012026012" expanded="true" signature="1238357:1238379" ph="{...}" />
+                <marker date="1465012026012" expanded="true" signature="1238357:1238385" ph="{...}" />
+                <marker date="1465012026012" expanded="true" signature="1238357:1238387" ph="{...}" />
               </folding>
             </state>
           </provider>
@@ -134,7 +127,7 @@
         <entry file="file://$PROJECT_DIR$/ExampleStructure/site/templates/main.html">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="165">
-              <caret line="5" column="21" selection-start-line="5" selection-start-column="21" selection-end-line="5" selection-end-column="21" />
+              <caret line="5" column="0" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -437,12 +430,12 @@
       <updated>1464984195822</updated>
       <workItem from="1464984198212" duration="801000" />
       <workItem from="1464986880129" duration="4270000" />
-      <workItem from="1464999330933" duration="1805000" />
+      <workItem from="1464999330933" duration="2410000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="6876000" />
+    <option name="totallyTimeSpent" value="7481000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-14" y="-14" width="3228" height="1738" extended-state="6" />
@@ -593,11 +586,11 @@
     <entry file="file://$PROJECT_DIR$/app.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-1573">
-          <caret line="31776" column="9" selection-start-line="31776" selection-start-column="9" selection-end-line="31776" selection-end-column="9" />
+          <caret line="31777" column="9" selection-start-line="31777" selection-start-column="9" selection-end-line="31777" selection-end-column="9" />
           <folding>
-            <marker date="1465011978481" expanded="true" signature="1238325:1238347" ph="{...}" />
-            <marker date="1465011978481" expanded="true" signature="1238325:1238353" ph="{...}" />
-            <marker date="1465011978481" expanded="true" signature="1238325:1238355" ph="{...}" />
+            <marker date="1465012026012" expanded="true" signature="1238357:1238379" ph="{...}" />
+            <marker date="1465012026012" expanded="true" signature="1238357:1238385" ph="{...}" />
+            <marker date="1465012026012" expanded="true" signature="1238357:1238387" ph="{...}" />
           </folding>
         </state>
       </provider>
@@ -667,7 +660,7 @@
     <entry file="file://$PROJECT_DIR$/ExampleStructure/site/templates/main.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="165">
-          <caret line="5" column="21" selection-start-line="5" selection-start-column="21" selection-end-line="5" selection-end-column="21" />
+          <caret line="5" column="0" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
           <folding />
         </state>
       </provider>
