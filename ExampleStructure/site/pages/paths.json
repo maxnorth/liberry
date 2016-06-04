@@ -1,0 +1,6 @@
+{
+  "$note": "you can set a url parameter with this syntax /:parameterName/ and that argument will become available to you in the application",
+  "index": "",
+  "info": "",
+  "patterns": "patterns/:id"
+}

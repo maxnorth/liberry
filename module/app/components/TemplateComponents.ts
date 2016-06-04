@@ -10,7 +10,7 @@ for (var i in site.templates) {
         var template = site.templates[i];
 
         @Component({
-            selector: `[${i}Template]`,
+            selector: `[${i}Template], ${i}-template, [templat="${i}"]`,
             template: template.html,
             directives: [RepeaterManager]
         })
@@ -23,7 +23,7 @@ for (var i in site.templates) {
         Object.defineProperty(TemplateComponent, "name", {
             value: componentName
         });
-        
+
         TemplateComponents.push(TemplateComponent);
     }
 }

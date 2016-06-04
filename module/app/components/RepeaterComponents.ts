@@ -14,7 +14,7 @@ Object.defineProperty(site.repeaters, "_components", {
 
 for (var i in site.repeaters) {
   if (site.repeaters[i].html) {
-    var repeater = site.repeaters[i];
+    var repeater = site.repeaters[i]; 
 
     @Component({
       selector: `[${i}-repeater]`,
