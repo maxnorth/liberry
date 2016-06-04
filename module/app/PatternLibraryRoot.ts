@@ -6,7 +6,7 @@ import {RepeaterManager} from "app/components/RepeaterManager";
 @Component({
     selector: 'pattern-library',
     templateUrl: TemplateUrls.PatternLibrary,
-    directives: [RepeaterManager].concat(RepeaterComponents)
+    directives: []//[RepeaterManager].concat(RepeaterComponents)
     //pipes: AllPipes
 })
 export default class RootComponent {

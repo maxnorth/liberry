@@ -22860,7 +22860,50 @@ $__System.register("c0", [], function(exports_1, context_1) {
     }
 });
 
-$__System.register("c1", ["8", "c2", "c3"], function(exports_1, context_1) {
+$__System.register("c1", ["8", "c0"], function(exports_1, context_1) {
+    "use strict";
+    var __moduleName = context_1 && context_1.id;
+    var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+        var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+        if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+        else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+        return c > 3 && r && Object.defineProperty(target, key, r), r;
+    };
+    var __metadata = (this && this.__metadata) || function (k, v) {
+        if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+    };
+    var core_1, resource_1;
+    var RootComponent;
+    return {
+        setters:[
+            function (core_1_1) {
+                core_1 = core_1_1;
+            },
+            function (resource_1_1) {
+                resource_1 = resource_1_1;
+            }],
+        execute: function() {
+            RootComponent = (function () {
+                function RootComponent() {
+                    this.hey = "llll";
+                }
+                ;
+                RootComponent = __decorate([
+                    core_1.Component({
+                        selector: 'pattern-library',
+                        templateUrl: resource_1.TemplateUrls.PatternLibrary,
+                        directives: [] //[RepeaterManager].concat(RepeaterComponents)
+                    }), 
+                    __metadata('design:paramtypes', [])
+                ], RootComponent);
+                return RootComponent;
+            }());
+            exports_1("default", RootComponent);
+        }
+    }
+});
+
+$__System.register("c2", ["8", "c3", "c4"], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -23143,7 +23186,7 @@ $__System.registerDynamic("9c", ["6", "40", "a0"], true, function($__require, ex
   return module.exports;
 });
 
-$__System.registerDynamic("97", ["6", "a0", "c4"], true, function($__require, exports, module) {
+$__System.registerDynamic("97", ["6", "a0", "c5"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -23177,7 +23220,7 @@ $__System.registerDynamic("97", ["6", "a0", "c4"], true, function($__require, ex
   };
   var lang_1 = $__require('6');
   var metadata_1 = $__require('a0');
-  var change_detection_1 = $__require('c4');
+  var change_detection_1 = $__require('c5');
   var DirectiveMetadata = (function(_super) {
     __extends(DirectiveMetadata, _super);
     function DirectiveMetadata(_a) {
@@ -23430,7 +23473,7 @@ $__System.registerDynamic("6a", ["6"], true, function($__require, exports, modul
   return module.exports;
 });
 
-$__System.registerDynamic("54", ["9c", "97", "6a", "c5"], true, function($__require, exports, module) {
+$__System.registerDynamic("54", ["9c", "97", "6a", "c6"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -23459,7 +23502,7 @@ $__System.registerDynamic("54", ["9c", "97", "6a", "c5"], true, function($__requ
   var di_2 = $__require('9c');
   var directives_2 = $__require('97');
   var view_2 = $__require('6a');
-  var decorators_1 = $__require('c5');
+  var decorators_1 = $__require('c6');
   exports.Component = decorators_1.makeDecorator(directives_2.ComponentMetadata, function(fn) {
     return fn.View = View;
   });
@@ -23482,19 +23525,19 @@ $__System.registerDynamic("54", ["9c", "97", "6a", "c5"], true, function($__requ
   return module.exports;
 });
 
-$__System.registerDynamic("c6", ["c5"], true, function($__require, exports, module) {
+$__System.registerDynamic("c7", ["c6"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
       global = this,
       GLOBAL = this;
   "use strict";
-  var decorators_1 = $__require('c5');
+  var decorators_1 = $__require('c6');
   exports.Class = decorators_1.Class;
   return module.exports;
 });
 
-$__System.registerDynamic("c7", ["6"], true, function($__require, exports, module) {
+$__System.registerDynamic("c8", ["6"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -23506,7 +23549,7 @@ $__System.registerDynamic("c7", ["6"], true, function($__require, exports, modul
   return module.exports;
 });
 
-$__System.registerDynamic("c8", ["6", "7", "12", "c9"], true, function($__require, exports, module) {
+$__System.registerDynamic("c9", ["6", "7", "12", "ca"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -23519,12 +23562,12 @@ $__System.registerDynamic("c8", ["6", "7", "12", "c9"], true, function($__requir
   exports.EventEmitter = async_1.EventEmitter;
   var exceptions_1 = $__require('12');
   exports.WrappedException = exceptions_1.WrappedException;
-  var exception_handler_1 = $__require('c9');
+  var exception_handler_1 = $__require('ca');
   exports.ExceptionHandler = exception_handler_1.ExceptionHandler;
   return module.exports;
 });
 
-$__System.registerDynamic("ca", ["5e"], true, function($__require, exports, module) {
+$__System.registerDynamic("cb", ["5e"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -23537,7 +23580,7 @@ $__System.registerDynamic("ca", ["5e"], true, function($__require, exports, modu
   return module.exports;
 });
 
-$__System.registerDynamic("cb", ["a7"], true, function($__require, exports, module) {
+$__System.registerDynamic("cc", ["a7"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -23551,7 +23594,7 @@ $__System.registerDynamic("cb", ["a7"], true, function($__require, exports, modu
   return module.exports;
 });
 
-$__System.registerDynamic("cc", ["e", "6", "7"], true, function($__require, exports, module) {
+$__System.registerDynamic("cd", ["e", "6", "7"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -23692,7 +23735,7 @@ $__System.registerDynamic("aa", [], true, function($__require, exports, module) 
   return module.exports;
 });
 
-$__System.registerDynamic("b3", ["12", "cd", "7b"], true, function($__require, exports, module) {
+$__System.registerDynamic("b3", ["12", "ce", "7b"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -23709,7 +23752,7 @@ $__System.registerDynamic("b3", ["12", "cd", "7b"], true, function($__require, e
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
   };
   var exceptions_1 = $__require('12');
-  var change_detector_ref_1 = $__require('cd');
+  var change_detector_ref_1 = $__require('ce');
   var constants_1 = $__require('7b');
   var ViewRef = (function(_super) {
     __extends(ViewRef, _super);
@@ -23817,7 +23860,7 @@ $__System.registerDynamic("b3", ["12", "cd", "7b"], true, function($__require, e
   return module.exports;
 });
 
-$__System.registerDynamic("a8", ["bc", "cc", "ce", "a5", "aa", "b3", "a6", "66", "b5"], true, function($__require, exports, module) {
+$__System.registerDynamic("a8", ["bc", "cd", "cf", "a5", "aa", "b3", "a6", "66", "b5"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -23826,9 +23869,9 @@ $__System.registerDynamic("a8", ["bc", "cc", "ce", "a5", "aa", "b3", "a6", "66",
   "use strict";
   var component_resolver_1 = $__require('bc');
   exports.ComponentResolver = component_resolver_1.ComponentResolver;
-  var query_list_1 = $__require('cc');
+  var query_list_1 = $__require('cd');
   exports.QueryList = query_list_1.QueryList;
-  var dynamic_component_loader_1 = $__require('ce');
+  var dynamic_component_loader_1 = $__require('cf');
   exports.DynamicComponentLoader = dynamic_component_loader_1.DynamicComponentLoader;
   var element_ref_1 = $__require('a5');
   exports.ElementRef = element_ref_1.ElementRef;
@@ -24051,7 +24094,7 @@ $__System.registerDynamic("56", ["6", "e"], true, function($__require, exports, 
   return module.exports;
 });
 
-$__System.registerDynamic("c4", ["78"], true, function($__require, exports, module) {
+$__System.registerDynamic("c5", ["78"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -24084,7 +24127,7 @@ $__System.registerDynamic("9d", ["40", "6"], true, function($__require, exports,
   return module.exports;
 });
 
-$__System.registerDynamic("cf", ["6", "40", "86", "93", "94", "62", "5c"], true, function($__require, exports, module) {
+$__System.registerDynamic("d0", ["6", "40", "86", "93", "94", "62", "5c"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -24108,7 +24151,7 @@ $__System.registerDynamic("cf", ["6", "40", "86", "93", "94", "62", "5c"], true,
   return module.exports;
 });
 
-$__System.registerDynamic("d0", [], true, function($__require, exports, module) {
+$__System.registerDynamic("d1", [], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -24205,7 +24248,7 @@ $__System.registerDynamic("d0", [], true, function($__require, exports, module) 
   return module.exports;
 });
 
-$__System.registerDynamic("5e", ["7", "d0", "12"], true, function($__require, exports, module) {
+$__System.registerDynamic("5e", ["7", "d1", "12"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -24213,9 +24256,9 @@ $__System.registerDynamic("5e", ["7", "d0", "12"], true, function($__require, ex
       GLOBAL = this;
   "use strict";
   var async_1 = $__require('7');
-  var ng_zone_impl_1 = $__require('d0');
+  var ng_zone_impl_1 = $__require('d1');
   var exceptions_1 = $__require('12');
-  var ng_zone_impl_2 = $__require('d0');
+  var ng_zone_impl_2 = $__require('d1');
   exports.NgZoneError = ng_zone_impl_2.NgZoneError;
   var NgZone = (function() {
     function NgZone(_a) {
@@ -24989,7 +25032,7 @@ $__System.registerDynamic("2e", [], true, function($__require, exports, module) 
   return module.exports;
 });
 
-$__System.registerDynamic("d1", [], true, function($__require, exports, module) {
+$__System.registerDynamic("d2", [], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -25016,7 +25059,7 @@ $__System.registerDynamic("d1", [], true, function($__require, exports, module) 
   return module.exports;
 });
 
-$__System.registerDynamic("d2", ["d3"], true, function($__require, exports, module) {
+$__System.registerDynamic("d3", ["d4"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -25031,7 +25074,7 @@ $__System.registerDynamic("d2", ["d3"], true, function($__require, exports, modu
     }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
   };
-  var Subscription_1 = $__require('d3');
+  var Subscription_1 = $__require('d4');
   var SubjectSubscription = (function(_super) {
     __extends(SubjectSubscription, _super);
     function SubjectSubscription(subject, subscriber) {
@@ -25062,7 +25105,7 @@ $__System.registerDynamic("d2", ["d3"], true, function($__require, exports, modu
   return module.exports;
 });
 
-$__System.registerDynamic("d4", ["d5", "d6", "d3", "d1", "d2", "d7"], true, function($__require, exports, module) {
+$__System.registerDynamic("d5", ["d6", "d7", "d4", "d2", "d3", "d8"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -25077,12 +25120,12 @@ $__System.registerDynamic("d4", ["d5", "d6", "d3", "d1", "d2", "d7"], true, func
     }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
   };
-  var Observable_1 = $__require('d5');
-  var Subscriber_1 = $__require('d6');
-  var Subscription_1 = $__require('d3');
-  var ObjectUnsubscribedError_1 = $__require('d1');
-  var SubjectSubscription_1 = $__require('d2');
-  var rxSubscriber_1 = $__require('d7');
+  var Observable_1 = $__require('d6');
+  var Subscriber_1 = $__require('d7');
+  var Subscription_1 = $__require('d4');
+  var ObjectUnsubscribedError_1 = $__require('d2');
+  var SubjectSubscription_1 = $__require('d3');
+  var rxSubscriber_1 = $__require('d8');
   var SubjectSubscriber = (function(_super) {
     __extends(SubjectSubscriber, _super);
     function SubjectSubscriber(destination) {
@@ -25220,7 +25263,7 @@ $__System.registerDynamic("d4", ["d5", "d6", "d3", "d1", "d2", "d7"], true, func
   return module.exports;
 });
 
-$__System.registerDynamic("d8", ["d9", "d5"], true, function($__require, exports, module) {
+$__System.registerDynamic("d9", ["da", "d6"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -25235,8 +25278,8 @@ $__System.registerDynamic("d8", ["d9", "d5"], true, function($__require, exports
     }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
   };
-  var root_1 = $__require('d9');
-  var Observable_1 = $__require('d5');
+  var root_1 = $__require('da');
+  var Observable_1 = $__require('d6');
   var PromiseObservable = (function(_super) {
     __extends(PromiseObservable, _super);
     function PromiseObservable(promise, scheduler) {
@@ -25335,13 +25378,13 @@ $__System.registerDynamic("d8", ["d9", "d5"], true, function($__require, exports
   return module.exports;
 });
 
-$__System.registerDynamic("da", ["d9"], true, function($__require, exports, module) {
+$__System.registerDynamic("db", ["da"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
       global = this,
       GLOBAL = this;
-  var root_1 = $__require('d9');
+  var root_1 = $__require('da');
   function toPromise(PromiseCtor) {
     var _this = this;
     if (!PromiseCtor) {
@@ -25369,7 +25412,7 @@ $__System.registerDynamic("da", ["d9"], true, function($__require, exports, modu
   return module.exports;
 });
 
-$__System.registerDynamic("db", [], true, function($__require, exports, module) {
+$__System.registerDynamic("dc", [], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -25381,7 +25424,7 @@ $__System.registerDynamic("db", [], true, function($__require, exports, module) 
   return module.exports;
 });
 
-$__System.registerDynamic("dc", [], true, function($__require, exports, module) {
+$__System.registerDynamic("dd", [], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -25394,7 +25437,7 @@ $__System.registerDynamic("dc", [], true, function($__require, exports, module) 
   return module.exports;
 });
 
-$__System.registerDynamic("dd", [], true, function($__require, exports, module) {
+$__System.registerDynamic("de", [], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -25407,13 +25450,13 @@ $__System.registerDynamic("dd", [], true, function($__require, exports, module) 
   return module.exports;
 });
 
-$__System.registerDynamic("de", ["df"], true, function($__require, exports, module) {
+$__System.registerDynamic("df", ["e0"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
       global = this,
       GLOBAL = this;
-  var errorObject_1 = $__require('df');
+  var errorObject_1 = $__require('e0');
   var tryCatchTarget;
   function tryCatcher() {
     try {
@@ -25432,7 +25475,7 @@ $__System.registerDynamic("de", ["df"], true, function($__require, exports, modu
   return module.exports;
 });
 
-$__System.registerDynamic("df", [], true, function($__require, exports, module) {
+$__System.registerDynamic("e0", [], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -25442,7 +25485,7 @@ $__System.registerDynamic("df", [], true, function($__require, exports, module) 
   return module.exports;
 });
 
-$__System.registerDynamic("e0", [], true, function($__require, exports, module) {
+$__System.registerDynamic("e1", [], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -25473,18 +25516,18 @@ $__System.registerDynamic("e0", [], true, function($__require, exports, module) 
   return module.exports;
 });
 
-$__System.registerDynamic("d3", ["db", "dc", "dd", "de", "df", "e0"], true, function($__require, exports, module) {
+$__System.registerDynamic("d4", ["dc", "dd", "de", "df", "e0", "e1"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
       global = this,
       GLOBAL = this;
-  var isArray_1 = $__require('db');
-  var isObject_1 = $__require('dc');
-  var isFunction_1 = $__require('dd');
-  var tryCatch_1 = $__require('de');
-  var errorObject_1 = $__require('df');
-  var UnsubscriptionError_1 = $__require('e0');
+  var isArray_1 = $__require('dc');
+  var isObject_1 = $__require('dd');
+  var isFunction_1 = $__require('de');
+  var tryCatch_1 = $__require('df');
+  var errorObject_1 = $__require('e0');
+  var UnsubscriptionError_1 = $__require('e1');
   var Subscription = (function() {
     function Subscription(unsubscribe) {
       this.isUnsubscribed = false;
@@ -25578,7 +25621,7 @@ $__System.registerDynamic("d3", ["db", "dc", "dd", "de", "df", "e0"], true, func
   return module.exports;
 });
 
-$__System.registerDynamic("e1", [], true, function($__require, exports, module) {
+$__System.registerDynamic("e2", [], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -25595,7 +25638,7 @@ $__System.registerDynamic("e1", [], true, function($__require, exports, module) 
   return module.exports;
 });
 
-$__System.registerDynamic("d6", ["dd", "d3", "e1", "d7"], true, function($__require, exports, module) {
+$__System.registerDynamic("d7", ["de", "d4", "e2", "d8"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -25610,10 +25653,10 @@ $__System.registerDynamic("d6", ["dd", "d3", "e1", "d7"], true, function($__requ
     }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
   };
-  var isFunction_1 = $__require('dd');
-  var Subscription_1 = $__require('d3');
-  var Observer_1 = $__require('e1');
-  var rxSubscriber_1 = $__require('d7');
+  var isFunction_1 = $__require('de');
+  var Subscription_1 = $__require('d4');
+  var Observer_1 = $__require('e2');
+  var rxSubscriber_1 = $__require('d8');
   var Subscriber = (function(_super) {
     __extends(Subscriber, _super);
     function Subscriber(destinationOrNext, error, complete) {
@@ -25793,7 +25836,7 @@ $__System.registerDynamic("d6", ["dd", "d3", "e1", "d7"], true, function($__requ
   return module.exports;
 });
 
-$__System.registerDynamic("d9", [], true, function($__require, exports, module) {
+$__System.registerDynamic("da", [], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -25817,26 +25860,26 @@ $__System.registerDynamic("d9", [], true, function($__require, exports, module) 
   return module.exports;
 });
 
-$__System.registerDynamic("d7", ["d9"], true, function($__require, exports, module) {
+$__System.registerDynamic("d8", ["da"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
       global = this,
       GLOBAL = this;
-  var root_1 = $__require('d9');
+  var root_1 = $__require('da');
   var Symbol = root_1.root.Symbol;
   exports.$$rxSubscriber = (typeof Symbol === 'function' && typeof Symbol.for === 'function') ? Symbol.for('rxSubscriber') : '@@rxSubscriber';
   return module.exports;
 });
 
-$__System.registerDynamic("e2", ["d6", "d7"], true, function($__require, exports, module) {
+$__System.registerDynamic("e3", ["d7", "d8"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
       global = this,
       GLOBAL = this;
-  var Subscriber_1 = $__require('d6');
-  var rxSubscriber_1 = $__require('d7');
+  var Subscriber_1 = $__require('d7');
+  var rxSubscriber_1 = $__require('d8');
   function toSubscriber(nextOrObserver, error, complete) {
     if (nextOrObserver) {
       if (nextOrObserver instanceof Subscriber_1.Subscriber) {
@@ -25855,7 +25898,7 @@ $__System.registerDynamic("e2", ["d6", "d7"], true, function($__require, exports
   return module.exports;
 });
 
-$__System.registerDynamic("e3", [], true, function($__require, exports, module) {
+$__System.registerDynamic("e4", [], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -25879,25 +25922,25 @@ $__System.registerDynamic("e3", [], true, function($__require, exports, module) 
   return module.exports;
 });
 
-$__System.registerDynamic("e4", ["e3"], true, function($__require, exports, module) {
+$__System.registerDynamic("e5", ["e4"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
       global = this,
       GLOBAL = this;
-  module.exports = $__require('e3')(global || window || this);
+  module.exports = $__require('e4')(global || window || this);
   return module.exports;
 });
 
-$__System.registerDynamic("d5", ["d9", "e2", "e4"], true, function($__require, exports, module) {
+$__System.registerDynamic("d6", ["da", "e3", "e5"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
       global = this,
       GLOBAL = this;
-  var root_1 = $__require('d9');
-  var toSubscriber_1 = $__require('e2');
-  var $$observable = $__require('e4');
+  var root_1 = $__require('da');
+  var toSubscriber_1 = $__require('e3');
+  var $$observable = $__require('e5');
   var Observable = (function() {
     function Observable(subscribe) {
       this._isScalar = false;
@@ -25969,7 +26012,7 @@ $__System.registerDynamic("d5", ["d9", "e2", "e4"], true, function($__require, e
   return module.exports;
 });
 
-$__System.registerDynamic("7", ["6", "2e", "d4", "d8", "da", "d5"], true, function($__require, exports, module) {
+$__System.registerDynamic("7", ["6", "2e", "d5", "d9", "db", "d6"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -25989,12 +26032,12 @@ $__System.registerDynamic("7", ["6", "2e", "d4", "d8", "da", "d5"], true, functi
   var promise_1 = $__require('2e');
   exports.PromiseWrapper = promise_1.PromiseWrapper;
   exports.PromiseCompleter = promise_1.PromiseCompleter;
-  var Subject_1 = $__require('d4');
-  var PromiseObservable_1 = $__require('d8');
-  var toPromise_1 = $__require('da');
-  var Observable_1 = $__require('d5');
+  var Subject_1 = $__require('d5');
+  var PromiseObservable_1 = $__require('d9');
+  var toPromise_1 = $__require('db');
+  var Observable_1 = $__require('d6');
   exports.Observable = Observable_1.Observable;
-  var Subject_2 = $__require('d4');
+  var Subject_2 = $__require('d5');
   exports.Subject = Subject_2.Subject;
   var TimerWrapper = (function() {
     function TimerWrapper() {}
@@ -26174,7 +26217,7 @@ $__System.registerDynamic("a5", [], true, function($__require, exports, module) 
   return module.exports;
 });
 
-$__System.registerDynamic("e5", ["6"], true, function($__require, exports, module) {
+$__System.registerDynamic("e6", ["6"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -26219,14 +26262,14 @@ $__System.registerDynamic("e5", ["6"], true, function($__require, exports, modul
   return module.exports;
 });
 
-$__System.registerDynamic("b4", ["e5"], true, function($__require, exports, module) {
+$__System.registerDynamic("b4", ["e6"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
       global = this,
       GLOBAL = this;
   "use strict";
-  var impl = $__require('e5');
+  var impl = $__require('e6');
   exports.wtfEnabled = impl.detectWTF();
   function noopScope(arg0, arg1) {
     return null;
@@ -26548,7 +26591,7 @@ $__System.registerDynamic("b5", ["12"], true, function($__require, exports, modu
   return module.exports;
 });
 
-$__System.registerDynamic("e6", ["6", "12", "e", "40"], true, function($__require, exports, module) {
+$__System.registerDynamic("e7", ["6", "12", "e", "40"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -26616,7 +26659,7 @@ $__System.registerDynamic("e6", ["6", "12", "e", "40"], true, function($__requir
   return module.exports;
 });
 
-$__System.registerDynamic("e7", ["12", "e", "6"], true, function($__require, exports, module) {
+$__System.registerDynamic("e8", ["12", "e", "6"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -27132,7 +27175,7 @@ $__System.registerDynamic("e7", ["12", "e", "6"], true, function($__require, exp
   return module.exports;
 });
 
-$__System.registerDynamic("e8", ["6", "12", "e", "40"], true, function($__require, exports, module) {
+$__System.registerDynamic("e9", ["6", "12", "e", "40"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -27200,7 +27243,7 @@ $__System.registerDynamic("e8", ["6", "12", "e", "40"], true, function($__requir
   return module.exports;
 });
 
-$__System.registerDynamic("e9", ["e", "6", "12"], true, function($__require, exports, module) {
+$__System.registerDynamic("ea", ["e", "6", "12"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -27523,7 +27566,7 @@ $__System.registerDynamic("7b", ["6"], true, function($__require, exports, modul
   return module.exports;
 });
 
-$__System.registerDynamic("cd", [], true, function($__require, exports, module) {
+$__System.registerDynamic("ce", [], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -27538,7 +27581,7 @@ $__System.registerDynamic("cd", [], true, function($__require, exports, module) 
   return module.exports;
 });
 
-$__System.registerDynamic("ea", ["6", "e"], true, function($__require, exports, module) {
+$__System.registerDynamic("eb", ["6", "e"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -27601,22 +27644,22 @@ $__System.registerDynamic("ea", ["6", "e"], true, function($__require, exports, 
   return module.exports;
 });
 
-$__System.registerDynamic("78", ["e6", "e7", "e8", "e9", "6", "7b", "cd", "ea"], true, function($__require, exports, module) {
+$__System.registerDynamic("78", ["e7", "e8", "e9", "ea", "6", "7b", "ce", "eb"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
       global = this,
       GLOBAL = this;
   "use strict";
-  var iterable_differs_1 = $__require('e6');
-  var default_iterable_differ_1 = $__require('e7');
-  var keyvalue_differs_1 = $__require('e8');
-  var default_keyvalue_differ_1 = $__require('e9');
+  var iterable_differs_1 = $__require('e7');
+  var default_iterable_differ_1 = $__require('e8');
+  var keyvalue_differs_1 = $__require('e9');
+  var default_keyvalue_differ_1 = $__require('ea');
   var lang_1 = $__require('6');
-  var default_keyvalue_differ_2 = $__require('e9');
+  var default_keyvalue_differ_2 = $__require('ea');
   exports.DefaultKeyValueDifferFactory = default_keyvalue_differ_2.DefaultKeyValueDifferFactory;
   exports.KeyValueChangeRecord = default_keyvalue_differ_2.KeyValueChangeRecord;
-  var default_iterable_differ_2 = $__require('e7');
+  var default_iterable_differ_2 = $__require('e8');
   exports.DefaultIterableDifferFactory = default_iterable_differ_2.DefaultIterableDifferFactory;
   exports.CollectionChangeRecord = default_iterable_differ_2.CollectionChangeRecord;
   var constants_1 = $__require('7b');
@@ -27625,13 +27668,13 @@ $__System.registerDynamic("78", ["e6", "e7", "e8", "e9", "6", "7b", "cd", "ea"],
   exports.ChangeDetectorState = constants_1.ChangeDetectorState;
   exports.CHANGE_DETECTOR_STATE_VALUES = constants_1.CHANGE_DETECTOR_STATE_VALUES;
   exports.isDefaultChangeDetectionStrategy = constants_1.isDefaultChangeDetectionStrategy;
-  var change_detector_ref_1 = $__require('cd');
+  var change_detector_ref_1 = $__require('ce');
   exports.ChangeDetectorRef = change_detector_ref_1.ChangeDetectorRef;
-  var iterable_differs_2 = $__require('e6');
+  var iterable_differs_2 = $__require('e7');
   exports.IterableDiffers = iterable_differs_2.IterableDiffers;
-  var keyvalue_differs_2 = $__require('e8');
+  var keyvalue_differs_2 = $__require('e9');
   exports.KeyValueDiffers = keyvalue_differs_2.KeyValueDiffers;
-  var change_detection_util_1 = $__require('ea');
+  var change_detection_util_1 = $__require('eb');
   exports.WrappedValue = change_detection_util_1.WrappedValue;
   exports.ValueUnwrapper = change_detection_util_1.ValueUnwrapper;
   exports.SimpleChange = change_detection_util_1.SimpleChange;
@@ -27717,7 +27760,7 @@ $__System.registerDynamic("a7", ["12"], true, function($__require, exports, modu
   return module.exports;
 });
 
-$__System.registerDynamic("c5", ["6"], true, function($__require, exports, module) {
+$__System.registerDynamic("c6", ["6"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -27887,7 +27930,7 @@ $__System.registerDynamic("c5", ["6"], true, function($__require, exports, modul
   return module.exports;
 });
 
-$__System.registerDynamic("b9", ["a0", "c5"], true, function($__require, exports, module) {
+$__System.registerDynamic("b9", ["a0", "c6"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -27895,7 +27938,7 @@ $__System.registerDynamic("b9", ["a0", "c5"], true, function($__require, exports
       GLOBAL = this;
   "use strict";
   var metadata_1 = $__require('a0');
-  var decorators_1 = $__require('c5');
+  var decorators_1 = $__require('c6');
   exports.Inject = decorators_1.makeParamDecorator(metadata_1.InjectMetadata);
   exports.Optional = decorators_1.makeParamDecorator(metadata_1.OptionalMetadata);
   exports.Injectable = decorators_1.makeDecorator(metadata_1.InjectableMetadata);
@@ -27928,7 +27971,7 @@ $__System.registerDynamic("a9", ["6", "12"], true, function($__require, exports,
   return module.exports;
 });
 
-$__System.registerDynamic("eb", ["e", "9f", "9b", "6", "12", "ec", "a0", "a9"], true, function($__require, exports, module) {
+$__System.registerDynamic("ec", ["e", "9f", "9b", "6", "12", "ed", "a0", "a9"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -27940,7 +27983,7 @@ $__System.registerDynamic("eb", ["e", "9f", "9b", "6", "12", "ec", "a0", "a9"], 
   var reflective_exceptions_1 = $__require('9b');
   var lang_1 = $__require('6');
   var exceptions_1 = $__require('12');
-  var reflective_key_1 = $__require('ec');
+  var reflective_key_1 = $__require('ed');
   var metadata_1 = $__require('a0');
   var injector_1 = $__require('a9');
   var __unused;
@@ -28799,7 +28842,7 @@ $__System.registerDynamic("9e", ["6", "12"], true, function($__require, exports,
   return module.exports;
 });
 
-$__System.registerDynamic("9f", ["6", "e", "93", "ec", "a0", "9b", "ed", "9e"], true, function($__require, exports, module) {
+$__System.registerDynamic("9f", ["6", "e", "93", "ed", "a0", "9b", "ee", "9e"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -28809,10 +28852,10 @@ $__System.registerDynamic("9f", ["6", "e", "93", "ec", "a0", "9b", "ed", "9e"], 
   var lang_1 = $__require('6');
   var collection_1 = $__require('e');
   var reflection_1 = $__require('93');
-  var reflective_key_1 = $__require('ec');
+  var reflective_key_1 = $__require('ed');
   var metadata_1 = $__require('a0');
   var reflective_exceptions_1 = $__require('9b');
-  var forward_ref_1 = $__require('ed');
+  var forward_ref_1 = $__require('ee');
   var provider_1 = $__require('9e');
   var ReflectiveDependency = (function() {
     function ReflectiveDependency(key, optional, lowerBoundVisibility, upperBoundVisibility, properties) {
@@ -29002,7 +29045,7 @@ $__System.registerDynamic("9f", ["6", "e", "93", "ec", "a0", "9b", "ed", "9e"], 
   return module.exports;
 });
 
-$__System.registerDynamic("ed", ["6"], true, function($__require, exports, module) {
+$__System.registerDynamic("ee", ["6"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -29029,7 +29072,7 @@ $__System.registerDynamic("ed", ["6"], true, function($__require, exports, modul
   return module.exports;
 });
 
-$__System.registerDynamic("ec", ["6", "12", "ed"], true, function($__require, exports, module) {
+$__System.registerDynamic("ed", ["6", "12", "ee"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -29038,7 +29081,7 @@ $__System.registerDynamic("ec", ["6", "12", "ed"], true, function($__require, ex
   "use strict";
   var lang_1 = $__require('6');
   var exceptions_1 = $__require('12');
-  var forward_ref_1 = $__require('ed');
+  var forward_ref_1 = $__require('ee');
   var ReflectiveKey = (function() {
     function ReflectiveKey(token, id) {
       this.token = token;
@@ -29266,7 +29309,7 @@ $__System.registerDynamic("9b", ["e", "6", "12"], true, function($__require, exp
   return module.exports;
 });
 
-$__System.registerDynamic("ee", ["6"], true, function($__require, exports, module) {
+$__System.registerDynamic("ef", ["6"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -29304,7 +29347,7 @@ $__System.registerDynamic("ee", ["6"], true, function($__require, exports, modul
   return module.exports;
 });
 
-$__System.registerDynamic("40", ["a0", "b9", "ed", "a9", "eb", "9e", "9f", "ec", "9b", "ee"], true, function($__require, exports, module) {
+$__System.registerDynamic("40", ["a0", "b9", "ee", "a9", "ec", "9e", "9f", "ed", "9b", "ef"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -29325,12 +29368,12 @@ $__System.registerDynamic("40", ["a0", "b9", "ed", "a9", "eb", "9e", "9f", "ec",
   exports.SkipSelfMetadata = metadata_1.SkipSelfMetadata;
   exports.DependencyMetadata = metadata_1.DependencyMetadata;
   __export($__require('b9'));
-  var forward_ref_1 = $__require('ed');
+  var forward_ref_1 = $__require('ee');
   exports.forwardRef = forward_ref_1.forwardRef;
   exports.resolveForwardRef = forward_ref_1.resolveForwardRef;
   var injector_1 = $__require('a9');
   exports.Injector = injector_1.Injector;
-  var reflective_injector_1 = $__require('eb');
+  var reflective_injector_1 = $__require('ec');
   exports.ReflectiveInjector = reflective_injector_1.ReflectiveInjector;
   var provider_1 = $__require('9e');
   exports.Binding = provider_1.Binding;
@@ -29341,7 +29384,7 @@ $__System.registerDynamic("40", ["a0", "b9", "ed", "a9", "eb", "9e", "9f", "ec",
   var reflective_provider_1 = $__require('9f');
   exports.ResolvedReflectiveFactory = reflective_provider_1.ResolvedReflectiveFactory;
   exports.ReflectiveDependency = reflective_provider_1.ReflectiveDependency;
-  var reflective_key_1 = $__require('ec');
+  var reflective_key_1 = $__require('ed');
   exports.ReflectiveKey = reflective_key_1.ReflectiveKey;
   var reflective_exceptions_1 = $__require('9b');
   exports.NoProviderError = reflective_exceptions_1.NoProviderError;
@@ -29351,7 +29394,7 @@ $__System.registerDynamic("40", ["a0", "b9", "ed", "a9", "eb", "9e", "9f", "ec",
   exports.InvalidProviderError = reflective_exceptions_1.InvalidProviderError;
   exports.NoAnnotationError = reflective_exceptions_1.NoAnnotationError;
   exports.OutOfBoundsError = reflective_exceptions_1.OutOfBoundsError;
-  var opaque_token_1 = $__require('ee');
+  var opaque_token_1 = $__require('ef');
   exports.OpaqueToken = opaque_token_1.OpaqueToken;
   return module.exports;
 });
@@ -30013,7 +30056,7 @@ $__System.registerDynamic("bc", ["40", "6", "12", "7", "93", "66"], true, functi
   return module.exports;
 });
 
-$__System.registerDynamic("ce", ["40", "bc", "6"], true, function($__require, exports, module) {
+$__System.registerDynamic("cf", ["40", "bc", "6"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -30088,7 +30131,7 @@ $__System.registerDynamic("ce", ["40", "bc", "6"], true, function($__require, ex
   return module.exports;
 });
 
-$__System.registerDynamic("ef", ["6", "40", "a1", "5c", "78", "8b", "bc", "ce"], true, function($__require, exports, module) {
+$__System.registerDynamic("f0", ["6", "40", "a1", "5c", "78", "8b", "bc", "cf"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -30102,7 +30145,7 @@ $__System.registerDynamic("ef", ["6", "40", "a1", "5c", "78", "8b", "bc", "ce"],
   var change_detection_1 = $__require('78');
   var view_utils_1 = $__require('8b');
   var component_resolver_1 = $__require('bc');
-  var dynamic_component_loader_1 = $__require('ce');
+  var dynamic_component_loader_1 = $__require('cf');
   var __unused;
   exports.APPLICATION_COMMON_PROVIDERS = lang_1.CONST_EXPR([application_ref_1.APPLICATION_CORE_PROVIDERS, new di_1.Provider(component_resolver_1.ComponentResolver, {useClass: component_resolver_1.ReflectorComponentResolver}), application_tokens_1.APP_ID_RANDOM_PROVIDER, view_utils_1.ViewUtils, new di_1.Provider(change_detection_1.IterableDiffers, {useValue: change_detection_1.defaultIterableDiffers}), new di_1.Provider(change_detection_1.KeyValueDiffers, {useValue: change_detection_1.defaultKeyValueDiffers}), new di_1.Provider(dynamic_component_loader_1.DynamicComponentLoader, {useClass: dynamic_component_loader_1.DynamicComponentLoader_})]);
   return module.exports;
@@ -30123,7 +30166,7 @@ $__System.registerDynamic("94", [], true, function($__require, exports, module) 
   return module.exports;
 });
 
-$__System.registerDynamic("f0", ["6", "12", "e", "94"], true, function($__require, exports, module) {
+$__System.registerDynamic("f1", ["6", "12", "e", "94"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -30280,7 +30323,7 @@ $__System.registerDynamic("f0", ["6", "12", "e", "94"], true, function($__requir
   return module.exports;
 });
 
-$__System.registerDynamic("f1", [], true, function($__require, exports, module) {
+$__System.registerDynamic("f2", [], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -31279,7 +31322,7 @@ $__System.registerDynamic("e", ["6"], true, function($__require, exports, module
   return module.exports;
 });
 
-$__System.registerDynamic("c9", ["6", "f1", "e"], true, function($__require, exports, module) {
+$__System.registerDynamic("ca", ["6", "f2", "e"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -31287,7 +31330,7 @@ $__System.registerDynamic("c9", ["6", "f1", "e"], true, function($__require, exp
       GLOBAL = this;
   "use strict";
   var lang_1 = $__require('6');
-  var base_wrapped_exception_1 = $__require('f1');
+  var base_wrapped_exception_1 = $__require('f2');
   var collection_1 = $__require('e');
   var _ArrayLogger = (function() {
     function _ArrayLogger() {
@@ -31402,7 +31445,7 @@ $__System.registerDynamic("c9", ["6", "f1", "e"], true, function($__require, exp
   return module.exports;
 });
 
-$__System.registerDynamic("12", ["f1", "c9"], true, function($__require, exports, module) {
+$__System.registerDynamic("12", ["f2", "ca"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -31418,9 +31461,9 @@ $__System.registerDynamic("12", ["f1", "c9"], true, function($__require, exports
     }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
   };
-  var base_wrapped_exception_1 = $__require('f1');
-  var exception_handler_1 = $__require('c9');
-  var exception_handler_2 = $__require('c9');
+  var base_wrapped_exception_1 = $__require('f2');
+  var exception_handler_1 = $__require('ca');
+  var exception_handler_2 = $__require('ca');
   exports.ExceptionHandler = exception_handler_2.ExceptionHandler;
   var BaseException = (function(_super) {
     __extends(BaseException, _super);
@@ -31701,15 +31744,15 @@ $__System.registerDynamic("bf", ["6", "12"], true, function($__require, exports,
   return module.exports;
 });
 
-$__System.registerDynamic("93", ["f0", "bf"], true, function($__require, exports, module) {
+$__System.registerDynamic("93", ["f1", "bf"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
       global = this,
       GLOBAL = this;
   "use strict";
-  var reflector_1 = $__require('f0');
-  var reflector_2 = $__require('f0');
+  var reflector_1 = $__require('f1');
+  var reflector_2 = $__require('f1');
   exports.Reflector = reflector_2.Reflector;
   exports.ReflectionInfo = reflector_2.ReflectionInfo;
   var reflection_capabilities_1 = $__require('bf');
@@ -31717,7 +31760,7 @@ $__System.registerDynamic("93", ["f0", "bf"], true, function($__require, exports
   return module.exports;
 });
 
-$__System.registerDynamic("8", ["54", "c6", "c7", "40", "c8", "6", "5c", "a1", "ca", "cb", "a8", "56", "62", "c4", "9d", "cf", "ef", "93"], true, function($__require, exports, module) {
+$__System.registerDynamic("8", ["54", "c7", "c8", "40", "c9", "6", "5c", "a1", "cb", "cc", "a8", "56", "62", "c5", "9d", "d0", "f0", "93"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -31730,10 +31773,10 @@ $__System.registerDynamic("8", ["54", "c6", "c7", "40", "c8", "6", "5c", "a1", "
         exports[p] = m[p];
   }
   __export($__require('54'));
-  __export($__require('c6'));
   __export($__require('c7'));
-  __export($__require('40'));
   __export($__require('c8'));
+  __export($__require('40'));
+  __export($__require('c9'));
   var lang_1 = $__require('6');
   exports.enableProdMode = lang_1.enableProdMode;
   var application_ref_1 = $__require('5c');
@@ -31751,35 +31794,35 @@ $__System.registerDynamic("8", ["54", "c6", "c7", "40", "c8", "6", "5c", "a1", "
   exports.APP_INITIALIZER = application_tokens_1.APP_INITIALIZER;
   exports.PACKAGE_ROOT_URL = application_tokens_1.PACKAGE_ROOT_URL;
   exports.PLATFORM_INITIALIZER = application_tokens_1.PLATFORM_INITIALIZER;
-  __export($__require('ca'));
   __export($__require('cb'));
+  __export($__require('cc'));
   __export($__require('a8'));
   var debug_node_1 = $__require('56');
   exports.DebugElement = debug_node_1.DebugElement;
   exports.DebugNode = debug_node_1.DebugNode;
   exports.asNativeElements = debug_node_1.asNativeElements;
   __export($__require('62'));
-  __export($__require('c4'));
+  __export($__require('c5'));
   __export($__require('9d'));
-  __export($__require('cf'));
-  __export($__require('ef'));
+  __export($__require('d0'));
+  __export($__require('f0'));
   __export($__require('93'));
   return module.exports;
 });
 
-$__System.register("c2", [], function(exports_1, context_1) {
+$__System.register("c3", [], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var metadata;
     return {
         setters:[],
         execute: function() {
-            exports_1("metadata", metadata = { "library": { "templates": "hey!", "patterns": { "other": "yo", "name": "patterns", "title": "Patterns", "path": "/patterns", "items": { "banners": { "name": "banners", "title": "Banners", "path": "/patterns/banners", "items": { "banner1": { "name": "banner1", "title": "Banner 1", "path": "/patterns/banners/banner1", "html": "test 1!!!!", "md": "", "txt": "" }, "banner2": { "name": "banner2", "title": "Banner 2", "path": "/patterns/banners/banner2", "html": "test 2!!!!" }, "config": { "name": "config", "title": "Config", "path": "/patterns/banners/config" } } }, "columns": { "name": "columns", "title": "Columns", "path": "/patterns/columns" }, "Feedback": { "name": "Feedback", "title": "Feedback", "path": "/patterns/Feedback" }, "icons": { "name": "icons", "title": "Icons", "path": "/patterns/icons", "js": "" }, "style-guide": { "name": "style-guide", "title": "Style Guide", "path": "/patterns/style-guide", "items": { "colors": { "name": "colors", "title": "Colors", "path": "/patterns/style-guide/colors", "items": { "primary": { "name": "primary", "title": "Primary", "path": "/patterns/style-guide/colors/primary", "items": { "primary-dark": { "name": "primary-dark", "title": "Primary Dark", "path": "/patterns/style-guide/colors/primary/primary-dark", "Hex": "#5CA156", "RGB": "92 161 86" }, "primary-darker": { "name": "primary-darker", "title": "Primary Darker", "path": "/patterns/style-guide/colors/primary/primary-darker", "Hex": "#528F4D", "RGB": "82 143 77" }, "primary": { "name": "primary", "title": "Primary", "path": "/patterns/style-guide/colors/primary/primary", "Hex": "#66B360", "RGB": "102 179 96" } } }, "secondary": { "name": "secondary", "title": "Secondary", "path": "/patterns/style-guide/colors/secondary", "items": { "background-dark": { "name": "background-dark", "title": "Background Dark", "path": "/patterns/style-guide/colors/secondary/background-dark", "Hex": "#000000", "RGB": "0 0 0" }, "background-light": { "name": "background-light", "title": "Background Light", "path": "/patterns/style-guide/colors/secondary/background-light", "Hex": "#DDDDDD", "RGB": "221 221 221" }, "background-lighter": { "name": "background-lighter", "title": "Background Lighter", "path": "/patterns/style-guide/colors/secondary/background-lighter", "Hex": "#EEEEEE", "RGB": "238 238 238" } } }, "ternary": { "name": "ternary", "title": "Ternary", "path": "/patterns/style-guide/colors/ternary", "items": { "bla": { "name": "bla", "title": "Bla", "path": "/patterns/style-guide/colors/ternary/bla", "Hex": 12345, "RGB": "bla" } } } } }, "icons": { "name": "icons", "title": "Icons", "path": "/patterns/style-guide/icons", "items": { "account": { "name": "account", "title": "Account", "path": "/patterns/style-guide/icons/account" } } } } } } }, "sorters": { "name": "sorters", "title": "Sorters", "path": "/sorters", "banners": ["banner2", "banner1"] }, "test": { "name": "test", "title": "Test", "path": "/test", "html": "a string of content!!!\r\n" } }, "site": { "pages": { "name": "pages", "title": "Pages", "path": "/pages", "index": { "name": "index", "title": "Index", "path": "/pages/index", "html": "" }, "info": { "name": "info", "title": "Info", "path": "/pages/info", "html": "" }, "patterns": { "name": "patterns", "title": "Patterns", "path": "/pages/patterns", "html": "" }, "readme": { "name": "readme", "title": "Readme", "path": "/pages/readme", "html": "<main-template>\r\n    <markdown>\r\n        This is the readme for the Pattern Library project\r\n        \r\n        \r\n        Repeaters\r\n        What does a repeater repeat?\r\n        \r\n            There are 4 ways to use a repeater.\r\n            -by specifying it on the repeater\r\n                angular 2 makes javascript variables available to your html. \r\n                in this case, we are repeating on the *items* javascript object\r\n                <example-repeater (on)=\"items\"></example-repeater>\r\n                or we can repeat on an object referenced by name from the library.\r\n                <example-repeater example-repeater (on)=\"patterns.example\"></example-repeater>\r\n            -by specifying what it should repeat in a configuration file\r\n            -by context. it will use the items property of the repeater it is inside of\r\n            \r\n        The Pages folder defines site structure of your pattern library\r\n        \r\n        \r\n        \r\n        \r\n        \r\n    </markdown>\r\n</main-template>" } }, "repeaters": { "name": "repeaters", "title": "Repeaters", "path": "/repeaters", "colorCards": { "name": "colorCards", "title": "Color Cards", "path": "/repeaters/colorCards", "html": "<div class=\"color-card\">\r\n\t<div class=\"brand {{name}}\"></div>\r\n\t<p>Hex: {{Hex}}</p>\r\n\t<p>RGB: {{RGB}}</p>\r\n\t<p>SCSS: $brand-{{name}}</p>\r\n</div>\r\n" }, "colors": { "name": "colors", "title": "Colors", "path": "/repeaters/colors", "html": "<section class=\"{{name}}-colors\">\r\n\t<h3>{{title}} Colors</h3>\r\n\t<hr>\r\n\t<div class=\"color-wrapper\">\r\n\t\t<template repeater=\"colorCards\"></template>\r\n\t</div>\r\n</section>\r\n" }, "icons": { "name": "icons", "title": "Icons", "path": "/repeaters/icons", "html": "<div class=\"icon-preview\">\r\n\t<h4>{{title}}</h4>\r\n\t<i class=\"exc-icon-{{name}}\"></i>\r\n\t<pre><code><i class=\"exc-icon-{{name}}\"></i></code></pre>\r\n</div>\r\n" }, "navRail": { "name": "navRail", "title": "Nav Rail", "path": "/repeaters/navRail", "html": "<li><a href=\"#{{name}}\">{{title}}</a></li>\r\n" }, "pattern": { "name": "pattern", "title": "Pattern", "path": "/repeaters/pattern", "html": "<p>Pattern example - Title: {{title}}, Name: {{name}}</p>\n" } }, "templates": { "name": "templates", "title": "Templates", "path": "/templates", "main": { "name": "main", "title": "Main", "path": "/templates/main", "html": "<div>\r\n    <div>\r\n        banner content\r\n    </div>\r\n    <content></content>\r\n</div>" }, "mainMasterPage": { "name": "mainMasterPage", "title": "Main Master Page", "path": "/templates/mainMasterPage", "html": "<div>\r\n  <banner></banner>\r\n  <content selectror=\"\"></content>\r\n</div>\r\n" }, "patternDisplay": { "name": "patternDisplay", "title": "Pattern Display", "path": "/templates/patternDisplay", "html": "<template name=\"pattern-area\">\r\n    <markdown content=\"library.patterns/{{url.hash}}\"></markdown>\r\n    <repeater name=\"pattern\"></repeater>\r\n</template>" }, "socialMediaBtn": { "name": "socialMediaBtn", "title": "Social Media Btn", "path": "/templates/socialMediaBtn", "html": "<div>an isolated chunk of functionality</div>\r\n" } } } });
+            exports_1("metadata", metadata = { "library": { "templates": "hey!", "patterns": { "other": "yo", "name": "patterns", "title": "Patterns", "path": "/patterns", "items": { "banners": { "name": "banners", "title": "Banners", "path": "/patterns/banners", "items": { "banner1": { "name": "banner1", "title": "Banner 1", "path": "/patterns/banners/banner1", "html": "test 1!!!!", "md": "", "txt": "" }, "banner2": { "name": "banner2", "title": "Banner 2", "path": "/patterns/banners/banner2", "html": "test 2!!!!" }, "config": { "name": "config", "title": "Config", "path": "/patterns/banners/config" } } }, "columns": { "name": "columns", "title": "Columns", "path": "/patterns/columns" }, "Feedback": { "name": "Feedback", "title": "Feedback", "path": "/patterns/Feedback" }, "icons": { "name": "icons", "title": "Icons", "path": "/patterns/icons", "js": "" }, "style-guide": { "name": "style-guide", "title": "Style Guide", "path": "/patterns/style-guide", "items": { "colors": { "name": "colors", "title": "Colors", "path": "/patterns/style-guide/colors", "items": { "primary": { "name": "primary", "title": "Primary", "path": "/patterns/style-guide/colors/primary", "items": { "primary-dark": { "name": "primary-dark", "title": "Primary Dark", "path": "/patterns/style-guide/colors/primary/primary-dark", "Hex": "#5CA156", "RGB": "92 161 86" }, "primary-darker": { "name": "primary-darker", "title": "Primary Darker", "path": "/patterns/style-guide/colors/primary/primary-darker", "Hex": "#528F4D", "RGB": "82 143 77" }, "primary": { "name": "primary", "title": "Primary", "path": "/patterns/style-guide/colors/primary/primary", "Hex": "#66B360", "RGB": "102 179 96" } } }, "secondary": { "name": "secondary", "title": "Secondary", "path": "/patterns/style-guide/colors/secondary", "items": { "background-dark": { "name": "background-dark", "title": "Background Dark", "path": "/patterns/style-guide/colors/secondary/background-dark", "Hex": "#000000", "RGB": "0 0 0" }, "background-light": { "name": "background-light", "title": "Background Light", "path": "/patterns/style-guide/colors/secondary/background-light", "Hex": "#DDDDDD", "RGB": "221 221 221" }, "background-lighter": { "name": "background-lighter", "title": "Background Lighter", "path": "/patterns/style-guide/colors/secondary/background-lighter", "Hex": "#EEEEEE", "RGB": "238 238 238" } } }, "ternary": { "name": "ternary", "title": "Ternary", "path": "/patterns/style-guide/colors/ternary", "items": { "bla": { "name": "bla", "title": "Bla", "path": "/patterns/style-guide/colors/ternary/bla", "Hex": 12345, "RGB": "bla" } } } } }, "icons": { "name": "icons", "title": "Icons", "path": "/patterns/style-guide/icons", "items": { "account": { "name": "account", "title": "Account", "path": "/patterns/style-guide/icons/account" } } } } } } }, "sorters": { "name": "sorters", "title": "Sorters", "path": "/sorters", "banners": ["banner2", "banner1"] }, "test": { "name": "test", "title": "Test", "path": "/test", "html": "a string of content!!!\r\n" } }, "site": { "pages": { "name": "pages", "title": "Pages", "path": "/pages", "index": { "name": "index", "title": "Index", "path": "/pages/index", "html": "" }, "info": { "name": "info", "title": "Info", "path": "/pages/info", "html": "" }, "patterns": { "name": "patterns", "title": "Patterns", "path": "/pages/patterns", "html": "" }, "readme": { "name": "readme", "title": "Readme", "path": "/pages/readme", "html": "<main-template>\r\n    <markdown>\r\n        This is the readme for the Pattern Library project\r\n        \r\n        \r\n        Repeaters\r\n        What does a repeater repeat?\r\n        \r\n            There are 4 ways to use a repeater.\r\n            -by specifying it on the repeater\r\n                angular 2 makes javascript variables available to your html. \r\n                in this case, we are repeating on the *items* javascript object\r\n                <example-repeater (on)=\"items\"></example-repeater>\r\n                or we can repeat on an object referenced by name from the library.\r\n                <example-repeater example-repeater (on)=\"patterns.example\"></example-repeater>\r\n            -by specifying what it should repeat in a configuration file\r\n            -by context. it will use the items property of the repeater it is inside of\r\n            \r\n        The Pages folder defines site structure of your pattern library\r\n        \r\n        \r\n        \r\n        \r\n        \r\n    </markdown>\r\n</main-template>" } }, "repeaters": { "name": "repeaters", "title": "Repeaters", "path": "/repeaters", "colorCards": { "name": "colorCards", "title": "Color Cards", "path": "/repeaters/colorCards", "html": "<div class=\"color-card\">\r\n\t<div class=\"brand {{name}}\"></div>\r\n\t<p>Hex: {{Hex}}</p>\r\n\t<p>RGB: {{RGB}}</p>\r\n\t<p>SCSS: $brand-{{name}}</p>\r\n</div>\r\n" }, "colors": { "name": "colors", "title": "Colors", "path": "/repeaters/colors", "html": "<section class=\"{{name}}-colors\">\r\n\t<h3>{{title}} Colors</h3>\r\n\t<hr>\r\n\t<div class=\"color-wrapper\">\r\n\t\t<template repeater=\"colorCards\"></template>\r\n\t</div>\r\n</section>\r\n" }, "icons": { "name": "icons", "title": "Icons", "path": "/repeaters/icons", "html": "<div class=\"icon-preview\">\r\n\t<h4>{{title}}</h4>\r\n\t<i class=\"exc-icon-{{name}}\"></i>\r\n\t<pre><code><i class=\"exc-icon-{{name}}\"></i></code></pre>\r\n</div>\r\n" }, "navRail": { "name": "navRail", "title": "Nav Rail", "path": "/repeaters/navRail", "html": "<li><a href=\"#{{name}}\">{{title}}</a></li>\r\n" }, "pattern": { "name": "pattern", "title": "Pattern", "path": "/repeaters/pattern", "html": "<p>Pattern example - Title: {{title}}, Name: {{name}}</p>\n" } }, "templates": { "name": "templates", "title": "Templates", "path": "/templates", "main": { "name": "main", "title": "Main", "path": "/templates/main", "html": "<div>\r\n    <div>\r\n        banner content\r\n    </div>\r\n    <ng-content></ng-content>\r\n    <div mainTemplate></div>\r\n</div>" }, "mainMasterPage": { "name": "mainMasterPage", "title": "Main Master Page", "path": "/templates/mainMasterPage", "html": "<div>\r\n  <banner></banner>\r\n  <content selectror=\"\"></content>\r\n</div>\r\n" }, "patternDisplay": { "name": "patternDisplay", "title": "Pattern Display", "path": "/templates/patternDisplay", "html": "<template name=\"pattern-area\">\r\n    <markdown content=\"library.patterns/{{url.hash}}\"></markdown>\r\n    <repeater name=\"pattern\"></repeater>\r\n</template>" }, "socialMediaBtn": { "name": "socialMediaBtn", "title": "Social Media Btn", "path": "/templates/socialMediaBtn", "html": "<div>an isolated chunk of functionality</div>\r\n" } } } });
         }
     }
 });
 
-$__System.register("f2", [], function(exports_1, context_1) {
+$__System.register("f3", [], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var objectPath;
@@ -31811,7 +31854,7 @@ $__System.register("f2", [], function(exports_1, context_1) {
     }
 });
 
-$__System.register("c3", ["8", "c2", "f2"], function(exports_1, context_1) {
+$__System.register("c4", ["8", "c3", "f3"], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -31837,7 +31880,6 @@ $__System.register("c3", ["8", "c2", "f2"], function(exports_1, context_1) {
                 objectPath_1 = objectPath_1_1;
             }],
         execute: function() {
-            console.log("this is metadata", metadata_1.metadata);
             site = metadata_1.metadata.site, library = metadata_1.metadata.library;
             RepeaterManager = (function () {
                 function RepeaterManager(viewContainerRef, componentResolver, changeDetectorRef) {
@@ -31900,7 +31942,7 @@ $__System.register("c3", ["8", "c2", "f2"], function(exports_1, context_1) {
     }
 });
 
-$__System.register("f3", ["8", "c0", "c1", "c3"], function(exports_1, context_1) {
+$__System.register("f4", ["8", "c3", "c4"], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -31912,65 +31954,84 @@ $__System.register("f3", ["8", "c0", "c1", "c3"], function(exports_1, context_1)
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, resource_1, RepeaterComponents_1, RepeaterManager_1;
-    var RootComponent;
+    var core_1, metadata_1, RepeaterManager_1;
+    var TemplateComponents, site, i, template, TemplateComponent, componentName;
     return {
         setters:[
             function (core_1_1) {
                 core_1 = core_1_1;
             },
-            function (resource_1_1) {
-                resource_1 = resource_1_1;
+            function (metadata_1_1) {
+                metadata_1 = metadata_1_1;
+            },
+            function (RepeaterManager_1_1) {
+                RepeaterManager_1 = RepeaterManager_1_1;
+            }],
+        execute: function() {
+            exports_1("TemplateComponents", TemplateComponents = []);
+            site = metadata_1.metadata.site;
+            for (i in site.templates) {
+                if (site.templates[i].html) {
+                    template = site.templates[i];
+                    TemplateComponent = (function () {
+                        function TemplateComponent() {
+                        }
+                        ;
+                        TemplateComponent = __decorate([
+                            core_1.Component({
+                                selector: "[" + i + "Template]",
+                                template: template.html,
+                                directives: [RepeaterManager_1.RepeaterManager]
+                            }), 
+                            __metadata('design:paramtypes', [])
+                        ], TemplateComponent);
+                        return TemplateComponent;
+                    }());
+                    componentName = i + "Template";
+                    Object.defineProperty(TemplateComponent, "name", {
+                        value: componentName
+                    });
+                    TemplateComponents.push(TemplateComponent);
+                }
+            }
+        }
+    }
+});
+
+$__System.register("1", ["2", "4", "8", "be", "c1", "c2", "c4", "f4"], function(exports_1, context_1) {
+    "use strict";
+    var __moduleName = context_1 && context_1.id;
+    var core_1, browser_1, PatternLibraryRoot_1, RepeaterComponents_1, RepeaterManager_1, TemplateComponents_1;
+    var PlatformDirectives, GlobalDirectives, i, directive;
+    return {
+        setters:[
+            function (_1) {},
+            function (_2) {},
+            function (core_1_1) {
+                core_1 = core_1_1;
+            },
+            function (browser_1_1) {
+                browser_1 = browser_1_1;
+            },
+            function (PatternLibraryRoot_1_1) {
+                PatternLibraryRoot_1 = PatternLibraryRoot_1_1;
             },
             function (RepeaterComponents_1_1) {
                 RepeaterComponents_1 = RepeaterComponents_1_1;
             },
             function (RepeaterManager_1_1) {
                 RepeaterManager_1 = RepeaterManager_1_1;
-            }],
-        execute: function() {
-            RootComponent = (function () {
-                function RootComponent() {
-                    this.hey = "llll";
-                }
-                ;
-                RootComponent = __decorate([
-                    core_1.Component({
-                        selector: 'pattern-library',
-                        templateUrl: resource_1.TemplateUrls.PatternLibrary,
-                        directives: [RepeaterManager_1.RepeaterManager].concat(RepeaterComponents_1.RepeaterComponents)
-                    }), 
-                    __metadata('design:paramtypes', [])
-                ], RootComponent);
-                return RootComponent;
-            }());
-            exports_1("default", RootComponent);
-        }
-    }
-});
-
-$__System.register("1", ["2", "4", "be", "f3"], function(exports_1, context_1) {
-    "use strict";
-    var __moduleName = context_1 && context_1.id;
-    var browser_1, PatternLibraryRoot_1;
-    return {
-        setters:[
-            function (_1) {},
-            function (_2) {},
-            function (browser_1_1) {
-                browser_1 = browser_1_1;
             },
-            function (PatternLibraryRoot_1_1) {
-                PatternLibraryRoot_1 = PatternLibraryRoot_1_1;
+            function (TemplateComponents_1_1) {
+                TemplateComponents_1 = TemplateComponents_1_1;
             }],
         execute: function() {
-            // var PlatformDirectives = [],
-            //     GlobalDirectives = [RepeaterManager].concat(RepeaterComponents);
-            // for (var i in GlobalDirectives) {
-            //     var directive = GlobalDirectives[i];
-            //     PlatformDirectives.push(provide(PLATFORM_DIRECTIVES, {useValue: directive, multi: true}));
-            // }
-            browser_1.bootstrap(PatternLibraryRoot_1.default, []); //GlobalDirectives);
+            PlatformDirectives = [], GlobalDirectives = [RepeaterManager_1.RepeaterManager].concat(RepeaterComponents_1.RepeaterComponents).concat(TemplateComponents_1.TemplateComponents);
+            for (i in GlobalDirectives) {
+                directive = GlobalDirectives[i];
+                PlatformDirectives.push(core_1.provide(core_1.PLATFORM_DIRECTIVES, { useValue: directive, multi: true }));
+            }
+            browser_1.bootstrap(PatternLibraryRoot_1.default, PlatformDirectives);
         }
     }
 });
