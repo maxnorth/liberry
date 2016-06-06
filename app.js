@@ -22913,7 +22913,6 @@ $__System.register("c3", ["8", "c0", "c4", "c1"], function(exports_1, context_1)
                 PageComponents_1 = PageComponents_1_1;
             }],
         execute: function() {
-            console.log(router_1.ROUTER_DIRECTIVES);
             RootComponent = (function () {
                 function RootComponent() {
                 }
@@ -22921,7 +22920,7 @@ $__System.register("c3", ["8", "c0", "c4", "c1"], function(exports_1, context_1)
                 RootComponent = __decorate([
                     core_1.Component({
                         selector: 'pattern-library',
-                        templateUrl: resource_1.TemplateUrls.PatternLibrary,
+                        templateUrl: resource_1.TemplateUrls.PatternLibrary
                     }),
                     router_1.RouteConfig(PageComponents_1.PageComponentRoutes), 
                     __metadata('design:paramtypes', [])
@@ -35340,12 +35339,12 @@ $__System.register("1", ["2", "4", "8", "be", "c3", "c5", "c6", "c8", "c4"], fun
                 router_1 = router_1_1;
             }],
         execute: function() {
-            PlatformDirectives = [router_1.ROUTER_PROVIDERS], GlobalDirectives = [RepeaterManager_1.RepeaterManager, RepeaterComponents_1.RepeaterComponents, TemplateComponents_1.TemplateComponents, router_1.ROUTER_DIRECTIVES];
+            PlatformDirectives = [], GlobalDirectives = [RepeaterManager_1.RepeaterManager].concat(RepeaterComponents_1.RepeaterComponents).concat(TemplateComponents_1.TemplateComponents).concat(router_1.ROUTER_DIRECTIVES);
             for (i in GlobalDirectives) {
                 directive = GlobalDirectives[i];
                 PlatformDirectives.push(core_1.provide(core_1.PLATFORM_DIRECTIVES, { useValue: directive, multi: true }));
             }
-            browser_1.bootstrap(PatternLibraryRoot_1.default, PlatformDirectives);
+            browser_1.bootstrap(PatternLibraryRoot_1.default, [router_1.ROUTER_PROVIDERS, PlatformDirectives]); //hey
         }
     }
 });
