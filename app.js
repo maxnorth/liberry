@@ -22825,7 +22825,7 @@ $__System.register("c0", [], function(exports_1, context_1) {
     }
 });
 
-$__System.register("c1", ["8", "c2"], function(exports_1, context_1) {
+$__System.register("c1", ["8", "c2", "c3"], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -22837,12 +22837,15 @@ $__System.register("c1", ["8", "c2"], function(exports_1, context_1) {
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, metadata_1;
-    var PageComponentRoutes, site, i, page, PageComponent, componentName, RouteConfig;
+    var core_1, router_1, metadata_1;
+    var PageComponentRoutes, site, i, page, PageComponent, componentName, RouteConfig, NoArgRouteConfig;
     return {
         setters:[
             function (core_1_1) {
                 core_1 = core_1_1;
+            },
+            function (router_1_1) {
+                router_1 = router_1_1;
             },
             function (metadata_1_1) {
                 metadata_1 = metadata_1_1;
@@ -22854,7 +22857,10 @@ $__System.register("c1", ["8", "c2"], function(exports_1, context_1) {
                 if (site.pages[i].html) {
                     page = site.pages[i];
                     PageComponent = (function () {
-                        function PageComponent() {
+                        function PageComponent(routeParams) {
+                            this.routeParams = routeParams;
+                            this.url = routeParams.params;
+                            //console.log("root", root);
                         }
                         ;
                         PageComponent = __decorate([
@@ -22862,29 +22868,37 @@ $__System.register("c1", ["8", "c2"], function(exports_1, context_1) {
                                 selector: i + "-page",
                                 template: page.html
                             }), 
-                            __metadata('design:paramtypes', [])
+                            __metadata('design:paramtypes', [(typeof (_a = typeof router_1.RouteParams !== 'undefined' && router_1.RouteParams) === 'function' && _a) || Object])
                         ], PageComponent);
                         return PageComponent;
+                        var _a;
                     }());
                     componentName = i + "Page";
                     Object.defineProperty(PageComponent, "name", {
                         value: componentName
                     });
                     RouteConfig = {
+                        path: site.pages[i].path.slice(6, Infinity) + "/:id",
+                        name: site.pages[i].title,
+                        component: PageComponent
+                    };
+                    NoArgRouteConfig = {
                         path: site.pages[i].path.slice(6, Infinity),
                         name: site.pages[i].title,
                         component: PageComponent
                     };
                     if (i === "index")
-                        RouteConfig.useAsDefault = true;
+                        NoArgRouteConfig.useAsDefault = true;
                     PageComponentRoutes.push(RouteConfig);
+                    PageComponentRoutes.push(NoArgRouteConfig);
                 }
+                ;
             }
         }
     }
 });
 
-$__System.register("c3", ["8", "c0", "c4", "c1"], function(exports_1, context_1) {
+$__System.register("c4", ["8", "c0", "c2", "c1"], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -22932,7 +22946,7 @@ $__System.register("c3", ["8", "c0", "c4", "c1"], function(exports_1, context_1)
     }
 });
 
-$__System.register("c5", ["8", "c2", "c6"], function(exports_1, context_1) {
+$__System.register("c5", ["8", "c3", "c6"], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -22944,8 +22958,8 @@ $__System.register("c5", ["8", "c2", "c6"], function(exports_1, context_1) {
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, metadata_1, RepeaterManager_1;
-    var RepeaterComponents, site, i, repeater, RepeaterComponent, componentName;
+    var core_1, metadata_1, objectPath_1;
+    var site, library, SiteComponentManager;
     return {
         setters:[
             function (core_1_1) {
@@ -22954,11 +22968,95 @@ $__System.register("c5", ["8", "c2", "c6"], function(exports_1, context_1) {
             function (metadata_1_1) {
                 metadata_1 = metadata_1_1;
             },
-            function (RepeaterManager_1_1) {
-                RepeaterManager_1 = RepeaterManager_1_1;
+            function (objectPath_1_1) {
+                objectPath_1 = objectPath_1_1;
             }],
         execute: function() {
-            console.log(metadata_1.metadata);
+            site = metadata_1.metadata.site, library = metadata_1.metadata.library;
+            SiteComponentManager = (function () {
+                function SiteComponentManager(viewContainerRef, componentResolver) {
+                    this.viewContainerRef = viewContainerRef;
+                    this.componentResolver = componentResolver;
+                }
+                SiteComponentManager.prototype.ngOnChanges = function (changes) {
+                    if (changes.context) {
+                        this.viewContainerRef.clear();
+                        this.setView();
+                    }
+                };
+                SiteComponentManager.prototype.setView = function () {
+                    var _this = this;
+                    if (typeof (this.context) === "string") {
+                        var component = this.component;
+                        if (component && site.components[component]) {
+                            var component = site._components[(component + "Component")];
+                            this.componentResolver.resolveComponent(component).then(function (componentFactory) {
+                                _this.context = objectPath_1.objectPath.get(library, _this.context);
+                                var componentRef = _this.viewContainerRef.createComponent(componentFactory);
+                                var component = componentRef.instance;
+                                for (var prop in _this.context) {
+                                    component[prop] = _this.context[prop];
+                                    component._context = _this.context;
+                                }
+                            });
+                        }
+                    }
+                };
+                __decorate([
+                    core_1.Input(), 
+                    __metadata('design:type', Object)
+                ], SiteComponentManager.prototype, "component", void 0);
+                __decorate([
+                    core_1.Input(), 
+                    __metadata('design:type', Object)
+                ], SiteComponentManager.prototype, "context", void 0);
+                SiteComponentManager = __decorate([
+                    core_1.Directive({
+                        selector: "[component]",
+                        providers: []
+                    }), 
+                    __metadata('design:paramtypes', [(typeof (_a = typeof core_1.ViewContainerRef !== 'undefined' && core_1.ViewContainerRef) === 'function' && _a) || Object, (typeof (_b = typeof core_1.ComponentResolver !== 'undefined' && core_1.ComponentResolver) === 'function' && _b) || Object])
+                ], SiteComponentManager);
+                return SiteComponentManager;
+                var _a, _b;
+            }());
+            exports_1("SiteComponentManager", SiteComponentManager);
+        }
+    }
+});
+
+$__System.register("c7", ["8", "c2", "c3", "c8", "c5"], function(exports_1, context_1) {
+    "use strict";
+    var __moduleName = context_1 && context_1.id;
+    var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+        var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+        if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+        else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+        return c > 3 && r && Object.defineProperty(target, key, r), r;
+    };
+    var __metadata = (this && this.__metadata) || function (k, v) {
+        if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+    };
+    var core_1, router_1, metadata_1, RepeaterManager_1, SiteComponentManager_1;
+    var RepeaterComponents, site, i, repeater, RepeaterComponent, componentName;
+    return {
+        setters:[
+            function (core_1_1) {
+                core_1 = core_1_1;
+            },
+            function (router_1_1) {
+                router_1 = router_1_1;
+            },
+            function (metadata_1_1) {
+                metadata_1 = metadata_1_1;
+            },
+            function (RepeaterManager_1_1) {
+                RepeaterManager_1 = RepeaterManager_1_1;
+            },
+            function (SiteComponentManager_1_1) {
+                SiteComponentManager_1 = SiteComponentManager_1_1;
+            }],
+        execute: function() {
             exports_1("RepeaterComponents", RepeaterComponents = []);
             site = metadata_1.metadata.site;
             Object.defineProperty(site.repeaters, "_components", {
@@ -22969,38 +23067,51 @@ $__System.register("c5", ["8", "c2", "c6"], function(exports_1, context_1) {
                 if (site.repeaters[i].html) {
                     repeater = site.repeaters[i];
                     RepeaterComponent = (function () {
-                        function RepeaterComponent() {
+                        function RepeaterComponent(routeParams, _injector) {
+                            this.routeParams = routeParams;
+                            this._injector = _injector;
+                            window.injector = _injector;
+                            this.url = routeParams.params;
                         }
+                        ;
                         RepeaterComponent.prototype.ngAfterViewInit = function () {
-                            console.log("repeater " + this.repeater + " view init!");
                             var repeaters = this.repeaters._results;
                             for (var i in repeaters) {
                                 var repeater = repeaters[i];
-                                if (!repeater.on) {
-                                    repeater.on = this.path;
+                                if (!repeater.context) {
+                                    repeater.context = this.path;
                                     repeater.changeDetectorRef.detectChanges();
-                                    console.log("child repeater manager " + this.path + " 'on' set!");
                                     repeater.setView();
                                 }
                             }
-                        };
-                        RepeaterComponent.prototype.ngOnInit = function () {
-                            console.log("repeater " + this.repeater + " init!");
-                            //this.setView();
+                            var components = this.components._results;
+                            for (var i in components) {
+                                var component = components[i];
+                                if (!component.context) {
+                                    component.context = this.path;
+                                    component.changeDetectorRef.detectChanges();
+                                    component.setView();
+                                }
+                            }
                         };
                         __decorate([
                             core_1.ViewChildren(RepeaterManager_1.RepeaterManager), 
                             __metadata('design:type', Object)
                         ], RepeaterComponent.prototype, "repeaters", void 0);
+                        __decorate([
+                            core_1.ViewChildren(SiteComponentManager_1.SiteComponentManager), 
+                            __metadata('design:type', Object)
+                        ], RepeaterComponent.prototype, "components", void 0);
                         RepeaterComponent = __decorate([
                             core_1.Component({
                                 selector: "[" + i + "-repeater]",
                                 template: repeater.html,
-                                directives: [RepeaterManager_1.RepeaterManager]
+                                directives: [RepeaterManager_1.RepeaterManager, SiteComponentManager_1.SiteComponentManager]
                             }), 
-                            __metadata('design:paramtypes', [])
+                            __metadata('design:paramtypes', [(typeof (_a = typeof router_1.RouteParams !== 'undefined' && router_1.RouteParams) === 'function' && _a) || Object, (typeof (_b = typeof core_1.Injector !== 'undefined' && core_1.Injector) === 'function' && _b) || Object])
                         ], RepeaterComponent);
                         return RepeaterComponent;
+                        var _a, _b;
                     }());
                     componentName = i + "Repeater";
                     Object.defineProperty(RepeaterComponent, "name", {
@@ -23010,56 +23121,11 @@ $__System.register("c5", ["8", "c2", "c6"], function(exports_1, context_1) {
                     RepeaterComponents.push(RepeaterComponent);
                 }
             }
-            console.log("repeaters:", RepeaterComponents);
         }
     }
 });
 
-$__System.register("c2", [], function(exports_1, context_1) {
-    "use strict";
-    var __moduleName = context_1 && context_1.id;
-    var metadata;
-    return {
-        setters:[],
-        execute: function() {
-            exports_1("metadata", metadata = { "library": { "templates": "hey!", "patterns": { "other": "yo", "name": "patterns", "title": "Patterns", "path": "/patterns", "items": { "banners": { "name": "banners", "title": "Banners", "path": "/patterns/banners", "items": { "banner1": { "name": "banner1", "title": "Banner 1", "path": "/patterns/banners/banner1", "html": "test 1!!!!", "md": "" }, "banner2": { "name": "banner2", "title": "Banner 2", "path": "/patterns/banners/banner2", "html": "test 2!!!!" }, "config": { "name": "config", "title": "Config", "path": "/patterns/banners/config" } } }, "columns": { "name": "columns", "title": "Columns", "path": "/patterns/columns" }, "Feedback": { "name": "Feedback", "title": "Feedback", "path": "/patterns/Feedback" }, "icons": { "name": "icons", "title": "Icons", "path": "/patterns/icons", "js": "" }, "style-guide": { "name": "style-guide", "title": "Style Guide", "path": "/patterns/style-guide", "items": { "colors": { "name": "colors", "title": "Colors", "path": "/patterns/style-guide/colors", "items": { "primary": { "name": "primary", "title": "Primary", "path": "/patterns/style-guide/colors/primary", "items": { "primary-dark": { "name": "primary-dark", "title": "Primary Dark", "path": "/patterns/style-guide/colors/primary/primary-dark", "Hex": "#5CA156", "RGB": "92 161 86" }, "primary-darker": { "name": "primary-darker", "title": "Primary Darker", "path": "/patterns/style-guide/colors/primary/primary-darker", "Hex": "#528F4D", "RGB": "82 143 77" }, "primary": { "name": "primary", "title": "Primary", "path": "/patterns/style-guide/colors/primary/primary", "Hex": "#66B360", "RGB": "102 179 96" } } }, "secondary": { "name": "secondary", "title": "Secondary", "path": "/patterns/style-guide/colors/secondary", "items": { "background-dark": { "name": "background-dark", "title": "Background Dark", "path": "/patterns/style-guide/colors/secondary/background-dark", "Hex": "#000000", "RGB": "0 0 0" }, "background-light": { "name": "background-light", "title": "Background Light", "path": "/patterns/style-guide/colors/secondary/background-light", "Hex": "#DDDDDD", "RGB": "221 221 221" }, "background-lighter": { "name": "background-lighter", "title": "Background Lighter", "path": "/patterns/style-guide/colors/secondary/background-lighter", "Hex": "#EEEEEE", "RGB": "238 238 238" } } }, "ternary": { "name": "ternary", "title": "Ternary", "path": "/patterns/style-guide/colors/ternary", "items": { "bla": { "name": "bla", "title": "Bla", "path": "/patterns/style-guide/colors/ternary/bla", "Hex": 12345, "RGB": "bla" } } } } }, "icons": { "name": "icons", "title": "Icons", "path": "/patterns/style-guide/icons", "items": { "account": { "name": "account", "title": "Account", "path": "/patterns/style-guide/icons/account" } } } } } } }, "sorters": { "name": "sorters", "title": "Sorters", "path": "/sorters", "banners": ["banner2", "banner1"] }, "test": { "name": "test", "title": "Test", "path": "/test", "html": "a string of content!!!\r\n" } }, "site": { "pages": { "name": "pages", "title": "Pages", "path": "/pages", "index": { "name": "index", "title": "Index", "path": "/pages/index", "html": "<mainMasterPage-template></mainMasterPage-template>" }, "info": { "name": "info", "title": "Info", "path": "/pages/info", "html": "<a [routerLink]=\"['Index']\">Go to Index</a>\r\nyooo" }, "paths": { "name": "paths", "title": "Paths", "path": "/pages/paths", "$note": "you can set a url parameter with this syntax /:parameterName/ and that argument will become available to you in the application", "index": "", "info": "", "patterns": "patterns/:id" }, "patterns": { "name": "patterns", "title": "Patterns", "path": "/pages/patterns", "html": "<a [routerLink]=\"['Info']\">Go to Info</a>" }, "readme": { "name": "readme", "title": "Readme", "path": "/pages/readme", "html": "<!--<main-template>-->\r\n    <!--<markdown>-->\r\n        <!--This is the readme for the Pattern Library project-->\r\n        <!---->\r\n        <!---->\r\n        <!--Repeaters-->\r\n        <!--What does a repeater repeat?-->\r\n        <!---->\r\n            <!--There are 4 ways to use a repeater.-->\r\n            <!-- -by specifying it on the repeater-->\r\n                <!--angular 2 makes javascript variables available to your html. -->\r\n                <!--in this case, we are repeating on the *items* javascript object-->\r\n                <!--<example-repeater (on)=\"items\"></example-repeater>-->\r\n                <!--or we can repeat on an object referenced by name from the library.-->\r\n                <!--<example-repeater example-repeater (on)=\"patterns.example\"></example-repeater>-->\r\n            <!-- -by specifying what it should repeat in a configuration file-->\r\n            <!-- -by context. it will use the items property of the repeater it is inside of-->\r\n            <!---->\r\n        <!--The Pages folder defines site structure of your pattern library-->\r\n        <!---->\r\n        <!---->\r\n        <!---->\r\n        <!---->\r\n        <!---->\r\n    <!--</markdown>-->\r\n<!--</main-template>-->\r\nyo" } }, "repeaters": { "name": "repeaters", "title": "Repeaters", "path": "/repeaters", "colorCards": { "name": "colorCards", "title": "Color Cards", "path": "/repeaters/colorCards", "html": "<div class=\"color-card\">\r\n\t<div class=\"brand {{name}}\"></div>\r\n\t<p>Hex: {{Hex}}</p>\r\n\t<p>RGB: {{RGB}}</p>\r\n\t<p>SCSS: $brand-{{name}}</p>\r\n</div>\r\n" }, "colors": { "name": "colors", "title": "Colors", "path": "/repeaters/colors", "html": "<section class=\"{{name}}-colors\">\r\n\t<h3>{{title}} Colors</h3>\r\n\t<hr>\r\n\t<div class=\"color-wrapper\">\r\n\t\t<template repeater=\"colorCards\"></template>\r\n\t</div>\r\n</section>\r\n" }, "icons": { "name": "icons", "title": "Icons", "path": "/repeaters/icons", "html": "<div class=\"icon-preview\">\r\n\t<h4>{{title}}</h4>\r\n\t<i class=\"exc-icon-{{name}}\"></i>\r\n\t<pre><code><i class=\"exc-icon-{{name}}\"></i></code></pre>\r\n</div>\r\n" }, "navRail": { "name": "navRail", "title": "Nav Rail", "path": "/repeaters/navRail", "html": "<li><a href=\"#{{name}}\">{{title}}</a></li>\r\n" }, "pattern": { "name": "pattern", "title": "Pattern", "path": "/repeaters/pattern", "html": "<p>Pattern example - Title: {{title}}, Name: {{name}}</p>\n" } }, "templates": { "name": "templates", "title": "Templates", "path": "/templates", "main": { "name": "main", "title": "Main", "path": "/templates/main", "html": "<div>\r\n    <div>\r\n        banner content\r\n    </div>\r\n    <ng-content></ng-content>\r\n</div>" }, "mainMasterPage": { "name": "mainMasterPage", "title": "Main Master Page", "path": "/templates/mainMasterPage", "html": "<body class=\"language-markup\">\r\n<a name=\"0\" id=\"0\"></a>\r\n<div class=\"pl-main row-offcanvas row-offcanvas-right\" >\r\n  <div class=\"sidebar-offcanvas\" id=\"sidebar\">\r\n    <nav role=\"navigation\" class=\"pl-menu\">\r\n      <a class=\"block-link\" href=\"/index.php\">\r\n        <span class=\"caret-left\"></span>\r\n        Project Portal\r\n      </a>\r\n      <ul>\r\n        <!--***REPEATER***-->\r\n        <template repeater='navRail' on='patterns'></template>\r\n      </ul>\r\n    </nav>\r\n  </div>\r\n\r\n  <main role=\"main\" class=\"offcanvas-body\">\r\n    <div class=\"pl-container\">\r\n      <header>\r\n        <p class=\"pl-menu-toggle\">\r\n          <button type=\"button\" class=\"navbar-toggle btn btn-primary btn-sm\" data-toggle=\"offcanvas\">\r\n            <span class=\"sr-only\">Toggle navigation</span>\r\n            <span class=\"icon-bar\"></span>\r\n            <span class=\"icon-bar\"></span>\r\n            <span class=\"icon-bar\"></span>\r\n          </button>\r\n        </p>\r\n        <!--<div class=\"project-logo\">-->\r\n        <!--\t<img src=\"../../pattern-library/assets/images/portal-logo-bge-small.jpg\" alt=\"BGE\">-->\r\n        <!--</div>-->\r\n        <div class=\"pl-catalog\">\r\n          <div class=\"pl-title\">\r\n            <h2>Style Guide</h2>\r\n          </div>\r\n        </div>\r\n        <div mainTemplate>\r\n          example\r\n        </div>\r\n        <div templat=\"main\">\r\n          <a [routerLink]=\"['Patterns']\">Go to Info</a>\r\n        </div>\r\n      </header>\r\n\r\n      <!--***REPEATER***-->\r\n      <template repeater=\"colors\" on=\"patterns/style-guide/colors\"></template>\r\n\r\n      <!--<section class=\"system-icons\">-->\r\n      <!--\t<h3>Icons</h3>-->\r\n      <!--\t<hr>-->\r\n      <!--\t<div class=\"icon-preview-row\">-->\r\n      <!--***REPEATER***-->\r\n      <!--\t\t<template repeater=\"icons\" on=\"patterns/style-guide/icons\"></template>-->\r\n      <!--\t</div>-->\r\n      <!--</section>-->\r\n    </div>\r\n  </main>\r\n\r\n  <div class=\"pl-container\">\r\n    <footer class=\"pl-footer\" role=\"footer\">\r\n    </footer>\r\n  </div>\r\n</div>\r\n<a href=\"#0\" class=\"cd-top\">Top</a>\r\n</body>\r\n" }, "patternDisplay": { "name": "patternDisplay", "title": "Pattern Display", "path": "/templates/patternDisplay", "html": "<template name=\"pattern-area\">\r\n    <markdown content=\"library.patterns/{{url.hash}}\"></markdown>\r\n    <repeater name=\"pattern\"></repeater>\r\n</template>" }, "socialMediaBtn": { "name": "socialMediaBtn", "title": "Social Media Btn", "path": "/templates/socialMediaBtn", "html": "<div>an isolated chunk of functionality</div>\r\n" } } } });
-        }
-    }
-});
-
-$__System.register("c7", [], function(exports_1, context_1) {
-    "use strict";
-    var __moduleName = context_1 && context_1.id;
-    var objectPath;
-    function get(object, path) {
-        if (typeof (path) === "string") {
-            path = parsePath(path);
-        }
-        if (object.items)
-            object = object.items;
-        if (path.length > 1) {
-            return get(object[path[0]], path.slice(1, path.length));
-        }
-        return object[path[0]];
-    }
-    function parsePath(path) {
-        var pathRegExp = /[^\/\.]+/g, match, results = [];
-        while (match = pathRegExp.exec(path)) {
-            results.push(match[0]);
-        }
-        return results;
-    }
-    return {
-        setters:[],
-        execute: function() {
-            exports_1("objectPath", objectPath = {
-                get: get
-            });
-        }
-    }
-});
-
-$__System.register("c6", ["8", "c2", "c7"], function(exports_1, context_1) {
+$__System.register("c8", ["8", "c3", "c6"], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -23093,28 +23159,24 @@ $__System.register("c6", ["8", "c2", "c7"], function(exports_1, context_1) {
                     this.changeDetectorRef = changeDetectorRef;
                 }
                 RepeaterManager.prototype.ngOnChanges = function (changes) {
-                    //console.log(this.on);
-                    if (changes.on) {
+                    if (changes.context) {
                         this.viewContainerRef.clear();
                         this.setView();
                     }
                 };
-                RepeaterManager.prototype.ngOnInit = function () {
-                };
                 RepeaterManager.prototype.setView = function () {
                     var _this = this;
                     var repeater = this.repeater;
-                    var on = this.on;
+                    var context = this.context;
                     if (repeater && site.repeaters[repeater]) {
                         var component = site.repeaters._components[(repeater + "Repeater")];
                         this.componentResolver.resolveComponent(component).then(function (componentFactory) {
-                            var path = typeof (on) === "string" ? on : (on && on.path || "");
+                            var path = typeof (context) === "string" ? context : (context && context.path || "");
                             var root = objectPath_1.objectPath.get(library, path);
                             var children = root.items;
                             //iterate through library items and add them to the viewContainer
                             for (var child in children) {
                                 child = children[child];
-                                //debugger;
                                 var componentRef = _this.viewContainerRef.createComponent(componentFactory);
                                 var component = componentRef.instance;
                                 for (var prop in child) {
@@ -23131,7 +23193,7 @@ $__System.register("c6", ["8", "c2", "c7"], function(exports_1, context_1) {
                 __decorate([
                     core_1.Input(), 
                     __metadata('design:type', Object)
-                ], RepeaterManager.prototype, "on", void 0);
+                ], RepeaterManager.prototype, "context", void 0);
                 RepeaterManager = __decorate([
                     core_1.Directive({
                         selector: "[repeater]",
@@ -23147,7 +23209,96 @@ $__System.register("c6", ["8", "c2", "c7"], function(exports_1, context_1) {
     }
 });
 
-$__System.register("c8", ["8", "c2", "c6"], function(exports_1, context_1) {
+$__System.register("c9", ["8", "c6"], function(exports_1, context_1) {
+    "use strict";
+    var __moduleName = context_1 && context_1.id;
+    var core_1, objectPath_1;
+    var LibraryContext;
+    function parseLibraryContext(_injector, libraryMetadata) {
+        var context = _injector._view.parent.context.libraryMetaDataContext;
+        if (!context)
+            return libraryMetadata;
+        if (typeof (context) === "object")
+            return context;
+        if (typeof (context) === "string") {
+            objectPath_1.objectPath.get(context, libraryMetadata);
+        }
+        else
+            throw new Error("Invalid Library Metadata Context type.");
+    }
+    return {
+        setters:[
+            function (core_1_1) {
+                core_1 = core_1_1;
+            },
+            function (objectPath_1_1) {
+                objectPath_1 = objectPath_1_1;
+            }],
+        execute: function() {
+            exports_1("LibraryContext", LibraryContext = core_1.provide("LibraryContext", {
+                useFactory: parseLibraryContext,
+                deps: [core_1.Injector, "LibraryMetadata"]
+            }));
+        }
+    }
+});
+
+$__System.register("ca", [], function(exports_1, context_1) {
+    "use strict";
+    var __moduleName = context_1 && context_1.id;
+    function createPrototypeChain() {
+        for (var i = 0; i < arguments.length; i++) {
+            var item = arguments[i];
+            var proto = arguments[i + 1];
+            try {
+                item.__proto__.__proto__ = proto;
+            }
+            catch (error) {
+                item.__proto__ = proto;
+            }
+        }
+    }
+    exports_1("default", createPrototypeChain);
+    return {
+        setters:[],
+        execute: function() {
+        }
+    }
+});
+
+$__System.register("c6", [], function(exports_1, context_1) {
+    "use strict";
+    var __moduleName = context_1 && context_1.id;
+    var objectPath;
+    function get(object, path) {
+        if (typeof (path) === "string") {
+            path = parsePath(path);
+        }
+        if (object.items)
+            object = object.items;
+        if (path.length > 1) {
+            return get(object[path[0]], path.slice(1, path.length));
+        }
+        return object[path[0]];
+    }
+    function parsePath(path) {
+        var pathRegExp = /[^\/\.]+/g, match, results = [];
+        while (match = pathRegExp.exec(path)) {
+            results.push(match[0]);
+        }
+        return results;
+    }
+    return {
+        setters:[],
+        execute: function() {
+            exports_1("objectPath", objectPath = {
+                get: get
+            });
+        }
+    }
+});
+
+$__System.register("cb", ["8", "c3", "c8", "c2", "c9", "ca", "c6"], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -23159,8 +23310,11 @@ $__System.register("c8", ["8", "c2", "c6"], function(exports_1, context_1) {
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, metadata_1, RepeaterManager_1;
-    var TemplateComponents, site, i, template, TemplateComponent, componentName;
+    var __param = (this && this.__param) || function (paramIndex, decorator) {
+        return function (target, key) { decorator(target, key, paramIndex); }
+    };
+    var core_1, metadata_1, RepeaterManager_1, router_1, LibraryContext_1, createPrototypeChain_1, objectPath_1;
+    var SiteComponents, site, name, component, SiteComponent, componentName;
     return {
         setters:[
             function (core_1_1) {
@@ -23171,39 +23325,70 @@ $__System.register("c8", ["8", "c2", "c6"], function(exports_1, context_1) {
             },
             function (RepeaterManager_1_1) {
                 RepeaterManager_1 = RepeaterManager_1_1;
+            },
+            function (router_1_1) {
+                router_1 = router_1_1;
+            },
+            function (LibraryContext_1_1) {
+                LibraryContext_1 = LibraryContext_1_1;
+            },
+            function (createPrototypeChain_1_1) {
+                createPrototypeChain_1 = createPrototypeChain_1_1;
+            },
+            function (objectPath_1_1) {
+                objectPath_1 = objectPath_1_1;
             }],
         execute: function() {
-            exports_1("TemplateComponents", TemplateComponents = []);
+            exports_1("SiteComponents", SiteComponents = []);
             site = metadata_1.metadata.site;
-            for (i in site.templates) {
-                if (site.templates[i].html) {
-                    template = site.templates[i];
-                    TemplateComponent = (function () {
-                        function TemplateComponent() {
+            for (name in site.components) {
+                if (site.components[name].html) {
+                    component = site.components[name];
+                    SiteComponent = (function () {
+                        function SiteComponent(_routeParams, context, libraryMetadata) {
+                            this.context = context;
+                            this.libraryMetadata = libraryMetadata;
+                            this.url = _routeParams.params;
+                            this.context = context;
+                            this.library = libraryMetadata.library;
+                            createPrototypeChain_1.default(this, this.context, this.url);
                         }
-                        ;
-                        TemplateComponent = __decorate([
+                        SiteComponent.prototype.ngOnInit = function () {
+                            if (typeof (this.context) === "string") {
+                                this.context = objectPath_1.objectPath.get(this.library, this.context);
+                                createPrototypeChain_1.default(this, this.context, this.url);
+                            }
+                        };
+                        __decorate([
+                            core_1.Input(), 
+                            __metadata('design:type', Object)
+                        ], SiteComponent.prototype, "context", void 0);
+                        SiteComponent = __decorate([
                             core_1.Component({
-                                selector: "[" + i + "Template], " + i + "-template, [templat=\"" + i + "\"]",
-                                template: template.html,
-                                directives: [RepeaterManager_1.RepeaterManager]
-                            }), 
-                            __metadata('design:paramtypes', [])
-                        ], TemplateComponent);
-                        return TemplateComponent;
+                                selector: component.selector + ", " + name + "-component",
+                                template: component.html,
+                                directives: [RepeaterManager_1.RepeaterManager],
+                                providers: [LibraryContext_1.LibraryContext]
+                            }),
+                            __param(1, core_1.Inject("LibraryContext")),
+                            __param(2, core_1.Inject("LibraryMetadata")), 
+                            __metadata('design:paramtypes', [(typeof (_a = typeof router_1.RouteParams !== 'undefined' && router_1.RouteParams) === 'function' && _a) || Object, Object, Object])
+                        ], SiteComponent);
+                        return SiteComponent;
+                        var _a;
                     }());
-                    componentName = i + "Template";
-                    Object.defineProperty(TemplateComponent, "name", {
+                    componentName = name + "Component";
+                    Object.defineProperty(SiteComponent, "name", {
                         value: componentName
                     });
-                    TemplateComponents.push(TemplateComponent);
+                    SiteComponents.push(SiteComponent);
                 }
             }
         }
     }
 });
 
-$__System.registerDynamic("c9", ["7", "e", "6", "8", "ca", "cb", "cc", "cd"], true, function($__require, exports, module) {
+$__System.registerDynamic("cc", ["7", "e", "6", "8", "cd", "ce", "cf", "d0"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -23235,10 +23420,10 @@ $__System.registerDynamic("c9", ["7", "e", "6", "8", "ca", "cb", "cc", "cd"], tr
   var collection_1 = $__require('e');
   var lang_1 = $__require('6');
   var core_1 = $__require('8');
-  var routerMod = $__require('ca');
-  var instruction_1 = $__require('cb');
-  var hookMod = $__require('cc');
-  var route_lifecycle_reflector_1 = $__require('cd');
+  var routerMod = $__require('cd');
+  var instruction_1 = $__require('ce');
+  var hookMod = $__require('cf');
+  var route_lifecycle_reflector_1 = $__require('d0');
   var _resolveToTrue = async_1.PromiseWrapper.resolve(true);
   var RouterOutlet = (function() {
     function RouterOutlet(_viewContainerRef, _loader, _parentRouter, nameAttr) {
@@ -23342,7 +23527,7 @@ $__System.registerDynamic("c9", ["7", "e", "6", "8", "ca", "cb", "cc", "cd"], tr
   return module.exports;
 });
 
-$__System.registerDynamic("ce", ["8", "cf", "6", "ca"], true, function($__require, exports, module) {
+$__System.registerDynamic("d1", ["8", "d2", "6", "cd"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -23366,9 +23551,9 @@ $__System.registerDynamic("ce", ["8", "cf", "6", "ca"], true, function($__requir
       return Reflect.metadata(k, v);
   };
   var core_1 = $__require('8');
-  var common_1 = $__require('cf');
+  var common_1 = $__require('d2');
   var lang_1 = $__require('6');
-  var router_1 = $__require('ca');
+  var router_1 = $__require('cd');
   var RouterLink = (function() {
     function RouterLink(_router, _location) {
       var _this = this;
@@ -23420,16 +23605,16 @@ $__System.registerDynamic("ce", ["8", "cf", "6", "ca"], true, function($__requir
   return module.exports;
 });
 
-$__System.registerDynamic("cc", ["d0", "d1"], true, function($__require, exports, module) {
+$__System.registerDynamic("cf", ["d3", "d4"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
       global = this,
       GLOBAL = this;
   "use strict";
-  var decorators_1 = $__require('d0');
-  var lifecycle_annotations_impl_1 = $__require('d1');
-  var lifecycle_annotations_impl_2 = $__require('d1');
+  var decorators_1 = $__require('d3');
+  var lifecycle_annotations_impl_1 = $__require('d4');
+  var lifecycle_annotations_impl_2 = $__require('d4');
   exports.routerCanReuse = lifecycle_annotations_impl_2.routerCanReuse;
   exports.routerCanDeactivate = lifecycle_annotations_impl_2.routerCanDeactivate;
   exports.routerOnActivate = lifecycle_annotations_impl_2.routerOnActivate;
@@ -23439,7 +23624,7 @@ $__System.registerDynamic("cc", ["d0", "d1"], true, function($__require, exports
   return module.exports;
 });
 
-$__System.registerDynamic("d1", ["6"], true, function($__require, exports, module) {
+$__System.registerDynamic("d4", ["6"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -23487,7 +23672,7 @@ $__System.registerDynamic("d1", ["6"], true, function($__require, exports, modul
   return module.exports;
 });
 
-$__System.registerDynamic("cd", ["6", "d1", "93"], true, function($__require, exports, module) {
+$__System.registerDynamic("d0", ["6", "d4", "93"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -23495,7 +23680,7 @@ $__System.registerDynamic("cd", ["6", "d1", "93"], true, function($__require, ex
       GLOBAL = this;
   "use strict";
   var lang_1 = $__require('6');
-  var lifecycle_annotations_impl_1 = $__require('d1');
+  var lifecycle_annotations_impl_1 = $__require('d4');
   var reflection_1 = $__require('93');
   function hasLifecycleHook(e, type) {
     if (!(type instanceof lang_1.Type))
@@ -23517,7 +23702,7 @@ $__System.registerDynamic("cd", ["6", "d1", "93"], true, function($__require, ex
   return module.exports;
 });
 
-$__System.registerDynamic("ca", ["7", "e", "6", "12", "cf", "8", "d2", "cd"], true, function($__require, exports, module) {
+$__System.registerDynamic("cd", ["7", "e", "6", "12", "d2", "8", "d5", "d0"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -23558,10 +23743,10 @@ $__System.registerDynamic("ca", ["7", "e", "6", "12", "cf", "8", "d2", "cd"], tr
   var collection_1 = $__require('e');
   var lang_1 = $__require('6');
   var exceptions_1 = $__require('12');
-  var common_1 = $__require('cf');
+  var common_1 = $__require('d2');
   var core_1 = $__require('8');
-  var route_registry_1 = $__require('d2');
-  var route_lifecycle_reflector_1 = $__require('cd');
+  var route_registry_1 = $__require('d5');
+  var route_lifecycle_reflector_1 = $__require('d0');
   var _resolveToTrue = async_1.PromiseWrapper.resolve(true);
   var _resolveToFalse = async_1.PromiseWrapper.resolve(false);
   var Router = (function() {
@@ -23973,7 +24158,7 @@ $__System.registerDynamic("ca", ["7", "e", "6", "12", "cf", "8", "d2", "cd"], tr
   return module.exports;
 });
 
-$__System.registerDynamic("d3", ["6", "12", "2e", "e", "d4", "cb"], true, function($__require, exports, module) {
+$__System.registerDynamic("d6", ["6", "12", "2e", "e", "d7", "ce"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -23993,8 +24178,8 @@ $__System.registerDynamic("d3", ["6", "12", "2e", "e", "d4", "cb"], true, functi
   var exceptions_1 = $__require('12');
   var promise_1 = $__require('2e');
   var collection_1 = $__require('e');
-  var url_parser_1 = $__require('d4');
-  var instruction_1 = $__require('cb');
+  var url_parser_1 = $__require('d7');
+  var instruction_1 = $__require('ce');
   var RouteMatch = (function() {
     function RouteMatch() {}
     return RouteMatch;
@@ -24108,7 +24293,7 @@ $__System.registerDynamic("d3", ["6", "12", "2e", "e", "d4", "cb"], true, functi
   return module.exports;
 });
 
-$__System.registerDynamic("d5", ["6", "cb"], true, function($__require, exports, module) {
+$__System.registerDynamic("d8", ["6", "ce"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -24116,7 +24301,7 @@ $__System.registerDynamic("d5", ["6", "cb"], true, function($__require, exports,
       GLOBAL = this;
   "use strict";
   var lang_1 = $__require('6');
-  var instruction_1 = $__require('cb');
+  var instruction_1 = $__require('ce');
   var AsyncRouteHandler = (function() {
     function AsyncRouteHandler(_loader, data) {
       if (data === void 0) {
@@ -24142,7 +24327,7 @@ $__System.registerDynamic("d5", ["6", "cb"], true, function($__require, exports,
   return module.exports;
 });
 
-$__System.registerDynamic("d6", ["7", "6", "cb"], true, function($__require, exports, module) {
+$__System.registerDynamic("d9", ["7", "6", "ce"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -24151,7 +24336,7 @@ $__System.registerDynamic("d6", ["7", "6", "cb"], true, function($__require, exp
   "use strict";
   var async_1 = $__require('7');
   var lang_1 = $__require('6');
-  var instruction_1 = $__require('cb');
+  var instruction_1 = $__require('ce');
   var SyncRouteHandler = (function() {
     function SyncRouteHandler(componentType, data) {
       this.componentType = componentType;
@@ -24168,7 +24353,7 @@ $__System.registerDynamic("d6", ["7", "6", "cb"], true, function($__require, exp
   return module.exports;
 });
 
-$__System.registerDynamic("d7", ["6", "e"], true, function($__require, exports, module) {
+$__System.registerDynamic("da", ["6", "e"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -24216,7 +24401,7 @@ $__System.registerDynamic("d7", ["6", "e"], true, function($__require, exports, 
   return module.exports;
 });
 
-$__System.registerDynamic("d8", ["6", "12", "e", "d7", "d4", "d9"], true, function($__require, exports, module) {
+$__System.registerDynamic("db", ["6", "12", "e", "da", "d7", "dc"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -24226,9 +24411,9 @@ $__System.registerDynamic("d8", ["6", "12", "e", "d7", "d4", "d9"], true, functi
   var lang_1 = $__require('6');
   var exceptions_1 = $__require('12');
   var collection_1 = $__require('e');
-  var utils_1 = $__require('d7');
-  var url_parser_1 = $__require('d4');
-  var route_path_1 = $__require('d9');
+  var utils_1 = $__require('da');
+  var url_parser_1 = $__require('d7');
+  var route_path_1 = $__require('dc');
   var ContinuationPathSegment = (function() {
     function ContinuationPathSegment() {
       this.name = '';
@@ -24462,7 +24647,7 @@ $__System.registerDynamic("d8", ["6", "12", "e", "d7", "d4", "d9"], true, functi
   return module.exports;
 });
 
-$__System.registerDynamic("d9", [], true, function($__require, exports, module) {
+$__System.registerDynamic("dc", [], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -24491,7 +24676,7 @@ $__System.registerDynamic("d9", [], true, function($__require, exports, module) 
   return module.exports;
 });
 
-$__System.registerDynamic("da", ["6", "d9"], true, function($__require, exports, module) {
+$__System.registerDynamic("dd", ["6", "dc"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -24499,7 +24684,7 @@ $__System.registerDynamic("da", ["6", "d9"], true, function($__require, exports,
       GLOBAL = this;
   "use strict";
   var lang_1 = $__require('6');
-  var route_path_1 = $__require('d9');
+  var route_path_1 = $__require('dc');
   var RegexRoutePath = (function() {
     function RegexRoutePath(_reString, _serializer) {
       this._reString = _reString;
@@ -24534,7 +24719,7 @@ $__System.registerDynamic("da", ["6", "d9"], true, function($__require, exports,
   return module.exports;
 });
 
-$__System.registerDynamic("db", ["6", "12", "e", "7", "d3", "dc", "d5", "d6", "d8", "da"], true, function($__require, exports, module) {
+$__System.registerDynamic("de", ["6", "12", "e", "7", "d6", "df", "d8", "d9", "db", "dd"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -24545,12 +24730,12 @@ $__System.registerDynamic("db", ["6", "12", "e", "7", "d3", "dc", "d5", "d6", "d
   var exceptions_1 = $__require('12');
   var collection_1 = $__require('e');
   var async_1 = $__require('7');
-  var rules_1 = $__require('d3');
-  var route_config_impl_1 = $__require('dc');
-  var async_route_handler_1 = $__require('d5');
-  var sync_route_handler_1 = $__require('d6');
-  var param_route_path_1 = $__require('d8');
-  var regex_route_path_1 = $__require('da');
+  var rules_1 = $__require('d6');
+  var route_config_impl_1 = $__require('df');
+  var async_route_handler_1 = $__require('d8');
+  var sync_route_handler_1 = $__require('d9');
+  var param_route_path_1 = $__require('db');
+  var regex_route_path_1 = $__require('dd');
   var RuleSet = (function() {
     function RuleSet() {
       this.rulesByName = new collection_1.Map();
@@ -24675,7 +24860,7 @@ $__System.registerDynamic("db", ["6", "12", "e", "7", "d3", "dc", "d5", "d6", "d
   return module.exports;
 });
 
-$__System.registerDynamic("cb", ["e", "6", "7"], true, function($__require, exports, module) {
+$__System.registerDynamic("ce", ["e", "6", "7"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -24917,7 +25102,7 @@ $__System.registerDynamic("cb", ["e", "6", "7"], true, function($__require, expo
   return module.exports;
 });
 
-$__System.registerDynamic("dc", ["6"], true, function($__require, exports, module) {
+$__System.registerDynamic("df", ["6"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -25079,16 +25264,16 @@ $__System.registerDynamic("dc", ["6"], true, function($__require, exports, modul
   return module.exports;
 });
 
-$__System.registerDynamic("dd", ["dc", "d0"], true, function($__require, exports, module) {
+$__System.registerDynamic("e0", ["df", "d3"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
       global = this,
       GLOBAL = this;
   "use strict";
-  var route_config_impl_1 = $__require('dc');
-  var decorators_1 = $__require('d0');
-  var route_config_impl_2 = $__require('dc');
+  var route_config_impl_1 = $__require('df');
+  var decorators_1 = $__require('d3');
+  var route_config_impl_2 = $__require('df');
   exports.Route = route_config_impl_2.Route;
   exports.Redirect = route_config_impl_2.Redirect;
   exports.AuxRoute = route_config_impl_2.AuxRoute;
@@ -25097,14 +25282,14 @@ $__System.registerDynamic("dd", ["dc", "d0"], true, function($__require, exports
   return module.exports;
 });
 
-$__System.registerDynamic("de", ["dd", "6", "12"], true, function($__require, exports, module) {
+$__System.registerDynamic("e1", ["e0", "6", "12"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
       global = this,
       GLOBAL = this;
   "use strict";
-  var route_config_decorator_1 = $__require('dd');
+  var route_config_decorator_1 = $__require('e0');
   var lang_1 = $__require('6');
   var exceptions_1 = $__require('12');
   function normalizeRouteConfig(config, registry) {
@@ -25198,7 +25383,7 @@ $__System.registerDynamic("de", ["dd", "6", "12"], true, function($__require, ex
   return module.exports;
 });
 
-$__System.registerDynamic("d4", ["e", "6", "12"], true, function($__require, exports, module) {
+$__System.registerDynamic("d7", ["e", "6", "12"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -25459,7 +25644,7 @@ $__System.registerDynamic("d4", ["e", "6", "12"], true, function($__require, exp
   return module.exports;
 });
 
-$__System.registerDynamic("d2", ["e", "7", "6", "12", "93", "8", "dc", "d3", "db", "cb", "de", "d4"], true, function($__require, exports, module) {
+$__System.registerDynamic("d5", ["e", "7", "6", "12", "93", "8", "df", "d6", "de", "ce", "e1", "d7"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -25493,12 +25678,12 @@ $__System.registerDynamic("d2", ["e", "7", "6", "12", "93", "8", "dc", "d3", "db
   var exceptions_1 = $__require('12');
   var reflection_1 = $__require('93');
   var core_1 = $__require('8');
-  var route_config_impl_1 = $__require('dc');
-  var rules_1 = $__require('d3');
-  var rule_set_1 = $__require('db');
-  var instruction_1 = $__require('cb');
-  var route_config_normalizer_1 = $__require('de');
-  var url_parser_1 = $__require('d4');
+  var route_config_impl_1 = $__require('df');
+  var rules_1 = $__require('d6');
+  var rule_set_1 = $__require('de');
+  var instruction_1 = $__require('ce');
+  var route_config_normalizer_1 = $__require('e1');
+  var url_parser_1 = $__require('d7');
   var _resolveToNull = async_1.PromiseWrapper.resolve(null);
   exports.ROUTER_PRIMARY_COMPONENT = lang_1.CONST_EXPR(new core_1.OpaqueToken('RouterPrimaryComponent'));
   var RouteRegistry = (function() {
@@ -25842,16 +26027,16 @@ $__System.registerDynamic("d2", ["e", "7", "6", "12", "93", "8", "dc", "d3", "db
   return module.exports;
 });
 
-$__System.registerDynamic("df", ["cf", "ca", "d2", "6", "8", "12"], true, function($__require, exports, module) {
+$__System.registerDynamic("e2", ["d2", "cd", "d5", "6", "8", "12"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
       global = this,
       GLOBAL = this;
   "use strict";
-  var common_1 = $__require('cf');
-  var router_1 = $__require('ca');
-  var route_registry_1 = $__require('d2');
+  var common_1 = $__require('d2');
+  var router_1 = $__require('cd');
+  var route_registry_1 = $__require('d5');
   var lang_1 = $__require('6');
   var core_1 = $__require('8');
   var exceptions_1 = $__require('12');
@@ -25913,7 +26098,7 @@ $__System.registerDynamic("3e", ["6"], true, function($__require, exports, modul
   return module.exports;
 });
 
-$__System.registerDynamic("e0", ["b9", "e1", "3e"], true, function($__require, exports, module) {
+$__System.registerDynamic("e3", ["b9", "e4", "3e"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -25946,7 +26131,7 @@ $__System.registerDynamic("e0", ["b9", "e1", "3e"], true, function($__require, e
       return Reflect.metadata(k, v);
   };
   var decorators_1 = $__require('b9');
-  var platform_location_1 = $__require('e1');
+  var platform_location_1 = $__require('e4');
   var dom_adapter_1 = $__require('3e');
   var BrowserPlatformLocation = (function(_super) {
     __extends(BrowserPlatformLocation, _super);
@@ -26017,7 +26202,7 @@ $__System.registerDynamic("e0", ["b9", "e1", "3e"], true, function($__require, e
   return module.exports;
 });
 
-$__System.registerDynamic("e2", ["8", "e3", "e4", "e1", "6"], true, function($__require, exports, module) {
+$__System.registerDynamic("e5", ["8", "e6", "e7", "e4", "6"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -26055,9 +26240,9 @@ $__System.registerDynamic("e2", ["8", "e3", "e4", "e1", "6"], true, function($__
     };
   };
   var core_1 = $__require('8');
-  var location_strategy_1 = $__require('e3');
-  var location_1 = $__require('e4');
-  var platform_location_1 = $__require('e1');
+  var location_strategy_1 = $__require('e6');
+  var location_1 = $__require('e7');
+  var platform_location_1 = $__require('e4');
   var lang_1 = $__require('6');
   var HashLocationStrategy = (function(_super) {
     __extends(HashLocationStrategy, _super);
@@ -26113,7 +26298,7 @@ $__System.registerDynamic("e2", ["8", "e3", "e4", "e1", "6"], true, function($__
   return module.exports;
 });
 
-$__System.registerDynamic("e1", [], true, function($__require, exports, module) {
+$__System.registerDynamic("e4", [], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -26149,7 +26334,7 @@ $__System.registerDynamic("e1", [], true, function($__require, exports, module) 
   return module.exports;
 });
 
-$__System.registerDynamic("e5", ["8", "6", "12", "e1", "e3", "e4"], true, function($__require, exports, module) {
+$__System.registerDynamic("e8", ["8", "6", "12", "e4", "e6", "e7"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -26189,9 +26374,9 @@ $__System.registerDynamic("e5", ["8", "6", "12", "e1", "e3", "e4"], true, functi
   var core_1 = $__require('8');
   var lang_1 = $__require('6');
   var exceptions_1 = $__require('12');
-  var platform_location_1 = $__require('e1');
-  var location_strategy_1 = $__require('e3');
-  var location_1 = $__require('e4');
+  var platform_location_1 = $__require('e4');
+  var location_strategy_1 = $__require('e6');
+  var location_1 = $__require('e7');
   var PathLocationStrategy = (function(_super) {
     __extends(PathLocationStrategy, _super);
     function PathLocationStrategy(_platformLocation, href) {
@@ -26237,6 +26422,370 @@ $__System.registerDynamic("e5", ["8", "6", "12", "e1", "e3", "e4"], true, functi
   }(location_strategy_1.LocationStrategy));
   exports.PathLocationStrategy = PathLocationStrategy;
   return module.exports;
+});
+
+$__System.registerDynamic("e6", ["6", "8"], true, function($__require, exports, module) {
+  "use strict";
+  ;
+  var define,
+      global = this,
+      GLOBAL = this;
+  "use strict";
+  var lang_1 = $__require('6');
+  var core_1 = $__require('8');
+  var LocationStrategy = (function() {
+    function LocationStrategy() {}
+    return LocationStrategy;
+  }());
+  exports.LocationStrategy = LocationStrategy;
+  exports.APP_BASE_HREF = lang_1.CONST_EXPR(new core_1.OpaqueToken('appBaseHref'));
+  return module.exports;
+});
+
+$__System.registerDynamic("e7", ["7", "8", "e6"], true, function($__require, exports, module) {
+  "use strict";
+  ;
+  var define,
+      global = this,
+      GLOBAL = this;
+  "use strict";
+  var __decorate = (this && this.__decorate) || function(decorators, target, key, desc) {
+    var c = arguments.length,
+        r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc,
+        d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
+      r = Reflect.decorate(decorators, target, key, desc);
+    else
+      for (var i = decorators.length - 1; i >= 0; i--)
+        if (d = decorators[i])
+          r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+  };
+  var __metadata = (this && this.__metadata) || function(k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function")
+      return Reflect.metadata(k, v);
+  };
+  var async_1 = $__require('7');
+  var core_1 = $__require('8');
+  var location_strategy_1 = $__require('e6');
+  var Location = (function() {
+    function Location(platformStrategy) {
+      var _this = this;
+      this.platformStrategy = platformStrategy;
+      this._subject = new async_1.EventEmitter();
+      var browserBaseHref = this.platformStrategy.getBaseHref();
+      this._baseHref = Location.stripTrailingSlash(_stripIndexHtml(browserBaseHref));
+      this.platformStrategy.onPopState(function(ev) {
+        async_1.ObservableWrapper.callEmit(_this._subject, {
+          'url': _this.path(),
+          'pop': true,
+          'type': ev.type
+        });
+      });
+    }
+    Location.prototype.path = function() {
+      return this.normalize(this.platformStrategy.path());
+    };
+    Location.prototype.normalize = function(url) {
+      return Location.stripTrailingSlash(_stripBaseHref(this._baseHref, _stripIndexHtml(url)));
+    };
+    Location.prototype.prepareExternalUrl = function(url) {
+      if (url.length > 0 && !url.startsWith('/')) {
+        url = '/' + url;
+      }
+      return this.platformStrategy.prepareExternalUrl(url);
+    };
+    Location.prototype.go = function(path, query) {
+      if (query === void 0) {
+        query = '';
+      }
+      this.platformStrategy.pushState(null, '', path, query);
+    };
+    Location.prototype.replaceState = function(path, query) {
+      if (query === void 0) {
+        query = '';
+      }
+      this.platformStrategy.replaceState(null, '', path, query);
+    };
+    Location.prototype.forward = function() {
+      this.platformStrategy.forward();
+    };
+    Location.prototype.back = function() {
+      this.platformStrategy.back();
+    };
+    Location.prototype.subscribe = function(onNext, onThrow, onReturn) {
+      if (onThrow === void 0) {
+        onThrow = null;
+      }
+      if (onReturn === void 0) {
+        onReturn = null;
+      }
+      return async_1.ObservableWrapper.subscribe(this._subject, onNext, onThrow, onReturn);
+    };
+    Location.normalizeQueryParams = function(params) {
+      return (params.length > 0 && params.substring(0, 1) != '?') ? ('?' + params) : params;
+    };
+    Location.joinWithSlash = function(start, end) {
+      if (start.length == 0) {
+        return end;
+      }
+      if (end.length == 0) {
+        return start;
+      }
+      var slashes = 0;
+      if (start.endsWith('/')) {
+        slashes++;
+      }
+      if (end.startsWith('/')) {
+        slashes++;
+      }
+      if (slashes == 2) {
+        return start + end.substring(1);
+      }
+      if (slashes == 1) {
+        return start + end;
+      }
+      return start + '/' + end;
+    };
+    Location.stripTrailingSlash = function(url) {
+      if (/\/$/g.test(url)) {
+        url = url.substring(0, url.length - 1);
+      }
+      return url;
+    };
+    Location = __decorate([core_1.Injectable(), __metadata('design:paramtypes', [location_strategy_1.LocationStrategy])], Location);
+    return Location;
+  }());
+  exports.Location = Location;
+  function _stripBaseHref(baseHref, url) {
+    if (baseHref.length > 0 && url.startsWith(baseHref)) {
+      return url.substring(baseHref.length);
+    }
+    return url;
+  }
+  function _stripIndexHtml(url) {
+    if (/\/index.html$/g.test(url)) {
+      return url.substring(0, url.length - 11);
+    }
+    return url;
+  }
+  return module.exports;
+});
+
+$__System.registerDynamic("e9", ["e4", "e6", "e5", "e8", "e7"], true, function($__require, exports, module) {
+  "use strict";
+  ;
+  var define,
+      global = this,
+      GLOBAL = this;
+  "use strict";
+  function __export(m) {
+    for (var p in m)
+      if (!exports.hasOwnProperty(p))
+        exports[p] = m[p];
+  }
+  __export($__require('e4'));
+  __export($__require('e6'));
+  __export($__require('e5'));
+  __export($__require('e8'));
+  __export($__require('e7'));
+  return module.exports;
+});
+
+$__System.registerDynamic("d2", ["e9"], true, function($__require, exports, module) {
+  "use strict";
+  ;
+  var define,
+      global = this,
+      GLOBAL = this;
+  "use strict";
+  function __export(m) {
+    for (var p in m)
+      if (!exports.hasOwnProperty(p))
+        exports[p] = m[p];
+  }
+  __export($__require('e9'));
+  return module.exports;
+});
+
+$__System.registerDynamic("ea", ["e2", "8", "e3", "d2", "6"], true, function($__require, exports, module) {
+  "use strict";
+  ;
+  var define,
+      global = this,
+      GLOBAL = this;
+  "use strict";
+  var router_providers_common_1 = $__require('e2');
+  var core_1 = $__require('8');
+  var browser_platform_location_1 = $__require('e3');
+  var common_1 = $__require('d2');
+  var lang_1 = $__require('6');
+  exports.ROUTER_PROVIDERS = lang_1.CONST_EXPR([router_providers_common_1.ROUTER_PROVIDERS_COMMON, lang_1.CONST_EXPR(new core_1.Provider(common_1.PlatformLocation, {useClass: browser_platform_location_1.BrowserPlatformLocation}))]);
+  exports.ROUTER_BINDINGS = exports.ROUTER_PROVIDERS;
+  return module.exports;
+});
+
+$__System.registerDynamic("c2", ["cd", "cc", "d1", "ce", "d5", "e0", "cf", "8", "e2", "ea", "6"], true, function($__require, exports, module) {
+  "use strict";
+  ;
+  var define,
+      global = this,
+      GLOBAL = this;
+  "use strict";
+  function __export(m) {
+    for (var p in m)
+      if (!exports.hasOwnProperty(p))
+        exports[p] = m[p];
+  }
+  var router_1 = $__require('cd');
+  exports.Router = router_1.Router;
+  var router_outlet_1 = $__require('cc');
+  exports.RouterOutlet = router_outlet_1.RouterOutlet;
+  var router_link_1 = $__require('d1');
+  exports.RouterLink = router_link_1.RouterLink;
+  var instruction_1 = $__require('ce');
+  exports.RouteParams = instruction_1.RouteParams;
+  exports.RouteData = instruction_1.RouteData;
+  var route_registry_1 = $__require('d5');
+  exports.RouteRegistry = route_registry_1.RouteRegistry;
+  exports.ROUTER_PRIMARY_COMPONENT = route_registry_1.ROUTER_PRIMARY_COMPONENT;
+  __export($__require('e0'));
+  var lifecycle_annotations_1 = $__require('cf');
+  exports.CanActivate = lifecycle_annotations_1.CanActivate;
+  var instruction_2 = $__require('ce');
+  exports.Instruction = instruction_2.Instruction;
+  exports.ComponentInstruction = instruction_2.ComponentInstruction;
+  var core_1 = $__require('8');
+  exports.OpaqueToken = core_1.OpaqueToken;
+  var router_providers_common_1 = $__require('e2');
+  exports.ROUTER_PROVIDERS_COMMON = router_providers_common_1.ROUTER_PROVIDERS_COMMON;
+  var router_providers_1 = $__require('ea');
+  exports.ROUTER_PROVIDERS = router_providers_1.ROUTER_PROVIDERS;
+  exports.ROUTER_BINDINGS = router_providers_1.ROUTER_BINDINGS;
+  var router_outlet_2 = $__require('cc');
+  var router_link_2 = $__require('d1');
+  var lang_1 = $__require('6');
+  exports.ROUTER_DIRECTIVES = lang_1.CONST_EXPR([router_outlet_2.RouterOutlet, router_link_2.RouterLink]);
+  return module.exports;
+});
+
+$__System.register("eb", ["8", "c2", "c3"], function(exports_1, context_1) {
+    "use strict";
+    var __moduleName = context_1 && context_1.id;
+    var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+        var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+        if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+        else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+        return c > 3 && r && Object.defineProperty(target, key, r), r;
+    };
+    var __metadata = (this && this.__metadata) || function (k, v) {
+        if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+    };
+    var core_1, router_1, metadata_1;
+    var site, HrefRouter;
+    function matchRoute(value, routes) {
+        for (var i in routes) {
+            var route = routes[i];
+        }
+    }
+    return {
+        setters:[
+            function (core_1_1) {
+                core_1 = core_1_1;
+            },
+            function (router_1_1) {
+                router_1 = router_1_1;
+            },
+            function (metadata_1_1) {
+                metadata_1 = metadata_1_1;
+            }],
+        execute: function() {
+            //import {$} from "jquery";
+            site = metadata_1.metadata.site;
+            HrefRouter = (function () {
+                function HrefRouter(elementRef, router) {
+                    this.elementRef = elementRef;
+                    this.router = router;
+                    router.subscribe(function (o) { return console.log(o); });
+                }
+                HrefRouter.prototype.onClick = function ($event) {
+                    $event.preventDefault();
+                    console.log(this.route);
+                    this.router.navigateByUrl(this.route);
+                };
+                Object.defineProperty(HrefRouter.prototype, "hrefRoute", {
+                    get: function () { return this.route; },
+                    enumerable: true,
+                    configurable: true
+                });
+                HrefRouter.prototype.onClick = function ($event) {
+                    $event.preventDefault();
+                    console.log(this.route);
+                    this.router.navigateByUrl(this.route);
+                };
+                __decorate([
+                    core_1.Input("href"), 
+                    __metadata('design:type', Object)
+                ], HrefRouter.prototype, "route", void 0);
+                __decorate([
+                    core_1.HostListener('click', ['$event']), 
+                    __metadata('design:type', Function), 
+                    __metadata('design:paramtypes', [Object]), 
+                    __metadata('design:returntype', void 0)
+                ], HrefRouter.prototype, "onClick", null);
+                __decorate([
+                    core_1.HostBinding("attr.href"), 
+                    __metadata('design:type', Object)
+                ], HrefRouter.prototype, "hrefRoute", null);
+                HrefRouter = __decorate([
+                    core_1.Directive({
+                        selector: "a[href]"
+                    }), 
+                    __metadata('design:paramtypes', [(typeof (_a = typeof core_1.ElementRef !== 'undefined' && core_1.ElementRef) === 'function' && _a) || Object, (typeof (_b = typeof router_1.Router !== 'undefined' && router_1.Router) === 'function' && _b) || Object])
+                ], HrefRouter);
+                return HrefRouter;
+                var _a, _b;
+            }());
+            exports_1("HrefRouter", HrefRouter);
+        }
+    }
+});
+
+$__System.register("ec", ["c7", "c8", "cb", "c2", "eb"], function(exports_1, context_1) {
+    "use strict";
+    var __moduleName = context_1 && context_1.id;
+    var RepeaterComponents_1, RepeaterManager_1, SiteComponents_1, router_1, HrefRouter_1;
+    var GlobalDirectives, GlobalProviders;
+    return {
+        setters:[
+            function (RepeaterComponents_1_1) {
+                RepeaterComponents_1 = RepeaterComponents_1_1;
+            },
+            function (RepeaterManager_1_1) {
+                RepeaterManager_1 = RepeaterManager_1_1;
+            },
+            function (SiteComponents_1_1) {
+                SiteComponents_1 = SiteComponents_1_1;
+            },
+            function (router_1_1) {
+                router_1 = router_1_1;
+            },
+            function (HrefRouter_1_1) {
+                HrefRouter_1 = HrefRouter_1_1;
+            }],
+        execute: function() {
+            exports_1("GlobalDirectives", GlobalDirectives = [
+                RepeaterManager_1.RepeaterManager,
+                RepeaterComponents_1.RepeaterComponents,
+                SiteComponents_1.SiteComponents,
+                router_1.ROUTER_DIRECTIVES,
+                HrefRouter_1.HrefRouter
+            ]);
+            exports_1("GlobalProviders", GlobalProviders = [
+                router_1.ROUTER_PROVIDERS
+            ]);
+        }
+    }
 });
 
 $__System.registerDynamic("9c", ["6", "40", "a0"], true, function($__require, exports, module) {
@@ -26439,7 +26988,7 @@ $__System.registerDynamic("9c", ["6", "40", "a0"], true, function($__require, ex
   return module.exports;
 });
 
-$__System.registerDynamic("97", ["6", "a0", "e6"], true, function($__require, exports, module) {
+$__System.registerDynamic("97", ["6", "a0", "ed"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -26473,7 +27022,7 @@ $__System.registerDynamic("97", ["6", "a0", "e6"], true, function($__require, ex
   };
   var lang_1 = $__require('6');
   var metadata_1 = $__require('a0');
-  var change_detection_1 = $__require('e6');
+  var change_detection_1 = $__require('ed');
   var DirectiveMetadata = (function(_super) {
     __extends(DirectiveMetadata, _super);
     function DirectiveMetadata(_a) {
@@ -26726,7 +27275,7 @@ $__System.registerDynamic("6a", ["6"], true, function($__require, exports, modul
   return module.exports;
 });
 
-$__System.registerDynamic("54", ["9c", "97", "6a", "d0"], true, function($__require, exports, module) {
+$__System.registerDynamic("54", ["9c", "97", "6a", "d3"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -26755,7 +27304,7 @@ $__System.registerDynamic("54", ["9c", "97", "6a", "d0"], true, function($__requ
   var di_2 = $__require('9c');
   var directives_2 = $__require('97');
   var view_2 = $__require('6a');
-  var decorators_1 = $__require('d0');
+  var decorators_1 = $__require('d3');
   exports.Component = decorators_1.makeDecorator(directives_2.ComponentMetadata, function(fn) {
     return fn.View = View;
   });
@@ -26778,19 +27327,19 @@ $__System.registerDynamic("54", ["9c", "97", "6a", "d0"], true, function($__requ
   return module.exports;
 });
 
-$__System.registerDynamic("e7", ["d0"], true, function($__require, exports, module) {
+$__System.registerDynamic("ee", ["d3"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
       global = this,
       GLOBAL = this;
   "use strict";
-  var decorators_1 = $__require('d0');
+  var decorators_1 = $__require('d3');
   exports.Class = decorators_1.Class;
   return module.exports;
 });
 
-$__System.registerDynamic("e8", ["6"], true, function($__require, exports, module) {
+$__System.registerDynamic("ef", ["6"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -26802,7 +27351,7 @@ $__System.registerDynamic("e8", ["6"], true, function($__require, exports, modul
   return module.exports;
 });
 
-$__System.registerDynamic("e9", ["6", "7", "12", "ea"], true, function($__require, exports, module) {
+$__System.registerDynamic("f0", ["6", "7", "12", "f1"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -26815,12 +27364,12 @@ $__System.registerDynamic("e9", ["6", "7", "12", "ea"], true, function($__requir
   exports.EventEmitter = async_1.EventEmitter;
   var exceptions_1 = $__require('12');
   exports.WrappedException = exceptions_1.WrappedException;
-  var exception_handler_1 = $__require('ea');
+  var exception_handler_1 = $__require('f1');
   exports.ExceptionHandler = exception_handler_1.ExceptionHandler;
   return module.exports;
 });
 
-$__System.registerDynamic("eb", ["5e"], true, function($__require, exports, module) {
+$__System.registerDynamic("f2", ["5e"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -26833,7 +27382,7 @@ $__System.registerDynamic("eb", ["5e"], true, function($__require, exports, modu
   return module.exports;
 });
 
-$__System.registerDynamic("ec", ["a7"], true, function($__require, exports, module) {
+$__System.registerDynamic("f3", ["a7"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -26847,7 +27396,7 @@ $__System.registerDynamic("ec", ["a7"], true, function($__require, exports, modu
   return module.exports;
 });
 
-$__System.registerDynamic("ed", ["e", "6", "7"], true, function($__require, exports, module) {
+$__System.registerDynamic("f4", ["e", "6", "7"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -26988,7 +27537,7 @@ $__System.registerDynamic("aa", [], true, function($__require, exports, module) 
   return module.exports;
 });
 
-$__System.registerDynamic("b3", ["12", "ee", "7b"], true, function($__require, exports, module) {
+$__System.registerDynamic("b3", ["12", "f5", "7b"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -27005,7 +27554,7 @@ $__System.registerDynamic("b3", ["12", "ee", "7b"], true, function($__require, e
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
   };
   var exceptions_1 = $__require('12');
-  var change_detector_ref_1 = $__require('ee');
+  var change_detector_ref_1 = $__require('f5');
   var constants_1 = $__require('7b');
   var ViewRef = (function(_super) {
     __extends(ViewRef, _super);
@@ -27113,7 +27662,7 @@ $__System.registerDynamic("b3", ["12", "ee", "7b"], true, function($__require, e
   return module.exports;
 });
 
-$__System.registerDynamic("a8", ["bc", "ed", "ef", "a5", "aa", "b3", "a6", "66", "b5"], true, function($__require, exports, module) {
+$__System.registerDynamic("a8", ["bc", "f4", "f6", "a5", "aa", "b3", "a6", "66", "b5"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -27122,9 +27671,9 @@ $__System.registerDynamic("a8", ["bc", "ed", "ef", "a5", "aa", "b3", "a6", "66",
   "use strict";
   var component_resolver_1 = $__require('bc');
   exports.ComponentResolver = component_resolver_1.ComponentResolver;
-  var query_list_1 = $__require('ed');
+  var query_list_1 = $__require('f4');
   exports.QueryList = query_list_1.QueryList;
-  var dynamic_component_loader_1 = $__require('ef');
+  var dynamic_component_loader_1 = $__require('f6');
   exports.DynamicComponentLoader = dynamic_component_loader_1.DynamicComponentLoader;
   var element_ref_1 = $__require('a5');
   exports.ElementRef = element_ref_1.ElementRef;
@@ -27347,7 +27896,7 @@ $__System.registerDynamic("56", ["6", "e"], true, function($__require, exports, 
   return module.exports;
 });
 
-$__System.registerDynamic("e6", ["78"], true, function($__require, exports, module) {
+$__System.registerDynamic("ed", ["78"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -27380,7 +27929,7 @@ $__System.registerDynamic("9d", ["40", "6"], true, function($__require, exports,
   return module.exports;
 });
 
-$__System.registerDynamic("f0", ["6", "40", "86", "93", "94", "62", "5c"], true, function($__require, exports, module) {
+$__System.registerDynamic("f7", ["6", "40", "86", "93", "94", "62", "5c"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -27404,7 +27953,7 @@ $__System.registerDynamic("f0", ["6", "40", "86", "93", "94", "62", "5c"], true,
   return module.exports;
 });
 
-$__System.registerDynamic("f1", [], true, function($__require, exports, module) {
+$__System.registerDynamic("f8", [], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -27501,7 +28050,7 @@ $__System.registerDynamic("f1", [], true, function($__require, exports, module) 
   return module.exports;
 });
 
-$__System.registerDynamic("5e", ["7", "f1", "12"], true, function($__require, exports, module) {
+$__System.registerDynamic("5e", ["7", "f8", "12"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -27509,9 +28058,9 @@ $__System.registerDynamic("5e", ["7", "f1", "12"], true, function($__require, ex
       GLOBAL = this;
   "use strict";
   var async_1 = $__require('7');
-  var ng_zone_impl_1 = $__require('f1');
+  var ng_zone_impl_1 = $__require('f8');
   var exceptions_1 = $__require('12');
-  var ng_zone_impl_2 = $__require('f1');
+  var ng_zone_impl_2 = $__require('f8');
   exports.NgZoneError = ng_zone_impl_2.NgZoneError;
   var NgZone = (function() {
     function NgZone(_a) {
@@ -28285,7 +28834,7 @@ $__System.registerDynamic("2e", [], true, function($__require, exports, module) 
   return module.exports;
 });
 
-$__System.registerDynamic("f2", [], true, function($__require, exports, module) {
+$__System.registerDynamic("f9", [], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -28312,7 +28861,7 @@ $__System.registerDynamic("f2", [], true, function($__require, exports, module) 
   return module.exports;
 });
 
-$__System.registerDynamic("f3", ["f4"], true, function($__require, exports, module) {
+$__System.registerDynamic("fa", ["fb"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -28327,7 +28876,7 @@ $__System.registerDynamic("f3", ["f4"], true, function($__require, exports, modu
     }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
   };
-  var Subscription_1 = $__require('f4');
+  var Subscription_1 = $__require('fb');
   var SubjectSubscription = (function(_super) {
     __extends(SubjectSubscription, _super);
     function SubjectSubscription(subject, subscriber) {
@@ -28358,7 +28907,7 @@ $__System.registerDynamic("f3", ["f4"], true, function($__require, exports, modu
   return module.exports;
 });
 
-$__System.registerDynamic("f5", ["f6", "f7", "f4", "f2", "f3", "f8"], true, function($__require, exports, module) {
+$__System.registerDynamic("fc", ["fd", "fe", "fb", "f9", "fa", "ff"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -28373,12 +28922,12 @@ $__System.registerDynamic("f5", ["f6", "f7", "f4", "f2", "f3", "f8"], true, func
     }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
   };
-  var Observable_1 = $__require('f6');
-  var Subscriber_1 = $__require('f7');
-  var Subscription_1 = $__require('f4');
-  var ObjectUnsubscribedError_1 = $__require('f2');
-  var SubjectSubscription_1 = $__require('f3');
-  var rxSubscriber_1 = $__require('f8');
+  var Observable_1 = $__require('fd');
+  var Subscriber_1 = $__require('fe');
+  var Subscription_1 = $__require('fb');
+  var ObjectUnsubscribedError_1 = $__require('f9');
+  var SubjectSubscription_1 = $__require('fa');
+  var rxSubscriber_1 = $__require('ff');
   var SubjectSubscriber = (function(_super) {
     __extends(SubjectSubscriber, _super);
     function SubjectSubscriber(destination) {
@@ -28516,7 +29065,7 @@ $__System.registerDynamic("f5", ["f6", "f7", "f4", "f2", "f3", "f8"], true, func
   return module.exports;
 });
 
-$__System.registerDynamic("f9", ["fa", "f6"], true, function($__require, exports, module) {
+$__System.registerDynamic("100", ["101", "fd"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -28531,8 +29080,8 @@ $__System.registerDynamic("f9", ["fa", "f6"], true, function($__require, exports
     }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
   };
-  var root_1 = $__require('fa');
-  var Observable_1 = $__require('f6');
+  var root_1 = $__require('101');
+  var Observable_1 = $__require('fd');
   var PromiseObservable = (function(_super) {
     __extends(PromiseObservable, _super);
     function PromiseObservable(promise, scheduler) {
@@ -28631,13 +29180,13 @@ $__System.registerDynamic("f9", ["fa", "f6"], true, function($__require, exports
   return module.exports;
 });
 
-$__System.registerDynamic("fb", ["fa"], true, function($__require, exports, module) {
+$__System.registerDynamic("102", ["101"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
       global = this,
       GLOBAL = this;
-  var root_1 = $__require('fa');
+  var root_1 = $__require('101');
   function toPromise(PromiseCtor) {
     var _this = this;
     if (!PromiseCtor) {
@@ -28665,7 +29214,7 @@ $__System.registerDynamic("fb", ["fa"], true, function($__require, exports, modu
   return module.exports;
 });
 
-$__System.registerDynamic("fc", [], true, function($__require, exports, module) {
+$__System.registerDynamic("103", [], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -28677,7 +29226,7 @@ $__System.registerDynamic("fc", [], true, function($__require, exports, module) 
   return module.exports;
 });
 
-$__System.registerDynamic("fd", [], true, function($__require, exports, module) {
+$__System.registerDynamic("104", [], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -28690,7 +29239,7 @@ $__System.registerDynamic("fd", [], true, function($__require, exports, module) 
   return module.exports;
 });
 
-$__System.registerDynamic("fe", [], true, function($__require, exports, module) {
+$__System.registerDynamic("105", [], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -28703,13 +29252,13 @@ $__System.registerDynamic("fe", [], true, function($__require, exports, module) 
   return module.exports;
 });
 
-$__System.registerDynamic("ff", ["100"], true, function($__require, exports, module) {
+$__System.registerDynamic("106", ["107"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
       global = this,
       GLOBAL = this;
-  var errorObject_1 = $__require('100');
+  var errorObject_1 = $__require('107');
   var tryCatchTarget;
   function tryCatcher() {
     try {
@@ -28728,7 +29277,7 @@ $__System.registerDynamic("ff", ["100"], true, function($__require, exports, mod
   return module.exports;
 });
 
-$__System.registerDynamic("100", [], true, function($__require, exports, module) {
+$__System.registerDynamic("107", [], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -28738,7 +29287,7 @@ $__System.registerDynamic("100", [], true, function($__require, exports, module)
   return module.exports;
 });
 
-$__System.registerDynamic("101", [], true, function($__require, exports, module) {
+$__System.registerDynamic("108", [], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -28769,18 +29318,18 @@ $__System.registerDynamic("101", [], true, function($__require, exports, module)
   return module.exports;
 });
 
-$__System.registerDynamic("f4", ["fc", "fd", "fe", "ff", "100", "101"], true, function($__require, exports, module) {
+$__System.registerDynamic("fb", ["103", "104", "105", "106", "107", "108"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
       global = this,
       GLOBAL = this;
-  var isArray_1 = $__require('fc');
-  var isObject_1 = $__require('fd');
-  var isFunction_1 = $__require('fe');
-  var tryCatch_1 = $__require('ff');
-  var errorObject_1 = $__require('100');
-  var UnsubscriptionError_1 = $__require('101');
+  var isArray_1 = $__require('103');
+  var isObject_1 = $__require('104');
+  var isFunction_1 = $__require('105');
+  var tryCatch_1 = $__require('106');
+  var errorObject_1 = $__require('107');
+  var UnsubscriptionError_1 = $__require('108');
   var Subscription = (function() {
     function Subscription(unsubscribe) {
       this.isUnsubscribed = false;
@@ -28874,7 +29423,7 @@ $__System.registerDynamic("f4", ["fc", "fd", "fe", "ff", "100", "101"], true, fu
   return module.exports;
 });
 
-$__System.registerDynamic("102", [], true, function($__require, exports, module) {
+$__System.registerDynamic("109", [], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -28891,7 +29440,7 @@ $__System.registerDynamic("102", [], true, function($__require, exports, module)
   return module.exports;
 });
 
-$__System.registerDynamic("f7", ["fe", "f4", "102", "f8"], true, function($__require, exports, module) {
+$__System.registerDynamic("fe", ["105", "fb", "109", "ff"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -28906,10 +29455,10 @@ $__System.registerDynamic("f7", ["fe", "f4", "102", "f8"], true, function($__req
     }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
   };
-  var isFunction_1 = $__require('fe');
-  var Subscription_1 = $__require('f4');
-  var Observer_1 = $__require('102');
-  var rxSubscriber_1 = $__require('f8');
+  var isFunction_1 = $__require('105');
+  var Subscription_1 = $__require('fb');
+  var Observer_1 = $__require('109');
+  var rxSubscriber_1 = $__require('ff');
   var Subscriber = (function(_super) {
     __extends(Subscriber, _super);
     function Subscriber(destinationOrNext, error, complete) {
@@ -29089,7 +29638,7 @@ $__System.registerDynamic("f7", ["fe", "f4", "102", "f8"], true, function($__req
   return module.exports;
 });
 
-$__System.registerDynamic("fa", [], true, function($__require, exports, module) {
+$__System.registerDynamic("101", [], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -29113,26 +29662,26 @@ $__System.registerDynamic("fa", [], true, function($__require, exports, module) 
   return module.exports;
 });
 
-$__System.registerDynamic("f8", ["fa"], true, function($__require, exports, module) {
+$__System.registerDynamic("ff", ["101"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
       global = this,
       GLOBAL = this;
-  var root_1 = $__require('fa');
+  var root_1 = $__require('101');
   var Symbol = root_1.root.Symbol;
   exports.$$rxSubscriber = (typeof Symbol === 'function' && typeof Symbol.for === 'function') ? Symbol.for('rxSubscriber') : '@@rxSubscriber';
   return module.exports;
 });
 
-$__System.registerDynamic("103", ["f7", "f8"], true, function($__require, exports, module) {
+$__System.registerDynamic("10a", ["fe", "ff"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
       global = this,
       GLOBAL = this;
-  var Subscriber_1 = $__require('f7');
-  var rxSubscriber_1 = $__require('f8');
+  var Subscriber_1 = $__require('fe');
+  var rxSubscriber_1 = $__require('ff');
   function toSubscriber(nextOrObserver, error, complete) {
     if (nextOrObserver) {
       if (nextOrObserver instanceof Subscriber_1.Subscriber) {
@@ -29151,7 +29700,7 @@ $__System.registerDynamic("103", ["f7", "f8"], true, function($__require, export
   return module.exports;
 });
 
-$__System.registerDynamic("104", [], true, function($__require, exports, module) {
+$__System.registerDynamic("10b", [], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -29175,25 +29724,25 @@ $__System.registerDynamic("104", [], true, function($__require, exports, module)
   return module.exports;
 });
 
-$__System.registerDynamic("105", ["104"], true, function($__require, exports, module) {
+$__System.registerDynamic("10c", ["10b"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
       global = this,
       GLOBAL = this;
-  module.exports = $__require('104')(global || window || this);
+  module.exports = $__require('10b')(global || window || this);
   return module.exports;
 });
 
-$__System.registerDynamic("f6", ["fa", "103", "105"], true, function($__require, exports, module) {
+$__System.registerDynamic("fd", ["101", "10a", "10c"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
       global = this,
       GLOBAL = this;
-  var root_1 = $__require('fa');
-  var toSubscriber_1 = $__require('103');
-  var $$observable = $__require('105');
+  var root_1 = $__require('101');
+  var toSubscriber_1 = $__require('10a');
+  var $$observable = $__require('10c');
   var Observable = (function() {
     function Observable(subscribe) {
       this._isScalar = false;
@@ -29265,7 +29814,7 @@ $__System.registerDynamic("f6", ["fa", "103", "105"], true, function($__require,
   return module.exports;
 });
 
-$__System.registerDynamic("7", ["6", "2e", "f5", "f9", "fb", "f6"], true, function($__require, exports, module) {
+$__System.registerDynamic("7", ["6", "2e", "fc", "100", "102", "fd"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -29285,12 +29834,12 @@ $__System.registerDynamic("7", ["6", "2e", "f5", "f9", "fb", "f6"], true, functi
   var promise_1 = $__require('2e');
   exports.PromiseWrapper = promise_1.PromiseWrapper;
   exports.PromiseCompleter = promise_1.PromiseCompleter;
-  var Subject_1 = $__require('f5');
-  var PromiseObservable_1 = $__require('f9');
-  var toPromise_1 = $__require('fb');
-  var Observable_1 = $__require('f6');
+  var Subject_1 = $__require('fc');
+  var PromiseObservable_1 = $__require('100');
+  var toPromise_1 = $__require('102');
+  var Observable_1 = $__require('fd');
   exports.Observable = Observable_1.Observable;
-  var Subject_2 = $__require('f5');
+  var Subject_2 = $__require('fc');
   exports.Subject = Subject_2.Subject;
   var TimerWrapper = (function() {
     function TimerWrapper() {}
@@ -29470,7 +30019,7 @@ $__System.registerDynamic("a5", [], true, function($__require, exports, module) 
   return module.exports;
 });
 
-$__System.registerDynamic("106", ["6"], true, function($__require, exports, module) {
+$__System.registerDynamic("10d", ["6"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -29515,14 +30064,14 @@ $__System.registerDynamic("106", ["6"], true, function($__require, exports, modu
   return module.exports;
 });
 
-$__System.registerDynamic("b4", ["106"], true, function($__require, exports, module) {
+$__System.registerDynamic("b4", ["10d"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
       global = this,
       GLOBAL = this;
   "use strict";
-  var impl = $__require('106');
+  var impl = $__require('10d');
   exports.wtfEnabled = impl.detectWTF();
   function noopScope(arg0, arg1) {
     return null;
@@ -29844,7 +30393,7 @@ $__System.registerDynamic("b5", ["12"], true, function($__require, exports, modu
   return module.exports;
 });
 
-$__System.registerDynamic("107", ["6", "12", "e", "40"], true, function($__require, exports, module) {
+$__System.registerDynamic("10e", ["6", "12", "e", "40"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -29912,7 +30461,7 @@ $__System.registerDynamic("107", ["6", "12", "e", "40"], true, function($__requi
   return module.exports;
 });
 
-$__System.registerDynamic("108", ["12", "e", "6"], true, function($__require, exports, module) {
+$__System.registerDynamic("10f", ["12", "e", "6"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -30428,7 +30977,7 @@ $__System.registerDynamic("108", ["12", "e", "6"], true, function($__require, ex
   return module.exports;
 });
 
-$__System.registerDynamic("109", ["6", "12", "e", "40"], true, function($__require, exports, module) {
+$__System.registerDynamic("110", ["6", "12", "e", "40"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -30496,7 +31045,7 @@ $__System.registerDynamic("109", ["6", "12", "e", "40"], true, function($__requi
   return module.exports;
 });
 
-$__System.registerDynamic("10a", ["e", "6", "12"], true, function($__require, exports, module) {
+$__System.registerDynamic("111", ["e", "6", "12"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -30819,7 +31368,7 @@ $__System.registerDynamic("7b", ["6"], true, function($__require, exports, modul
   return module.exports;
 });
 
-$__System.registerDynamic("ee", [], true, function($__require, exports, module) {
+$__System.registerDynamic("f5", [], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -30834,7 +31383,7 @@ $__System.registerDynamic("ee", [], true, function($__require, exports, module) 
   return module.exports;
 });
 
-$__System.registerDynamic("10b", ["6", "e"], true, function($__require, exports, module) {
+$__System.registerDynamic("112", ["6", "e"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -30897,22 +31446,22 @@ $__System.registerDynamic("10b", ["6", "e"], true, function($__require, exports,
   return module.exports;
 });
 
-$__System.registerDynamic("78", ["107", "108", "109", "10a", "6", "7b", "ee", "10b"], true, function($__require, exports, module) {
+$__System.registerDynamic("78", ["10e", "10f", "110", "111", "6", "7b", "f5", "112"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
       global = this,
       GLOBAL = this;
   "use strict";
-  var iterable_differs_1 = $__require('107');
-  var default_iterable_differ_1 = $__require('108');
-  var keyvalue_differs_1 = $__require('109');
-  var default_keyvalue_differ_1 = $__require('10a');
+  var iterable_differs_1 = $__require('10e');
+  var default_iterable_differ_1 = $__require('10f');
+  var keyvalue_differs_1 = $__require('110');
+  var default_keyvalue_differ_1 = $__require('111');
   var lang_1 = $__require('6');
-  var default_keyvalue_differ_2 = $__require('10a');
+  var default_keyvalue_differ_2 = $__require('111');
   exports.DefaultKeyValueDifferFactory = default_keyvalue_differ_2.DefaultKeyValueDifferFactory;
   exports.KeyValueChangeRecord = default_keyvalue_differ_2.KeyValueChangeRecord;
-  var default_iterable_differ_2 = $__require('108');
+  var default_iterable_differ_2 = $__require('10f');
   exports.DefaultIterableDifferFactory = default_iterable_differ_2.DefaultIterableDifferFactory;
   exports.CollectionChangeRecord = default_iterable_differ_2.CollectionChangeRecord;
   var constants_1 = $__require('7b');
@@ -30921,13 +31470,13 @@ $__System.registerDynamic("78", ["107", "108", "109", "10a", "6", "7b", "ee", "1
   exports.ChangeDetectorState = constants_1.ChangeDetectorState;
   exports.CHANGE_DETECTOR_STATE_VALUES = constants_1.CHANGE_DETECTOR_STATE_VALUES;
   exports.isDefaultChangeDetectionStrategy = constants_1.isDefaultChangeDetectionStrategy;
-  var change_detector_ref_1 = $__require('ee');
+  var change_detector_ref_1 = $__require('f5');
   exports.ChangeDetectorRef = change_detector_ref_1.ChangeDetectorRef;
-  var iterable_differs_2 = $__require('107');
+  var iterable_differs_2 = $__require('10e');
   exports.IterableDiffers = iterable_differs_2.IterableDiffers;
-  var keyvalue_differs_2 = $__require('109');
+  var keyvalue_differs_2 = $__require('110');
   exports.KeyValueDiffers = keyvalue_differs_2.KeyValueDiffers;
-  var change_detection_util_1 = $__require('10b');
+  var change_detection_util_1 = $__require('112');
   exports.WrappedValue = change_detection_util_1.WrappedValue;
   exports.ValueUnwrapper = change_detection_util_1.ValueUnwrapper;
   exports.SimpleChange = change_detection_util_1.SimpleChange;
@@ -31013,7 +31562,7 @@ $__System.registerDynamic("a7", ["12"], true, function($__require, exports, modu
   return module.exports;
 });
 
-$__System.registerDynamic("d0", ["6"], true, function($__require, exports, module) {
+$__System.registerDynamic("d3", ["6"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -31183,7 +31732,7 @@ $__System.registerDynamic("d0", ["6"], true, function($__require, exports, modul
   return module.exports;
 });
 
-$__System.registerDynamic("b9", ["a0", "d0"], true, function($__require, exports, module) {
+$__System.registerDynamic("b9", ["a0", "d3"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -31191,7 +31740,7 @@ $__System.registerDynamic("b9", ["a0", "d0"], true, function($__require, exports
       GLOBAL = this;
   "use strict";
   var metadata_1 = $__require('a0');
-  var decorators_1 = $__require('d0');
+  var decorators_1 = $__require('d3');
   exports.Inject = decorators_1.makeParamDecorator(metadata_1.InjectMetadata);
   exports.Optional = decorators_1.makeParamDecorator(metadata_1.OptionalMetadata);
   exports.Injectable = decorators_1.makeDecorator(metadata_1.InjectableMetadata);
@@ -31224,7 +31773,7 @@ $__System.registerDynamic("a9", ["6", "12"], true, function($__require, exports,
   return module.exports;
 });
 
-$__System.registerDynamic("10c", ["e", "9f", "9b", "6", "12", "10d", "a0", "a9"], true, function($__require, exports, module) {
+$__System.registerDynamic("113", ["e", "9f", "9b", "6", "12", "114", "a0", "a9"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -31236,7 +31785,7 @@ $__System.registerDynamic("10c", ["e", "9f", "9b", "6", "12", "10d", "a0", "a9"]
   var reflective_exceptions_1 = $__require('9b');
   var lang_1 = $__require('6');
   var exceptions_1 = $__require('12');
-  var reflective_key_1 = $__require('10d');
+  var reflective_key_1 = $__require('114');
   var metadata_1 = $__require('a0');
   var injector_1 = $__require('a9');
   var __unused;
@@ -32095,7 +32644,7 @@ $__System.registerDynamic("9e", ["6", "12"], true, function($__require, exports,
   return module.exports;
 });
 
-$__System.registerDynamic("9f", ["6", "e", "93", "10d", "a0", "9b", "10e", "9e"], true, function($__require, exports, module) {
+$__System.registerDynamic("9f", ["6", "e", "93", "114", "a0", "9b", "115", "9e"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -32105,10 +32654,10 @@ $__System.registerDynamic("9f", ["6", "e", "93", "10d", "a0", "9b", "10e", "9e"]
   var lang_1 = $__require('6');
   var collection_1 = $__require('e');
   var reflection_1 = $__require('93');
-  var reflective_key_1 = $__require('10d');
+  var reflective_key_1 = $__require('114');
   var metadata_1 = $__require('a0');
   var reflective_exceptions_1 = $__require('9b');
-  var forward_ref_1 = $__require('10e');
+  var forward_ref_1 = $__require('115');
   var provider_1 = $__require('9e');
   var ReflectiveDependency = (function() {
     function ReflectiveDependency(key, optional, lowerBoundVisibility, upperBoundVisibility, properties) {
@@ -32298,7 +32847,7 @@ $__System.registerDynamic("9f", ["6", "e", "93", "10d", "a0", "9b", "10e", "9e"]
   return module.exports;
 });
 
-$__System.registerDynamic("10e", ["6"], true, function($__require, exports, module) {
+$__System.registerDynamic("115", ["6"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -32325,7 +32874,7 @@ $__System.registerDynamic("10e", ["6"], true, function($__require, exports, modu
   return module.exports;
 });
 
-$__System.registerDynamic("10d", ["6", "12", "10e"], true, function($__require, exports, module) {
+$__System.registerDynamic("114", ["6", "12", "115"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -32334,7 +32883,7 @@ $__System.registerDynamic("10d", ["6", "12", "10e"], true, function($__require, 
   "use strict";
   var lang_1 = $__require('6');
   var exceptions_1 = $__require('12');
-  var forward_ref_1 = $__require('10e');
+  var forward_ref_1 = $__require('115');
   var ReflectiveKey = (function() {
     function ReflectiveKey(token, id) {
       this.token = token;
@@ -32562,7 +33111,7 @@ $__System.registerDynamic("9b", ["e", "6", "12"], true, function($__require, exp
   return module.exports;
 });
 
-$__System.registerDynamic("10f", ["6"], true, function($__require, exports, module) {
+$__System.registerDynamic("116", ["6"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -32600,7 +33149,7 @@ $__System.registerDynamic("10f", ["6"], true, function($__require, exports, modu
   return module.exports;
 });
 
-$__System.registerDynamic("40", ["a0", "b9", "10e", "a9", "10c", "9e", "9f", "10d", "9b", "10f"], true, function($__require, exports, module) {
+$__System.registerDynamic("40", ["a0", "b9", "115", "a9", "113", "9e", "9f", "114", "9b", "116"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -32621,12 +33170,12 @@ $__System.registerDynamic("40", ["a0", "b9", "10e", "a9", "10c", "9e", "9f", "10
   exports.SkipSelfMetadata = metadata_1.SkipSelfMetadata;
   exports.DependencyMetadata = metadata_1.DependencyMetadata;
   __export($__require('b9'));
-  var forward_ref_1 = $__require('10e');
+  var forward_ref_1 = $__require('115');
   exports.forwardRef = forward_ref_1.forwardRef;
   exports.resolveForwardRef = forward_ref_1.resolveForwardRef;
   var injector_1 = $__require('a9');
   exports.Injector = injector_1.Injector;
-  var reflective_injector_1 = $__require('10c');
+  var reflective_injector_1 = $__require('113');
   exports.ReflectiveInjector = reflective_injector_1.ReflectiveInjector;
   var provider_1 = $__require('9e');
   exports.Binding = provider_1.Binding;
@@ -32637,7 +33186,7 @@ $__System.registerDynamic("40", ["a0", "b9", "10e", "a9", "10c", "9e", "9f", "10
   var reflective_provider_1 = $__require('9f');
   exports.ResolvedReflectiveFactory = reflective_provider_1.ResolvedReflectiveFactory;
   exports.ReflectiveDependency = reflective_provider_1.ReflectiveDependency;
-  var reflective_key_1 = $__require('10d');
+  var reflective_key_1 = $__require('114');
   exports.ReflectiveKey = reflective_key_1.ReflectiveKey;
   var reflective_exceptions_1 = $__require('9b');
   exports.NoProviderError = reflective_exceptions_1.NoProviderError;
@@ -32647,7 +33196,7 @@ $__System.registerDynamic("40", ["a0", "b9", "10e", "a9", "10c", "9e", "9f", "10
   exports.InvalidProviderError = reflective_exceptions_1.InvalidProviderError;
   exports.NoAnnotationError = reflective_exceptions_1.NoAnnotationError;
   exports.OutOfBoundsError = reflective_exceptions_1.OutOfBoundsError;
-  var opaque_token_1 = $__require('10f');
+  var opaque_token_1 = $__require('116');
   exports.OpaqueToken = opaque_token_1.OpaqueToken;
   return module.exports;
 });
@@ -33309,7 +33858,7 @@ $__System.registerDynamic("bc", ["40", "6", "12", "7", "93", "66"], true, functi
   return module.exports;
 });
 
-$__System.registerDynamic("ef", ["40", "bc", "6"], true, function($__require, exports, module) {
+$__System.registerDynamic("f6", ["40", "bc", "6"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -33384,7 +33933,7 @@ $__System.registerDynamic("ef", ["40", "bc", "6"], true, function($__require, ex
   return module.exports;
 });
 
-$__System.registerDynamic("110", ["6", "40", "a1", "5c", "78", "8b", "bc", "ef"], true, function($__require, exports, module) {
+$__System.registerDynamic("117", ["6", "40", "a1", "5c", "78", "8b", "bc", "f6"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -33398,7 +33947,7 @@ $__System.registerDynamic("110", ["6", "40", "a1", "5c", "78", "8b", "bc", "ef"]
   var change_detection_1 = $__require('78');
   var view_utils_1 = $__require('8b');
   var component_resolver_1 = $__require('bc');
-  var dynamic_component_loader_1 = $__require('ef');
+  var dynamic_component_loader_1 = $__require('f6');
   var __unused;
   exports.APPLICATION_COMMON_PROVIDERS = lang_1.CONST_EXPR([application_ref_1.APPLICATION_CORE_PROVIDERS, new di_1.Provider(component_resolver_1.ComponentResolver, {useClass: component_resolver_1.ReflectorComponentResolver}), application_tokens_1.APP_ID_RANDOM_PROVIDER, view_utils_1.ViewUtils, new di_1.Provider(change_detection_1.IterableDiffers, {useValue: change_detection_1.defaultIterableDiffers}), new di_1.Provider(change_detection_1.KeyValueDiffers, {useValue: change_detection_1.defaultKeyValueDiffers}), new di_1.Provider(dynamic_component_loader_1.DynamicComponentLoader, {useClass: dynamic_component_loader_1.DynamicComponentLoader_})]);
   return module.exports;
@@ -33419,7 +33968,7 @@ $__System.registerDynamic("94", [], true, function($__require, exports, module) 
   return module.exports;
 });
 
-$__System.registerDynamic("111", ["6", "12", "e", "94"], true, function($__require, exports, module) {
+$__System.registerDynamic("118", ["6", "12", "e", "94"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -33576,7 +34125,7 @@ $__System.registerDynamic("111", ["6", "12", "e", "94"], true, function($__requi
   return module.exports;
 });
 
-$__System.registerDynamic("112", [], true, function($__require, exports, module) {
+$__System.registerDynamic("119", [], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -33642,1109 +34191,6 @@ $__System.registerDynamic("112", [], true, function($__require, exports, module)
     return BaseWrappedException;
   }(Error));
   exports.BaseWrappedException = BaseWrappedException;
-  return module.exports;
-});
-
-$__System.registerDynamic("e", ["6"], true, function($__require, exports, module) {
-  "use strict";
-  ;
-  var define,
-      global = this,
-      GLOBAL = this;
-  "use strict";
-  var lang_1 = $__require('6');
-  exports.Map = lang_1.global.Map;
-  exports.Set = lang_1.global.Set;
-  var createMapFromPairs = (function() {
-    try {
-      if (new exports.Map([[1, 2]]).size === 1) {
-        return function createMapFromPairs(pairs) {
-          return new exports.Map(pairs);
-        };
-      }
-    } catch (e) {}
-    return function createMapAndPopulateFromPairs(pairs) {
-      var map = new exports.Map();
-      for (var i = 0; i < pairs.length; i++) {
-        var pair = pairs[i];
-        map.set(pair[0], pair[1]);
-      }
-      return map;
-    };
-  })();
-  var createMapFromMap = (function() {
-    try {
-      if (new exports.Map(new exports.Map())) {
-        return function createMapFromMap(m) {
-          return new exports.Map(m);
-        };
-      }
-    } catch (e) {}
-    return function createMapAndPopulateFromMap(m) {
-      var map = new exports.Map();
-      m.forEach(function(v, k) {
-        map.set(k, v);
-      });
-      return map;
-    };
-  })();
-  var _clearValues = (function() {
-    if ((new exports.Map()).keys().next) {
-      return function _clearValues(m) {
-        var keyIterator = m.keys();
-        var k;
-        while (!((k = keyIterator.next()).done)) {
-          m.set(k.value, null);
-        }
-      };
-    } else {
-      return function _clearValuesWithForeEach(m) {
-        m.forEach(function(v, k) {
-          m.set(k, null);
-        });
-      };
-    }
-  })();
-  var _arrayFromMap = (function() {
-    try {
-      if ((new exports.Map()).values().next) {
-        return function createArrayFromMap(m, getValues) {
-          return getValues ? Array.from(m.values()) : Array.from(m.keys());
-        };
-      }
-    } catch (e) {}
-    return function createArrayFromMapWithForeach(m, getValues) {
-      var res = ListWrapper.createFixedSize(m.size),
-          i = 0;
-      m.forEach(function(v, k) {
-        res[i] = getValues ? v : k;
-        i++;
-      });
-      return res;
-    };
-  })();
-  var MapWrapper = (function() {
-    function MapWrapper() {}
-    MapWrapper.clone = function(m) {
-      return createMapFromMap(m);
-    };
-    MapWrapper.createFromStringMap = function(stringMap) {
-      var result = new exports.Map();
-      for (var prop in stringMap) {
-        result.set(prop, stringMap[prop]);
-      }
-      return result;
-    };
-    MapWrapper.toStringMap = function(m) {
-      var r = {};
-      m.forEach(function(v, k) {
-        return r[k] = v;
-      });
-      return r;
-    };
-    MapWrapper.createFromPairs = function(pairs) {
-      return createMapFromPairs(pairs);
-    };
-    MapWrapper.clearValues = function(m) {
-      _clearValues(m);
-    };
-    MapWrapper.iterable = function(m) {
-      return m;
-    };
-    MapWrapper.keys = function(m) {
-      return _arrayFromMap(m, false);
-    };
-    MapWrapper.values = function(m) {
-      return _arrayFromMap(m, true);
-    };
-    return MapWrapper;
-  }());
-  exports.MapWrapper = MapWrapper;
-  var StringMapWrapper = (function() {
-    function StringMapWrapper() {}
-    StringMapWrapper.create = function() {
-      return {};
-    };
-    StringMapWrapper.contains = function(map, key) {
-      return map.hasOwnProperty(key);
-    };
-    StringMapWrapper.get = function(map, key) {
-      return map.hasOwnProperty(key) ? map[key] : undefined;
-    };
-    StringMapWrapper.set = function(map, key, value) {
-      map[key] = value;
-    };
-    StringMapWrapper.keys = function(map) {
-      return Object.keys(map);
-    };
-    StringMapWrapper.values = function(map) {
-      return Object.keys(map).reduce(function(r, a) {
-        r.push(map[a]);
-        return r;
-      }, []);
-    };
-    StringMapWrapper.isEmpty = function(map) {
-      for (var prop in map) {
-        return false;
-      }
-      return true;
-    };
-    StringMapWrapper.delete = function(map, key) {
-      delete map[key];
-    };
-    StringMapWrapper.forEach = function(map, callback) {
-      for (var prop in map) {
-        if (map.hasOwnProperty(prop)) {
-          callback(map[prop], prop);
-        }
-      }
-    };
-    StringMapWrapper.merge = function(m1, m2) {
-      var m = {};
-      for (var attr in m1) {
-        if (m1.hasOwnProperty(attr)) {
-          m[attr] = m1[attr];
-        }
-      }
-      for (var attr in m2) {
-        if (m2.hasOwnProperty(attr)) {
-          m[attr] = m2[attr];
-        }
-      }
-      return m;
-    };
-    StringMapWrapper.equals = function(m1, m2) {
-      var k1 = Object.keys(m1);
-      var k2 = Object.keys(m2);
-      if (k1.length != k2.length) {
-        return false;
-      }
-      var key;
-      for (var i = 0; i < k1.length; i++) {
-        key = k1[i];
-        if (m1[key] !== m2[key]) {
-          return false;
-        }
-      }
-      return true;
-    };
-    return StringMapWrapper;
-  }());
-  exports.StringMapWrapper = StringMapWrapper;
-  var ListWrapper = (function() {
-    function ListWrapper() {}
-    ListWrapper.createFixedSize = function(size) {
-      return new Array(size);
-    };
-    ListWrapper.createGrowableSize = function(size) {
-      return new Array(size);
-    };
-    ListWrapper.clone = function(array) {
-      return array.slice(0);
-    };
-    ListWrapper.forEachWithIndex = function(array, fn) {
-      for (var i = 0; i < array.length; i++) {
-        fn(array[i], i);
-      }
-    };
-    ListWrapper.first = function(array) {
-      if (!array)
-        return null;
-      return array[0];
-    };
-    ListWrapper.last = function(array) {
-      if (!array || array.length == 0)
-        return null;
-      return array[array.length - 1];
-    };
-    ListWrapper.indexOf = function(array, value, startIndex) {
-      if (startIndex === void 0) {
-        startIndex = 0;
-      }
-      return array.indexOf(value, startIndex);
-    };
-    ListWrapper.contains = function(list, el) {
-      return list.indexOf(el) !== -1;
-    };
-    ListWrapper.reversed = function(array) {
-      var a = ListWrapper.clone(array);
-      return a.reverse();
-    };
-    ListWrapper.concat = function(a, b) {
-      return a.concat(b);
-    };
-    ListWrapper.insert = function(list, index, value) {
-      list.splice(index, 0, value);
-    };
-    ListWrapper.removeAt = function(list, index) {
-      var res = list[index];
-      list.splice(index, 1);
-      return res;
-    };
-    ListWrapper.removeAll = function(list, items) {
-      for (var i = 0; i < items.length; ++i) {
-        var index = list.indexOf(items[i]);
-        list.splice(index, 1);
-      }
-    };
-    ListWrapper.remove = function(list, el) {
-      var index = list.indexOf(el);
-      if (index > -1) {
-        list.splice(index, 1);
-        return true;
-      }
-      return false;
-    };
-    ListWrapper.clear = function(list) {
-      list.length = 0;
-    };
-    ListWrapper.isEmpty = function(list) {
-      return list.length == 0;
-    };
-    ListWrapper.fill = function(list, value, start, end) {
-      if (start === void 0) {
-        start = 0;
-      }
-      if (end === void 0) {
-        end = null;
-      }
-      list.fill(value, start, end === null ? list.length : end);
-    };
-    ListWrapper.equals = function(a, b) {
-      if (a.length != b.length)
-        return false;
-      for (var i = 0; i < a.length; ++i) {
-        if (a[i] !== b[i])
-          return false;
-      }
-      return true;
-    };
-    ListWrapper.slice = function(l, from, to) {
-      if (from === void 0) {
-        from = 0;
-      }
-      if (to === void 0) {
-        to = null;
-      }
-      return l.slice(from, to === null ? undefined : to);
-    };
-    ListWrapper.splice = function(l, from, length) {
-      return l.splice(from, length);
-    };
-    ListWrapper.sort = function(l, compareFn) {
-      if (lang_1.isPresent(compareFn)) {
-        l.sort(compareFn);
-      } else {
-        l.sort();
-      }
-    };
-    ListWrapper.toString = function(l) {
-      return l.toString();
-    };
-    ListWrapper.toJSON = function(l) {
-      return JSON.stringify(l);
-    };
-    ListWrapper.maximum = function(list, predicate) {
-      if (list.length == 0) {
-        return null;
-      }
-      var solution = null;
-      var maxValue = -Infinity;
-      for (var index = 0; index < list.length; index++) {
-        var candidate = list[index];
-        if (lang_1.isBlank(candidate)) {
-          continue;
-        }
-        var candidateValue = predicate(candidate);
-        if (candidateValue > maxValue) {
-          solution = candidate;
-          maxValue = candidateValue;
-        }
-      }
-      return solution;
-    };
-    ListWrapper.flatten = function(list) {
-      var target = [];
-      _flattenArray(list, target);
-      return target;
-    };
-    ListWrapper.addAll = function(list, source) {
-      for (var i = 0; i < source.length; i++) {
-        list.push(source[i]);
-      }
-    };
-    return ListWrapper;
-  }());
-  exports.ListWrapper = ListWrapper;
-  function _flattenArray(source, target) {
-    if (lang_1.isPresent(source)) {
-      for (var i = 0; i < source.length; i++) {
-        var item = source[i];
-        if (lang_1.isArray(item)) {
-          _flattenArray(item, target);
-        } else {
-          target.push(item);
-        }
-      }
-    }
-    return target;
-  }
-  function isListLikeIterable(obj) {
-    if (!lang_1.isJsObject(obj))
-      return false;
-    return lang_1.isArray(obj) || (!(obj instanceof exports.Map) && lang_1.getSymbolIterator() in obj);
-  }
-  exports.isListLikeIterable = isListLikeIterable;
-  function areIterablesEqual(a, b, comparator) {
-    var iterator1 = a[lang_1.getSymbolIterator()]();
-    var iterator2 = b[lang_1.getSymbolIterator()]();
-    while (true) {
-      var item1 = iterator1.next();
-      var item2 = iterator2.next();
-      if (item1.done && item2.done)
-        return true;
-      if (item1.done || item2.done)
-        return false;
-      if (!comparator(item1.value, item2.value))
-        return false;
-    }
-  }
-  exports.areIterablesEqual = areIterablesEqual;
-  function iterateListLike(obj, fn) {
-    if (lang_1.isArray(obj)) {
-      for (var i = 0; i < obj.length; i++) {
-        fn(obj[i]);
-      }
-    } else {
-      var iterator = obj[lang_1.getSymbolIterator()]();
-      var item;
-      while (!((item = iterator.next()).done)) {
-        fn(item.value);
-      }
-    }
-  }
-  exports.iterateListLike = iterateListLike;
-  var createSetFromList = (function() {
-    var test = new exports.Set([1, 2, 3]);
-    if (test.size === 3) {
-      return function createSetFromList(lst) {
-        return new exports.Set(lst);
-      };
-    } else {
-      return function createSetAndPopulateFromList(lst) {
-        var res = new exports.Set(lst);
-        if (res.size !== lst.length) {
-          for (var i = 0; i < lst.length; i++) {
-            res.add(lst[i]);
-          }
-        }
-        return res;
-      };
-    }
-  })();
-  var SetWrapper = (function() {
-    function SetWrapper() {}
-    SetWrapper.createFromList = function(lst) {
-      return createSetFromList(lst);
-    };
-    SetWrapper.has = function(s, key) {
-      return s.has(key);
-    };
-    SetWrapper.delete = function(m, k) {
-      m.delete(k);
-    };
-    return SetWrapper;
-  }());
-  exports.SetWrapper = SetWrapper;
-  return module.exports;
-});
-
-$__System.registerDynamic("ea", ["6", "112", "e"], true, function($__require, exports, module) {
-  "use strict";
-  ;
-  var define,
-      global = this,
-      GLOBAL = this;
-  "use strict";
-  var lang_1 = $__require('6');
-  var base_wrapped_exception_1 = $__require('112');
-  var collection_1 = $__require('e');
-  var _ArrayLogger = (function() {
-    function _ArrayLogger() {
-      this.res = [];
-    }
-    _ArrayLogger.prototype.log = function(s) {
-      this.res.push(s);
-    };
-    _ArrayLogger.prototype.logError = function(s) {
-      this.res.push(s);
-    };
-    _ArrayLogger.prototype.logGroup = function(s) {
-      this.res.push(s);
-    };
-    _ArrayLogger.prototype.logGroupEnd = function() {};
-    ;
-    return _ArrayLogger;
-  }());
-  var ExceptionHandler = (function() {
-    function ExceptionHandler(_logger, _rethrowException) {
-      if (_rethrowException === void 0) {
-        _rethrowException = true;
-      }
-      this._logger = _logger;
-      this._rethrowException = _rethrowException;
-    }
-    ExceptionHandler.exceptionToString = function(exception, stackTrace, reason) {
-      if (stackTrace === void 0) {
-        stackTrace = null;
-      }
-      if (reason === void 0) {
-        reason = null;
-      }
-      var l = new _ArrayLogger();
-      var e = new ExceptionHandler(l, false);
-      e.call(exception, stackTrace, reason);
-      return l.res.join("\n");
-    };
-    ExceptionHandler.prototype.call = function(exception, stackTrace, reason) {
-      if (stackTrace === void 0) {
-        stackTrace = null;
-      }
-      if (reason === void 0) {
-        reason = null;
-      }
-      var originalException = this._findOriginalException(exception);
-      var originalStack = this._findOriginalStack(exception);
-      var context = this._findContext(exception);
-      this._logger.logGroup("EXCEPTION: " + this._extractMessage(exception));
-      if (lang_1.isPresent(stackTrace) && lang_1.isBlank(originalStack)) {
-        this._logger.logError("STACKTRACE:");
-        this._logger.logError(this._longStackTrace(stackTrace));
-      }
-      if (lang_1.isPresent(reason)) {
-        this._logger.logError("REASON: " + reason);
-      }
-      if (lang_1.isPresent(originalException)) {
-        this._logger.logError("ORIGINAL EXCEPTION: " + this._extractMessage(originalException));
-      }
-      if (lang_1.isPresent(originalStack)) {
-        this._logger.logError("ORIGINAL STACKTRACE:");
-        this._logger.logError(this._longStackTrace(originalStack));
-      }
-      if (lang_1.isPresent(context)) {
-        this._logger.logError("ERROR CONTEXT:");
-        this._logger.logError(context);
-      }
-      this._logger.logGroupEnd();
-      if (this._rethrowException)
-        throw exception;
-    };
-    ExceptionHandler.prototype._extractMessage = function(exception) {
-      return exception instanceof base_wrapped_exception_1.BaseWrappedException ? exception.wrapperMessage : exception.toString();
-    };
-    ExceptionHandler.prototype._longStackTrace = function(stackTrace) {
-      return collection_1.isListLikeIterable(stackTrace) ? stackTrace.join("\n\n-----async gap-----\n") : stackTrace.toString();
-    };
-    ExceptionHandler.prototype._findContext = function(exception) {
-      try {
-        if (!(exception instanceof base_wrapped_exception_1.BaseWrappedException))
-          return null;
-        return lang_1.isPresent(exception.context) ? exception.context : this._findContext(exception.originalException);
-      } catch (e) {
-        return null;
-      }
-    };
-    ExceptionHandler.prototype._findOriginalException = function(exception) {
-      if (!(exception instanceof base_wrapped_exception_1.BaseWrappedException))
-        return null;
-      var e = exception.originalException;
-      while (e instanceof base_wrapped_exception_1.BaseWrappedException && lang_1.isPresent(e.originalException)) {
-        e = e.originalException;
-      }
-      return e;
-    };
-    ExceptionHandler.prototype._findOriginalStack = function(exception) {
-      if (!(exception instanceof base_wrapped_exception_1.BaseWrappedException))
-        return null;
-      var e = exception;
-      var stack = exception.originalStack;
-      while (e instanceof base_wrapped_exception_1.BaseWrappedException && lang_1.isPresent(e.originalException)) {
-        e = e.originalException;
-        if (e instanceof base_wrapped_exception_1.BaseWrappedException && lang_1.isPresent(e.originalException)) {
-          stack = e.originalStack;
-        }
-      }
-      return stack;
-    };
-    return ExceptionHandler;
-  }());
-  exports.ExceptionHandler = ExceptionHandler;
-  return module.exports;
-});
-
-$__System.registerDynamic("12", ["112", "ea"], true, function($__require, exports, module) {
-  "use strict";
-  ;
-  var define,
-      global = this,
-      GLOBAL = this;
-  "use strict";
-  var __extends = (this && this.__extends) || function(d, b) {
-    for (var p in b)
-      if (b.hasOwnProperty(p))
-        d[p] = b[p];
-    function __() {
-      this.constructor = d;
-    }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-  };
-  var base_wrapped_exception_1 = $__require('112');
-  var exception_handler_1 = $__require('ea');
-  var exception_handler_2 = $__require('ea');
-  exports.ExceptionHandler = exception_handler_2.ExceptionHandler;
-  var BaseException = (function(_super) {
-    __extends(BaseException, _super);
-    function BaseException(message) {
-      if (message === void 0) {
-        message = "--";
-      }
-      _super.call(this, message);
-      this.message = message;
-      this.stack = (new Error(message)).stack;
-    }
-    BaseException.prototype.toString = function() {
-      return this.message;
-    };
-    return BaseException;
-  }(Error));
-  exports.BaseException = BaseException;
-  var WrappedException = (function(_super) {
-    __extends(WrappedException, _super);
-    function WrappedException(_wrapperMessage, _originalException, _originalStack, _context) {
-      _super.call(this, _wrapperMessage);
-      this._wrapperMessage = _wrapperMessage;
-      this._originalException = _originalException;
-      this._originalStack = _originalStack;
-      this._context = _context;
-      this._wrapperStack = (new Error(_wrapperMessage)).stack;
-    }
-    Object.defineProperty(WrappedException.prototype, "wrapperMessage", {
-      get: function() {
-        return this._wrapperMessage;
-      },
-      enumerable: true,
-      configurable: true
-    });
-    Object.defineProperty(WrappedException.prototype, "wrapperStack", {
-      get: function() {
-        return this._wrapperStack;
-      },
-      enumerable: true,
-      configurable: true
-    });
-    Object.defineProperty(WrappedException.prototype, "originalException", {
-      get: function() {
-        return this._originalException;
-      },
-      enumerable: true,
-      configurable: true
-    });
-    Object.defineProperty(WrappedException.prototype, "originalStack", {
-      get: function() {
-        return this._originalStack;
-      },
-      enumerable: true,
-      configurable: true
-    });
-    Object.defineProperty(WrappedException.prototype, "context", {
-      get: function() {
-        return this._context;
-      },
-      enumerable: true,
-      configurable: true
-    });
-    Object.defineProperty(WrappedException.prototype, "message", {
-      get: function() {
-        return exception_handler_1.ExceptionHandler.exceptionToString(this);
-      },
-      enumerable: true,
-      configurable: true
-    });
-    WrappedException.prototype.toString = function() {
-      return this.message;
-    };
-    return WrappedException;
-  }(base_wrapped_exception_1.BaseWrappedException));
-  exports.WrappedException = WrappedException;
-  function makeTypeError(message) {
-    return new TypeError(message);
-  }
-  exports.makeTypeError = makeTypeError;
-  function unimplemented() {
-    throw new BaseException('unimplemented');
-  }
-  exports.unimplemented = unimplemented;
-  return module.exports;
-});
-
-$__System.registerDynamic("bf", ["6", "12"], true, function($__require, exports, module) {
-  "use strict";
-  ;
-  var define,
-      global = this,
-      GLOBAL = this;
-  "use strict";
-  var lang_1 = $__require('6');
-  var exceptions_1 = $__require('12');
-  var ReflectionCapabilities = (function() {
-    function ReflectionCapabilities(reflect) {
-      this._reflect = lang_1.isPresent(reflect) ? reflect : lang_1.global.Reflect;
-    }
-    ReflectionCapabilities.prototype.isReflectionEnabled = function() {
-      return true;
-    };
-    ReflectionCapabilities.prototype.factory = function(t) {
-      switch (t.length) {
-        case 0:
-          return function() {
-            return new t();
-          };
-        case 1:
-          return function(a1) {
-            return new t(a1);
-          };
-        case 2:
-          return function(a1, a2) {
-            return new t(a1, a2);
-          };
-        case 3:
-          return function(a1, a2, a3) {
-            return new t(a1, a2, a3);
-          };
-        case 4:
-          return function(a1, a2, a3, a4) {
-            return new t(a1, a2, a3, a4);
-          };
-        case 5:
-          return function(a1, a2, a3, a4, a5) {
-            return new t(a1, a2, a3, a4, a5);
-          };
-        case 6:
-          return function(a1, a2, a3, a4, a5, a6) {
-            return new t(a1, a2, a3, a4, a5, a6);
-          };
-        case 7:
-          return function(a1, a2, a3, a4, a5, a6, a7) {
-            return new t(a1, a2, a3, a4, a5, a6, a7);
-          };
-        case 8:
-          return function(a1, a2, a3, a4, a5, a6, a7, a8) {
-            return new t(a1, a2, a3, a4, a5, a6, a7, a8);
-          };
-        case 9:
-          return function(a1, a2, a3, a4, a5, a6, a7, a8, a9) {
-            return new t(a1, a2, a3, a4, a5, a6, a7, a8, a9);
-          };
-        case 10:
-          return function(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10) {
-            return new t(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10);
-          };
-        case 11:
-          return function(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11) {
-            return new t(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11);
-          };
-        case 12:
-          return function(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12) {
-            return new t(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12);
-          };
-        case 13:
-          return function(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13) {
-            return new t(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13);
-          };
-        case 14:
-          return function(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14) {
-            return new t(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14);
-          };
-        case 15:
-          return function(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14, a15) {
-            return new t(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14, a15);
-          };
-        case 16:
-          return function(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14, a15, a16) {
-            return new t(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14, a15, a16);
-          };
-        case 17:
-          return function(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14, a15, a16, a17) {
-            return new t(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14, a15, a16, a17);
-          };
-        case 18:
-          return function(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14, a15, a16, a17, a18) {
-            return new t(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14, a15, a16, a17, a18);
-          };
-        case 19:
-          return function(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14, a15, a16, a17, a18, a19) {
-            return new t(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14, a15, a16, a17, a18, a19);
-          };
-        case 20:
-          return function(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14, a15, a16, a17, a18, a19, a20) {
-            return new t(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14, a15, a16, a17, a18, a19, a20);
-          };
-      }
-      ;
-      throw new Error("Cannot create a factory for '" + lang_1.stringify(t) + "' because its constructor has more than 20 arguments");
-    };
-    ReflectionCapabilities.prototype._zipTypesAndAnnotations = function(paramTypes, paramAnnotations) {
-      var result;
-      if (typeof paramTypes === 'undefined') {
-        result = new Array(paramAnnotations.length);
-      } else {
-        result = new Array(paramTypes.length);
-      }
-      for (var i = 0; i < result.length; i++) {
-        if (typeof paramTypes === 'undefined') {
-          result[i] = [];
-        } else if (paramTypes[i] != Object) {
-          result[i] = [paramTypes[i]];
-        } else {
-          result[i] = [];
-        }
-        if (lang_1.isPresent(paramAnnotations) && lang_1.isPresent(paramAnnotations[i])) {
-          result[i] = result[i].concat(paramAnnotations[i]);
-        }
-      }
-      return result;
-    };
-    ReflectionCapabilities.prototype.parameters = function(typeOrFunc) {
-      if (lang_1.isPresent(typeOrFunc.parameters)) {
-        return typeOrFunc.parameters;
-      }
-      if (lang_1.isPresent(this._reflect) && lang_1.isPresent(this._reflect.getMetadata)) {
-        var paramAnnotations = this._reflect.getMetadata('parameters', typeOrFunc);
-        var paramTypes = this._reflect.getMetadata('design:paramtypes', typeOrFunc);
-        if (lang_1.isPresent(paramTypes) || lang_1.isPresent(paramAnnotations)) {
-          return this._zipTypesAndAnnotations(paramTypes, paramAnnotations);
-        }
-      }
-      var parameters = new Array(typeOrFunc.length);
-      parameters.fill(undefined);
-      return parameters;
-    };
-    ReflectionCapabilities.prototype.annotations = function(typeOrFunc) {
-      if (lang_1.isPresent(typeOrFunc.annotations)) {
-        var annotations = typeOrFunc.annotations;
-        if (lang_1.isFunction(annotations) && annotations.annotations) {
-          annotations = annotations.annotations;
-        }
-        return annotations;
-      }
-      if (lang_1.isPresent(this._reflect) && lang_1.isPresent(this._reflect.getMetadata)) {
-        var annotations = this._reflect.getMetadata('annotations', typeOrFunc);
-        if (lang_1.isPresent(annotations))
-          return annotations;
-      }
-      return [];
-    };
-    ReflectionCapabilities.prototype.propMetadata = function(typeOrFunc) {
-      if (lang_1.isPresent(typeOrFunc.propMetadata)) {
-        var propMetadata = typeOrFunc.propMetadata;
-        if (lang_1.isFunction(propMetadata) && propMetadata.propMetadata) {
-          propMetadata = propMetadata.propMetadata;
-        }
-        return propMetadata;
-      }
-      if (lang_1.isPresent(this._reflect) && lang_1.isPresent(this._reflect.getMetadata)) {
-        var propMetadata = this._reflect.getMetadata('propMetadata', typeOrFunc);
-        if (lang_1.isPresent(propMetadata))
-          return propMetadata;
-      }
-      return {};
-    };
-    ReflectionCapabilities.prototype.interfaces = function(type) {
-      throw new exceptions_1.BaseException("JavaScript does not support interfaces");
-    };
-    ReflectionCapabilities.prototype.getter = function(name) {
-      return new Function('o', 'return o.' + name + ';');
-    };
-    ReflectionCapabilities.prototype.setter = function(name) {
-      return new Function('o', 'v', 'return o.' + name + ' = v;');
-    };
-    ReflectionCapabilities.prototype.method = function(name) {
-      var functionBody = "if (!o." + name + ") throw new Error('\"" + name + "\" is undefined');\n        return o." + name + ".apply(o, args);";
-      return new Function('o', 'args', functionBody);
-    };
-    ReflectionCapabilities.prototype.importUri = function(type) {
-      return "./" + lang_1.stringify(type);
-    };
-    return ReflectionCapabilities;
-  }());
-  exports.ReflectionCapabilities = ReflectionCapabilities;
-  return module.exports;
-});
-
-$__System.registerDynamic("93", ["111", "bf"], true, function($__require, exports, module) {
-  "use strict";
-  ;
-  var define,
-      global = this,
-      GLOBAL = this;
-  "use strict";
-  var reflector_1 = $__require('111');
-  var reflector_2 = $__require('111');
-  exports.Reflector = reflector_2.Reflector;
-  exports.ReflectionInfo = reflector_2.ReflectionInfo;
-  var reflection_capabilities_1 = $__require('bf');
-  exports.reflector = new reflector_1.Reflector(new reflection_capabilities_1.ReflectionCapabilities());
-  return module.exports;
-});
-
-$__System.registerDynamic("8", ["54", "e7", "e8", "40", "e9", "6", "5c", "a1", "eb", "ec", "a8", "56", "62", "e6", "9d", "f0", "110", "93"], true, function($__require, exports, module) {
-  "use strict";
-  ;
-  var define,
-      global = this,
-      GLOBAL = this;
-  "use strict";
-  function __export(m) {
-    for (var p in m)
-      if (!exports.hasOwnProperty(p))
-        exports[p] = m[p];
-  }
-  __export($__require('54'));
-  __export($__require('e7'));
-  __export($__require('e8'));
-  __export($__require('40'));
-  __export($__require('e9'));
-  var lang_1 = $__require('6');
-  exports.enableProdMode = lang_1.enableProdMode;
-  var application_ref_1 = $__require('5c');
-  exports.createPlatform = application_ref_1.createPlatform;
-  exports.assertPlatform = application_ref_1.assertPlatform;
-  exports.disposePlatform = application_ref_1.disposePlatform;
-  exports.getPlatform = application_ref_1.getPlatform;
-  exports.coreBootstrap = application_ref_1.coreBootstrap;
-  exports.coreLoadAndBootstrap = application_ref_1.coreLoadAndBootstrap;
-  exports.createNgZone = application_ref_1.createNgZone;
-  exports.PlatformRef = application_ref_1.PlatformRef;
-  exports.ApplicationRef = application_ref_1.ApplicationRef;
-  var application_tokens_1 = $__require('a1');
-  exports.APP_ID = application_tokens_1.APP_ID;
-  exports.APP_INITIALIZER = application_tokens_1.APP_INITIALIZER;
-  exports.PACKAGE_ROOT_URL = application_tokens_1.PACKAGE_ROOT_URL;
-  exports.PLATFORM_INITIALIZER = application_tokens_1.PLATFORM_INITIALIZER;
-  __export($__require('eb'));
-  __export($__require('ec'));
-  __export($__require('a8'));
-  var debug_node_1 = $__require('56');
-  exports.DebugElement = debug_node_1.DebugElement;
-  exports.DebugNode = debug_node_1.DebugNode;
-  exports.asNativeElements = debug_node_1.asNativeElements;
-  __export($__require('62'));
-  __export($__require('e6'));
-  __export($__require('9d'));
-  __export($__require('f0'));
-  __export($__require('110'));
-  __export($__require('93'));
-  return module.exports;
-});
-
-$__System.registerDynamic("e3", ["6", "8"], true, function($__require, exports, module) {
-  "use strict";
-  ;
-  var define,
-      global = this,
-      GLOBAL = this;
-  "use strict";
-  var lang_1 = $__require('6');
-  var core_1 = $__require('8');
-  var LocationStrategy = (function() {
-    function LocationStrategy() {}
-    return LocationStrategy;
-  }());
-  exports.LocationStrategy = LocationStrategy;
-  exports.APP_BASE_HREF = lang_1.CONST_EXPR(new core_1.OpaqueToken('appBaseHref'));
-  return module.exports;
-});
-
-$__System.registerDynamic("e4", ["7", "8", "e3"], true, function($__require, exports, module) {
-  "use strict";
-  ;
-  var define,
-      global = this,
-      GLOBAL = this;
-  "use strict";
-  var __decorate = (this && this.__decorate) || function(decorators, target, key, desc) {
-    var c = arguments.length,
-        r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc,
-        d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
-      r = Reflect.decorate(decorators, target, key, desc);
-    else
-      for (var i = decorators.length - 1; i >= 0; i--)
-        if (d = decorators[i])
-          r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-  };
-  var __metadata = (this && this.__metadata) || function(k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function")
-      return Reflect.metadata(k, v);
-  };
-  var async_1 = $__require('7');
-  var core_1 = $__require('8');
-  var location_strategy_1 = $__require('e3');
-  var Location = (function() {
-    function Location(platformStrategy) {
-      var _this = this;
-      this.platformStrategy = platformStrategy;
-      this._subject = new async_1.EventEmitter();
-      var browserBaseHref = this.platformStrategy.getBaseHref();
-      this._baseHref = Location.stripTrailingSlash(_stripIndexHtml(browserBaseHref));
-      this.platformStrategy.onPopState(function(ev) {
-        async_1.ObservableWrapper.callEmit(_this._subject, {
-          'url': _this.path(),
-          'pop': true,
-          'type': ev.type
-        });
-      });
-    }
-    Location.prototype.path = function() {
-      return this.normalize(this.platformStrategy.path());
-    };
-    Location.prototype.normalize = function(url) {
-      return Location.stripTrailingSlash(_stripBaseHref(this._baseHref, _stripIndexHtml(url)));
-    };
-    Location.prototype.prepareExternalUrl = function(url) {
-      if (url.length > 0 && !url.startsWith('/')) {
-        url = '/' + url;
-      }
-      return this.platformStrategy.prepareExternalUrl(url);
-    };
-    Location.prototype.go = function(path, query) {
-      if (query === void 0) {
-        query = '';
-      }
-      this.platformStrategy.pushState(null, '', path, query);
-    };
-    Location.prototype.replaceState = function(path, query) {
-      if (query === void 0) {
-        query = '';
-      }
-      this.platformStrategy.replaceState(null, '', path, query);
-    };
-    Location.prototype.forward = function() {
-      this.platformStrategy.forward();
-    };
-    Location.prototype.back = function() {
-      this.platformStrategy.back();
-    };
-    Location.prototype.subscribe = function(onNext, onThrow, onReturn) {
-      if (onThrow === void 0) {
-        onThrow = null;
-      }
-      if (onReturn === void 0) {
-        onReturn = null;
-      }
-      return async_1.ObservableWrapper.subscribe(this._subject, onNext, onThrow, onReturn);
-    };
-    Location.normalizeQueryParams = function(params) {
-      return (params.length > 0 && params.substring(0, 1) != '?') ? ('?' + params) : params;
-    };
-    Location.joinWithSlash = function(start, end) {
-      if (start.length == 0) {
-        return end;
-      }
-      if (end.length == 0) {
-        return start;
-      }
-      var slashes = 0;
-      if (start.endsWith('/')) {
-        slashes++;
-      }
-      if (end.startsWith('/')) {
-        slashes++;
-      }
-      if (slashes == 2) {
-        return start + end.substring(1);
-      }
-      if (slashes == 1) {
-        return start + end;
-      }
-      return start + '/' + end;
-    };
-    Location.stripTrailingSlash = function(url) {
-      if (/\/$/g.test(url)) {
-        url = url.substring(0, url.length - 1);
-      }
-      return url;
-    };
-    Location = __decorate([core_1.Injectable(), __metadata('design:paramtypes', [location_strategy_1.LocationStrategy])], Location);
-    return Location;
-  }());
-  exports.Location = Location;
-  function _stripBaseHref(baseHref, url) {
-    if (baseHref.length > 0 && url.startsWith(baseHref)) {
-      return url.substring(baseHref.length);
-    }
-    return url;
-  }
-  function _stripIndexHtml(url) {
-    if (/\/index.html$/g.test(url)) {
-      return url.substring(0, url.length - 11);
-    }
-    return url;
-  }
-  return module.exports;
-});
-
-$__System.registerDynamic("113", ["e1", "e3", "e2", "e5", "e4"], true, function($__require, exports, module) {
-  "use strict";
-  ;
-  var define,
-      global = this,
-      GLOBAL = this;
-  "use strict";
-  function __export(m) {
-    for (var p in m)
-      if (!exports.hasOwnProperty(p))
-        exports[p] = m[p];
-  }
-  __export($__require('e1'));
-  __export($__require('e3'));
-  __export($__require('e2'));
-  __export($__require('e5'));
-  __export($__require('e4'));
-  return module.exports;
-});
-
-$__System.registerDynamic("cf", ["113"], true, function($__require, exports, module) {
-  "use strict";
-  ;
-  var define,
-      global = this,
-      GLOBAL = this;
-  "use strict";
-  function __export(m) {
-    for (var p in m)
-      if (!exports.hasOwnProperty(p))
-        exports[p] = m[p];
-  }
-  __export($__require('113'));
-  return module.exports;
-});
-
-$__System.registerDynamic("114", ["df", "8", "e0", "cf", "6"], true, function($__require, exports, module) {
-  "use strict";
-  ;
-  var define,
-      global = this,
-      GLOBAL = this;
-  "use strict";
-  var router_providers_common_1 = $__require('df');
-  var core_1 = $__require('8');
-  var browser_platform_location_1 = $__require('e0');
-  var common_1 = $__require('cf');
-  var lang_1 = $__require('6');
-  exports.ROUTER_PROVIDERS = lang_1.CONST_EXPR([router_providers_common_1.ROUTER_PROVIDERS_COMMON, lang_1.CONST_EXPR(new core_1.Provider(common_1.PlatformLocation, {useClass: browser_platform_location_1.BrowserPlatformLocation}))]);
-  exports.ROUTER_BINDINGS = exports.ROUTER_PROVIDERS;
   return module.exports;
 });
 
@@ -35264,7 +34710,859 @@ $__System.registerDynamic("6", [], true, function($__require, exports, module) {
   return module.exports;
 });
 
-$__System.registerDynamic("c4", ["ca", "c9", "ce", "cb", "d2", "dd", "cc", "8", "df", "114", "6"], true, function($__require, exports, module) {
+$__System.registerDynamic("e", ["6"], true, function($__require, exports, module) {
+  "use strict";
+  ;
+  var define,
+      global = this,
+      GLOBAL = this;
+  "use strict";
+  var lang_1 = $__require('6');
+  exports.Map = lang_1.global.Map;
+  exports.Set = lang_1.global.Set;
+  var createMapFromPairs = (function() {
+    try {
+      if (new exports.Map([[1, 2]]).size === 1) {
+        return function createMapFromPairs(pairs) {
+          return new exports.Map(pairs);
+        };
+      }
+    } catch (e) {}
+    return function createMapAndPopulateFromPairs(pairs) {
+      var map = new exports.Map();
+      for (var i = 0; i < pairs.length; i++) {
+        var pair = pairs[i];
+        map.set(pair[0], pair[1]);
+      }
+      return map;
+    };
+  })();
+  var createMapFromMap = (function() {
+    try {
+      if (new exports.Map(new exports.Map())) {
+        return function createMapFromMap(m) {
+          return new exports.Map(m);
+        };
+      }
+    } catch (e) {}
+    return function createMapAndPopulateFromMap(m) {
+      var map = new exports.Map();
+      m.forEach(function(v, k) {
+        map.set(k, v);
+      });
+      return map;
+    };
+  })();
+  var _clearValues = (function() {
+    if ((new exports.Map()).keys().next) {
+      return function _clearValues(m) {
+        var keyIterator = m.keys();
+        var k;
+        while (!((k = keyIterator.next()).done)) {
+          m.set(k.value, null);
+        }
+      };
+    } else {
+      return function _clearValuesWithForeEach(m) {
+        m.forEach(function(v, k) {
+          m.set(k, null);
+        });
+      };
+    }
+  })();
+  var _arrayFromMap = (function() {
+    try {
+      if ((new exports.Map()).values().next) {
+        return function createArrayFromMap(m, getValues) {
+          return getValues ? Array.from(m.values()) : Array.from(m.keys());
+        };
+      }
+    } catch (e) {}
+    return function createArrayFromMapWithForeach(m, getValues) {
+      var res = ListWrapper.createFixedSize(m.size),
+          i = 0;
+      m.forEach(function(v, k) {
+        res[i] = getValues ? v : k;
+        i++;
+      });
+      return res;
+    };
+  })();
+  var MapWrapper = (function() {
+    function MapWrapper() {}
+    MapWrapper.clone = function(m) {
+      return createMapFromMap(m);
+    };
+    MapWrapper.createFromStringMap = function(stringMap) {
+      var result = new exports.Map();
+      for (var prop in stringMap) {
+        result.set(prop, stringMap[prop]);
+      }
+      return result;
+    };
+    MapWrapper.toStringMap = function(m) {
+      var r = {};
+      m.forEach(function(v, k) {
+        return r[k] = v;
+      });
+      return r;
+    };
+    MapWrapper.createFromPairs = function(pairs) {
+      return createMapFromPairs(pairs);
+    };
+    MapWrapper.clearValues = function(m) {
+      _clearValues(m);
+    };
+    MapWrapper.iterable = function(m) {
+      return m;
+    };
+    MapWrapper.keys = function(m) {
+      return _arrayFromMap(m, false);
+    };
+    MapWrapper.values = function(m) {
+      return _arrayFromMap(m, true);
+    };
+    return MapWrapper;
+  }());
+  exports.MapWrapper = MapWrapper;
+  var StringMapWrapper = (function() {
+    function StringMapWrapper() {}
+    StringMapWrapper.create = function() {
+      return {};
+    };
+    StringMapWrapper.contains = function(map, key) {
+      return map.hasOwnProperty(key);
+    };
+    StringMapWrapper.get = function(map, key) {
+      return map.hasOwnProperty(key) ? map[key] : undefined;
+    };
+    StringMapWrapper.set = function(map, key, value) {
+      map[key] = value;
+    };
+    StringMapWrapper.keys = function(map) {
+      return Object.keys(map);
+    };
+    StringMapWrapper.values = function(map) {
+      return Object.keys(map).reduce(function(r, a) {
+        r.push(map[a]);
+        return r;
+      }, []);
+    };
+    StringMapWrapper.isEmpty = function(map) {
+      for (var prop in map) {
+        return false;
+      }
+      return true;
+    };
+    StringMapWrapper.delete = function(map, key) {
+      delete map[key];
+    };
+    StringMapWrapper.forEach = function(map, callback) {
+      for (var prop in map) {
+        if (map.hasOwnProperty(prop)) {
+          callback(map[prop], prop);
+        }
+      }
+    };
+    StringMapWrapper.merge = function(m1, m2) {
+      var m = {};
+      for (var attr in m1) {
+        if (m1.hasOwnProperty(attr)) {
+          m[attr] = m1[attr];
+        }
+      }
+      for (var attr in m2) {
+        if (m2.hasOwnProperty(attr)) {
+          m[attr] = m2[attr];
+        }
+      }
+      return m;
+    };
+    StringMapWrapper.equals = function(m1, m2) {
+      var k1 = Object.keys(m1);
+      var k2 = Object.keys(m2);
+      if (k1.length != k2.length) {
+        return false;
+      }
+      var key;
+      for (var i = 0; i < k1.length; i++) {
+        key = k1[i];
+        if (m1[key] !== m2[key]) {
+          return false;
+        }
+      }
+      return true;
+    };
+    return StringMapWrapper;
+  }());
+  exports.StringMapWrapper = StringMapWrapper;
+  var ListWrapper = (function() {
+    function ListWrapper() {}
+    ListWrapper.createFixedSize = function(size) {
+      return new Array(size);
+    };
+    ListWrapper.createGrowableSize = function(size) {
+      return new Array(size);
+    };
+    ListWrapper.clone = function(array) {
+      return array.slice(0);
+    };
+    ListWrapper.forEachWithIndex = function(array, fn) {
+      for (var i = 0; i < array.length; i++) {
+        fn(array[i], i);
+      }
+    };
+    ListWrapper.first = function(array) {
+      if (!array)
+        return null;
+      return array[0];
+    };
+    ListWrapper.last = function(array) {
+      if (!array || array.length == 0)
+        return null;
+      return array[array.length - 1];
+    };
+    ListWrapper.indexOf = function(array, value, startIndex) {
+      if (startIndex === void 0) {
+        startIndex = 0;
+      }
+      return array.indexOf(value, startIndex);
+    };
+    ListWrapper.contains = function(list, el) {
+      return list.indexOf(el) !== -1;
+    };
+    ListWrapper.reversed = function(array) {
+      var a = ListWrapper.clone(array);
+      return a.reverse();
+    };
+    ListWrapper.concat = function(a, b) {
+      return a.concat(b);
+    };
+    ListWrapper.insert = function(list, index, value) {
+      list.splice(index, 0, value);
+    };
+    ListWrapper.removeAt = function(list, index) {
+      var res = list[index];
+      list.splice(index, 1);
+      return res;
+    };
+    ListWrapper.removeAll = function(list, items) {
+      for (var i = 0; i < items.length; ++i) {
+        var index = list.indexOf(items[i]);
+        list.splice(index, 1);
+      }
+    };
+    ListWrapper.remove = function(list, el) {
+      var index = list.indexOf(el);
+      if (index > -1) {
+        list.splice(index, 1);
+        return true;
+      }
+      return false;
+    };
+    ListWrapper.clear = function(list) {
+      list.length = 0;
+    };
+    ListWrapper.isEmpty = function(list) {
+      return list.length == 0;
+    };
+    ListWrapper.fill = function(list, value, start, end) {
+      if (start === void 0) {
+        start = 0;
+      }
+      if (end === void 0) {
+        end = null;
+      }
+      list.fill(value, start, end === null ? list.length : end);
+    };
+    ListWrapper.equals = function(a, b) {
+      if (a.length != b.length)
+        return false;
+      for (var i = 0; i < a.length; ++i) {
+        if (a[i] !== b[i])
+          return false;
+      }
+      return true;
+    };
+    ListWrapper.slice = function(l, from, to) {
+      if (from === void 0) {
+        from = 0;
+      }
+      if (to === void 0) {
+        to = null;
+      }
+      return l.slice(from, to === null ? undefined : to);
+    };
+    ListWrapper.splice = function(l, from, length) {
+      return l.splice(from, length);
+    };
+    ListWrapper.sort = function(l, compareFn) {
+      if (lang_1.isPresent(compareFn)) {
+        l.sort(compareFn);
+      } else {
+        l.sort();
+      }
+    };
+    ListWrapper.toString = function(l) {
+      return l.toString();
+    };
+    ListWrapper.toJSON = function(l) {
+      return JSON.stringify(l);
+    };
+    ListWrapper.maximum = function(list, predicate) {
+      if (list.length == 0) {
+        return null;
+      }
+      var solution = null;
+      var maxValue = -Infinity;
+      for (var index = 0; index < list.length; index++) {
+        var candidate = list[index];
+        if (lang_1.isBlank(candidate)) {
+          continue;
+        }
+        var candidateValue = predicate(candidate);
+        if (candidateValue > maxValue) {
+          solution = candidate;
+          maxValue = candidateValue;
+        }
+      }
+      return solution;
+    };
+    ListWrapper.flatten = function(list) {
+      var target = [];
+      _flattenArray(list, target);
+      return target;
+    };
+    ListWrapper.addAll = function(list, source) {
+      for (var i = 0; i < source.length; i++) {
+        list.push(source[i]);
+      }
+    };
+    return ListWrapper;
+  }());
+  exports.ListWrapper = ListWrapper;
+  function _flattenArray(source, target) {
+    if (lang_1.isPresent(source)) {
+      for (var i = 0; i < source.length; i++) {
+        var item = source[i];
+        if (lang_1.isArray(item)) {
+          _flattenArray(item, target);
+        } else {
+          target.push(item);
+        }
+      }
+    }
+    return target;
+  }
+  function isListLikeIterable(obj) {
+    if (!lang_1.isJsObject(obj))
+      return false;
+    return lang_1.isArray(obj) || (!(obj instanceof exports.Map) && lang_1.getSymbolIterator() in obj);
+  }
+  exports.isListLikeIterable = isListLikeIterable;
+  function areIterablesEqual(a, b, comparator) {
+    var iterator1 = a[lang_1.getSymbolIterator()]();
+    var iterator2 = b[lang_1.getSymbolIterator()]();
+    while (true) {
+      var item1 = iterator1.next();
+      var item2 = iterator2.next();
+      if (item1.done && item2.done)
+        return true;
+      if (item1.done || item2.done)
+        return false;
+      if (!comparator(item1.value, item2.value))
+        return false;
+    }
+  }
+  exports.areIterablesEqual = areIterablesEqual;
+  function iterateListLike(obj, fn) {
+    if (lang_1.isArray(obj)) {
+      for (var i = 0; i < obj.length; i++) {
+        fn(obj[i]);
+      }
+    } else {
+      var iterator = obj[lang_1.getSymbolIterator()]();
+      var item;
+      while (!((item = iterator.next()).done)) {
+        fn(item.value);
+      }
+    }
+  }
+  exports.iterateListLike = iterateListLike;
+  var createSetFromList = (function() {
+    var test = new exports.Set([1, 2, 3]);
+    if (test.size === 3) {
+      return function createSetFromList(lst) {
+        return new exports.Set(lst);
+      };
+    } else {
+      return function createSetAndPopulateFromList(lst) {
+        var res = new exports.Set(lst);
+        if (res.size !== lst.length) {
+          for (var i = 0; i < lst.length; i++) {
+            res.add(lst[i]);
+          }
+        }
+        return res;
+      };
+    }
+  })();
+  var SetWrapper = (function() {
+    function SetWrapper() {}
+    SetWrapper.createFromList = function(lst) {
+      return createSetFromList(lst);
+    };
+    SetWrapper.has = function(s, key) {
+      return s.has(key);
+    };
+    SetWrapper.delete = function(m, k) {
+      m.delete(k);
+    };
+    return SetWrapper;
+  }());
+  exports.SetWrapper = SetWrapper;
+  return module.exports;
+});
+
+$__System.registerDynamic("f1", ["6", "119", "e"], true, function($__require, exports, module) {
+  "use strict";
+  ;
+  var define,
+      global = this,
+      GLOBAL = this;
+  "use strict";
+  var lang_1 = $__require('6');
+  var base_wrapped_exception_1 = $__require('119');
+  var collection_1 = $__require('e');
+  var _ArrayLogger = (function() {
+    function _ArrayLogger() {
+      this.res = [];
+    }
+    _ArrayLogger.prototype.log = function(s) {
+      this.res.push(s);
+    };
+    _ArrayLogger.prototype.logError = function(s) {
+      this.res.push(s);
+    };
+    _ArrayLogger.prototype.logGroup = function(s) {
+      this.res.push(s);
+    };
+    _ArrayLogger.prototype.logGroupEnd = function() {};
+    ;
+    return _ArrayLogger;
+  }());
+  var ExceptionHandler = (function() {
+    function ExceptionHandler(_logger, _rethrowException) {
+      if (_rethrowException === void 0) {
+        _rethrowException = true;
+      }
+      this._logger = _logger;
+      this._rethrowException = _rethrowException;
+    }
+    ExceptionHandler.exceptionToString = function(exception, stackTrace, reason) {
+      if (stackTrace === void 0) {
+        stackTrace = null;
+      }
+      if (reason === void 0) {
+        reason = null;
+      }
+      var l = new _ArrayLogger();
+      var e = new ExceptionHandler(l, false);
+      e.call(exception, stackTrace, reason);
+      return l.res.join("\n");
+    };
+    ExceptionHandler.prototype.call = function(exception, stackTrace, reason) {
+      if (stackTrace === void 0) {
+        stackTrace = null;
+      }
+      if (reason === void 0) {
+        reason = null;
+      }
+      var originalException = this._findOriginalException(exception);
+      var originalStack = this._findOriginalStack(exception);
+      var context = this._findContext(exception);
+      this._logger.logGroup("EXCEPTION: " + this._extractMessage(exception));
+      if (lang_1.isPresent(stackTrace) && lang_1.isBlank(originalStack)) {
+        this._logger.logError("STACKTRACE:");
+        this._logger.logError(this._longStackTrace(stackTrace));
+      }
+      if (lang_1.isPresent(reason)) {
+        this._logger.logError("REASON: " + reason);
+      }
+      if (lang_1.isPresent(originalException)) {
+        this._logger.logError("ORIGINAL EXCEPTION: " + this._extractMessage(originalException));
+      }
+      if (lang_1.isPresent(originalStack)) {
+        this._logger.logError("ORIGINAL STACKTRACE:");
+        this._logger.logError(this._longStackTrace(originalStack));
+      }
+      if (lang_1.isPresent(context)) {
+        this._logger.logError("ERROR CONTEXT:");
+        this._logger.logError(context);
+      }
+      this._logger.logGroupEnd();
+      if (this._rethrowException)
+        throw exception;
+    };
+    ExceptionHandler.prototype._extractMessage = function(exception) {
+      return exception instanceof base_wrapped_exception_1.BaseWrappedException ? exception.wrapperMessage : exception.toString();
+    };
+    ExceptionHandler.prototype._longStackTrace = function(stackTrace) {
+      return collection_1.isListLikeIterable(stackTrace) ? stackTrace.join("\n\n-----async gap-----\n") : stackTrace.toString();
+    };
+    ExceptionHandler.prototype._findContext = function(exception) {
+      try {
+        if (!(exception instanceof base_wrapped_exception_1.BaseWrappedException))
+          return null;
+        return lang_1.isPresent(exception.context) ? exception.context : this._findContext(exception.originalException);
+      } catch (e) {
+        return null;
+      }
+    };
+    ExceptionHandler.prototype._findOriginalException = function(exception) {
+      if (!(exception instanceof base_wrapped_exception_1.BaseWrappedException))
+        return null;
+      var e = exception.originalException;
+      while (e instanceof base_wrapped_exception_1.BaseWrappedException && lang_1.isPresent(e.originalException)) {
+        e = e.originalException;
+      }
+      return e;
+    };
+    ExceptionHandler.prototype._findOriginalStack = function(exception) {
+      if (!(exception instanceof base_wrapped_exception_1.BaseWrappedException))
+        return null;
+      var e = exception;
+      var stack = exception.originalStack;
+      while (e instanceof base_wrapped_exception_1.BaseWrappedException && lang_1.isPresent(e.originalException)) {
+        e = e.originalException;
+        if (e instanceof base_wrapped_exception_1.BaseWrappedException && lang_1.isPresent(e.originalException)) {
+          stack = e.originalStack;
+        }
+      }
+      return stack;
+    };
+    return ExceptionHandler;
+  }());
+  exports.ExceptionHandler = ExceptionHandler;
+  return module.exports;
+});
+
+$__System.registerDynamic("12", ["119", "f1"], true, function($__require, exports, module) {
+  "use strict";
+  ;
+  var define,
+      global = this,
+      GLOBAL = this;
+  "use strict";
+  var __extends = (this && this.__extends) || function(d, b) {
+    for (var p in b)
+      if (b.hasOwnProperty(p))
+        d[p] = b[p];
+    function __() {
+      this.constructor = d;
+    }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+  };
+  var base_wrapped_exception_1 = $__require('119');
+  var exception_handler_1 = $__require('f1');
+  var exception_handler_2 = $__require('f1');
+  exports.ExceptionHandler = exception_handler_2.ExceptionHandler;
+  var BaseException = (function(_super) {
+    __extends(BaseException, _super);
+    function BaseException(message) {
+      if (message === void 0) {
+        message = "--";
+      }
+      _super.call(this, message);
+      this.message = message;
+      this.stack = (new Error(message)).stack;
+    }
+    BaseException.prototype.toString = function() {
+      return this.message;
+    };
+    return BaseException;
+  }(Error));
+  exports.BaseException = BaseException;
+  var WrappedException = (function(_super) {
+    __extends(WrappedException, _super);
+    function WrappedException(_wrapperMessage, _originalException, _originalStack, _context) {
+      _super.call(this, _wrapperMessage);
+      this._wrapperMessage = _wrapperMessage;
+      this._originalException = _originalException;
+      this._originalStack = _originalStack;
+      this._context = _context;
+      this._wrapperStack = (new Error(_wrapperMessage)).stack;
+    }
+    Object.defineProperty(WrappedException.prototype, "wrapperMessage", {
+      get: function() {
+        return this._wrapperMessage;
+      },
+      enumerable: true,
+      configurable: true
+    });
+    Object.defineProperty(WrappedException.prototype, "wrapperStack", {
+      get: function() {
+        return this._wrapperStack;
+      },
+      enumerable: true,
+      configurable: true
+    });
+    Object.defineProperty(WrappedException.prototype, "originalException", {
+      get: function() {
+        return this._originalException;
+      },
+      enumerable: true,
+      configurable: true
+    });
+    Object.defineProperty(WrappedException.prototype, "originalStack", {
+      get: function() {
+        return this._originalStack;
+      },
+      enumerable: true,
+      configurable: true
+    });
+    Object.defineProperty(WrappedException.prototype, "context", {
+      get: function() {
+        return this._context;
+      },
+      enumerable: true,
+      configurable: true
+    });
+    Object.defineProperty(WrappedException.prototype, "message", {
+      get: function() {
+        return exception_handler_1.ExceptionHandler.exceptionToString(this);
+      },
+      enumerable: true,
+      configurable: true
+    });
+    WrappedException.prototype.toString = function() {
+      return this.message;
+    };
+    return WrappedException;
+  }(base_wrapped_exception_1.BaseWrappedException));
+  exports.WrappedException = WrappedException;
+  function makeTypeError(message) {
+    return new TypeError(message);
+  }
+  exports.makeTypeError = makeTypeError;
+  function unimplemented() {
+    throw new BaseException('unimplemented');
+  }
+  exports.unimplemented = unimplemented;
+  return module.exports;
+});
+
+$__System.registerDynamic("bf", ["6", "12"], true, function($__require, exports, module) {
+  "use strict";
+  ;
+  var define,
+      global = this,
+      GLOBAL = this;
+  "use strict";
+  var lang_1 = $__require('6');
+  var exceptions_1 = $__require('12');
+  var ReflectionCapabilities = (function() {
+    function ReflectionCapabilities(reflect) {
+      this._reflect = lang_1.isPresent(reflect) ? reflect : lang_1.global.Reflect;
+    }
+    ReflectionCapabilities.prototype.isReflectionEnabled = function() {
+      return true;
+    };
+    ReflectionCapabilities.prototype.factory = function(t) {
+      switch (t.length) {
+        case 0:
+          return function() {
+            return new t();
+          };
+        case 1:
+          return function(a1) {
+            return new t(a1);
+          };
+        case 2:
+          return function(a1, a2) {
+            return new t(a1, a2);
+          };
+        case 3:
+          return function(a1, a2, a3) {
+            return new t(a1, a2, a3);
+          };
+        case 4:
+          return function(a1, a2, a3, a4) {
+            return new t(a1, a2, a3, a4);
+          };
+        case 5:
+          return function(a1, a2, a3, a4, a5) {
+            return new t(a1, a2, a3, a4, a5);
+          };
+        case 6:
+          return function(a1, a2, a3, a4, a5, a6) {
+            return new t(a1, a2, a3, a4, a5, a6);
+          };
+        case 7:
+          return function(a1, a2, a3, a4, a5, a6, a7) {
+            return new t(a1, a2, a3, a4, a5, a6, a7);
+          };
+        case 8:
+          return function(a1, a2, a3, a4, a5, a6, a7, a8) {
+            return new t(a1, a2, a3, a4, a5, a6, a7, a8);
+          };
+        case 9:
+          return function(a1, a2, a3, a4, a5, a6, a7, a8, a9) {
+            return new t(a1, a2, a3, a4, a5, a6, a7, a8, a9);
+          };
+        case 10:
+          return function(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10) {
+            return new t(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10);
+          };
+        case 11:
+          return function(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11) {
+            return new t(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11);
+          };
+        case 12:
+          return function(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12) {
+            return new t(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12);
+          };
+        case 13:
+          return function(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13) {
+            return new t(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13);
+          };
+        case 14:
+          return function(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14) {
+            return new t(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14);
+          };
+        case 15:
+          return function(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14, a15) {
+            return new t(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14, a15);
+          };
+        case 16:
+          return function(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14, a15, a16) {
+            return new t(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14, a15, a16);
+          };
+        case 17:
+          return function(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14, a15, a16, a17) {
+            return new t(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14, a15, a16, a17);
+          };
+        case 18:
+          return function(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14, a15, a16, a17, a18) {
+            return new t(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14, a15, a16, a17, a18);
+          };
+        case 19:
+          return function(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14, a15, a16, a17, a18, a19) {
+            return new t(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14, a15, a16, a17, a18, a19);
+          };
+        case 20:
+          return function(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14, a15, a16, a17, a18, a19, a20) {
+            return new t(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14, a15, a16, a17, a18, a19, a20);
+          };
+      }
+      ;
+      throw new Error("Cannot create a factory for '" + lang_1.stringify(t) + "' because its constructor has more than 20 arguments");
+    };
+    ReflectionCapabilities.prototype._zipTypesAndAnnotations = function(paramTypes, paramAnnotations) {
+      var result;
+      if (typeof paramTypes === 'undefined') {
+        result = new Array(paramAnnotations.length);
+      } else {
+        result = new Array(paramTypes.length);
+      }
+      for (var i = 0; i < result.length; i++) {
+        if (typeof paramTypes === 'undefined') {
+          result[i] = [];
+        } else if (paramTypes[i] != Object) {
+          result[i] = [paramTypes[i]];
+        } else {
+          result[i] = [];
+        }
+        if (lang_1.isPresent(paramAnnotations) && lang_1.isPresent(paramAnnotations[i])) {
+          result[i] = result[i].concat(paramAnnotations[i]);
+        }
+      }
+      return result;
+    };
+    ReflectionCapabilities.prototype.parameters = function(typeOrFunc) {
+      if (lang_1.isPresent(typeOrFunc.parameters)) {
+        return typeOrFunc.parameters;
+      }
+      if (lang_1.isPresent(this._reflect) && lang_1.isPresent(this._reflect.getMetadata)) {
+        var paramAnnotations = this._reflect.getMetadata('parameters', typeOrFunc);
+        var paramTypes = this._reflect.getMetadata('design:paramtypes', typeOrFunc);
+        if (lang_1.isPresent(paramTypes) || lang_1.isPresent(paramAnnotations)) {
+          return this._zipTypesAndAnnotations(paramTypes, paramAnnotations);
+        }
+      }
+      var parameters = new Array(typeOrFunc.length);
+      parameters.fill(undefined);
+      return parameters;
+    };
+    ReflectionCapabilities.prototype.annotations = function(typeOrFunc) {
+      if (lang_1.isPresent(typeOrFunc.annotations)) {
+        var annotations = typeOrFunc.annotations;
+        if (lang_1.isFunction(annotations) && annotations.annotations) {
+          annotations = annotations.annotations;
+        }
+        return annotations;
+      }
+      if (lang_1.isPresent(this._reflect) && lang_1.isPresent(this._reflect.getMetadata)) {
+        var annotations = this._reflect.getMetadata('annotations', typeOrFunc);
+        if (lang_1.isPresent(annotations))
+          return annotations;
+      }
+      return [];
+    };
+    ReflectionCapabilities.prototype.propMetadata = function(typeOrFunc) {
+      if (lang_1.isPresent(typeOrFunc.propMetadata)) {
+        var propMetadata = typeOrFunc.propMetadata;
+        if (lang_1.isFunction(propMetadata) && propMetadata.propMetadata) {
+          propMetadata = propMetadata.propMetadata;
+        }
+        return propMetadata;
+      }
+      if (lang_1.isPresent(this._reflect) && lang_1.isPresent(this._reflect.getMetadata)) {
+        var propMetadata = this._reflect.getMetadata('propMetadata', typeOrFunc);
+        if (lang_1.isPresent(propMetadata))
+          return propMetadata;
+      }
+      return {};
+    };
+    ReflectionCapabilities.prototype.interfaces = function(type) {
+      throw new exceptions_1.BaseException("JavaScript does not support interfaces");
+    };
+    ReflectionCapabilities.prototype.getter = function(name) {
+      return new Function('o', 'return o.' + name + ';');
+    };
+    ReflectionCapabilities.prototype.setter = function(name) {
+      return new Function('o', 'v', 'return o.' + name + ' = v;');
+    };
+    ReflectionCapabilities.prototype.method = function(name) {
+      var functionBody = "if (!o." + name + ") throw new Error('\"" + name + "\" is undefined');\n        return o." + name + ".apply(o, args);";
+      return new Function('o', 'args', functionBody);
+    };
+    ReflectionCapabilities.prototype.importUri = function(type) {
+      return "./" + lang_1.stringify(type);
+    };
+    return ReflectionCapabilities;
+  }());
+  exports.ReflectionCapabilities = ReflectionCapabilities;
+  return module.exports;
+});
+
+$__System.registerDynamic("93", ["118", "bf"], true, function($__require, exports, module) {
+  "use strict";
+  ;
+  var define,
+      global = this,
+      GLOBAL = this;
+  "use strict";
+  var reflector_1 = $__require('118');
+  var reflector_2 = $__require('118');
+  exports.Reflector = reflector_2.Reflector;
+  exports.ReflectionInfo = reflector_2.ReflectionInfo;
+  var reflection_capabilities_1 = $__require('bf');
+  exports.reflector = new reflector_1.Reflector(new reflection_capabilities_1.ReflectionCapabilities());
+  return module.exports;
+});
+
+$__System.registerDynamic("8", ["54", "ee", "ef", "40", "f0", "6", "5c", "a1", "f2", "f3", "a8", "56", "62", "ed", "9d", "f7", "117", "93"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -35276,75 +35574,107 @@ $__System.registerDynamic("c4", ["ca", "c9", "ce", "cb", "d2", "dd", "cc", "8", 
       if (!exports.hasOwnProperty(p))
         exports[p] = m[p];
   }
-  var router_1 = $__require('ca');
-  exports.Router = router_1.Router;
-  var router_outlet_1 = $__require('c9');
-  exports.RouterOutlet = router_outlet_1.RouterOutlet;
-  var router_link_1 = $__require('ce');
-  exports.RouterLink = router_link_1.RouterLink;
-  var instruction_1 = $__require('cb');
-  exports.RouteParams = instruction_1.RouteParams;
-  exports.RouteData = instruction_1.RouteData;
-  var route_registry_1 = $__require('d2');
-  exports.RouteRegistry = route_registry_1.RouteRegistry;
-  exports.ROUTER_PRIMARY_COMPONENT = route_registry_1.ROUTER_PRIMARY_COMPONENT;
-  __export($__require('dd'));
-  var lifecycle_annotations_1 = $__require('cc');
-  exports.CanActivate = lifecycle_annotations_1.CanActivate;
-  var instruction_2 = $__require('cb');
-  exports.Instruction = instruction_2.Instruction;
-  exports.ComponentInstruction = instruction_2.ComponentInstruction;
-  var core_1 = $__require('8');
-  exports.OpaqueToken = core_1.OpaqueToken;
-  var router_providers_common_1 = $__require('df');
-  exports.ROUTER_PROVIDERS_COMMON = router_providers_common_1.ROUTER_PROVIDERS_COMMON;
-  var router_providers_1 = $__require('114');
-  exports.ROUTER_PROVIDERS = router_providers_1.ROUTER_PROVIDERS;
-  exports.ROUTER_BINDINGS = router_providers_1.ROUTER_BINDINGS;
-  var router_outlet_2 = $__require('c9');
-  var router_link_2 = $__require('ce');
+  __export($__require('54'));
+  __export($__require('ee'));
+  __export($__require('ef'));
+  __export($__require('40'));
+  __export($__require('f0'));
   var lang_1 = $__require('6');
-  exports.ROUTER_DIRECTIVES = lang_1.CONST_EXPR([router_outlet_2.RouterOutlet, router_link_2.RouterLink]);
+  exports.enableProdMode = lang_1.enableProdMode;
+  var application_ref_1 = $__require('5c');
+  exports.createPlatform = application_ref_1.createPlatform;
+  exports.assertPlatform = application_ref_1.assertPlatform;
+  exports.disposePlatform = application_ref_1.disposePlatform;
+  exports.getPlatform = application_ref_1.getPlatform;
+  exports.coreBootstrap = application_ref_1.coreBootstrap;
+  exports.coreLoadAndBootstrap = application_ref_1.coreLoadAndBootstrap;
+  exports.createNgZone = application_ref_1.createNgZone;
+  exports.PlatformRef = application_ref_1.PlatformRef;
+  exports.ApplicationRef = application_ref_1.ApplicationRef;
+  var application_tokens_1 = $__require('a1');
+  exports.APP_ID = application_tokens_1.APP_ID;
+  exports.APP_INITIALIZER = application_tokens_1.APP_INITIALIZER;
+  exports.PACKAGE_ROOT_URL = application_tokens_1.PACKAGE_ROOT_URL;
+  exports.PLATFORM_INITIALIZER = application_tokens_1.PLATFORM_INITIALIZER;
+  __export($__require('f2'));
+  __export($__require('f3'));
+  __export($__require('a8'));
+  var debug_node_1 = $__require('56');
+  exports.DebugElement = debug_node_1.DebugElement;
+  exports.DebugNode = debug_node_1.DebugNode;
+  exports.asNativeElements = debug_node_1.asNativeElements;
+  __export($__require('62'));
+  __export($__require('ed'));
+  __export($__require('9d'));
+  __export($__require('f7'));
+  __export($__require('117'));
+  __export($__require('93'));
   return module.exports;
 });
 
-$__System.register("1", ["2", "4", "8", "be", "c3", "c5", "c6", "c8", "c4"], function(exports_1, context_1) {
+$__System.register("11a", ["8"], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
-    var core_1, browser_1, PatternLibraryRoot_1, RepeaterComponents_1, RepeaterManager_1, TemplateComponents_1, router_1;
-    var PlatformDirectives, GlobalDirectives, i, directive;
+    var core_1;
+    function globalizeDirectives(directives) {
+        var PlatformDirectives = [];
+        for (var i in directives) {
+            var directive = directives[i];
+            PlatformDirectives.push(core_1.provide(core_1.PLATFORM_DIRECTIVES, { useValue: directive, multi: true }));
+        }
+        return PlatformDirectives;
+    }
+    exports_1("default", globalizeDirectives);
+    return {
+        setters:[
+            function (core_1_1) {
+                core_1 = core_1_1;
+            }],
+        execute: function() {
+        }
+    }
+});
+
+$__System.register("c3", [], function(exports_1, context_1) {
+    "use strict";
+    var __moduleName = context_1 && context_1.id;
+    var metadata;
+    return {
+        setters:[],
+        execute: function() {
+            exports_1("metadata", metadata = { "library": { "templates": "hey!", "patterns": { "other": "yo", "name": "patterns", "title": "Patterns", "path": "/patterns", "items": { "banners": { "name": "banners", "title": "Banners", "path": "/patterns/banners", "items": { "banner1": { "name": "banner1", "title": "Banner 1", "path": "/patterns/banners/banner1", "html": "test 1!!!!", "md": "" }, "banner2": { "name": "banner2", "title": "Banner 2", "path": "/patterns/banners/banner2", "html": "test 2!!!!" }, "config": { "name": "config", "title": "Config", "path": "/patterns/banners/config" } } }, "colors": { "name": "colors", "title": "Colors", "path": "/patterns/colors" }, "columns": { "name": "columns", "title": "Columns", "path": "/patterns/columns" }, "feedback": { "name": "feedback", "title": "Feedback", "path": "/patterns/feedback" }, "icons": { "name": "icons", "title": "Icons", "path": "/patterns/icons", "js": "" }, "style-guide": { "name": "style-guide", "title": "Style Guide", "path": "/patterns/style-guide", "items": { "colors": { "name": "colors", "title": "Colors", "path": "/patterns/style-guide/colors", "items": { "primary": { "name": "primary", "title": "Primary", "path": "/patterns/style-guide/colors/primary", "items": { "primary-dark": { "name": "primary-dark", "title": "Primary Dark", "path": "/patterns/style-guide/colors/primary/primary-dark", "Hex": "#5CA156", "RGB": "92 161 86" }, "primary-darker": { "name": "primary-darker", "title": "Primary Darker", "path": "/patterns/style-guide/colors/primary/primary-darker", "Hex": "#528F4D", "RGB": "82 143 77" }, "primary": { "name": "primary", "title": "Primary", "path": "/patterns/style-guide/colors/primary/primary", "Hex": "#66B360", "RGB": "102 179 96" } } }, "secondary": { "name": "secondary", "title": "Secondary", "path": "/patterns/style-guide/colors/secondary", "items": { "background-dark": { "name": "background-dark", "title": "Background Dark", "path": "/patterns/style-guide/colors/secondary/background-dark", "Hex": "#000000", "RGB": "0 0 0" }, "background-light": { "name": "background-light", "title": "Background Light", "path": "/patterns/style-guide/colors/secondary/background-light", "Hex": "#DDDDDD", "RGB": "221 221 221" }, "background-lighter": { "name": "background-lighter", "title": "Background Lighter", "path": "/patterns/style-guide/colors/secondary/background-lighter", "Hex": "#EEEEEE", "RGB": "238 238 238" } } }, "ternary": { "name": "ternary", "title": "Ternary", "path": "/patterns/style-guide/colors/ternary", "items": { "bla": { "name": "bla", "title": "Bla", "path": "/patterns/style-guide/colors/ternary/bla", "Hex": 12345, "RGB": "bla" } } } } }, "icons": { "name": "icons", "title": "Icons", "path": "/patterns/style-guide/icons", "items": { "account": { "name": "account", "title": "Account", "path": "/patterns/style-guide/icons/account" } } } } }, "patterns": { "name": "patterns", "title": "Patterns", "path": "/patterns/patterns" } } } }, "site": { "components": { "name": "components", "title": "Components", "path": "/components", "rail": { "selector": "nav[rail]", "name": "rail", "title": "Rail", "path": "/components/rail", "html": "\r\n<div class=\"sidebar-offcanvas\" id=\"sidebar\">\r\n    <nav role=\"navigation\" class=\"pl-menu\">\r\n        <a class=\"block-link\" href=\"/index.php\">\r\n            <span class=\"caret-left\"></span>\r\n            Project Portal\r\n        </a>\r\n        <ul>\r\n            <!--***REPEATER***-->\r\n            <template repeater='navRail' context='patterns'></template>\r\n        </ul>\r\n    </nav>\r\n</div>" }, "pattern-display": { "selector": "pattern-display", "name": "pattern-display", "title": "Pattern Display", "path": "/components/pattern-display", "html": "<div class=\"pl-container\">\r\n    <header>\r\n        <menu-toggle></menu-toggle>\r\n        <!--<div class=\"project-logo\">-->\r\n        <!--\t<img src=\"../../pattern-library/assets/images/portal-logo-bge-small.jpg\" alt=\"BGE\">-->\r\n        <!--</div>-->\r\n        <div class=\"pl-catalog\">\r\n            <div class=\"pl-title\">\r\n                <h2>Style Guide</h2>\r\n            </div>\r\n        </div>\r\n    </header>\r\n\r\n    <template repeater=\"colors\" context=\"patterns/style-guide/{{url.id}}\"></template>\r\n</div>" }, "menu-toggle": { "selector": "menu-toggle", "name": "menu-toggle", "title": "Menu Toggle", "path": "/components/menu-toggle", "html": "<p class=\"pl-menu-toggle\">\r\n    <button type=\"button\" class=\"navbar-toggle btn btn-primary btn-sm\" data-toggle=\"offcanvas\">\r\n        <span class=\"sr-only\">Toggle navigation</span>\r\n        <span class=\"icon-bar\"></span>\r\n        <span class=\"icon-bar\"></span>\r\n        <span class=\"icon-bar\"></span>\r\n    </button>\r\n</p>" }, "main": { "name": "main", "title": "Main", "path": "/components/main", "html": "<body class=\"language-markup\">\r\n<a name=\"0\" id=\"0\"></a>\r\n<div class=\"pl-main row-offcanvas row-offcanvas-right\" >\r\n  <nav rail context=\"patterns\"></nav>\r\n\r\n  <main role=\"main\" class=\"offcanvas-body\">\r\n    <pattern-display context=\"patterns/{{id}}\"></pattern-display>\r\n  </main>\r\n\r\n  <div class=\"pl-container\">\r\n    <footer class=\"pl-footer\" role=\"footer\">\r\n    </footer>\r\n  </div>\r\n</div>\r\n<a href=\"#0\" class=\"cd-top\">Top</a>\r\n</body>\r\n" }, "socialMediaBtn": { "name": "socialMediaBtn", "title": "Social Media Btn", "path": "/components/socialMediaBtn", "html": "<div>an isolated chunk of functionality</div>\r\n" } }, "pages": { "name": "pages", "title": "Pages", "path": "/pages", "index": { "name": "index", "title": "Index", "path": "/pages/index", "html": "<main-component></main-component>" }, "info": { "name": "info", "title": "Info", "path": "/pages/info", "html": "<a [routerLink]=\"['Index']\">Go to Index</a>\r\nyooo" }, "paths": { "name": "paths", "title": "Paths", "path": "/pages/paths", "$note": "you can set a url parameter with this syntax /:parameterName/ and that argument will become available to you in the application", "index": "", "info": "", "patterns": "patterns/:id" }, "patterns": { "name": "patterns", "title": "Patterns", "path": "/pages/patterns", "html": "<a [routerLink]=\"['Info']\">Go to Info</a>" }, "readme": { "name": "readme", "title": "Readme", "path": "/pages/readme", "html": "<!--<main-template>-->\r\n    <!--<markdown>-->\r\n        <!--This is the readme for the Pattern Library project-->\r\n        <!---->\r\n        <!---->\r\n        <!--Repeaters-->\r\n        <!--What does a repeater repeat?-->\r\n        <!---->\r\n            <!--There are 4 ways to use a repeater.-->\r\n            <!-- -by specifying it on the repeater-->\r\n                <!--angular 2 makes javascript variables available to your html. -->\r\n                <!--in this case, we are repeating on the *items* javascript object-->\r\n                <!--<example-repeater (on)=\"items\"></example-repeater>-->\r\n                <!--or we can repeat on an object referenced by name from the library.-->\r\n                <!--<example-repeater example-repeater (on)=\"patterns.example\"></example-repeater>-->\r\n            <!-- -by specifying what it should repeat in a configuration file-->\r\n            <!-- -by context. it will use the items property of the repeater it is inside of-->\r\n            <!---->\r\n        <!--The Pages folder defines site structure of your pattern library-->\r\n        <!---->\r\n        <!---->\r\n        <!---->\r\n        <!---->\r\n        <!---->\r\n    <!--</markdown>-->\r\n<!--</main-template>-->\r\n" } }, "repeaters": { "name": "repeaters", "title": "Repeaters", "path": "/repeaters", "colorCards": { "name": "colorCards", "title": "Color Cards", "path": "/repeaters/colorCards", "html": "<div class=\"color-card\">\r\n\t<div class=\"brand {{name}}\"></div>\r\n\t<p>Hex: {{Hex}}</p>\r\n\t<p>RGB: {{RGB}}</p>\r\n\t<p>SCSS: $brand-{{name}}</p>\r\n</div>\r\n" }, "colors": { "name": "colors", "title": "Colors", "path": "/repeaters/colors", "html": "<section class=\"{{name}}-colors\">\r\n\t<h3>{{title}} Colors</h3>\r\n\t<hr>\r\n\t<div class=\"color-wrapper\">\r\n\t\t<template repeater=\"colorCards\"></template>\r\n\t</div>\r\n</section>\r\n" }, "icons": { "name": "icons", "title": "Icons", "path": "/repeaters/icons", "html": "<div class=\"icon-preview\">\r\n\t<h4>{{title}}</h4>\r\n\t<i class=\"exc-icon-{{name}}\"></i>\r\n\t<pre><code><i class=\"exc-icon-{{name}}\"></i></code></pre>\r\n</div>\r\n" }, "navRail": { "name": "navRail", "title": "Nav Rail", "path": "/repeaters/navRail", "html": "<li><a href=\"/index/{{name}}\">{{title}}</a></li>\r\n" }, "pattern": { "name": "pattern", "title": "Pattern", "path": "/repeaters/pattern", "html": "<p>Pattern example - Title: {{title}}, Name: {{name}}</p>\n" } } } });
+        }
+    }
+});
+
+$__System.register("1", ["2", "4", "be", "8", "c4", "ec", "11a", "c3"], function(exports_1, context_1) {
+    "use strict";
+    var __moduleName = context_1 && context_1.id;
+    var browser_1, core_1, RootComponent_1, globals_1, globalizeDirectives_1, metadata_1;
     return {
         setters:[
             function (_1) {},
             function (_2) {},
-            function (core_1_1) {
-                core_1 = core_1_1;
-            },
             function (browser_1_1) {
                 browser_1 = browser_1_1;
             },
-            function (PatternLibraryRoot_1_1) {
-                PatternLibraryRoot_1 = PatternLibraryRoot_1_1;
+            function (core_1_1) {
+                core_1 = core_1_1;
             },
-            function (RepeaterComponents_1_1) {
-                RepeaterComponents_1 = RepeaterComponents_1_1;
+            function (RootComponent_1_1) {
+                RootComponent_1 = RootComponent_1_1;
             },
-            function (RepeaterManager_1_1) {
-                RepeaterManager_1 = RepeaterManager_1_1;
+            function (globals_1_1) {
+                globals_1 = globals_1_1;
             },
-            function (TemplateComponents_1_1) {
-                TemplateComponents_1 = TemplateComponents_1_1;
+            function (globalizeDirectives_1_1) {
+                globalizeDirectives_1 = globalizeDirectives_1_1;
             },
-            function (router_1_1) {
-                router_1 = router_1_1;
+            function (metadata_1_1) {
+                metadata_1 = metadata_1_1;
             }],
         execute: function() {
-            PlatformDirectives = [], GlobalDirectives = [RepeaterManager_1.RepeaterManager].concat(RepeaterComponents_1.RepeaterComponents).concat(TemplateComponents_1.TemplateComponents).concat(router_1.ROUTER_DIRECTIVES);
-            for (i in GlobalDirectives) {
-                directive = GlobalDirectives[i];
-                PlatformDirectives.push(core_1.provide(core_1.PLATFORM_DIRECTIVES, { useValue: directive, multi: true }));
-            }
-            browser_1.bootstrap(PatternLibraryRoot_1.default, [router_1.ROUTER_PROVIDERS, PlatformDirectives]); //hey
+            browser_1.bootstrap(RootComponent_1.default, [globals_1.GlobalProviders, core_1.provide("LibraryMetadata", { useValue: metadata_1.metadata }), globalizeDirectives_1.default(globals_1.GlobalDirectives)]);
         }
     }
 });

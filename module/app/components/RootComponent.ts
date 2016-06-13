@@ -1,9 +1,9 @@
 import { Component } from 'angular2/core';
-import { TemplateUrls, PatternLibrary } from 'app/resources/resource';
-import {RepeaterComponents} from "app/components/RepeaterComponents";
-import {RepeaterManager} from "app/components/RepeaterManager";
+import { TemplateUrls, PatternLibrary } from '../resources/resource';
+import {RepeaterComponents} from "RepeaterComponents";
+import {RepeaterManager} from "RepeaterManager";
 import {RouteConfig, ROUTER_DIRECTIVES} from "angular2/router";
-import {PageComponentRoutes} from "app/components/PageComponents";
+import {PageComponentRoutes} from "app/components/PageComponents"; 
 
 @Component({
     selector: 'pattern-library',

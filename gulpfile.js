@@ -48,7 +48,7 @@ gulp.task("clean", function() {
     .pipe(clean());
 })
 
-gulp.task("metadata", createMetadata.bind(createMetadata, "ExampleStructure", "module/app/resources/metadata.ts"));
+gulp.task("metadata", createMetadata.bind(createMetadata, "Pattern Library", "module/app/resources/metadata.ts"));
 
 gulp.watch("module/**/*", ['default']);
-gulp.watch("ExampleStructure/**/*", ['default']);
+gulp.watch("Pattern Library/**/*", ['default']);

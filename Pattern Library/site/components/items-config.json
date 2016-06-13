@@ -1,0 +1,11 @@
+{
+  "rail": {
+    "selector": "nav[rail]"
+  },
+  "pattern-display": {
+    "selector": "pattern-display"
+  },
+  "menu-toggle": {
+    "selector": "menu-toggle"
+  }
+}

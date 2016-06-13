@@ -6,6 +6,6 @@ import { Directive, ElementRef, DynamicComponentLoader } from 'angular2/core';
 })
 export class MarkDownTranslator {
     constructor(elementRef: ElementRef) {
-        
+
     }
 }

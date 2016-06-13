@@ -1,19 +1,12 @@
 import 'zone.js';
 import 'reflect-metadata';
-import {provide, PLATFORM_DIRECTIVES} from "angular2/core";
 import {bootstrap} from 'angular2/platform/browser';
-import RootComponent from 'app/PatternLibraryRoot';
-import {RepeaterComponents} from "app/components/RepeaterComponents";
-import {RepeaterManager} from "app/components/RepeaterManager";
-import {TemplateComponents} from "app/components/TemplateComponents";
-import {ROUTER_PROVIDERS,ROUTER_DIRECTIVES} from "angular2/router";
+import {provide} from 'angular2/core';
+import RootComponent from 'app/components/RootComponent'
 
- var PlatformDirectives = [],
-     GlobalDirectives = [RepeaterManager].concat(RepeaterComponents).concat(TemplateComponents).concat(ROUTER_DIRECTIVES);
+import {GlobalDirectives, GlobalProviders} from 'app/resources/globals';
+import globalize from 'app/utilities/globalizeDirectives';
 
-for (var i in GlobalDirectives) {
-    var directive = GlobalDirectives[i];
-    PlatformDirectives.push(provide(PLATFORM_DIRECTIVES, {useValue: directive, multi: true}));
-}
+import {metadata} from 'app/resources/metadata';
 
-bootstrap(RootComponent, [ROUTER_PROVIDERS, PlatformDirectives]);//hey
+bootstrap(RootComponent, [GlobalProviders, provide("LibraryMetadata", {useValue: metadata}), globalize(GlobalDirectives)]);

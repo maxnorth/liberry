@@ -1,4 +1,5 @@
 import {Component} from "angular2/core";
+import {RouteParams} from 'angular2/router';
 import {metadata} from "app/resources/metadata";
 
 export var PageComponentRoutes = [];
@@ -13,7 +14,10 @@ for (var i in site.pages) {
             template: page.html
         })
         class PageComponent {
-            constructor() { };
+            constructor(public routeParams: RouteParams) {
+                this.url = routeParams.params;
+                //console.log("root", root);
+            };
         }
 
         var componentName = `${i}Page`;
@@ -23,14 +27,23 @@ for (var i in site.pages) {
         });
 
         var RouteConfig = {
+            path: site.pages[i].path.slice(6, Infinity) + "/:id",
+            name: site.pages[i].title,
+            component: PageComponent
+        };
+        var NoArgRouteConfig = {
             path: site.pages[i].path.slice(6, Infinity),
             name: site.pages[i].title,
             component: PageComponent
         };
 
-        if (i === "index") RouteConfig.useAsDefault = true;
+        if (i === "index") NoArgRouteConfig.useAsDefault = true;
 
         PageComponentRoutes.push(RouteConfig);
-    }
+        PageComponentRoutes.push(NoArgRouteConfig);
+    };
+
+
+}
 }
 

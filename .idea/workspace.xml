@@ -2,13 +2,73 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b015dd07-4443-4abe-bbe4-7456778c7368" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/dev notes/todo.txt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/app/utilities/GlobalizeComponents.ts" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/module/app/resources/metadata.json" afterPath="" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Pattern Library/library/patterns/colors.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Pattern Library/library/patterns/icons.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Pattern Library/site/components/items-config.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Pattern Library/site/components/main.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Pattern Library/site/components/menu-toggle.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Pattern Library/site/components/pattern-display.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Pattern Library/site/components/rail.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/dev notes/javascript.txt" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/dev notes/styles.txt" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/app/components/SiteComponentManager.ts" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/app/components/SiteComponents.ts" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/app/directives/HrefRouter.ts" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/app/providers/LibraryContext.ts" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/app/resources/Globals.ts" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/app/utilities/createProtoTypeChain.ts" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/app/utilities/globalizeDirectives.ts" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/run/serveIndex.js" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/ExampleStructure/library/sorters.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/ExampleStructure/library/test.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/ExampleStructure/site/templates/main.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/ExampleStructure/site/templates/mainMasterPage.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/ExampleStructure/site/templates/patternDisplay.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/module/app/GlobalDirectives.ts" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/module/app/components/Iterators.ts" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/module/app/components/TemplateComponents.ts" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/module/app/utilities/GlobalizeComponents.ts" afterPath="" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/ExampleStructure/library/items-config.json" afterPath="$PROJECT_DIR$/Pattern Library/library/items-config.json" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/ExampleStructure/library/patterns/Feedback.json" afterPath="$PROJECT_DIR$/Pattern Library/library/patterns/Feedback.json" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/ExampleStructure/library/patterns/banners/banner1.html" afterPath="$PROJECT_DIR$/Pattern Library/library/patterns/banners/banner1.html" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/ExampleStructure/library/patterns/banners/banner1.md" afterPath="$PROJECT_DIR$/Pattern Library/library/patterns/banners/banner1.md" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/ExampleStructure/library/patterns/banners/banner2.html" afterPath="$PROJECT_DIR$/Pattern Library/library/patterns/banners/banner2.html" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/ExampleStructure/library/patterns/banners/config.json" afterPath="$PROJECT_DIR$/Pattern Library/library/patterns/banners/config.json" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/ExampleStructure/library/patterns/columns.json" afterPath="$PROJECT_DIR$/Pattern Library/library/patterns/columns.json" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/ExampleStructure/library/patterns/icons.js" afterPath="$PROJECT_DIR$/Pattern Library/library/patterns/Patterns.json" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/ExampleStructure/library/patterns/items-config.json" afterPath="$PROJECT_DIR$/Pattern Library/library/patterns/items-config.json" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/ExampleStructure/library/patterns/style-guide/colors/primary/primary-dark.json" afterPath="$PROJECT_DIR$/Pattern Library/library/patterns/style-guide/colors/primary/primary-dark.json" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/ExampleStructure/library/patterns/style-guide/colors/primary/primary-darker.json" afterPath="$PROJECT_DIR$/Pattern Library/library/patterns/style-guide/colors/primary/primary-darker.json" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/ExampleStructure/library/patterns/style-guide/colors/primary/primary.json" afterPath="$PROJECT_DIR$/Pattern Library/library/patterns/style-guide/colors/primary/primary.json" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/ExampleStructure/library/patterns/style-guide/colors/secondary/background-dark.json" afterPath="$PROJECT_DIR$/Pattern Library/library/patterns/style-guide/colors/secondary/background-dark.json" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/ExampleStructure/library/patterns/style-guide/colors/secondary/background-light.json" afterPath="$PROJECT_DIR$/Pattern Library/library/patterns/style-guide/colors/secondary/background-light.json" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/ExampleStructure/library/patterns/style-guide/colors/secondary/background-lighter.json" afterPath="$PROJECT_DIR$/Pattern Library/library/patterns/style-guide/colors/secondary/background-lighter.json" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/ExampleStructure/library/patterns/style-guide/colors/ternary/bla.json" afterPath="$PROJECT_DIR$/Pattern Library/library/patterns/style-guide/colors/ternary/bla.json" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/ExampleStructure/library/patterns/style-guide/icons/account.json" afterPath="$PROJECT_DIR$/Pattern Library/library/patterns/style-guide/icons/account.json" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/ExampleStructure/site/pages/index.html" afterPath="$PROJECT_DIR$/Pattern Library/site/pages/index.html" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/ExampleStructure/site/pages/info.html" afterPath="$PROJECT_DIR$/Pattern Library/site/pages/info.html" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/ExampleStructure/site/pages/paths.json" afterPath="$PROJECT_DIR$/Pattern Library/site/pages/paths.json" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/ExampleStructure/site/pages/patterns.html" afterPath="$PROJECT_DIR$/Pattern Library/site/pages/patterns.html" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/ExampleStructure/site/pages/readme.html" afterPath="$PROJECT_DIR$/Pattern Library/site/pages/readme.html" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/ExampleStructure/site/repeaters/colorCards.html" afterPath="$PROJECT_DIR$/Pattern Library/site/repeaters/colorCards.html" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/ExampleStructure/site/repeaters/colors.html" afterPath="$PROJECT_DIR$/Pattern Library/site/repeaters/colors.html" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/ExampleStructure/site/repeaters/icons.html" afterPath="$PROJECT_DIR$/Pattern Library/site/repeaters/icons.html" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/ExampleStructure/site/repeaters/navRail.html" afterPath="$PROJECT_DIR$/Pattern Library/site/repeaters/navRail.html" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/ExampleStructure/site/repeaters/pattern.html" afterPath="$PROJECT_DIR$/Pattern Library/site/repeaters/pattern.html" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/ExampleStructure/site/templates/socialMediaBtn.html" afterPath="$PROJECT_DIR$/Pattern Library/site/components/socialMediaBtn.html" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/module/app/PatternLibraryRoot.ts" afterPath="$PROJECT_DIR$/module/app/components/RootComponent.ts" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/module/app/components/notes.txt" afterPath="$PROJECT_DIR$/dev notes/components.txt" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app.js" afterPath="$PROJECT_DIR$/app.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/module/app/PatternLibraryRoot.ts" afterPath="$PROJECT_DIR$/module/app/PatternLibraryRoot.ts" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gulpfile.js" afterPath="$PROJECT_DIR$/gulpfile.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/module/app/bootstrap.ts" afterPath="$PROJECT_DIR$/module/app/bootstrap.ts" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/module/app/components/PageComponents.ts" afterPath="$PROJECT_DIR$/module/app/components/PageComponents.ts" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/module/app/components/RepeaterComponents.ts" afterPath="$PROJECT_DIR$/module/app/components/RepeaterComponents.ts" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/module/app/components/RepeaterManager.ts" afterPath="$PROJECT_DIR$/module/app/components/RepeaterManager.ts" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/module/app/components/TemplateRenderer.ts" afterPath="$PROJECT_DIR$/module/app/components/TemplateRenderer.ts" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/module/app/directives/MarkDown.ts" afterPath="$PROJECT_DIR$/module/app/directives/MarkDown.ts" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/module/app/resources/metadata.ts" afterPath="$PROJECT_DIR$/module/app/resources/metadata.ts" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/module/build/test.js" afterPath="$PROJECT_DIR$/module/build/test.js" />
     </list>
     <ignored path="AIS-Pattern-Library.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -29,111 +89,106 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="600">
-      <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/index.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="462">
-              <caret line="14" column="7" selection-start-line="14" selection-start-column="7" selection-end-line="14" selection-end-column="7" />
-              <folding>
-                <marker date="1465082253622" expanded="true" signature="21:423" ph="..." />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="todo.txt" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/dev notes/todo.txt">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="660">
-              <caret line="20" column="28" selection-start-line="20" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="bootstrap.ts" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/module/app/bootstrap.ts">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="594">
-              <caret line="18" column="69" selection-start-line="18" selection-start-column="69" selection-end-line="18" selection-end-column="69" />
-              <folding>
-                <element signature="e#0#17#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="globalizeComponents.ts" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/module/app/utilities/globalizeComponents.ts">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="PatternLibraryRoot.ts" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/module/app/PatternLibraryRoot.ts">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="198">
-              <caret line="6" column="0" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
-              <folding>
-                <element signature="e#0#42#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="RepeaterComponents.ts" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/module/app/components/RepeaterComponents.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1089">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="test.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ExampleStructure/library/test.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="PageComponents.ts" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/module/app/components/PageComponents.ts">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-198">
-              <caret line="0" column="17" selection-start-line="0" selection-start-column="17" selection-end-line="0" selection-end-column="17" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="notes.txt" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/module/app/components/notes.txt">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Iterators.ts" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/module/app/components/Iterators.ts">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="396">
-              <caret line="18" column="7" selection-start-line="18" selection-start-column="7" selection-end-line="18" selection-end-column="7" />
+            <state relative-caret-position="806">
+              <caret line="25" column="36" selection-start-line="25" selection-start-column="36" selection-end-line="25" selection-end-column="36" />
               <folding>
-                <element signature="e#0#42#0" expanded="true" />
-                <marker date="1464724747754" expanded="true" signature="552:609" ph="..." />
+                <element signature="e#0#122#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SiteComponents.ts" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/module/app/components/SiteComponents.ts">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="165">
+              <caret line="5" column="70" selection-start-line="5" selection-start-column="70" selection-end-line="6" selection-end-column="52" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="main.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Pattern Library/site/components/main.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="198">
+              <caret line="6" column="41" selection-start-line="6" selection-start-column="41" selection-end-line="6" selection-end-column="41" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SiteComponentManager.ts" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/module/app/components/SiteComponentManager.ts">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="495">
+              <caret line="33" column="0" selection-start-line="33" selection-start-column="0" selection-end-line="33" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="RootComponent.ts" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/module/app/components/RootComponent.ts">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="99">
+              <caret line="3" column="28" selection-start-line="3" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="createPrototypeChain.ts" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/module/app/utilities/createPrototypeChain.ts">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="99">
+              <caret line="3" column="37" selection-start-line="3" selection-start-column="37" selection-end-line="3" selection-end-column="37" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="globalizeDirectives.ts" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/module/app/utilities/globalizeDirectives.ts">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="297">
+              <caret line="9" column="31" selection-start-line="9" selection-start-column="31" selection-end-line="9" selection-end-column="31" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="LibraryContext.ts" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/module/app/providers/LibraryContext.ts">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="528">
+              <caret line="16" column="1" selection-start-line="16" selection-start-column="1" selection-end-line="16" selection-end-column="1" />
+              <folding>
+                <element signature="e#0#48#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="objectPath.ts" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/module/app/utilities/objectPath.ts">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="bootstrap.ts" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/module/app/bootstrap.ts">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="99">
+              <caret line="3" column="38" selection-start-line="3" selection-start-column="38" selection-end-line="3" selection-end-column="38" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -153,27 +208,57 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/ExampleStructure/site/templates/root.html" />
-        <option value="$PROJECT_DIR$/app.js" />
-        <option value="$PROJECT_DIR$/gulpfile.js" />
-        <option value="$PROJECT_DIR$/module/app/components/RepeaterManager.ts" />
-        <option value="$PROJECT_DIR$/module/app/components/TemplateComponents.ts" />
-        <option value="$PROJECT_DIR$/ExampleStructure/site/pages/paths.json" />
-        <option value="$PROJECT_DIR$/module/app/components/RepeaterComponents.ts" />
-        <option value="$PROJECT_DIR$/module/app/components/PageManager.ts" />
-        <option value="$PROJECT_DIR$/ExampleStructure/site/pages/readme.html" />
-        <option value="$PROJECT_DIR$/module/app/components/PageComponents.ts" />
-        <option value="$PROJECT_DIR$/module/app/templates/PatternLibraryRoot.html" />
-        <option value="$PROJECT_DIR$/ExampleStructure/site/pages/index.html" />
-        <option value="$PROJECT_DIR$/ExampleStructure/site/templates/main.html" />
-        <option value="$PROJECT_DIR$/ExampleStructure/site/pages/info.html" />
         <option value="$PROJECT_DIR$/ExampleStructure/site/pages/patterns.html" />
         <option value="$PROJECT_DIR$/ExampleStructure/site/templates/mainMasterPage.html" />
         <option value="$PROJECT_DIR$/index.html" />
         <option value="$PROJECT_DIR$/module/app/utilities/GlobalizeComponents.ts" />
         <option value="$PROJECT_DIR$/dev notes/todo.txt" />
         <option value="$PROJECT_DIR$/module/app/PatternLibraryRoot.ts" />
+        <option value="$PROJECT_DIR$/module/app/resources/GlobalDirectives.ts" />
+        <option value="$PROJECT_DIR$/module/app/utilities/globalizeComponents.ts" />
+        <option value="$PROJECT_DIR$/dev notes/styles.txt" />
+        <option value="$PROJECT_DIR$/dev notes/javascript.txt" />
+        <option value="$PROJECT_DIR$/module/app/components/TemplateRenderer.ts" />
+        <option value="$PROJECT_DIR$/module/app/directives/MarkDown.ts" />
+        <option value="$PROJECT_DIR$/module/app/directives/HrefDirective.ts" />
+        <option value="$PROJECT_DIR$/Pattern Library/library/patterns/Patterns.json" />
+        <option value="$PROJECT_DIR$/module/run/serveIndex.js" />
+        <option value="$PROJECT_DIR$/gulpfile.js" />
+        <option value="$PROJECT_DIR$/module/app/directives/HrefRouter.ts" />
+        <option value="$PROJECT_DIR$/Pattern Library/site/repeaters/navRail.html" />
+        <option value="$PROJECT_DIR$/Pattern Library/site/templates/mainMasterPage.html" />
+        <option value="$PROJECT_DIR$/Pattern Library/library/patterns/colors.json" />
+        <option value="$PROJECT_DIR$/module/app/components/PageComponents.ts" />
+        <option value="$PROJECT_DIR$/module/app/components/TestParentComponent.ts" />
+        <option value="$PROJECT_DIR$/module/app/components/TestBaseComponent.ts" />
+        <option value="$PROJECT_DIR$/Pattern Library/site/templates/config.json" />
+        <option value="$PROJECT_DIR$/Pattern Library/site/templates/patternDisplay.html" />
+        <option value="$PROJECT_DIR$/Pattern Library/site/pages/readme.html" />
+        <option value="$PROJECT_DIR$/Pattern Library/site/templates/main.html" />
+        <option value="$PROJECT_DIR$/Pattern Library/site/templates/menu-toggle.html" />
+        <option value="$PROJECT_DIR$/Pattern Library/site/templates/items-config.json" />
+        <option value="$PROJECT_DIR$/Pattern Library/site/repeaters/colorCards.html" />
+        <option value="$PROJECT_DIR$/Pattern Library/site/templates/pattern-display.html" />
+        <option value="$PROJECT_DIR$/Pattern Library/site/templates/rail.html" />
+        <option value="$PROJECT_DIR$/module/app/components/TemplateComponents.ts" />
+        <option value="$PROJECT_DIR$/module/app/components/TTT.ts" />
+        <option value="$PROJECT_DIR$/module/app/components/SiteComponentManager.ts" />
+        <option value="$PROJECT_DIR$/module/app/components/RepeaterManager.ts" />
+        <option value="$PROJECT_DIR$/module/app/resources/resource.ts" />
+        <option value="$PROJECT_DIR$/module/app/components/RootComponent.ts" />
+        <option value="$PROJECT_DIR$/module/app/utilities/globalizeDirectives.ts" />
+        <option value="$PROJECT_DIR$/module/app/resources/Globals.ts" />
+        <option value="$PROJECT_DIR$/Pattern Library/site/pages/index.html" />
         <option value="$PROJECT_DIR$/module/app/bootstrap.ts" />
+        <option value="$PROJECT_DIR$/module/app/utilities/libraryContextParse.ts" />
+        <option value="$PROJECT_DIR$/module/app/utilities/libraryContextParser.ts" />
+        <option value="$PROJECT_DIR$/module/app/utilities/componentContextHelper.ts" />
+        <option value="$PROJECT_DIR$/module/app/utilities/createProtoTypeChain.ts" />
+        <option value="$PROJECT_DIR$/Pattern Library/site/components/main.html" />
+        <option value="$PROJECT_DIR$/module/app/utilities/createPrototypeChain.ts" />
+        <option value="$PROJECT_DIR$/module/app/components/RepeaterComponents.ts" />
+        <option value="$PROJECT_DIR$/module/app/components/SiteComponents.ts" />
+        <option value="$PROJECT_DIR$/module/app/providers/LibraryContext.ts" />
       </list>
     </option>
   </component>
@@ -193,7 +278,7 @@
   <component name="ProjectFrameBounds">
     <option name="x" value="-14" />
     <option name="y" value="-14" />
-    <option name="width" value="3228" />
+    <option name="width" value="3214" />
     <option name="height" value="1738" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
@@ -238,6 +323,82 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="AIS-Pattern-Library" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="AIS-Pattern-Library" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="AIS-Pattern-Library" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Pattern Library" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="site" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="AIS-Pattern-Library" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="AIS-Pattern-Library" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Pattern Library" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="site" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="pages" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="AIS-Pattern-Library" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="AIS-Pattern-Library" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Pattern Library" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="site" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="components" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="AIS-Pattern-Library" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="AIS-Pattern-Library" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Pattern Library" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -313,7 +474,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="resources" />
+              <option name="myItemId" value="providers" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -339,20 +500,6 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="AIS-Pattern-Library" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="AIS-Pattern-Library" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="dev notes" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
         </subPane>
       </pane>
     </panes>
@@ -362,6 +509,17 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="HbShouldOpenHtmlAsHb" value="" />
     <property name="js-jscs-nodeInterpreter" value="C:\Program Files\nodejs\node.exe" />
+    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
+    <property name="settings.editor.splitter.proportion" value="0.2" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\maxwe\Documents\Projects\AIS-Pattern-Library\module" />
+      <recent name="C:\Users\maxwe\Documents\Projects\AIS-Pattern-Library\module\app\components" />
+      <recent name="C:\Users\maxwe\Documents\Projects\AIS-Pattern-Library\dev notes" />
+      <recent name="C:\Users\maxwe\Documents\Projects\AIS-Pattern-Library\module\app\directives" />
+      <recent name="C:\Users\maxwe\Documents\Projects\AIS-Pattern-Library\module\app\resources" />
+    </key>
   </component>
   <component name="RunManager">
     <configuration default="true" type="DartCommandLineRunConfigurationType" factoryName="Dart Command Line Application">
@@ -436,27 +594,29 @@
       <updated>1464984195822</updated>
       <workItem from="1464984198212" duration="801000" />
       <workItem from="1464986880129" duration="4270000" />
-      <workItem from="1464999330933" duration="22323000" />
+      <workItem from="1464999330933" duration="32066000" />
+      <workItem from="1465414786034" duration="32067000" />
+      <workItem from="1465611212007" duration="15658000" />
+      <workItem from="1465837152364" duration="8609000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="27394000" />
+    <option name="totallyTimeSpent" value="93471000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-14" y="-14" width="3228" height="1738" extended-state="6" />
-    <editor active="false" />
+    <frame x="-14" y="-14" width="3214" height="1738" extended-state="0" />
+    <editor active="true" />
     <layout>
       <window_info id="Gulp" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24754359" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21776505" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3299458" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.339661" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24976228" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.29742548" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.29742548" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -464,6 +624,7 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32949153" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -479,183 +640,118 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager />
+    <breakpoint-manager>
+      <option name="time" value="1" />
+    </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/index.html">
+    <entry file="file://$PROJECT_DIR$/dev notes/todo.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="660">
+          <caret line="20" column="28" selection-start-line="20" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dev notes/components.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/gulpfile.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1848">
-          <caret line="56" column="0" selection-start-line="56" selection-start-column="0" selection-end-line="56" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/module/app/components/TemplateComponents.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="891">
-          <caret line="29" column="11" selection-start-line="29" selection-start-column="11" selection-end-line="29" selection-end-column="11" />
-          <folding>
-            <element signature="e#0#86#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/module/app/components/RepeaterComponents.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="33">
-          <caret line="1" column="48" selection-start-line="1" selection-start-column="48" selection-end-line="2" selection-end-column="63" />
-          <folding>
-            <element signature="e#0#86#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/module/app/templates/PatternLibraryRoot.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ExampleStructure/site/templates/main.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ExampleStructure/site/templates/root.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="38" selection-start-line="0" selection-start-column="38" selection-end-line="0" selection-end-column="38" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/module/app/components/LibraryTemplateRenderer.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/gulpfile.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/module/app/components/LibraryTemplateRenderer.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ExampleStructure/site/templates/root.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="38" selection-start-line="0" selection-start-column="38" selection-end-line="0" selection-end-column="38" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1573">
-          <caret line="31777" column="9" selection-start-line="31777" selection-start-column="9" selection-end-line="31777" selection-end-column="9" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/gulpfile.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="922">
-          <caret line="54" column="0" selection-start-line="54" selection-start-column="0" selection-end-line="54" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ExampleStructure/site/templates/socialMediaBtn.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/node_modules/angular2/router/router_link_dsl.d.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/node_modules/angular2/router/router_link_dsl.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ExampleStructure/site/pages/paths.json">
+    <entry file="file://$PROJECT_DIR$/dev notes/styles.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="165">
-          <caret line="5" column="1" selection-start-line="5" selection-start-column="1" selection-end-line="5" selection-end-column="1" />
-          <folding />
+          <caret line="5" column="67" selection-start-line="5" selection-start-column="67" selection-end-line="5" selection-end-column="67" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ExampleStructure/site/templates/patternDisplay.html">
+    <entry file="file://$PROJECT_DIR$/Pattern Library/library/test.html" />
+    <entry file="file://$PROJECT_DIR$/Pattern Library/library/sorters.json" />
+    <entry file="file://$PROJECT_DIR$/Pattern Library/library/patterns/feedback.json">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ExampleStructure/site/pages/readme.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="858">
-          <caret line="26" column="2" selection-start-line="26" selection-start-column="2" selection-end-line="26" selection-end-column="2" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/module/app/templates/PatternLibraryRoot.html">
+    <entry file="file://$PROJECT_DIR$/Pattern Library/library/patterns/icons.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dev notes/javascript.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="198">
+          <caret line="6" column="0" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/module/app/directives/MarkDown.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="10" selection-end-column="1" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ExampleStructure/site/templates/main.html">
+    <entry file="file://$PROJECT_DIR$/module/app/directives/AllDirectives.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Pattern Library/library/patterns/patterns.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="33">
+          <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/module/run/serveIndex.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="363">
+          <caret line="11" column="17" selection-start-line="11" selection-start-column="17" selection-end-line="11" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gulpfile.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="294">
+          <caret line="18" column="11" selection-start-line="18" selection-start-column="11" selection-end-line="18" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/module/app/directives/HrefRouter.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="264">
+          <caret line="20" column="24" selection-start-line="20" selection-start-column="24" selection-end-line="20" selection-end-column="24" />
+          <folding>
+            <element signature="e#0#102#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/module/app/components/TemplateRenderer.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="33">
+          <caret line="14" column="16" selection-start-line="14" selection-start-column="16" selection-end-line="14" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Pattern Library/library/patterns/colors.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="33">
+          <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Pattern Library/site/components/main.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="5" selection-end-column="6" />
@@ -663,156 +759,253 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ExampleStructure/site/pages/info.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="33">
-          <caret line="1" column="4" selection-start-line="1" selection-start-column="4" selection-end-line="1" selection-end-column="4" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ExampleStructure/site/pages/patterns.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="37" selection-start-line="0" selection-start-column="37" selection-end-line="0" selection-end-column="37" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ExampleStructure/site/pages/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="51" selection-start-line="0" selection-start-column="51" selection-end-line="0" selection-end-column="51" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ExampleStructure/site/templates/mainMasterPage.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="594">
-          <caret line="39" column="37" selection-start-line="39" selection-start-column="37" selection-end-line="39" selection-end-column="37" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/module/app/components/TemplateRenderer.ts">
+    <entry file="file://$PROJECT_DIR$/Pattern Library/site/repeaters/colors.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Pattern Library/site/repeaters/icons.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Pattern Library/site/repeaters/navRail.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="14" selection-start-line="0" selection-start-column="14" selection-end-line="0" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Pattern Library/site/repeaters/pattern.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/module/app/components/PageComponents.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="528">
+          <caret line="16" column="55" selection-start-line="16" selection-start-column="55" selection-end-line="16" selection-end-column="55" />
+          <folding>
+            <element signature="e#0#40#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/module/app/components/TestParentComponent.ts" />
+    <entry file="file://$PROJECT_DIR$/module/app/components/TestBaseComponent.ts" />
+    <entry file="file://$PROJECT_DIR$/Pattern Library/site/pages/paths.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="5" column="1" selection-start-line="5" selection-start-column="1" selection-end-line="5" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Pattern Library/site/pages/info.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="33">
+          <caret line="1" column="4" selection-start-line="1" selection-start-column="4" selection-end-line="1" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Pattern Library/site/pages/patterns.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="37" selection-start-line="0" selection-start-column="37" selection-end-line="0" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Pattern Library/site/pages/readme.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="858">
+          <caret line="26" column="0" selection-start-line="26" selection-start-column="0" selection-end-line="26" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/module/app/components/TemplateComponents.ts">
+    <entry file="file://$PROJECT_DIR$/Pattern Library/site/components/items-config.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="460">
-          <caret line="18" column="9" selection-start-line="18" selection-start-column="9" selection-end-line="18" selection-end-column="9" />
+        <state relative-caret-position="264">
+          <caret line="8" column="28" selection-start-line="8" selection-start-column="28" selection-end-line="8" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Pattern Library/site/repeaters/colorCards.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="33">
+          <caret line="1" column="38" selection-start-line="1" selection-start-column="38" selection-end-line="1" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Pattern Library/site/components/socialMediaBtn.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Pattern Library/site/components/rail.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="297">
+          <caret line="9" column="48" selection-start-line="9" selection-start-column="48" selection-end-line="9" selection-end-column="48" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Pattern Library/site/components/pattern-display.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="396">
+          <caret line="12" column="0" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Pattern Library/site/components/menu-toggle.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="231">
+          <caret line="7" column="4" selection-start-line="7" selection-start-column="4" selection-end-line="7" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/module/app/components/TTT.ts" />
+    <entry file="file://$PROJECT_DIR$/module/app/resources/resource.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="33">
+          <caret line="1" column="39" selection-start-line="1" selection-start-column="39" selection-end-line="1" selection-end-column="39" />
+          <folding>
+            <marker date="1465618047976" expanded="true" signature="419:486" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/module/app/resources/Globals.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="33">
+          <caret line="4" column="16" selection-start-line="4" selection-start-column="16" selection-end-line="4" selection-end-column="16" />
+          <folding>
+            <element signature="e#0#69#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Pattern Library/site/pages/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="32" selection-start-line="0" selection-start-column="32" selection-end-line="0" selection-end-column="32" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/module/app/components/RepeaterManager.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="594">
-          <caret line="20" column="22" selection-start-line="20" selection-start-column="22" selection-end-line="20" selection-end-column="22" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/module/app/components/PageComponents.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-198">
-          <caret line="0" column="17" selection-start-line="0" selection-start-column="17" selection-end-line="0" selection-end-column="17" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/module/app/components/notes.txt">
-      <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <caret line="0" column="123" selection-start-line="0" selection-start-column="123" selection-end-line="2" selection-end-column="52" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/module/app/components/Iterators.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="396">
-          <caret line="18" column="7" selection-start-line="18" selection-start-column="7" selection-end-line="18" selection-end-column="7" />
-          <folding>
-            <element signature="e#0#42#0" expanded="true" />
-            <marker date="1464724747754" expanded="true" signature="552:609" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/module/app/components/RepeaterComponents.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1089">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ExampleStructure/library/patterns/banners/banner1.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ExampleStructure/library/test.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="462">
-          <caret line="14" column="7" selection-start-line="14" selection-start-column="7" selection-end-line="14" selection-end-column="7" />
-          <folding>
-            <marker date="1465082253622" expanded="true" signature="21:423" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/dev notes/todo.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="660">
-          <caret line="20" column="28" selection-start-line="20" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/module/app/utilities/globalizeComponents.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/module/app/PatternLibraryRoot.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="198">
-          <caret line="6" column="0" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#42#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/module/app/bootstrap.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="594">
-          <caret line="18" column="69" selection-start-line="18" selection-start-column="69" selection-end-line="18" selection-end-column="69" />
+        <state relative-caret-position="99">
+          <caret line="3" column="38" selection-start-line="3" selection-start-column="38" selection-end-line="3" selection-end-column="38" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/module/app/utilities/libraryContextParser.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Pattern Library/site/components/main.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="198">
+          <caret line="6" column="41" selection-start-line="6" selection-start-column="41" selection-end-line="6" selection-end-column="41" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/module/app/utilities/objectPath.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/module/app/utilities/globalizeDirectives.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="297">
+          <caret line="9" column="31" selection-start-line="9" selection-start-column="31" selection-end-line="9" selection-end-column="31" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/module/app/utilities/createPrototypeChain.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="99">
+          <caret line="3" column="37" selection-start-line="3" selection-start-column="37" selection-end-line="3" selection-end-column="37" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/module/app/components/RepeaterComponents.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="806">
+          <caret line="25" column="36" selection-start-line="25" selection-start-column="36" selection-end-line="25" selection-end-column="36" />
           <folding>
-            <element signature="e#0#17#0" expanded="true" />
+            <element signature="e#0#122#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/module/app/components/SiteComponents.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="5" column="70" selection-start-line="5" selection-start-column="70" selection-end-line="6" selection-end-column="52" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/module/app/utilities/parseLibraryContext.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/module/app/providers/LibraryContext.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="528">
+          <caret line="16" column="1" selection-start-line="16" selection-start-column="1" selection-end-line="16" selection-end-column="1" />
+          <folding>
+            <element signature="e#0#48#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/module/app/components/RootComponent.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="99">
+          <caret line="3" column="28" selection-start-line="3" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/module/app/components/SiteComponentManager.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="495">
+          <caret line="33" column="0" selection-start-line="33" selection-start-column="0" selection-end-line="33" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>

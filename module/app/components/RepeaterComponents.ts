@@ -1,8 +1,8 @@
-import {Component, Input, ViewChildren, QueryList, HostListener} from 'angular2/core';
+import {Component, Input, Host, ViewChildren, Inject, Injector, forwardRef, QueryList, HostListener} from 'angular2/core';
+import {RouteParams} from 'angular2/router';
 import {metadata} from 'app/resources/metadata';
 import {RepeaterManager} from "app/components/RepeaterManager";
-
-console.log(metadata);
+import {SiteComponentManager} from "app/components/SiteComponentManager";
 
 export var RepeaterComponents = [];
 var site = metadata.site;
@@ -19,33 +19,41 @@ for (var i in site.repeaters) {
     @Component({
       selector: `[${i}-repeater]`,
       template: repeater.html,
-      directives: [RepeaterManager]
+      directives: [RepeaterManager, SiteComponentManager]
     })
     class RepeaterComponent {
-      constructor() {
-      }
+      constructor(public routeParams: RouteParams, public _injector: Injector) {
+        window.injector = _injector;
+        this.url = routeParams.params;
+      };
 
       @ViewChildren(RepeaterManager) repeaters;
+      @ViewChildren(SiteComponentManager) components
 
-      repeater;
+      public repeater;
+      public path;
+      public url;
 
       ngAfterViewInit () {
-        console.log(`repeater ${this.repeater} view init!`);
         var repeaters = this.repeaters._results;
         for (var i in repeaters) {
           var repeater = repeaters[i];
-          if (!repeater.on) {
-            repeater.on = this.path;
+          if (!repeater.context) {
+            repeater.context = this.path;
             repeater.changeDetectorRef.detectChanges();
-            console.log(`child repeater manager ${this.path} 'on' set!`)
             repeater.setView();
           }
         }
-      }
 
-      ngOnInit() {
-          console.log(`repeater ${this.repeater} init!`);
-          //this.setView();
+        var components = this.components._results;
+        for (var i in components) {
+          var component = components[i];
+          if (!component.context) {
+            component.context = this.path;
+            component.changeDetectorRef.detectChanges();
+            component.setView();
+          }
+        }
       }
     }
 
@@ -60,5 +68,3 @@ for (var i in site.repeaters) {
     RepeaterComponents.push(RepeaterComponent);
   }
 }
-
-console.log("repeaters:", RepeaterComponents);
