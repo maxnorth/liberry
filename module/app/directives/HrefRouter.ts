@@ -13,21 +13,20 @@ export class HrefRouter {
         router.subscribe(o => console.log(o));
     }
 
-    @Input("href")
-    public route;
+    @Input("href") public route;
 
     @HostListener('click', ['$event'])
     onClick($event) {
         $event.preventDefault();
-        console.log(this.route);
         this.router.navigateByUrl(this.route);
     }
 
-    @HostBinding("attr.href") get hrefRoute { return this.route; }
-    onClick($event) {
-        $event.preventDefault();
-        console.log(this.route);
-        this.router.navigateByUrl(this.route);
+    //set href attribute for the sake of default styling and transparency when examining element
+    @HostBinding("attr.href")
+    get hrefRoute() { return this.route; }
+
+    ngOnInit() {
+        //debugger;
     }
 }
 

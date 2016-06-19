@@ -4,7 +4,7 @@
   <nav rail context="patterns"></nav>
 
   <main role="main" class="offcanvas-body">
-    <pattern-display context="patterns/{{id}}"></pattern-display>
+    <pattern-display *ngIf="url.id" context="patterns/{{url.id}}"></pattern-display>
   </main>
 
   <div class="pl-container">

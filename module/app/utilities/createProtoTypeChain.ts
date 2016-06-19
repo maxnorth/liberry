@@ -1,4 +1,4 @@
-export default function createPrototypeChain() {
+export function createPrototypeChaintest() {
     for (var i = 0; i < arguments.length; i++) {
         var item = arguments[i];
         var proto = arguments[i + 1];

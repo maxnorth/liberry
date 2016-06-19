@@ -10,13 +10,18 @@ gulp.task('default', ["clean", "metadata"], function() {
 
     builder.config({
         packages: {
-          'module': {
-            //format: 'register',
-            defaultExtension: 'ts'
-          },
-          'node_modules': {
-              defaultExtension: 'js'
-          }
+            'module': {
+                //format: 'register',
+                defaultExtension: 'ts'
+            },
+            'node_modules': {
+                defaultExtension: 'js'
+            },
+            'lodash': {
+                defaultExtension: 'js',
+                main: 'lodash',
+                format: 'cjs'
+            }
         },
         paths: {
             'angular2/*': 'node_modules/angular2/*.js',
@@ -25,7 +30,8 @@ gulp.task('default', ["clean", "metadata"], function() {
             'reflect-metadata': 'node_modules/reflect-metadata/Reflect.js',
             'crypto': 'node_modules/crypto/sha1.js',
             'app/*': 'module/app/*.ts',
-            'symbol-observable': 'node_modules/symbol-observable/index.js'
+            'symbol-observable': 'node_modules/symbol-observable/index.js',
+            'lodash': 'node_modules/lodash'
         },
         transpiler: 'typescript',
         typescriptOptions: {

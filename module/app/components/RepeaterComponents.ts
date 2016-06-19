@@ -1,70 +1,44 @@
-import {Component, Input, Host, ViewChildren, Inject, Injector, forwardRef, QueryList, HostListener} from 'angular2/core';
+import {Component, SkipSelf, Input, Host, ViewChildren, Inject, Injector, forwardRef, QueryList, HostListener} from 'angular2/core';
 import {RouteParams} from 'angular2/router';
 import {metadata} from 'app/resources/metadata';
-import {RepeaterManager} from "app/components/RepeaterManager";
-import {SiteComponentManager} from "app/components/SiteComponentManager";
+import createPrototypeChain from "app/utilities/createPrototypeChain";
+import componentBuilder from 'app/utilities/componentBuilder';
+import {objectPath} from "app/utilities/objectPath";
+import {LibraryMetadata, Parent} from 'app/constants/DependencyTokens';
+import provideAsParent from 'app/providers/provideAsParent';
+import {BehaviorSubject} from 'rxjs/BehaviorSubject';
+import _ from "lodash";
 
-export var RepeaterComponents = [];
-var site = metadata.site;
+export var RepeaterComponents = componentBuilder(metadata.site.repeaters, "Repeater", (repeater) => {
+  @Component({
+    selector: `[${repeater.name}-repeater]`,
+    template: repeater.html,
+    providers: [provideAsParent(RepeaterComponent)]
+  })
+  class RepeaterComponent {
+    constructor(
+        private _routeParams: RouteParams,
+        public libraryMetadata: LibraryMetadata,
+        @SkipSelf() public parent: Parent
+    ) {
+      this.url = _routeParams.params;
+      this.library = libraryMetadata.library;
+    };
 
-Object.defineProperty(site.repeaters, "_components", {
-  value: {},
-  enumerable: false
-});
+    public context;
+    public url;
+    public library;
+    public observableContext = new BehaviorSubject<Object>(undefined);
+    public id = `${repeater.name}Repeater`
 
-for (var i in site.repeaters) {
-  if (site.repeaters[i].html) {
-    var repeater = site.repeaters[i]; 
+    ngOnInit() {
+      //console.log(`init: ${component.name}Component`, `parent: ${this.parent.id}`, this.parent);
 
-    @Component({
-      selector: `[${i}-repeater]`,
-      template: repeater.html,
-      directives: [RepeaterManager, SiteComponentManager]
-    })
-    class RepeaterComponent {
-      constructor(public routeParams: RouteParams, public _injector: Injector) {
-        window.injector = _injector;
-        this.url = routeParams.params;
-      };
-
-      @ViewChildren(RepeaterManager) repeaters;
-      @ViewChildren(SiteComponentManager) components
-
-      public repeater;
-      public path;
-      public url;
-
-      ngAfterViewInit () {
-        var repeaters = this.repeaters._results;
-        for (var i in repeaters) {
-          var repeater = repeaters[i];
-          if (!repeater.context) {
-            repeater.context = this.path;
-            repeater.changeDetectorRef.detectChanges();
-            repeater.setView();
-          }
-        }
-
-        var components = this.components._results;
-        for (var i in components) {
-          var component = components[i];
-          if (!component.context) {
-            component.context = this.path;
-            component.changeDetectorRef.detectChanges();
-            component.setView();
-          }
-        }
-      }
+      var cmp = this;
+      this.parent.observableContext.subscribe((context) => {
+        cmp.observableContext.next(cmp.context);
+      });
     }
-
-    var componentName = `${i}Repeater`
-
-    Object.defineProperty(RepeaterComponent, "name", {
-      value: componentName
-    });
-
-    site.repeaters._components[componentName] = RepeaterComponent;
-
-    RepeaterComponents.push(RepeaterComponent);
   }
-}
+  return RepeaterComponent;
+});

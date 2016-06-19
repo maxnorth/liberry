@@ -1,6 +1,13 @@
-import {Component} from "angular2/core";
+import {Component, Optional, SkipSelf, Inject} from "angular2/core";
 import {RouteParams} from 'angular2/router';
 import {metadata} from "app/resources/metadata";
+import BaseLibraryComponent from 'app/classes/BaseLibraryComponent';
+import {LibraryContext} from "app/providers/LibraryContext";
+import _ from "lodash";
+import {objectPath} from "app/utilities/objectPath";
+import {BehaviorSubject} from "rxjs/BehaviorSubject";
+import {Parent, LibraryMetadata} from '../constants/DependencyTokens';
+import provideAsParent from 'app/providers/provideAsParent';
 
 export var PageComponentRoutes = [];
 var site : any = metadata.site;
@@ -11,13 +18,35 @@ for (var i in site.pages) {
 
         @Component({
             selector: `${i}-page`,
-            template: page.html
+            template: page.html,
+            providers: [provideAsParent(PageComponent)]
         })
-        class PageComponent {
-            constructor(public routeParams: RouteParams) {
+        class PageComponent extends BaseLibraryComponent {
+            constructor(
+                public routeParams: RouteParams,
+                @SkipSelf() public parent: Parent,
+                public libraryMetadata: LibraryMetadata
+            ) {
                 this.url = routeParams.params;
-                //console.log("root", root);
+                this.library = libraryMetadata.library;
             };
+
+            public url;
+            public library;
+            public contextDef;
+            public observableContext = new BehaviorSubject<Object>(undefined);
+            public id = `${page.name}Page`;
+
+            ngOnInit() {
+                //console.log(`init: ${i}Page`)
+                var cmp = this;
+                this.parent.observableContext.subscribe((context) => {
+                    console.log(`next: ${i}Page`)
+                    cmp.context = !cmp.contextDef ? (context || cmp.library) : objectPath.get(cmp.library, cmp.contextDef);
+                    _.extend(cmp, cmp.context);
+                    cmp.observableContext.next(cmp.context);
+                });
+            }
         }
 
         var componentName = `${i}Page`;

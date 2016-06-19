@@ -1,6 +1,6 @@
 i'm thinking a js file can be provided for jquery style pattern manipulation. $ can be ovverridden with $(elementRef). or maybe 'this' can
 be the root.
 
-a ts file can be a full anguglar 2 component. the metadata object will just use the path and generate another file with
+a ts file can be a full angular 2 component. the metadata object will just use the path and generate another file with
 imports for each component.
 
