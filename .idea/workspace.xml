@@ -1,33 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="b015dd07-4443-4abe-bbe4-7456778c7368" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/app/classes/BaseLibraryComponent.ts" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/app/constants/DependencyTokens.ts" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/app/providers/provideAsParent.ts" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/app/utilities/componentBuilder.ts" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/module/app/components/SiteComponentManager.ts" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/module/app/metadata.ts" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pattern Library/site/components/main.html" afterPath="$PROJECT_DIR$/Pattern Library/site/components/main.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pattern Library/site/components/rail.html" afterPath="$PROJECT_DIR$/Pattern Library/site/components/rail.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pattern Library/site/pages/index.html" afterPath="$PROJECT_DIR$/Pattern Library/site/pages/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pattern Library/site/pages/patterns.html" afterPath="$PROJECT_DIR$/Pattern Library/site/pages/patterns.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app.js" afterPath="$PROJECT_DIR$/app.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gulpfile.js" afterPath="$PROJECT_DIR$/gulpfile.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/module/app/bootstrap.ts" afterPath="$PROJECT_DIR$/module/app/bootstrap.ts" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/module/app/components/PageComponents.ts" afterPath="$PROJECT_DIR$/module/app/components/PageComponents.ts" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/module/app/components/RepeaterComponents.ts" afterPath="$PROJECT_DIR$/module/app/components/RepeaterComponents.ts" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/module/app/components/RepeaterManager.ts" afterPath="$PROJECT_DIR$/module/app/components/RepeaterManager.ts" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/module/app/components/RootComponent.ts" afterPath="$PROJECT_DIR$/module/app/components/RootComponent.ts" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/module/app/components/SiteComponents.ts" afterPath="$PROJECT_DIR$/module/app/components/SiteComponents.ts" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/module/app/directives/HrefRouter.ts" afterPath="$PROJECT_DIR$/module/app/directives/HrefRouter.ts" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/module/app/providers/LibraryContext.ts" afterPath="$PROJECT_DIR$/module/app/providers/LibraryContext.ts" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/module/app/resources/metadata.ts" afterPath="$PROJECT_DIR$/module/app/resources/metadata.ts" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/module/app/utilities/createProtoTypeChain.ts" afterPath="$PROJECT_DIR$/module/app/utilities/createProtoTypeChain.ts" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/module/app/utilities/objectPath.ts" afterPath="$PROJECT_DIR$/module/app/utilities/objectPath.ts" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/npm-debug.log" afterPath="$PROJECT_DIR$/npm-debug.log" />
-    </list>
+    <list default="true" id="b015dd07-4443-4abe-bbe4-7456778c7368" name="Default" comment="" />
     <ignored path="AIS-Pattern-Library.iws" />
     <ignored path=".idea/workspace.xml" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -655,16 +629,16 @@
       <workItem from="1465414786034" duration="32067000" />
       <workItem from="1465611212007" duration="15658000" />
       <workItem from="1465837152364" duration="28999000" />
-      <workItem from="1466097500493" duration="27582000" />
+      <workItem from="1466097500493" duration="27589000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="141443000" />
+    <option name="totallyTimeSpent" value="141450000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-12" y="0" width="3214" height="1722" extended-state="0" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Gulp" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21617319" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -962,7 +936,7 @@
         <state relative-caret-position="627">
           <caret line="19" column="5" selection-start-line="19" selection-start-column="5" selection-end-line="19" selection-end-column="5" />
           <folding>
-            <element signature="e#0#48#0" expanded="true" />
+            <element signature="e#0#48#0" expanded="false" />
           </folding>
         </state>
       </provider>
