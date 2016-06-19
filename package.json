@@ -1,5 +1,5 @@
 {
-  "name": "pattern-library",
+  "name": "liberry",
   "version": "1.0.0",
   "description": "A framework for building web dev pattern libraries.",
   "main": "build.js",
@@ -25,6 +25,6 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Max",
+  "author": "Max North",
   "license": "ISC"
 }

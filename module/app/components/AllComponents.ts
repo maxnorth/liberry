@@ -1,5 +1,5 @@
 import RepeaterComponents from "app/components/RepeaterComponents";
 
-export default var AllComponents = RepeaterComponents;//[];
+export default RepeaterComponents;//[];
 
 //AllComponents.concat(RepeaterComponents);
