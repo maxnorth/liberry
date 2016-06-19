@@ -1,3 +1,0 @@
-repeater component
-    dynamically create the component based on the template,
-    dynamically create the component repeater

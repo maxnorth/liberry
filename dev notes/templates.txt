@@ -1,1 +1,0 @@
-i think the config for this folder could be used to set selectors for templates

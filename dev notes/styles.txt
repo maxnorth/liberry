@@ -1,8 +1,0 @@
-dynamic styles? going to be tricky to implement. but more importantly, is it going to be easy to understand how to use?
-
-how does a user include their styles?
-
-should there be modular styles? component-level styles.
-- how will css file structure work in a web-components application?
-
-live css/html views?
