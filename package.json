@@ -1,5 +1,5 @@
 {
-  "name": "liberry",
+  "name": "ais-pattern-library",
   "version": "1.0.0",
   "description": "A framework for building web dev pattern libraries.",
   "main": "build.js",
