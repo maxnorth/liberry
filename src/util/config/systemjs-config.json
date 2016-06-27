@@ -1,7 +1,6 @@
 {
     "packages": {
         "src": {
-            //format: "register",
             "defaultExtension": "ts"
         },
         "node_modules": {
@@ -30,6 +29,5 @@
         "experimentalDecorators": true
     },
     "map": {
-        //"app/resources/metadata": "app/metadata"
     }
 }
