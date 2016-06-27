@@ -7,10 +7,10 @@ var jsonfile = require("jsonfile");
 
 gulp.task('default', ["clean", "metadata"], function() {
 
-    var builder = new Builder();
-
-    var systemJsConfig = jsonfile.readFileSync("./systemjs-config.json");
-    builder.config();
+    var builder = new Builder(),
+    systemJsConfig = jsonfile.readFileSync("./config/systemjs-config.json");
+    
+    builder.config(systemJsConfig);
 
     builder.buildStatic("src/app/bootstrap.ts", "app.js", {
         // minify: true,
