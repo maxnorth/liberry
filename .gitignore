@@ -3,9 +3,11 @@
 
 /npm-debug.log
 
-/desktop.ini
+desktop.ini
 
-/.idea
-/.vs
-/.vscode
+.idea
+.vs
+.vscode
 /dev notes
+
+.npmignore
