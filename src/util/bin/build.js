@@ -4,7 +4,9 @@ global.ts = require("typescript");
 
 module.exports = function() {
     var builder = new Builder();
-    systemJsConfig = jsonfile.readFileSync("./src/util/config/systemjs-config.json");
+
+    var configPath = path.resolve(__dirname, "./src/util/config/systemjs-config.json");
+    systemJsConfig = jsonfile.readFileSync(configPath);
     console.log(systemJsConfig);
     
     builder.config(systemJsConfig);
