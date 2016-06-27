@@ -1,0 +1,1 @@
+Some "Review and Submit" pages will display all the field names from the form, with associated field values entered by the user.  For forms with multiple sections, the fields displayed from each section should be proceeded by an <h3> tag with the name of that section.

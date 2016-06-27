@@ -22798,34 +22798,7 @@ $__System.registerDynamic("be", ["61", "6", "bd", "8", "bf", "42", "40"], true, 
   return module.exports;
 });
 
-$__System.register("c0", [], function(exports_1, context_1) {
-    "use strict";
-    var __moduleName = context_1 && context_1.id;
-    var TemplateUrls, PatternLibrary, IterablesConfig, Iterables;
-    return {
-        setters:[],
-        execute: function() {
-            exports_1("TemplateUrls", TemplateUrls = {
-                PatternLibrary: "module/app/templates/PatternLibraryRoot.html"
-            });
-            exports_1("PatternLibrary", PatternLibrary = {
-                "banners": ["banner1", "banner2"],
-                "templates": ["template1"]
-            });
-            //should the sort be associated with the iterable or the thing being iterated on
-            exports_1("IterablesConfig", IterablesConfig = {
-                'railItems': {
-                    sort: []
-                }
-            });
-            exports_1("Iterables", Iterables = {
-                'railItems': "\n        <div>\n            Here is your railItem called {{i.name}}\n        </div>\n    "
-            });
-        }
-    }
-});
-
-$__System.register("c1", ["8", "c2", "c3", "c4", "c5", "c6", "c7", "c8", "c9"], function(exports_1, context_1) {
+$__System.register("c0", ["8", "c1", "c2", "c3", "c4", "c5", "c6", "c7", "c8"], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __extends = (this && this.__extends) || function (d, b) {
@@ -22941,7 +22914,7 @@ $__System.register("c1", ["8", "c2", "c3", "c4", "c5", "c6", "c7", "c8", "c9"], 
     }
 });
 
-$__System.register("ca", ["8", "c0", "c2", "c1", "c9", "c8", "c7"], function(exports_1, context_1) {
+$__System.register("c9", ["8", "c1", "c0", "c8", "c7", "c6"], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -22953,15 +22926,12 @@ $__System.register("ca", ["8", "c0", "c2", "c1", "c9", "c8", "c7"], function(exp
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, resource_1, router_1, PageComponents_1, provideAsParent_1, DependencyTokens_1, BehaviorSubject_1;
+    var core_1, router_1, PageComponents_1, provideAsParent_1, DependencyTokens_1, BehaviorSubject_1;
     var RootComponent;
     return {
         setters:[
             function (core_1_1) {
                 core_1 = core_1_1;
-            },
-            function (resource_1_1) {
-                resource_1 = resource_1_1;
             },
             function (router_1_1) {
                 router_1 = router_1_1;
@@ -22988,7 +22958,7 @@ $__System.register("ca", ["8", "c0", "c2", "c1", "c9", "c8", "c7"], function(exp
                 RootComponent = __decorate([
                     core_1.Component({
                         selector: 'pattern-library',
-                        templateUrl: resource_1.TemplateUrls.PatternLibrary,
+                        template: "<router-outlet></router-outlet>",
                         providers: [provideAsParent_1.default(RootComponent)]
                     }),
                     router_1.RouteConfig(PageComponents_1.PageComponentRoutes), 
@@ -23002,7 +22972,7 @@ $__System.register("ca", ["8", "c0", "c2", "c1", "c9", "c8", "c7"], function(exp
     }
 });
 
-$__System.register("cb", ["8", "c2", "c3", "cc", "c8", "c9", "c7"], function(exports_1, context_1) {
+$__System.register("ca", ["8", "c1", "c2", "cb", "c7", "c8", "c6"], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -23059,6 +23029,7 @@ $__System.register("cb", ["8", "c2", "c3", "cc", "c8", "c9", "c7"], function(exp
                         //console.log(`init: ${component.name}Component`, `parent: ${this.parent.id}`, this.parent);
                         var cmp = this;
                         this.parent.observableContext.subscribe(function (context) {
+                            //debugger;
                             cmp.observableContext.next(cmp.context);
                         });
                     };
@@ -23080,7 +23051,46 @@ $__System.register("cb", ["8", "c2", "c3", "cc", "c8", "c9", "c7"], function(exp
     }
 });
 
-$__System.register("cd", ["8", "c3", "c6", "c5", "c4", "c7", "c8"], function(exports_1, context_1) {
+$__System.register("c3", ["c6"], function(exports_1, context_1) {
+    "use strict";
+    var __moduleName = context_1 && context_1.id;
+    var BehaviorSubject_1;
+    var BaseLibraryComponent;
+    return {
+        setters:[
+            function (BehaviorSubject_1_1) {
+                BehaviorSubject_1 = BehaviorSubject_1_1;
+            }],
+        execute: function() {
+            BaseLibraryComponent = (function () {
+                function BaseLibraryComponent() {
+                    //context is prototype
+                    this.observableContext = new BehaviorSubject_1.BehaviorSubject(undefined);
+                }
+                BaseLibraryComponent.prototype.setContext = function (context, setSuperContext) {
+                    if (setSuperContext) {
+                        this.context = context;
+                    }
+                    //apply context fields to this
+                    //this.__proto__ = context;
+                    this.observableContext.next(context);
+                };
+                BaseLibraryComponent.prototype.watchContext = function (self) {
+                    var _this = this;
+                    self.parentObservableContext.subscribe(function (parentContext) {
+                        if (!self.contextDef) {
+                            _this.setContext(parentContext, true);
+                        }
+                    });
+                };
+                return BaseLibraryComponent;
+            }());
+            exports_1("default", BaseLibraryComponent);
+        }
+    }
+});
+
+$__System.register("cc", ["8", "c2", "c5", "c4", "c3", "c6", "c7"], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __extends = (this && this.__extends) || function (d, b) {
@@ -23198,7 +23208,7 @@ $__System.register("cd", ["8", "c3", "c6", "c5", "c4", "c7", "c8"], function(exp
     }
 });
 
-$__System.register("ce", ["8", "c7"], function(exports_1, context_1) {
+$__System.register("cd", ["8", "c6"], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var core_1, BehaviorSubject_1;
@@ -23231,33 +23241,7 @@ $__System.register("ce", ["8", "c7"], function(exports_1, context_1) {
     }
 });
 
-$__System.register("c6", [], function(exports_1, context_1) {
-    "use strict";
-    var __moduleName = context_1 && context_1.id;
-    var objectPath;
-    function get(object, path) {
-        if (typeof (path) === "string") {
-            path = path.match(/[^\/\.]+/g);
-        }
-        if (object.items)
-            object = object.items;
-        if (path.length > 1) {
-            return get(object[path[0]], path.slice(1, path.length));
-        }
-        //todo: return clone
-        return object[path[0]];
-    }
-    return {
-        setters:[],
-        execute: function() {
-            exports_1("objectPath", objectPath = {
-                get: get
-            });
-        }
-    }
-});
-
-$__System.register("cc", ["c3"], function(exports_1, context_1) {
+$__System.register("cb", ["c2"], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var metadata_1;
@@ -23292,7 +23276,7 @@ $__System.register("cc", ["c3"], function(exports_1, context_1) {
     }
 });
 
-$__System.registerDynamic("c5", [], true, function($__require, exports, module) {
+$__System.registerDynamic("c4", [], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
@@ -28677,46 +28661,7 @@ $__System.registerDynamic("c5", [], true, function($__require, exports, module) 
   return module.exports;
 });
 
-$__System.register("c4", ["c7"], function(exports_1, context_1) {
-    "use strict";
-    var __moduleName = context_1 && context_1.id;
-    var BehaviorSubject_1;
-    var BaseLibraryComponent;
-    return {
-        setters:[
-            function (BehaviorSubject_1_1) {
-                BehaviorSubject_1 = BehaviorSubject_1_1;
-            }],
-        execute: function() {
-            BaseLibraryComponent = (function () {
-                function BaseLibraryComponent() {
-                    //context is prototype
-                    this.observableContext = new BehaviorSubject_1.BehaviorSubject(undefined);
-                }
-                BaseLibraryComponent.prototype.setContext = function (context, setSuperContext) {
-                    if (setSuperContext) {
-                        this.context = context;
-                    }
-                    //apply context fields to this
-                    //this.__proto__ = context;
-                    this.observableContext.next(context);
-                };
-                BaseLibraryComponent.prototype.watchContext = function (self) {
-                    var _this = this;
-                    self.parentObservableContext.subscribe(function (parentContext) {
-                        if (!self.contextDef) {
-                            _this.setContext(parentContext, true);
-                        }
-                    });
-                };
-                return BaseLibraryComponent;
-            }());
-            exports_1("default", BaseLibraryComponent);
-        }
-    }
-});
-
-$__System.registerDynamic("cf", [], true, function($__require, exports, module) {
+$__System.registerDynamic("ce", [], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -28729,7 +28674,7 @@ $__System.registerDynamic("cf", [], true, function($__require, exports, module) 
   return module.exports;
 });
 
-$__System.registerDynamic("c7", ["d0", "cf", "d1"], true, function($__require, exports, module) {
+$__System.registerDynamic("c6", ["cf", "ce", "d0"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -28744,9 +28689,9 @@ $__System.registerDynamic("c7", ["d0", "cf", "d1"], true, function($__require, e
     }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
   };
-  var Subject_1 = $__require('d0');
-  var throwError_1 = $__require('cf');
-  var ObjectUnsubscribedError_1 = $__require('d1');
+  var Subject_1 = $__require('cf');
+  var throwError_1 = $__require('ce');
+  var ObjectUnsubscribedError_1 = $__require('d0');
   var BehaviorSubject = (function(_super) {
     __extends(BehaviorSubject, _super);
     function BehaviorSubject(_value) {
@@ -28785,32 +28730,7 @@ $__System.registerDynamic("c7", ["d0", "cf", "d1"], true, function($__require, e
   return module.exports;
 });
 
-$__System.register("c8", [], function(exports_1, context_1) {
-    "use strict";
-    var __moduleName = context_1 && context_1.id;
-    var Parent, LibraryMetadata;
-    return {
-        setters:[],
-        execute: function() {
-            Parent = (function () {
-                function Parent() {
-                }
-                return Parent;
-            }());
-            exports_1("Parent", Parent);
-            ;
-            LibraryMetadata = (function () {
-                function LibraryMetadata() {
-                }
-                return LibraryMetadata;
-            }());
-            exports_1("LibraryMetadata", LibraryMetadata);
-            ;
-        }
-    }
-});
-
-$__System.register("c9", ["8", "c8"], function(exports_1, context_1) {
+$__System.register("c8", ["8", "c7"], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var core_1, DependencyTokens_1;
@@ -28832,14 +28752,9 @@ $__System.register("c9", ["8", "c8"], function(exports_1, context_1) {
     }
 });
 
-$__System.register("d2", ["8", "c3", "cd", "c2", "ce", "c6", "cc", "c5", "c4", "c7", "c8", "c9"], function(exports_1, context_1) {
+$__System.register("d1", ["8", "c2", "cc", "c1", "cd", "c5", "cb", "c4", "c6", "c7", "c8"], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
-    var __extends = (this && this.__extends) || function (d, b) {
-        for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
         if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -28852,7 +28767,7 @@ $__System.register("d2", ["8", "c3", "cd", "c2", "ce", "c6", "cc", "c5", "c4", "
     var __param = (this && this.__param) || function (paramIndex, decorator) {
         return function (target, key) { decorator(target, key, paramIndex); }
     };
-    var core_1, metadata_1, RepeaterManager_1, router_1, LibraryContext_1, objectPath_1, componentBuilder_1, lodash_1, BaseLibraryComponent_1, BehaviorSubject_1, DependencyTokens_1, provideAsParent_1;
+    var core_1, metadata_1, RepeaterManager_1, router_1, LibraryContext_1, objectPath_1, componentBuilder_1, lodash_1, BehaviorSubject_1, DependencyTokens_1, provideAsParent_1;
     var SiteComponents;
     return {
         setters:[
@@ -28880,9 +28795,6 @@ $__System.register("d2", ["8", "c3", "cd", "c2", "ce", "c6", "cc", "c5", "c4", "
             function (lodash_1_1) {
                 lodash_1 = lodash_1_1;
             },
-            function (BaseLibraryComponent_1_1) {
-                BaseLibraryComponent_1 = BaseLibraryComponent_1_1;
-            },
             function (BehaviorSubject_1_1) {
                 BehaviorSubject_1 = BehaviorSubject_1_1;
             },
@@ -28894,8 +28806,7 @@ $__System.register("d2", ["8", "c3", "cd", "c2", "ce", "c6", "cc", "c5", "c4", "
             }],
         execute: function() {
             exports_1("SiteComponents", SiteComponents = componentBuilder_1.default(metadata_1.metadata.site.components, "Component", function (component) {
-                var SiteComponent = (function (_super) {
-                    __extends(SiteComponent, _super);
+                var SiteComponent = (function () {
                     function SiteComponent(_routeParams, parent, _libraryMetadata) {
                         this._routeParams = _routeParams;
                         this.parent = parent;
@@ -28922,7 +28833,7 @@ $__System.register("d2", ["8", "c3", "cd", "c2", "ce", "c6", "cc", "c5", "c4", "
                     ], SiteComponent.prototype, "contextDef", void 0);
                     SiteComponent = __decorate([
                         core_1.Component({
-                            selector: component.selector + ", " + component.name + "-component",
+                            selector: component.selector + ", " + component.name + "-component, [component=\"" + component.name + "\"]",
                             template: component.html,
                             directives: [RepeaterManager_1.RepeaterManager],
                             providers: [LibraryContext_1.LibraryContext, provideAsParent_1.default(SiteComponent)]
@@ -28932,14 +28843,14 @@ $__System.register("d2", ["8", "c3", "cd", "c2", "ce", "c6", "cc", "c5", "c4", "
                     ], SiteComponent);
                     return SiteComponent;
                     var _a, _b, _c;
-                }(BaseLibraryComponent_1.default));
+                }());
                 return SiteComponent;
             }));
         }
     }
 });
 
-$__System.registerDynamic("d3", ["7", "e", "6", "8", "d4", "d5", "d6", "d7"], true, function($__require, exports, module) {
+$__System.registerDynamic("d2", ["7", "e", "6", "8", "d3", "d4", "d5", "d6"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -28971,10 +28882,10 @@ $__System.registerDynamic("d3", ["7", "e", "6", "8", "d4", "d5", "d6", "d7"], tr
   var collection_1 = $__require('e');
   var lang_1 = $__require('6');
   var core_1 = $__require('8');
-  var routerMod = $__require('d4');
-  var instruction_1 = $__require('d5');
-  var hookMod = $__require('d6');
-  var route_lifecycle_reflector_1 = $__require('d7');
+  var routerMod = $__require('d3');
+  var instruction_1 = $__require('d4');
+  var hookMod = $__require('d5');
+  var route_lifecycle_reflector_1 = $__require('d6');
   var _resolveToTrue = async_1.PromiseWrapper.resolve(true);
   var RouterOutlet = (function() {
     function RouterOutlet(_viewContainerRef, _loader, _parentRouter, nameAttr) {
@@ -29078,7 +28989,7 @@ $__System.registerDynamic("d3", ["7", "e", "6", "8", "d4", "d5", "d6", "d7"], tr
   return module.exports;
 });
 
-$__System.registerDynamic("d8", ["8", "d9", "6", "d4"], true, function($__require, exports, module) {
+$__System.registerDynamic("d7", ["8", "d8", "6", "d3"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -29102,9 +29013,9 @@ $__System.registerDynamic("d8", ["8", "d9", "6", "d4"], true, function($__requir
       return Reflect.metadata(k, v);
   };
   var core_1 = $__require('8');
-  var common_1 = $__require('d9');
+  var common_1 = $__require('d8');
   var lang_1 = $__require('6');
-  var router_1 = $__require('d4');
+  var router_1 = $__require('d3');
   var RouterLink = (function() {
     function RouterLink(_router, _location) {
       var _this = this;
@@ -29156,16 +29067,16 @@ $__System.registerDynamic("d8", ["8", "d9", "6", "d4"], true, function($__requir
   return module.exports;
 });
 
-$__System.registerDynamic("d6", ["da", "db"], true, function($__require, exports, module) {
+$__System.registerDynamic("d5", ["d9", "da"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
       global = this,
       GLOBAL = this;
   "use strict";
-  var decorators_1 = $__require('da');
-  var lifecycle_annotations_impl_1 = $__require('db');
-  var lifecycle_annotations_impl_2 = $__require('db');
+  var decorators_1 = $__require('d9');
+  var lifecycle_annotations_impl_1 = $__require('da');
+  var lifecycle_annotations_impl_2 = $__require('da');
   exports.routerCanReuse = lifecycle_annotations_impl_2.routerCanReuse;
   exports.routerCanDeactivate = lifecycle_annotations_impl_2.routerCanDeactivate;
   exports.routerOnActivate = lifecycle_annotations_impl_2.routerOnActivate;
@@ -29175,7 +29086,7 @@ $__System.registerDynamic("d6", ["da", "db"], true, function($__require, exports
   return module.exports;
 });
 
-$__System.registerDynamic("db", ["6"], true, function($__require, exports, module) {
+$__System.registerDynamic("da", ["6"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -29223,7 +29134,7 @@ $__System.registerDynamic("db", ["6"], true, function($__require, exports, modul
   return module.exports;
 });
 
-$__System.registerDynamic("d7", ["6", "db", "93"], true, function($__require, exports, module) {
+$__System.registerDynamic("d6", ["6", "da", "93"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -29231,7 +29142,7 @@ $__System.registerDynamic("d7", ["6", "db", "93"], true, function($__require, ex
       GLOBAL = this;
   "use strict";
   var lang_1 = $__require('6');
-  var lifecycle_annotations_impl_1 = $__require('db');
+  var lifecycle_annotations_impl_1 = $__require('da');
   var reflection_1 = $__require('93');
   function hasLifecycleHook(e, type) {
     if (!(type instanceof lang_1.Type))
@@ -29253,7 +29164,7 @@ $__System.registerDynamic("d7", ["6", "db", "93"], true, function($__require, ex
   return module.exports;
 });
 
-$__System.registerDynamic("d4", ["7", "e", "6", "12", "d9", "8", "dc", "d7"], true, function($__require, exports, module) {
+$__System.registerDynamic("d3", ["7", "e", "6", "12", "d8", "8", "db", "d6"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -29294,10 +29205,10 @@ $__System.registerDynamic("d4", ["7", "e", "6", "12", "d9", "8", "dc", "d7"], tr
   var collection_1 = $__require('e');
   var lang_1 = $__require('6');
   var exceptions_1 = $__require('12');
-  var common_1 = $__require('d9');
+  var common_1 = $__require('d8');
   var core_1 = $__require('8');
-  var route_registry_1 = $__require('dc');
-  var route_lifecycle_reflector_1 = $__require('d7');
+  var route_registry_1 = $__require('db');
+  var route_lifecycle_reflector_1 = $__require('d6');
   var _resolveToTrue = async_1.PromiseWrapper.resolve(true);
   var _resolveToFalse = async_1.PromiseWrapper.resolve(false);
   var Router = (function() {
@@ -29709,7 +29620,7 @@ $__System.registerDynamic("d4", ["7", "e", "6", "12", "d9", "8", "dc", "d7"], tr
   return module.exports;
 });
 
-$__System.registerDynamic("dd", ["6", "12", "2e", "e", "de", "d5"], true, function($__require, exports, module) {
+$__System.registerDynamic("dc", ["6", "12", "2e", "e", "dd", "d4"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -29729,8 +29640,8 @@ $__System.registerDynamic("dd", ["6", "12", "2e", "e", "de", "d5"], true, functi
   var exceptions_1 = $__require('12');
   var promise_1 = $__require('2e');
   var collection_1 = $__require('e');
-  var url_parser_1 = $__require('de');
-  var instruction_1 = $__require('d5');
+  var url_parser_1 = $__require('dd');
+  var instruction_1 = $__require('d4');
   var RouteMatch = (function() {
     function RouteMatch() {}
     return RouteMatch;
@@ -29844,7 +29755,7 @@ $__System.registerDynamic("dd", ["6", "12", "2e", "e", "de", "d5"], true, functi
   return module.exports;
 });
 
-$__System.registerDynamic("df", ["6", "d5"], true, function($__require, exports, module) {
+$__System.registerDynamic("de", ["6", "d4"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -29852,7 +29763,7 @@ $__System.registerDynamic("df", ["6", "d5"], true, function($__require, exports,
       GLOBAL = this;
   "use strict";
   var lang_1 = $__require('6');
-  var instruction_1 = $__require('d5');
+  var instruction_1 = $__require('d4');
   var AsyncRouteHandler = (function() {
     function AsyncRouteHandler(_loader, data) {
       if (data === void 0) {
@@ -29878,7 +29789,7 @@ $__System.registerDynamic("df", ["6", "d5"], true, function($__require, exports,
   return module.exports;
 });
 
-$__System.registerDynamic("e0", ["7", "6", "d5"], true, function($__require, exports, module) {
+$__System.registerDynamic("df", ["7", "6", "d4"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -29887,7 +29798,7 @@ $__System.registerDynamic("e0", ["7", "6", "d5"], true, function($__require, exp
   "use strict";
   var async_1 = $__require('7');
   var lang_1 = $__require('6');
-  var instruction_1 = $__require('d5');
+  var instruction_1 = $__require('d4');
   var SyncRouteHandler = (function() {
     function SyncRouteHandler(componentType, data) {
       this.componentType = componentType;
@@ -29904,7 +29815,7 @@ $__System.registerDynamic("e0", ["7", "6", "d5"], true, function($__require, exp
   return module.exports;
 });
 
-$__System.registerDynamic("e1", ["6", "e"], true, function($__require, exports, module) {
+$__System.registerDynamic("e0", ["6", "e"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -29952,7 +29863,7 @@ $__System.registerDynamic("e1", ["6", "e"], true, function($__require, exports, 
   return module.exports;
 });
 
-$__System.registerDynamic("e2", ["6", "12", "e", "e1", "de", "e3"], true, function($__require, exports, module) {
+$__System.registerDynamic("e1", ["6", "12", "e", "e0", "dd", "e2"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -29962,9 +29873,9 @@ $__System.registerDynamic("e2", ["6", "12", "e", "e1", "de", "e3"], true, functi
   var lang_1 = $__require('6');
   var exceptions_1 = $__require('12');
   var collection_1 = $__require('e');
-  var utils_1 = $__require('e1');
-  var url_parser_1 = $__require('de');
-  var route_path_1 = $__require('e3');
+  var utils_1 = $__require('e0');
+  var url_parser_1 = $__require('dd');
+  var route_path_1 = $__require('e2');
   var ContinuationPathSegment = (function() {
     function ContinuationPathSegment() {
       this.name = '';
@@ -30198,7 +30109,7 @@ $__System.registerDynamic("e2", ["6", "12", "e", "e1", "de", "e3"], true, functi
   return module.exports;
 });
 
-$__System.registerDynamic("e3", [], true, function($__require, exports, module) {
+$__System.registerDynamic("e2", [], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -30227,7 +30138,7 @@ $__System.registerDynamic("e3", [], true, function($__require, exports, module) 
   return module.exports;
 });
 
-$__System.registerDynamic("e4", ["6", "e3"], true, function($__require, exports, module) {
+$__System.registerDynamic("e3", ["6", "e2"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -30235,7 +30146,7 @@ $__System.registerDynamic("e4", ["6", "e3"], true, function($__require, exports,
       GLOBAL = this;
   "use strict";
   var lang_1 = $__require('6');
-  var route_path_1 = $__require('e3');
+  var route_path_1 = $__require('e2');
   var RegexRoutePath = (function() {
     function RegexRoutePath(_reString, _serializer) {
       this._reString = _reString;
@@ -30270,7 +30181,7 @@ $__System.registerDynamic("e4", ["6", "e3"], true, function($__require, exports,
   return module.exports;
 });
 
-$__System.registerDynamic("e5", ["6", "12", "e", "7", "dd", "e6", "df", "e0", "e2", "e4"], true, function($__require, exports, module) {
+$__System.registerDynamic("e4", ["6", "12", "e", "7", "dc", "e5", "de", "df", "e1", "e3"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -30281,12 +30192,12 @@ $__System.registerDynamic("e5", ["6", "12", "e", "7", "dd", "e6", "df", "e0", "e
   var exceptions_1 = $__require('12');
   var collection_1 = $__require('e');
   var async_1 = $__require('7');
-  var rules_1 = $__require('dd');
-  var route_config_impl_1 = $__require('e6');
-  var async_route_handler_1 = $__require('df');
-  var sync_route_handler_1 = $__require('e0');
-  var param_route_path_1 = $__require('e2');
-  var regex_route_path_1 = $__require('e4');
+  var rules_1 = $__require('dc');
+  var route_config_impl_1 = $__require('e5');
+  var async_route_handler_1 = $__require('de');
+  var sync_route_handler_1 = $__require('df');
+  var param_route_path_1 = $__require('e1');
+  var regex_route_path_1 = $__require('e3');
   var RuleSet = (function() {
     function RuleSet() {
       this.rulesByName = new collection_1.Map();
@@ -30411,7 +30322,7 @@ $__System.registerDynamic("e5", ["6", "12", "e", "7", "dd", "e6", "df", "e0", "e
   return module.exports;
 });
 
-$__System.registerDynamic("d5", ["e", "6", "7"], true, function($__require, exports, module) {
+$__System.registerDynamic("d4", ["e", "6", "7"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -30653,7 +30564,7 @@ $__System.registerDynamic("d5", ["e", "6", "7"], true, function($__require, expo
   return module.exports;
 });
 
-$__System.registerDynamic("e6", ["6"], true, function($__require, exports, module) {
+$__System.registerDynamic("e5", ["6"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -30815,16 +30726,16 @@ $__System.registerDynamic("e6", ["6"], true, function($__require, exports, modul
   return module.exports;
 });
 
-$__System.registerDynamic("e7", ["e6", "da"], true, function($__require, exports, module) {
+$__System.registerDynamic("e6", ["e5", "d9"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
       global = this,
       GLOBAL = this;
   "use strict";
-  var route_config_impl_1 = $__require('e6');
-  var decorators_1 = $__require('da');
-  var route_config_impl_2 = $__require('e6');
+  var route_config_impl_1 = $__require('e5');
+  var decorators_1 = $__require('d9');
+  var route_config_impl_2 = $__require('e5');
   exports.Route = route_config_impl_2.Route;
   exports.Redirect = route_config_impl_2.Redirect;
   exports.AuxRoute = route_config_impl_2.AuxRoute;
@@ -30833,14 +30744,14 @@ $__System.registerDynamic("e7", ["e6", "da"], true, function($__require, exports
   return module.exports;
 });
 
-$__System.registerDynamic("e8", ["e7", "6", "12"], true, function($__require, exports, module) {
+$__System.registerDynamic("e7", ["e6", "6", "12"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
       global = this,
       GLOBAL = this;
   "use strict";
-  var route_config_decorator_1 = $__require('e7');
+  var route_config_decorator_1 = $__require('e6');
   var lang_1 = $__require('6');
   var exceptions_1 = $__require('12');
   function normalizeRouteConfig(config, registry) {
@@ -30934,7 +30845,7 @@ $__System.registerDynamic("e8", ["e7", "6", "12"], true, function($__require, ex
   return module.exports;
 });
 
-$__System.registerDynamic("de", ["e", "6", "12"], true, function($__require, exports, module) {
+$__System.registerDynamic("dd", ["e", "6", "12"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -31195,7 +31106,7 @@ $__System.registerDynamic("de", ["e", "6", "12"], true, function($__require, exp
   return module.exports;
 });
 
-$__System.registerDynamic("dc", ["e", "7", "6", "12", "93", "8", "e6", "dd", "e5", "d5", "e8", "de"], true, function($__require, exports, module) {
+$__System.registerDynamic("db", ["e", "7", "6", "12", "93", "8", "e5", "dc", "e4", "d4", "e7", "dd"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -31229,12 +31140,12 @@ $__System.registerDynamic("dc", ["e", "7", "6", "12", "93", "8", "e6", "dd", "e5
   var exceptions_1 = $__require('12');
   var reflection_1 = $__require('93');
   var core_1 = $__require('8');
-  var route_config_impl_1 = $__require('e6');
-  var rules_1 = $__require('dd');
-  var rule_set_1 = $__require('e5');
-  var instruction_1 = $__require('d5');
-  var route_config_normalizer_1 = $__require('e8');
-  var url_parser_1 = $__require('de');
+  var route_config_impl_1 = $__require('e5');
+  var rules_1 = $__require('dc');
+  var rule_set_1 = $__require('e4');
+  var instruction_1 = $__require('d4');
+  var route_config_normalizer_1 = $__require('e7');
+  var url_parser_1 = $__require('dd');
   var _resolveToNull = async_1.PromiseWrapper.resolve(null);
   exports.ROUTER_PRIMARY_COMPONENT = lang_1.CONST_EXPR(new core_1.OpaqueToken('RouterPrimaryComponent'));
   var RouteRegistry = (function() {
@@ -31578,16 +31489,16 @@ $__System.registerDynamic("dc", ["e", "7", "6", "12", "93", "8", "e6", "dd", "e5
   return module.exports;
 });
 
-$__System.registerDynamic("e9", ["d9", "d4", "dc", "6", "8", "12"], true, function($__require, exports, module) {
+$__System.registerDynamic("e8", ["d8", "d3", "db", "6", "8", "12"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
       global = this,
       GLOBAL = this;
   "use strict";
-  var common_1 = $__require('d9');
-  var router_1 = $__require('d4');
-  var route_registry_1 = $__require('dc');
+  var common_1 = $__require('d8');
+  var router_1 = $__require('d3');
+  var route_registry_1 = $__require('db');
   var lang_1 = $__require('6');
   var core_1 = $__require('8');
   var exceptions_1 = $__require('12');
@@ -31649,7 +31560,7 @@ $__System.registerDynamic("3e", ["6"], true, function($__require, exports, modul
   return module.exports;
 });
 
-$__System.registerDynamic("ea", ["b9", "eb", "3e"], true, function($__require, exports, module) {
+$__System.registerDynamic("e9", ["b9", "ea", "3e"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -31682,7 +31593,7 @@ $__System.registerDynamic("ea", ["b9", "eb", "3e"], true, function($__require, e
       return Reflect.metadata(k, v);
   };
   var decorators_1 = $__require('b9');
-  var platform_location_1 = $__require('eb');
+  var platform_location_1 = $__require('ea');
   var dom_adapter_1 = $__require('3e');
   var BrowserPlatformLocation = (function(_super) {
     __extends(BrowserPlatformLocation, _super);
@@ -31753,7 +31664,7 @@ $__System.registerDynamic("ea", ["b9", "eb", "3e"], true, function($__require, e
   return module.exports;
 });
 
-$__System.registerDynamic("ec", ["8", "ed", "ee", "eb", "6"], true, function($__require, exports, module) {
+$__System.registerDynamic("eb", ["8", "ec", "ed", "ea", "6"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -31791,9 +31702,9 @@ $__System.registerDynamic("ec", ["8", "ed", "ee", "eb", "6"], true, function($__
     };
   };
   var core_1 = $__require('8');
-  var location_strategy_1 = $__require('ed');
-  var location_1 = $__require('ee');
-  var platform_location_1 = $__require('eb');
+  var location_strategy_1 = $__require('ec');
+  var location_1 = $__require('ed');
+  var platform_location_1 = $__require('ea');
   var lang_1 = $__require('6');
   var HashLocationStrategy = (function(_super) {
     __extends(HashLocationStrategy, _super);
@@ -31849,7 +31760,7 @@ $__System.registerDynamic("ec", ["8", "ed", "ee", "eb", "6"], true, function($__
   return module.exports;
 });
 
-$__System.registerDynamic("eb", [], true, function($__require, exports, module) {
+$__System.registerDynamic("ea", [], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -31885,7 +31796,7 @@ $__System.registerDynamic("eb", [], true, function($__require, exports, module) 
   return module.exports;
 });
 
-$__System.registerDynamic("ef", ["8", "6", "12", "eb", "ed", "ee"], true, function($__require, exports, module) {
+$__System.registerDynamic("ee", ["8", "6", "12", "ea", "ec", "ed"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -31925,9 +31836,9 @@ $__System.registerDynamic("ef", ["8", "6", "12", "eb", "ed", "ee"], true, functi
   var core_1 = $__require('8');
   var lang_1 = $__require('6');
   var exceptions_1 = $__require('12');
-  var platform_location_1 = $__require('eb');
-  var location_strategy_1 = $__require('ed');
-  var location_1 = $__require('ee');
+  var platform_location_1 = $__require('ea');
+  var location_strategy_1 = $__require('ec');
+  var location_1 = $__require('ed');
   var PathLocationStrategy = (function(_super) {
     __extends(PathLocationStrategy, _super);
     function PathLocationStrategy(_platformLocation, href) {
@@ -31975,7 +31886,7 @@ $__System.registerDynamic("ef", ["8", "6", "12", "eb", "ed", "ee"], true, functi
   return module.exports;
 });
 
-$__System.registerDynamic("ed", ["6", "8"], true, function($__require, exports, module) {
+$__System.registerDynamic("ec", ["6", "8"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -31993,7 +31904,7 @@ $__System.registerDynamic("ed", ["6", "8"], true, function($__require, exports, 
   return module.exports;
 });
 
-$__System.registerDynamic("ee", ["7", "8", "ed"], true, function($__require, exports, module) {
+$__System.registerDynamic("ed", ["7", "8", "ec"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -32018,7 +31929,7 @@ $__System.registerDynamic("ee", ["7", "8", "ed"], true, function($__require, exp
   };
   var async_1 = $__require('7');
   var core_1 = $__require('8');
-  var location_strategy_1 = $__require('ed');
+  var location_strategy_1 = $__require('ec');
   var Location = (function() {
     function Location(platformStrategy) {
       var _this = this;
@@ -32123,7 +32034,7 @@ $__System.registerDynamic("ee", ["7", "8", "ed"], true, function($__require, exp
   return module.exports;
 });
 
-$__System.registerDynamic("f0", ["eb", "ed", "ec", "ef", "ee"], true, function($__require, exports, module) {
+$__System.registerDynamic("ef", ["ea", "ec", "eb", "ee", "ed"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -32135,15 +32046,15 @@ $__System.registerDynamic("f0", ["eb", "ed", "ec", "ef", "ee"], true, function($
       if (!exports.hasOwnProperty(p))
         exports[p] = m[p];
   }
-  __export($__require('eb'));
-  __export($__require('ed'));
+  __export($__require('ea'));
   __export($__require('ec'));
-  __export($__require('ef'));
+  __export($__require('eb'));
   __export($__require('ee'));
+  __export($__require('ed'));
   return module.exports;
 });
 
-$__System.registerDynamic("d9", ["f0"], true, function($__require, exports, module) {
+$__System.registerDynamic("d8", ["ef"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -32155,28 +32066,28 @@ $__System.registerDynamic("d9", ["f0"], true, function($__require, exports, modu
       if (!exports.hasOwnProperty(p))
         exports[p] = m[p];
   }
-  __export($__require('f0'));
+  __export($__require('ef'));
   return module.exports;
 });
 
-$__System.registerDynamic("f1", ["e9", "8", "ea", "d9", "6"], true, function($__require, exports, module) {
+$__System.registerDynamic("f0", ["e8", "8", "e9", "d8", "6"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
       global = this,
       GLOBAL = this;
   "use strict";
-  var router_providers_common_1 = $__require('e9');
+  var router_providers_common_1 = $__require('e8');
   var core_1 = $__require('8');
-  var browser_platform_location_1 = $__require('ea');
-  var common_1 = $__require('d9');
+  var browser_platform_location_1 = $__require('e9');
+  var common_1 = $__require('d8');
   var lang_1 = $__require('6');
   exports.ROUTER_PROVIDERS = lang_1.CONST_EXPR([router_providers_common_1.ROUTER_PROVIDERS_COMMON, lang_1.CONST_EXPR(new core_1.Provider(common_1.PlatformLocation, {useClass: browser_platform_location_1.BrowserPlatformLocation}))]);
   exports.ROUTER_BINDINGS = exports.ROUTER_PROVIDERS;
   return module.exports;
 });
 
-$__System.registerDynamic("c2", ["d4", "d3", "d8", "d5", "dc", "e7", "d6", "8", "e9", "f1", "6"], true, function($__require, exports, module) {
+$__System.registerDynamic("c1", ["d3", "d2", "d7", "d4", "db", "e6", "d5", "8", "e8", "f0", "6"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -32188,39 +32099,39 @@ $__System.registerDynamic("c2", ["d4", "d3", "d8", "d5", "dc", "e7", "d6", "8", 
       if (!exports.hasOwnProperty(p))
         exports[p] = m[p];
   }
-  var router_1 = $__require('d4');
+  var router_1 = $__require('d3');
   exports.Router = router_1.Router;
-  var router_outlet_1 = $__require('d3');
+  var router_outlet_1 = $__require('d2');
   exports.RouterOutlet = router_outlet_1.RouterOutlet;
-  var router_link_1 = $__require('d8');
+  var router_link_1 = $__require('d7');
   exports.RouterLink = router_link_1.RouterLink;
-  var instruction_1 = $__require('d5');
+  var instruction_1 = $__require('d4');
   exports.RouteParams = instruction_1.RouteParams;
   exports.RouteData = instruction_1.RouteData;
-  var route_registry_1 = $__require('dc');
+  var route_registry_1 = $__require('db');
   exports.RouteRegistry = route_registry_1.RouteRegistry;
   exports.ROUTER_PRIMARY_COMPONENT = route_registry_1.ROUTER_PRIMARY_COMPONENT;
-  __export($__require('e7'));
-  var lifecycle_annotations_1 = $__require('d6');
+  __export($__require('e6'));
+  var lifecycle_annotations_1 = $__require('d5');
   exports.CanActivate = lifecycle_annotations_1.CanActivate;
-  var instruction_2 = $__require('d5');
+  var instruction_2 = $__require('d4');
   exports.Instruction = instruction_2.Instruction;
   exports.ComponentInstruction = instruction_2.ComponentInstruction;
   var core_1 = $__require('8');
   exports.OpaqueToken = core_1.OpaqueToken;
-  var router_providers_common_1 = $__require('e9');
+  var router_providers_common_1 = $__require('e8');
   exports.ROUTER_PROVIDERS_COMMON = router_providers_common_1.ROUTER_PROVIDERS_COMMON;
-  var router_providers_1 = $__require('f1');
+  var router_providers_1 = $__require('f0');
   exports.ROUTER_PROVIDERS = router_providers_1.ROUTER_PROVIDERS;
   exports.ROUTER_BINDINGS = router_providers_1.ROUTER_BINDINGS;
-  var router_outlet_2 = $__require('d3');
-  var router_link_2 = $__require('d8');
+  var router_outlet_2 = $__require('d2');
+  var router_link_2 = $__require('d7');
   var lang_1 = $__require('6');
   exports.ROUTER_DIRECTIVES = lang_1.CONST_EXPR([router_outlet_2.RouterOutlet, router_link_2.RouterLink]);
   return module.exports;
 });
 
-$__System.register("f2", ["8", "c2", "c3"], function(exports_1, context_1) {
+$__System.register("f1", ["8", "c1", "c2"], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -32260,6 +32171,7 @@ $__System.register("f2", ["8", "c2", "c3"], function(exports_1, context_1) {
                     router.subscribe(function (o) { return console.log(o); });
                 }
                 HrefRouter.prototype.onClick = function ($event) {
+                    //TODO: make routing more flexible
                     $event.preventDefault();
                     this.router.navigateByUrl(this.route);
                 };
@@ -32300,11 +32212,759 @@ $__System.register("f2", ["8", "c2", "c3"], function(exports_1, context_1) {
     }
 });
 
-$__System.register("f3", ["cb", "cd", "d2", "c2", "f2"], function(exports_1, context_1) {
+$__System.registerDynamic("f2", [], true, function($__require, exports, module) {
+  ;
+  var define,
+      global = this,
+      GLOBAL = this;
+  var _self = (typeof window !== 'undefined') ? window : ((typeof WorkerGlobalScope !== 'undefined' && self instanceof WorkerGlobalScope) ? self : {});
+  var Prism = (function() {
+    var lang = /\blang(?:uage)?-(\w+)\b/i;
+    var uniqueId = 0;
+    var _ = _self.Prism = {
+      util: {
+        encode: function(tokens) {
+          if (tokens instanceof Token) {
+            return new Token(tokens.type, _.util.encode(tokens.content), tokens.alias);
+          } else if (_.util.type(tokens) === 'Array') {
+            return tokens.map(_.util.encode);
+          } else {
+            return tokens.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/\u00a0/g, ' ');
+          }
+        },
+        type: function(o) {
+          return Object.prototype.toString.call(o).match(/\[object (\w+)\]/)[1];
+        },
+        objId: function(obj) {
+          if (!obj['__id']) {
+            Object.defineProperty(obj, '__id', {value: ++uniqueId});
+          }
+          return obj['__id'];
+        },
+        clone: function(o) {
+          var type = _.util.type(o);
+          switch (type) {
+            case 'Object':
+              var clone = {};
+              for (var key in o) {
+                if (o.hasOwnProperty(key)) {
+                  clone[key] = _.util.clone(o[key]);
+                }
+              }
+              return clone;
+            case 'Array':
+              return o.map && o.map(function(v) {
+                return _.util.clone(v);
+              });
+          }
+          return o;
+        }
+      },
+      languages: {
+        extend: function(id, redef) {
+          var lang = _.util.clone(_.languages[id]);
+          for (var key in redef) {
+            lang[key] = redef[key];
+          }
+          return lang;
+        },
+        insertBefore: function(inside, before, insert, root) {
+          root = root || _.languages;
+          var grammar = root[inside];
+          if (arguments.length == 2) {
+            insert = arguments[1];
+            for (var newToken in insert) {
+              if (insert.hasOwnProperty(newToken)) {
+                grammar[newToken] = insert[newToken];
+              }
+            }
+            return grammar;
+          }
+          var ret = {};
+          for (var token in grammar) {
+            if (grammar.hasOwnProperty(token)) {
+              if (token == before) {
+                for (var newToken in insert) {
+                  if (insert.hasOwnProperty(newToken)) {
+                    ret[newToken] = insert[newToken];
+                  }
+                }
+              }
+              ret[token] = grammar[token];
+            }
+          }
+          _.languages.DFS(_.languages, function(key, value) {
+            if (value === root[inside] && key != inside) {
+              this[key] = ret;
+            }
+          });
+          return root[inside] = ret;
+        },
+        DFS: function(o, callback, type, visited) {
+          visited = visited || {};
+          for (var i in o) {
+            if (o.hasOwnProperty(i)) {
+              callback.call(o, i, o[i], type || i);
+              if (_.util.type(o[i]) === 'Object' && !visited[_.util.objId(o[i])]) {
+                visited[_.util.objId(o[i])] = true;
+                _.languages.DFS(o[i], callback, null, visited);
+              } else if (_.util.type(o[i]) === 'Array' && !visited[_.util.objId(o[i])]) {
+                visited[_.util.objId(o[i])] = true;
+                _.languages.DFS(o[i], callback, i, visited);
+              }
+            }
+          }
+        }
+      },
+      plugins: {},
+      highlightAll: function(async, callback) {
+        var env = {
+          callback: callback,
+          selector: 'code[class*="language-"], [class*="language-"] code, code[class*="lang-"], [class*="lang-"] code'
+        };
+        _.hooks.run("before-highlightall", env);
+        var elements = env.elements || document.querySelectorAll(env.selector);
+        for (var i = 0,
+            element; element = elements[i++]; ) {
+          _.highlightElement(element, async === true, env.callback);
+        }
+      },
+      highlightElement: function(element, async, callback) {
+        var language,
+            grammar,
+            parent = element;
+        while (parent && !lang.test(parent.className)) {
+          parent = parent.parentNode;
+        }
+        if (parent) {
+          language = (parent.className.match(lang) || [, ''])[1].toLowerCase();
+          grammar = _.languages[language];
+        }
+        element.className = element.className.replace(lang, '').replace(/\s+/g, ' ') + ' language-' + language;
+        parent = element.parentNode;
+        if (/pre/i.test(parent.nodeName)) {
+          parent.className = parent.className.replace(lang, '').replace(/\s+/g, ' ') + ' language-' + language;
+        }
+        var code = element.textContent;
+        var env = {
+          element: element,
+          language: language,
+          grammar: grammar,
+          code: code
+        };
+        _.hooks.run('before-sanity-check', env);
+        if (!env.code || !env.grammar) {
+          _.hooks.run('complete', env);
+          return;
+        }
+        _.hooks.run('before-highlight', env);
+        if (async && _self.Worker) {
+          var worker = new Worker(_.filename);
+          worker.onmessage = function(evt) {
+            env.highlightedCode = evt.data;
+            _.hooks.run('before-insert', env);
+            env.element.innerHTML = env.highlightedCode;
+            callback && callback.call(env.element);
+            _.hooks.run('after-highlight', env);
+            _.hooks.run('complete', env);
+          };
+          worker.postMessage(JSON.stringify({
+            language: env.language,
+            code: env.code,
+            immediateClose: true
+          }));
+        } else {
+          env.highlightedCode = _.highlight(env.code, env.grammar, env.language);
+          _.hooks.run('before-insert', env);
+          env.element.innerHTML = env.highlightedCode;
+          callback && callback.call(element);
+          _.hooks.run('after-highlight', env);
+          _.hooks.run('complete', env);
+        }
+      },
+      highlight: function(text, grammar, language) {
+        var tokens = _.tokenize(text, grammar);
+        return Token.stringify(_.util.encode(tokens), language);
+      },
+      tokenize: function(text, grammar, language) {
+        var Token = _.Token;
+        var strarr = [text];
+        var rest = grammar.rest;
+        if (rest) {
+          for (var token in rest) {
+            grammar[token] = rest[token];
+          }
+          delete grammar.rest;
+        }
+        tokenloop: for (var token in grammar) {
+          if (!grammar.hasOwnProperty(token) || !grammar[token]) {
+            continue;
+          }
+          var patterns = grammar[token];
+          patterns = (_.util.type(patterns) === "Array") ? patterns : [patterns];
+          for (var j = 0; j < patterns.length; ++j) {
+            var pattern = patterns[j],
+                inside = pattern.inside,
+                lookbehind = !!pattern.lookbehind,
+                greedy = !!pattern.greedy,
+                lookbehindLength = 0,
+                alias = pattern.alias;
+            pattern = pattern.pattern || pattern;
+            for (var i = 0; i < strarr.length; i++) {
+              var str = strarr[i];
+              if (strarr.length > text.length) {
+                break tokenloop;
+              }
+              if (str instanceof Token) {
+                continue;
+              }
+              pattern.lastIndex = 0;
+              var match = pattern.exec(str),
+                  delNum = 1;
+              if (!match && greedy && i != strarr.length - 1) {
+                var nextToken = strarr[i + 1].matchedStr || strarr[i + 1],
+                    combStr = str + nextToken;
+                if (i < strarr.length - 2) {
+                  combStr += strarr[i + 2].matchedStr || strarr[i + 2];
+                }
+                pattern.lastIndex = 0;
+                match = pattern.exec(combStr);
+                if (!match) {
+                  continue;
+                }
+                var from = match.index + (lookbehind ? match[1].length : 0);
+                if (from >= str.length) {
+                  continue;
+                }
+                var to = match.index + match[0].length,
+                    len = str.length + nextToken.length;
+                delNum = 3;
+                if (to <= len) {
+                  if (strarr[i + 1].greedy) {
+                    continue;
+                  }
+                  delNum = 2;
+                  combStr = combStr.slice(0, len);
+                }
+                str = combStr;
+              }
+              if (!match) {
+                continue;
+              }
+              if (lookbehind) {
+                lookbehindLength = match[1].length;
+              }
+              var from = match.index + lookbehindLength,
+                  match = match[0].slice(lookbehindLength),
+                  to = from + match.length,
+                  before = str.slice(0, from),
+                  after = str.slice(to);
+              var args = [i, delNum];
+              if (before) {
+                args.push(before);
+              }
+              var wrapped = new Token(token, inside ? _.tokenize(match, inside) : match, alias, match, greedy);
+              args.push(wrapped);
+              if (after) {
+                args.push(after);
+              }
+              Array.prototype.splice.apply(strarr, args);
+            }
+          }
+        }
+        return strarr;
+      },
+      hooks: {
+        all: {},
+        add: function(name, callback) {
+          var hooks = _.hooks.all;
+          hooks[name] = hooks[name] || [];
+          hooks[name].push(callback);
+        },
+        run: function(name, env) {
+          var callbacks = _.hooks.all[name];
+          if (!callbacks || !callbacks.length) {
+            return;
+          }
+          for (var i = 0,
+              callback; callback = callbacks[i++]; ) {
+            callback(env);
+          }
+        }
+      }
+    };
+    var Token = _.Token = function(type, content, alias, matchedStr, greedy) {
+      this.type = type;
+      this.content = content;
+      this.alias = alias;
+      this.matchedStr = matchedStr || null;
+      this.greedy = !!greedy;
+    };
+    Token.stringify = function(o, language, parent) {
+      if (typeof o == 'string') {
+        return o;
+      }
+      if (_.util.type(o) === 'Array') {
+        return o.map(function(element) {
+          return Token.stringify(element, language, o);
+        }).join('');
+      }
+      var env = {
+        type: o.type,
+        content: Token.stringify(o.content, language, parent),
+        tag: 'span',
+        classes: ['token', o.type],
+        attributes: {},
+        language: language,
+        parent: parent
+      };
+      if (env.type == 'comment') {
+        env.attributes['spellcheck'] = 'true';
+      }
+      if (o.alias) {
+        var aliases = _.util.type(o.alias) === 'Array' ? o.alias : [o.alias];
+        Array.prototype.push.apply(env.classes, aliases);
+      }
+      _.hooks.run('wrap', env);
+      var attributes = '';
+      for (var name in env.attributes) {
+        attributes += (attributes ? ' ' : '') + name + '="' + (env.attributes[name] || '') + '"';
+      }
+      return '<' + env.tag + ' class="' + env.classes.join(' ') + '" ' + attributes + '>' + env.content + '</' + env.tag + '>';
+    };
+    if (!_self.document) {
+      if (!_self.addEventListener) {
+        return _self.Prism;
+      }
+      _self.addEventListener('message', function(evt) {
+        var message = JSON.parse(evt.data),
+            lang = message.language,
+            code = message.code,
+            immediateClose = message.immediateClose;
+        _self.postMessage(_.highlight(code, _.languages[lang], lang));
+        if (immediateClose) {
+          _self.close();
+        }
+      }, false);
+      return _self.Prism;
+    }
+    var script = document.currentScript || [].slice.call(document.getElementsByTagName("script")).pop();
+    if (script) {
+      _.filename = script.src;
+      if (document.addEventListener && !script.hasAttribute('data-manual')) {
+        if (document.readyState !== "loading") {
+          requestAnimationFrame(_.highlightAll, 0);
+        } else {
+          document.addEventListener('DOMContentLoaded', _.highlightAll);
+        }
+      }
+    }
+    return _self.Prism;
+  })();
+  if (typeof module !== 'undefined' && module.exports) {
+    module.exports = Prism;
+  }
+  if (typeof global !== 'undefined') {
+    global.Prism = Prism;
+  }
+  Prism.languages.markup = {
+    'comment': /<!--[\w\W]*?-->/,
+    'prolog': /<\?[\w\W]+?\?>/,
+    'doctype': /<!DOCTYPE[\w\W]+?>/,
+    'cdata': /<!\[CDATA\[[\w\W]*?]]>/i,
+    'tag': {
+      pattern: /<\/?(?!\d)[^\s>\/=.$<]+(?:\s+[^\s>\/=]+(?:=(?:("|')(?:\\\1|\\?(?!\1)[\w\W])*\1|[^\s'">=]+))?)*\s*\/?>/i,
+      inside: {
+        'tag': {
+          pattern: /^<\/?[^\s>\/]+/i,
+          inside: {
+            'punctuation': /^<\/?/,
+            'namespace': /^[^\s>\/:]+:/
+          }
+        },
+        'attr-value': {
+          pattern: /=(?:('|")[\w\W]*?(\1)|[^\s>]+)/i,
+          inside: {'punctuation': /[=>"']/}
+        },
+        'punctuation': /\/?>/,
+        'attr-name': {
+          pattern: /[^\s>\/]+/,
+          inside: {'namespace': /^[^\s>\/:]+:/}
+        }
+      }
+    },
+    'entity': /&#?[\da-z]{1,8};/i
+  };
+  Prism.hooks.add('wrap', function(env) {
+    if (env.type === 'entity') {
+      env.attributes['title'] = env.content.replace(/&amp;/, '&');
+    }
+  });
+  Prism.languages.xml = Prism.languages.markup;
+  Prism.languages.html = Prism.languages.markup;
+  Prism.languages.mathml = Prism.languages.markup;
+  Prism.languages.svg = Prism.languages.markup;
+  Prism.languages.css = {
+    'comment': /\/\*[\w\W]*?\*\//,
+    'atrule': {
+      pattern: /@[\w-]+?.*?(;|(?=\s*\{))/i,
+      inside: {'rule': /@[\w-]+/}
+    },
+    'url': /url\((?:(["'])(\\(?:\r\n|[\w\W])|(?!\1)[^\\\r\n])*\1|.*?)\)/i,
+    'selector': /[^\{\}\s][^\{\};]*?(?=\s*\{)/,
+    'string': /("|')(\\(?:\r\n|[\w\W])|(?!\1)[^\\\r\n])*\1/,
+    'property': /(\b|\B)[\w-]+(?=\s*:)/i,
+    'important': /\B!important\b/i,
+    'function': /[-a-z0-9]+(?=\()/i,
+    'punctuation': /[(){};:]/
+  };
+  Prism.languages.css['atrule'].inside.rest = Prism.util.clone(Prism.languages.css);
+  if (Prism.languages.markup) {
+    Prism.languages.insertBefore('markup', 'tag', {'style': {
+        pattern: /(<style[\w\W]*?>)[\w\W]*?(?=<\/style>)/i,
+        lookbehind: true,
+        inside: Prism.languages.css,
+        alias: 'language-css'
+      }});
+    Prism.languages.insertBefore('inside', 'attr-value', {'style-attr': {
+        pattern: /\s*style=("|').*?\1/i,
+        inside: {
+          'attr-name': {
+            pattern: /^\s*style/i,
+            inside: Prism.languages.markup.tag.inside
+          },
+          'punctuation': /^\s*=\s*['"]|['"]\s*$/,
+          'attr-value': {
+            pattern: /.+/i,
+            inside: Prism.languages.css
+          }
+        },
+        alias: 'language-css'
+      }}, Prism.languages.markup.tag);
+  }
+  Prism.languages.clike = {
+    'comment': [{
+      pattern: /(^|[^\\])\/\*[\w\W]*?\*\//,
+      lookbehind: true
+    }, {
+      pattern: /(^|[^\\:])\/\/.*/,
+      lookbehind: true
+    }],
+    'string': {
+      pattern: /(["'])(\\(?:\r\n|[\s\S])|(?!\1)[^\\\r\n])*\1/,
+      greedy: true
+    },
+    'class-name': {
+      pattern: /((?:\b(?:class|interface|extends|implements|trait|instanceof|new)\s+)|(?:catch\s+\())[a-z0-9_\.\\]+/i,
+      lookbehind: true,
+      inside: {punctuation: /(\.|\\)/}
+    },
+    'keyword': /\b(if|else|while|do|for|return|in|instanceof|function|new|try|throw|catch|finally|null|break|continue)\b/,
+    'boolean': /\b(true|false)\b/,
+    'function': /[a-z0-9_]+(?=\()/i,
+    'number': /\b-?(?:0x[\da-f]+|\d*\.?\d+(?:e[+-]?\d+)?)\b/i,
+    'operator': /--?|\+\+?|!=?=?|<=?|>=?|==?=?|&&?|\|\|?|\?|\*|\/|~|\^|%/,
+    'punctuation': /[{}[\];(),.:]/
+  };
+  Prism.languages.javascript = Prism.languages.extend('clike', {
+    'keyword': /\b(as|async|await|break|case|catch|class|const|continue|debugger|default|delete|do|else|enum|export|extends|finally|for|from|function|get|if|implements|import|in|instanceof|interface|let|new|null|of|package|private|protected|public|return|set|static|super|switch|this|throw|try|typeof|var|void|while|with|yield)\b/,
+    'number': /\b-?(0x[\dA-Fa-f]+|0b[01]+|0o[0-7]+|\d*\.?\d+([Ee][+-]?\d+)?|NaN|Infinity)\b/,
+    'function': /[_$a-zA-Z\xA0-\uFFFF][_$a-zA-Z0-9\xA0-\uFFFF]*(?=\()/i
+  });
+  Prism.languages.insertBefore('javascript', 'keyword', {'regex': {
+      pattern: /(^|[^/])\/(?!\/)(\[.+?]|\\.|[^/\\\r\n])+\/[gimyu]{0,5}(?=\s*($|[\r\n,.;})]))/,
+      lookbehind: true,
+      greedy: true
+    }});
+  Prism.languages.insertBefore('javascript', 'string', {'template-string': {
+      pattern: /`(?:\\\\|\\?[^\\])*?`/,
+      greedy: true,
+      inside: {
+        'interpolation': {
+          pattern: /\$\{[^}]+\}/,
+          inside: {
+            'interpolation-punctuation': {
+              pattern: /^\$\{|\}$/,
+              alias: 'punctuation'
+            },
+            rest: Prism.languages.javascript
+          }
+        },
+        'string': /[\s\S]+/
+      }
+    }});
+  if (Prism.languages.markup) {
+    Prism.languages.insertBefore('markup', 'tag', {'script': {
+        pattern: /(<script[\w\W]*?>)[\w\W]*?(?=<\/script>)/i,
+        lookbehind: true,
+        inside: Prism.languages.javascript,
+        alias: 'language-javascript'
+      }});
+  }
+  Prism.languages.js = Prism.languages.javascript;
+  (function() {
+    if (typeof self === 'undefined' || !self.Prism || !self.document || !document.querySelector) {
+      return;
+    }
+    self.Prism.fileHighlight = function() {
+      var Extensions = {
+        'js': 'javascript',
+        'py': 'python',
+        'rb': 'ruby',
+        'ps1': 'powershell',
+        'psm1': 'powershell',
+        'sh': 'bash',
+        'bat': 'batch',
+        'h': 'c',
+        'tex': 'latex'
+      };
+      if (Array.prototype.forEach) {
+        Array.prototype.slice.call(document.querySelectorAll('pre[data-src]')).forEach(function(pre) {
+          var src = pre.getAttribute('data-src');
+          var language,
+              parent = pre;
+          var lang = /\blang(?:uage)?-(?!\*)(\w+)\b/i;
+          while (parent && !lang.test(parent.className)) {
+            parent = parent.parentNode;
+          }
+          if (parent) {
+            language = (pre.className.match(lang) || [, ''])[1];
+          }
+          if (!language) {
+            var extension = (src.match(/\.(\w+)$/) || [, ''])[1];
+            language = Extensions[extension] || extension;
+          }
+          var code = document.createElement('code');
+          code.className = 'language-' + language;
+          pre.textContent = '';
+          code.textContent = 'Loading…';
+          pre.appendChild(code);
+          var xhr = new XMLHttpRequest();
+          xhr.open('GET', src, true);
+          xhr.onreadystatechange = function() {
+            if (xhr.readyState == 4) {
+              if (xhr.status < 400 && xhr.responseText) {
+                code.textContent = xhr.responseText;
+                Prism.highlightElement(code);
+              } else if (xhr.status >= 400) {
+                code.textContent = '✖ Error ' + xhr.status + ' while fetching file: ' + xhr.statusText;
+              } else {
+                code.textContent = '✖ Error: File does not exist or is empty';
+              }
+            }
+          };
+          xhr.send(null);
+        });
+      }
+    };
+    document.addEventListener('DOMContentLoaded', self.Prism.fileHighlight);
+  })();
+  return module.exports;
+});
+
+$__System.register("f3", ["8", "f2", "c7"], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
-    var RepeaterComponents_1, RepeaterManager_1, SiteComponents_1, router_1, HrefRouter_1;
-    var GlobalDirectives, GlobalProviders;
+    var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+        var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+        if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+        else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+        return c > 3 && r && Object.defineProperty(target, key, r), r;
+    };
+    var __metadata = (this && this.__metadata) || function (k, v) {
+        if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+    };
+    var core_1, prismjs_1, DependencyTokens_1;
+    var PreviewHtml;
+    return {
+        setters:[
+            function (core_1_1) {
+                core_1 = core_1_1;
+            },
+            function (prismjs_1_1) {
+                prismjs_1 = prismjs_1_1;
+            },
+            function (DependencyTokens_1_1) {
+                DependencyTokens_1 = DependencyTokens_1_1;
+            }],
+        execute: function() {
+            PreviewHtml = (function () {
+                //better practice for doing this without touching nativeElement?
+                function PreviewHtml(elementRef, parent, injector) {
+                    var _this = this;
+                    parent.observableContext.subscribe(function (context) {
+                        elementRef.nativeElement.innerHTML = _this.renderPreview(context);
+                    });
+                }
+                PreviewHtml.prototype.renderPreview = function (context) {
+                    if (context) {
+                        if (context.html) {
+                            return prismjs_1.default.highlight(context.html, prismjs_1.default.languages.html);
+                        }
+                        return "[No Html available for " + context.title + "]";
+                    }
+                    return "";
+                };
+                PreviewHtml = __decorate([
+                    core_1.Directive({
+                        selector: "preview-html, [preview-html]"
+                    }), 
+                    __metadata('design:paramtypes', [(typeof (_a = typeof core_1.ElementRef !== 'undefined' && core_1.ElementRef) === 'function' && _a) || Object, (typeof (_b = typeof DependencyTokens_1.Parent !== 'undefined' && DependencyTokens_1.Parent) === 'function' && _b) || Object, (typeof (_c = typeof core_1.Injector !== 'undefined' && core_1.Injector) === 'function' && _c) || Object])
+                ], PreviewHtml);
+                return PreviewHtml;
+                var _a, _b, _c;
+            }());
+            exports_1("PreviewHtml", PreviewHtml);
+        }
+    }
+});
+
+$__System.register("c7", [], function(exports_1, context_1) {
+    "use strict";
+    var __moduleName = context_1 && context_1.id;
+    var Parent, LibraryMetadata;
+    return {
+        setters:[],
+        execute: function() {
+            Parent = (function () {
+                function Parent() {
+                }
+                return Parent;
+            }());
+            exports_1("Parent", Parent);
+            ;
+            LibraryMetadata = (function () {
+                function LibraryMetadata() {
+                }
+                return LibraryMetadata;
+            }());
+            exports_1("LibraryMetadata", LibraryMetadata);
+            ;
+        }
+    }
+});
+
+$__System.register("f4", ["8", "c7"], function(exports_1, context_1) {
+    "use strict";
+    var __moduleName = context_1 && context_1.id;
+    var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+        var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+        if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+        else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+        return c > 3 && r && Object.defineProperty(target, key, r), r;
+    };
+    var __metadata = (this && this.__metadata) || function (k, v) {
+        if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+    };
+    var core_1, DependencyTokens_1;
+    var RenderPattern;
+    return {
+        setters:[
+            function (core_1_1) {
+                core_1 = core_1_1;
+            },
+            function (DependencyTokens_1_1) {
+                DependencyTokens_1 = DependencyTokens_1_1;
+            }],
+        execute: function() {
+            RenderPattern = (function () {
+                //better practice for doing this without touching nativeElement?
+                function RenderPattern(elementRef, parent, injector) {
+                    parent.observableContext.subscribe(function (context) {
+                        if (context)
+                            elementRef.nativeElement.innerHTML = context.html || ""; //this.renderPreview(context);
+                    });
+                }
+                RenderPattern = __decorate([
+                    core_1.Directive({
+                        selector: "render-pattern, [render-pattern]"
+                    }), 
+                    __metadata('design:paramtypes', [(typeof (_a = typeof core_1.ElementRef !== 'undefined' && core_1.ElementRef) === 'function' && _a) || Object, (typeof (_b = typeof DependencyTokens_1.Parent !== 'undefined' && DependencyTokens_1.Parent) === 'function' && _b) || Object, (typeof (_c = typeof core_1.Injector !== 'undefined' && core_1.Injector) === 'function' && _c) || Object])
+                ], RenderPattern);
+                return RenderPattern;
+                var _a, _b, _c;
+            }());
+            exports_1("RenderPattern", RenderPattern);
+        }
+    }
+});
+
+$__System.register("c5", [], function(exports_1, context_1) {
+    "use strict";
+    var __moduleName = context_1 && context_1.id;
+    var objectPath;
+    function get(object, path) {
+        if (typeof (path) === "string") {
+            path = path.match(/[^\/\.]+/g);
+        }
+        if (object.items)
+            object = object.items;
+        if (path.length > 1) {
+            return get(object[path[0]], path.slice(1, path.length));
+        }
+        //todo: return clone
+        return object[path[0]];
+    }
+    return {
+        setters:[],
+        execute: function() {
+            exports_1("objectPath", objectPath = {
+                get: get
+            });
+        }
+    }
+});
+
+$__System.register("f5", ["8", "c5", "c2"], function(exports_1, context_1) {
+    "use strict";
+    var __moduleName = context_1 && context_1.id;
+    var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+        var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+        if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+        else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+        return c > 3 && r && Object.defineProperty(target, key, r), r;
+    };
+    var __metadata = (this && this.__metadata) || function (k, v) {
+        if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+    };
+    var core_1, objectPath_1, metadata_1;
+    var PathPipe;
+    return {
+        setters:[
+            function (core_1_1) {
+                core_1 = core_1_1;
+            },
+            function (objectPath_1_1) {
+                objectPath_1 = objectPath_1_1;
+            },
+            function (metadata_1_1) {
+                metadata_1 = metadata_1_1;
+            }],
+        execute: function() {
+            PathPipe = (function () {
+                function PathPipe() {
+                }
+                PathPipe.prototype.transform = function (value) {
+                    return objectPath_1.objectPath.get(metadata_1.metadata, value);
+                };
+                PathPipe = __decorate([
+                    core_1.Pipe({
+                        name: "path"
+                    }), 
+                    __metadata('design:paramtypes', [])
+                ], PathPipe);
+                return PathPipe;
+            }());
+            exports_1("PathPipe", PathPipe);
+        }
+    }
+});
+
+$__System.register("f6", ["ca", "cc", "d1", "c1", "f1", "f3", "f4", "f5"], function(exports_1, context_1) {
+    "use strict";
+    var __moduleName = context_1 && context_1.id;
+    var RepeaterComponents_1, RepeaterManager_1, SiteComponents_1, router_1, HrefRouter_1, PreviewHtml_1, RenderPattern_1, Path_1;
+    var GlobalDirectives, GlobalProviders, GlobalPipes;
     return {
         setters:[
             function (RepeaterComponents_1_1) {
@@ -32321,6 +32981,15 @@ $__System.register("f3", ["cb", "cd", "d2", "c2", "f2"], function(exports_1, con
             },
             function (HrefRouter_1_1) {
                 HrefRouter_1 = HrefRouter_1_1;
+            },
+            function (PreviewHtml_1_1) {
+                PreviewHtml_1 = PreviewHtml_1_1;
+            },
+            function (RenderPattern_1_1) {
+                RenderPattern_1 = RenderPattern_1_1;
+            },
+            function (Path_1_1) {
+                Path_1 = Path_1_1;
             }],
         execute: function() {
             exports_1("GlobalDirectives", GlobalDirectives = [
@@ -32328,10 +32997,15 @@ $__System.register("f3", ["cb", "cd", "d2", "c2", "f2"], function(exports_1, con
                 RepeaterComponents_1.RepeaterComponents,
                 SiteComponents_1.SiteComponents,
                 router_1.ROUTER_DIRECTIVES,
-                HrefRouter_1.HrefRouter
+                HrefRouter_1.HrefRouter,
+                PreviewHtml_1.PreviewHtml,
+                RenderPattern_1.RenderPattern
             ]);
             exports_1("GlobalProviders", GlobalProviders = [
                 router_1.ROUTER_PROVIDERS
+            ]);
+            exports_1("GlobalPipes", GlobalPipes = [
+                Path_1.PathPipe
             ]);
         }
     }
@@ -32537,7 +33211,7 @@ $__System.registerDynamic("9c", ["6", "40", "a0"], true, function($__require, ex
   return module.exports;
 });
 
-$__System.registerDynamic("97", ["6", "a0", "f4"], true, function($__require, exports, module) {
+$__System.registerDynamic("97", ["6", "a0", "f7"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -32571,7 +33245,7 @@ $__System.registerDynamic("97", ["6", "a0", "f4"], true, function($__require, ex
   };
   var lang_1 = $__require('6');
   var metadata_1 = $__require('a0');
-  var change_detection_1 = $__require('f4');
+  var change_detection_1 = $__require('f7');
   var DirectiveMetadata = (function(_super) {
     __extends(DirectiveMetadata, _super);
     function DirectiveMetadata(_a) {
@@ -32824,7 +33498,7 @@ $__System.registerDynamic("6a", ["6"], true, function($__require, exports, modul
   return module.exports;
 });
 
-$__System.registerDynamic("54", ["9c", "97", "6a", "da"], true, function($__require, exports, module) {
+$__System.registerDynamic("54", ["9c", "97", "6a", "d9"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -32853,7 +33527,7 @@ $__System.registerDynamic("54", ["9c", "97", "6a", "da"], true, function($__requ
   var di_2 = $__require('9c');
   var directives_2 = $__require('97');
   var view_2 = $__require('6a');
-  var decorators_1 = $__require('da');
+  var decorators_1 = $__require('d9');
   exports.Component = decorators_1.makeDecorator(directives_2.ComponentMetadata, function(fn) {
     return fn.View = View;
   });
@@ -32876,19 +33550,19 @@ $__System.registerDynamic("54", ["9c", "97", "6a", "da"], true, function($__requ
   return module.exports;
 });
 
-$__System.registerDynamic("f5", ["da"], true, function($__require, exports, module) {
+$__System.registerDynamic("f8", ["d9"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
       global = this,
       GLOBAL = this;
   "use strict";
-  var decorators_1 = $__require('da');
+  var decorators_1 = $__require('d9');
   exports.Class = decorators_1.Class;
   return module.exports;
 });
 
-$__System.registerDynamic("f6", ["6"], true, function($__require, exports, module) {
+$__System.registerDynamic("f9", ["6"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -32900,7 +33574,7 @@ $__System.registerDynamic("f6", ["6"], true, function($__require, exports, modul
   return module.exports;
 });
 
-$__System.registerDynamic("f7", ["6", "7", "12", "f8"], true, function($__require, exports, module) {
+$__System.registerDynamic("fa", ["6", "7", "12", "fb"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -32913,12 +33587,12 @@ $__System.registerDynamic("f7", ["6", "7", "12", "f8"], true, function($__requir
   exports.EventEmitter = async_1.EventEmitter;
   var exceptions_1 = $__require('12');
   exports.WrappedException = exceptions_1.WrappedException;
-  var exception_handler_1 = $__require('f8');
+  var exception_handler_1 = $__require('fb');
   exports.ExceptionHandler = exception_handler_1.ExceptionHandler;
   return module.exports;
 });
 
-$__System.registerDynamic("f9", ["5e"], true, function($__require, exports, module) {
+$__System.registerDynamic("fc", ["5e"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -32931,7 +33605,7 @@ $__System.registerDynamic("f9", ["5e"], true, function($__require, exports, modu
   return module.exports;
 });
 
-$__System.registerDynamic("fa", ["a7"], true, function($__require, exports, module) {
+$__System.registerDynamic("fd", ["a7"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -32945,7 +33619,7 @@ $__System.registerDynamic("fa", ["a7"], true, function($__require, exports, modu
   return module.exports;
 });
 
-$__System.registerDynamic("fb", ["e", "6", "7"], true, function($__require, exports, module) {
+$__System.registerDynamic("fe", ["e", "6", "7"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -33086,7 +33760,7 @@ $__System.registerDynamic("aa", [], true, function($__require, exports, module) 
   return module.exports;
 });
 
-$__System.registerDynamic("b3", ["12", "fc", "7b"], true, function($__require, exports, module) {
+$__System.registerDynamic("b3", ["12", "ff", "7b"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -33103,7 +33777,7 @@ $__System.registerDynamic("b3", ["12", "fc", "7b"], true, function($__require, e
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
   };
   var exceptions_1 = $__require('12');
-  var change_detector_ref_1 = $__require('fc');
+  var change_detector_ref_1 = $__require('ff');
   var constants_1 = $__require('7b');
   var ViewRef = (function(_super) {
     __extends(ViewRef, _super);
@@ -33211,7 +33885,7 @@ $__System.registerDynamic("b3", ["12", "fc", "7b"], true, function($__require, e
   return module.exports;
 });
 
-$__System.registerDynamic("a8", ["bc", "fb", "fd", "a5", "aa", "b3", "a6", "66", "b5"], true, function($__require, exports, module) {
+$__System.registerDynamic("a8", ["bc", "fe", "100", "a5", "aa", "b3", "a6", "66", "b5"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -33220,9 +33894,9 @@ $__System.registerDynamic("a8", ["bc", "fb", "fd", "a5", "aa", "b3", "a6", "66",
   "use strict";
   var component_resolver_1 = $__require('bc');
   exports.ComponentResolver = component_resolver_1.ComponentResolver;
-  var query_list_1 = $__require('fb');
+  var query_list_1 = $__require('fe');
   exports.QueryList = query_list_1.QueryList;
-  var dynamic_component_loader_1 = $__require('fd');
+  var dynamic_component_loader_1 = $__require('100');
   exports.DynamicComponentLoader = dynamic_component_loader_1.DynamicComponentLoader;
   var element_ref_1 = $__require('a5');
   exports.ElementRef = element_ref_1.ElementRef;
@@ -33445,7 +34119,7 @@ $__System.registerDynamic("56", ["6", "e"], true, function($__require, exports, 
   return module.exports;
 });
 
-$__System.registerDynamic("f4", ["78"], true, function($__require, exports, module) {
+$__System.registerDynamic("f7", ["78"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -33478,7 +34152,7 @@ $__System.registerDynamic("9d", ["40", "6"], true, function($__require, exports,
   return module.exports;
 });
 
-$__System.registerDynamic("fe", ["6", "40", "86", "93", "94", "62", "5c"], true, function($__require, exports, module) {
+$__System.registerDynamic("101", ["6", "40", "86", "93", "94", "62", "5c"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -33502,7 +34176,7 @@ $__System.registerDynamic("fe", ["6", "40", "86", "93", "94", "62", "5c"], true,
   return module.exports;
 });
 
-$__System.registerDynamic("ff", [], true, function($__require, exports, module) {
+$__System.registerDynamic("102", [], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -33599,7 +34273,7 @@ $__System.registerDynamic("ff", [], true, function($__require, exports, module) 
   return module.exports;
 });
 
-$__System.registerDynamic("5e", ["7", "ff", "12"], true, function($__require, exports, module) {
+$__System.registerDynamic("5e", ["7", "102", "12"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -33607,9 +34281,9 @@ $__System.registerDynamic("5e", ["7", "ff", "12"], true, function($__require, ex
       GLOBAL = this;
   "use strict";
   var async_1 = $__require('7');
-  var ng_zone_impl_1 = $__require('ff');
+  var ng_zone_impl_1 = $__require('102');
   var exceptions_1 = $__require('12');
-  var ng_zone_impl_2 = $__require('ff');
+  var ng_zone_impl_2 = $__require('102');
   exports.NgZoneError = ng_zone_impl_2.NgZoneError;
   var NgZone = (function() {
     function NgZone(_a) {
@@ -34383,7 +35057,7 @@ $__System.registerDynamic("2e", [], true, function($__require, exports, module) 
   return module.exports;
 });
 
-$__System.registerDynamic("d1", [], true, function($__require, exports, module) {
+$__System.registerDynamic("d0", [], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -34410,7 +35084,7 @@ $__System.registerDynamic("d1", [], true, function($__require, exports, module) 
   return module.exports;
 });
 
-$__System.registerDynamic("100", ["101"], true, function($__require, exports, module) {
+$__System.registerDynamic("103", ["104"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -34425,7 +35099,7 @@ $__System.registerDynamic("100", ["101"], true, function($__require, exports, mo
     }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
   };
-  var Subscription_1 = $__require('101');
+  var Subscription_1 = $__require('104');
   var SubjectSubscription = (function(_super) {
     __extends(SubjectSubscription, _super);
     function SubjectSubscription(subject, subscriber) {
@@ -34456,7 +35130,7 @@ $__System.registerDynamic("100", ["101"], true, function($__require, exports, mo
   return module.exports;
 });
 
-$__System.registerDynamic("d0", ["102", "103", "101", "d1", "100", "104"], true, function($__require, exports, module) {
+$__System.registerDynamic("cf", ["105", "106", "104", "d0", "103", "107"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -34471,12 +35145,12 @@ $__System.registerDynamic("d0", ["102", "103", "101", "d1", "100", "104"], true,
     }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
   };
-  var Observable_1 = $__require('102');
-  var Subscriber_1 = $__require('103');
-  var Subscription_1 = $__require('101');
-  var ObjectUnsubscribedError_1 = $__require('d1');
-  var SubjectSubscription_1 = $__require('100');
-  var rxSubscriber_1 = $__require('104');
+  var Observable_1 = $__require('105');
+  var Subscriber_1 = $__require('106');
+  var Subscription_1 = $__require('104');
+  var ObjectUnsubscribedError_1 = $__require('d0');
+  var SubjectSubscription_1 = $__require('103');
+  var rxSubscriber_1 = $__require('107');
   var SubjectSubscriber = (function(_super) {
     __extends(SubjectSubscriber, _super);
     function SubjectSubscriber(destination) {
@@ -34614,7 +35288,7 @@ $__System.registerDynamic("d0", ["102", "103", "101", "d1", "100", "104"], true,
   return module.exports;
 });
 
-$__System.registerDynamic("105", ["106", "102"], true, function($__require, exports, module) {
+$__System.registerDynamic("108", ["109", "105"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -34629,8 +35303,8 @@ $__System.registerDynamic("105", ["106", "102"], true, function($__require, expo
     }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
   };
-  var root_1 = $__require('106');
-  var Observable_1 = $__require('102');
+  var root_1 = $__require('109');
+  var Observable_1 = $__require('105');
   var PromiseObservable = (function(_super) {
     __extends(PromiseObservable, _super);
     function PromiseObservable(promise, scheduler) {
@@ -34729,13 +35403,13 @@ $__System.registerDynamic("105", ["106", "102"], true, function($__require, expo
   return module.exports;
 });
 
-$__System.registerDynamic("107", ["106"], true, function($__require, exports, module) {
+$__System.registerDynamic("10a", ["109"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
       global = this,
       GLOBAL = this;
-  var root_1 = $__require('106');
+  var root_1 = $__require('109');
   function toPromise(PromiseCtor) {
     var _this = this;
     if (!PromiseCtor) {
@@ -34763,7 +35437,7 @@ $__System.registerDynamic("107", ["106"], true, function($__require, exports, mo
   return module.exports;
 });
 
-$__System.registerDynamic("108", [], true, function($__require, exports, module) {
+$__System.registerDynamic("10b", [], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -34775,7 +35449,7 @@ $__System.registerDynamic("108", [], true, function($__require, exports, module)
   return module.exports;
 });
 
-$__System.registerDynamic("109", [], true, function($__require, exports, module) {
+$__System.registerDynamic("10c", [], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -34788,7 +35462,7 @@ $__System.registerDynamic("109", [], true, function($__require, exports, module)
   return module.exports;
 });
 
-$__System.registerDynamic("10a", [], true, function($__require, exports, module) {
+$__System.registerDynamic("10d", [], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -34801,13 +35475,13 @@ $__System.registerDynamic("10a", [], true, function($__require, exports, module)
   return module.exports;
 });
 
-$__System.registerDynamic("10b", ["10c"], true, function($__require, exports, module) {
+$__System.registerDynamic("10e", ["10f"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
       global = this,
       GLOBAL = this;
-  var errorObject_1 = $__require('10c');
+  var errorObject_1 = $__require('10f');
   var tryCatchTarget;
   function tryCatcher() {
     try {
@@ -34826,7 +35500,7 @@ $__System.registerDynamic("10b", ["10c"], true, function($__require, exports, mo
   return module.exports;
 });
 
-$__System.registerDynamic("10c", [], true, function($__require, exports, module) {
+$__System.registerDynamic("10f", [], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -34836,7 +35510,7 @@ $__System.registerDynamic("10c", [], true, function($__require, exports, module)
   return module.exports;
 });
 
-$__System.registerDynamic("10d", [], true, function($__require, exports, module) {
+$__System.registerDynamic("110", [], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -34867,18 +35541,18 @@ $__System.registerDynamic("10d", [], true, function($__require, exports, module)
   return module.exports;
 });
 
-$__System.registerDynamic("101", ["108", "109", "10a", "10b", "10c", "10d"], true, function($__require, exports, module) {
+$__System.registerDynamic("104", ["10b", "10c", "10d", "10e", "10f", "110"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
       global = this,
       GLOBAL = this;
-  var isArray_1 = $__require('108');
-  var isObject_1 = $__require('109');
-  var isFunction_1 = $__require('10a');
-  var tryCatch_1 = $__require('10b');
-  var errorObject_1 = $__require('10c');
-  var UnsubscriptionError_1 = $__require('10d');
+  var isArray_1 = $__require('10b');
+  var isObject_1 = $__require('10c');
+  var isFunction_1 = $__require('10d');
+  var tryCatch_1 = $__require('10e');
+  var errorObject_1 = $__require('10f');
+  var UnsubscriptionError_1 = $__require('110');
   var Subscription = (function() {
     function Subscription(unsubscribe) {
       this.isUnsubscribed = false;
@@ -34972,7 +35646,7 @@ $__System.registerDynamic("101", ["108", "109", "10a", "10b", "10c", "10d"], tru
   return module.exports;
 });
 
-$__System.registerDynamic("10e", [], true, function($__require, exports, module) {
+$__System.registerDynamic("111", [], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -34989,7 +35663,7 @@ $__System.registerDynamic("10e", [], true, function($__require, exports, module)
   return module.exports;
 });
 
-$__System.registerDynamic("103", ["10a", "101", "10e", "104"], true, function($__require, exports, module) {
+$__System.registerDynamic("106", ["10d", "104", "111", "107"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -35004,10 +35678,10 @@ $__System.registerDynamic("103", ["10a", "101", "10e", "104"], true, function($_
     }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
   };
-  var isFunction_1 = $__require('10a');
-  var Subscription_1 = $__require('101');
-  var Observer_1 = $__require('10e');
-  var rxSubscriber_1 = $__require('104');
+  var isFunction_1 = $__require('10d');
+  var Subscription_1 = $__require('104');
+  var Observer_1 = $__require('111');
+  var rxSubscriber_1 = $__require('107');
   var Subscriber = (function(_super) {
     __extends(Subscriber, _super);
     function Subscriber(destinationOrNext, error, complete) {
@@ -35187,7 +35861,7 @@ $__System.registerDynamic("103", ["10a", "101", "10e", "104"], true, function($_
   return module.exports;
 });
 
-$__System.registerDynamic("106", [], true, function($__require, exports, module) {
+$__System.registerDynamic("109", [], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -35211,26 +35885,26 @@ $__System.registerDynamic("106", [], true, function($__require, exports, module)
   return module.exports;
 });
 
-$__System.registerDynamic("104", ["106"], true, function($__require, exports, module) {
+$__System.registerDynamic("107", ["109"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
       global = this,
       GLOBAL = this;
-  var root_1 = $__require('106');
+  var root_1 = $__require('109');
   var Symbol = root_1.root.Symbol;
   exports.$$rxSubscriber = (typeof Symbol === 'function' && typeof Symbol.for === 'function') ? Symbol.for('rxSubscriber') : '@@rxSubscriber';
   return module.exports;
 });
 
-$__System.registerDynamic("10f", ["103", "104"], true, function($__require, exports, module) {
+$__System.registerDynamic("112", ["106", "107"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
       global = this,
       GLOBAL = this;
-  var Subscriber_1 = $__require('103');
-  var rxSubscriber_1 = $__require('104');
+  var Subscriber_1 = $__require('106');
+  var rxSubscriber_1 = $__require('107');
   function toSubscriber(nextOrObserver, error, complete) {
     if (nextOrObserver) {
       if (nextOrObserver instanceof Subscriber_1.Subscriber) {
@@ -35249,7 +35923,7 @@ $__System.registerDynamic("10f", ["103", "104"], true, function($__require, expo
   return module.exports;
 });
 
-$__System.registerDynamic("110", [], true, function($__require, exports, module) {
+$__System.registerDynamic("113", [], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -35273,25 +35947,25 @@ $__System.registerDynamic("110", [], true, function($__require, exports, module)
   return module.exports;
 });
 
-$__System.registerDynamic("111", ["110"], true, function($__require, exports, module) {
+$__System.registerDynamic("114", ["113"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
       global = this,
       GLOBAL = this;
-  module.exports = $__require('110')(global || window || this);
+  module.exports = $__require('113')(global || window || this);
   return module.exports;
 });
 
-$__System.registerDynamic("102", ["106", "10f", "111"], true, function($__require, exports, module) {
+$__System.registerDynamic("105", ["109", "112", "114"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
       global = this,
       GLOBAL = this;
-  var root_1 = $__require('106');
-  var toSubscriber_1 = $__require('10f');
-  var $$observable = $__require('111');
+  var root_1 = $__require('109');
+  var toSubscriber_1 = $__require('112');
+  var $$observable = $__require('114');
   var Observable = (function() {
     function Observable(subscribe) {
       this._isScalar = false;
@@ -35363,7 +36037,7 @@ $__System.registerDynamic("102", ["106", "10f", "111"], true, function($__requir
   return module.exports;
 });
 
-$__System.registerDynamic("7", ["6", "2e", "d0", "105", "107", "102"], true, function($__require, exports, module) {
+$__System.registerDynamic("7", ["6", "2e", "cf", "108", "10a", "105"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -35383,12 +36057,12 @@ $__System.registerDynamic("7", ["6", "2e", "d0", "105", "107", "102"], true, fun
   var promise_1 = $__require('2e');
   exports.PromiseWrapper = promise_1.PromiseWrapper;
   exports.PromiseCompleter = promise_1.PromiseCompleter;
-  var Subject_1 = $__require('d0');
-  var PromiseObservable_1 = $__require('105');
-  var toPromise_1 = $__require('107');
-  var Observable_1 = $__require('102');
+  var Subject_1 = $__require('cf');
+  var PromiseObservable_1 = $__require('108');
+  var toPromise_1 = $__require('10a');
+  var Observable_1 = $__require('105');
   exports.Observable = Observable_1.Observable;
-  var Subject_2 = $__require('d0');
+  var Subject_2 = $__require('cf');
   exports.Subject = Subject_2.Subject;
   var TimerWrapper = (function() {
     function TimerWrapper() {}
@@ -35568,7 +36242,7 @@ $__System.registerDynamic("a5", [], true, function($__require, exports, module) 
   return module.exports;
 });
 
-$__System.registerDynamic("112", ["6"], true, function($__require, exports, module) {
+$__System.registerDynamic("115", ["6"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -35613,14 +36287,14 @@ $__System.registerDynamic("112", ["6"], true, function($__require, exports, modu
   return module.exports;
 });
 
-$__System.registerDynamic("b4", ["112"], true, function($__require, exports, module) {
+$__System.registerDynamic("b4", ["115"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
       global = this,
       GLOBAL = this;
   "use strict";
-  var impl = $__require('112');
+  var impl = $__require('115');
   exports.wtfEnabled = impl.detectWTF();
   function noopScope(arg0, arg1) {
     return null;
@@ -35942,7 +36616,7 @@ $__System.registerDynamic("b5", ["12"], true, function($__require, exports, modu
   return module.exports;
 });
 
-$__System.registerDynamic("113", ["6", "12", "e", "40"], true, function($__require, exports, module) {
+$__System.registerDynamic("116", ["6", "12", "e", "40"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -36010,7 +36684,7 @@ $__System.registerDynamic("113", ["6", "12", "e", "40"], true, function($__requi
   return module.exports;
 });
 
-$__System.registerDynamic("114", ["12", "e", "6"], true, function($__require, exports, module) {
+$__System.registerDynamic("117", ["12", "e", "6"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -36526,7 +37200,7 @@ $__System.registerDynamic("114", ["12", "e", "6"], true, function($__require, ex
   return module.exports;
 });
 
-$__System.registerDynamic("115", ["6", "12", "e", "40"], true, function($__require, exports, module) {
+$__System.registerDynamic("118", ["6", "12", "e", "40"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -36594,7 +37268,7 @@ $__System.registerDynamic("115", ["6", "12", "e", "40"], true, function($__requi
   return module.exports;
 });
 
-$__System.registerDynamic("116", ["e", "6", "12"], true, function($__require, exports, module) {
+$__System.registerDynamic("119", ["e", "6", "12"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -36917,7 +37591,7 @@ $__System.registerDynamic("7b", ["6"], true, function($__require, exports, modul
   return module.exports;
 });
 
-$__System.registerDynamic("fc", [], true, function($__require, exports, module) {
+$__System.registerDynamic("ff", [], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -36932,7 +37606,7 @@ $__System.registerDynamic("fc", [], true, function($__require, exports, module) 
   return module.exports;
 });
 
-$__System.registerDynamic("117", ["6", "e"], true, function($__require, exports, module) {
+$__System.registerDynamic("11a", ["6", "e"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -36995,22 +37669,22 @@ $__System.registerDynamic("117", ["6", "e"], true, function($__require, exports,
   return module.exports;
 });
 
-$__System.registerDynamic("78", ["113", "114", "115", "116", "6", "7b", "fc", "117"], true, function($__require, exports, module) {
+$__System.registerDynamic("78", ["116", "117", "118", "119", "6", "7b", "ff", "11a"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
       global = this,
       GLOBAL = this;
   "use strict";
-  var iterable_differs_1 = $__require('113');
-  var default_iterable_differ_1 = $__require('114');
-  var keyvalue_differs_1 = $__require('115');
-  var default_keyvalue_differ_1 = $__require('116');
+  var iterable_differs_1 = $__require('116');
+  var default_iterable_differ_1 = $__require('117');
+  var keyvalue_differs_1 = $__require('118');
+  var default_keyvalue_differ_1 = $__require('119');
   var lang_1 = $__require('6');
-  var default_keyvalue_differ_2 = $__require('116');
+  var default_keyvalue_differ_2 = $__require('119');
   exports.DefaultKeyValueDifferFactory = default_keyvalue_differ_2.DefaultKeyValueDifferFactory;
   exports.KeyValueChangeRecord = default_keyvalue_differ_2.KeyValueChangeRecord;
-  var default_iterable_differ_2 = $__require('114');
+  var default_iterable_differ_2 = $__require('117');
   exports.DefaultIterableDifferFactory = default_iterable_differ_2.DefaultIterableDifferFactory;
   exports.CollectionChangeRecord = default_iterable_differ_2.CollectionChangeRecord;
   var constants_1 = $__require('7b');
@@ -37019,13 +37693,13 @@ $__System.registerDynamic("78", ["113", "114", "115", "116", "6", "7b", "fc", "1
   exports.ChangeDetectorState = constants_1.ChangeDetectorState;
   exports.CHANGE_DETECTOR_STATE_VALUES = constants_1.CHANGE_DETECTOR_STATE_VALUES;
   exports.isDefaultChangeDetectionStrategy = constants_1.isDefaultChangeDetectionStrategy;
-  var change_detector_ref_1 = $__require('fc');
+  var change_detector_ref_1 = $__require('ff');
   exports.ChangeDetectorRef = change_detector_ref_1.ChangeDetectorRef;
-  var iterable_differs_2 = $__require('113');
+  var iterable_differs_2 = $__require('116');
   exports.IterableDiffers = iterable_differs_2.IterableDiffers;
-  var keyvalue_differs_2 = $__require('115');
+  var keyvalue_differs_2 = $__require('118');
   exports.KeyValueDiffers = keyvalue_differs_2.KeyValueDiffers;
-  var change_detection_util_1 = $__require('117');
+  var change_detection_util_1 = $__require('11a');
   exports.WrappedValue = change_detection_util_1.WrappedValue;
   exports.ValueUnwrapper = change_detection_util_1.ValueUnwrapper;
   exports.SimpleChange = change_detection_util_1.SimpleChange;
@@ -37111,7 +37785,7 @@ $__System.registerDynamic("a7", ["12"], true, function($__require, exports, modu
   return module.exports;
 });
 
-$__System.registerDynamic("da", ["6"], true, function($__require, exports, module) {
+$__System.registerDynamic("d9", ["6"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -37281,7 +37955,7 @@ $__System.registerDynamic("da", ["6"], true, function($__require, exports, modul
   return module.exports;
 });
 
-$__System.registerDynamic("b9", ["a0", "da"], true, function($__require, exports, module) {
+$__System.registerDynamic("b9", ["a0", "d9"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -37289,7 +37963,7 @@ $__System.registerDynamic("b9", ["a0", "da"], true, function($__require, exports
       GLOBAL = this;
   "use strict";
   var metadata_1 = $__require('a0');
-  var decorators_1 = $__require('da');
+  var decorators_1 = $__require('d9');
   exports.Inject = decorators_1.makeParamDecorator(metadata_1.InjectMetadata);
   exports.Optional = decorators_1.makeParamDecorator(metadata_1.OptionalMetadata);
   exports.Injectable = decorators_1.makeDecorator(metadata_1.InjectableMetadata);
@@ -37322,7 +37996,7 @@ $__System.registerDynamic("a9", ["6", "12"], true, function($__require, exports,
   return module.exports;
 });
 
-$__System.registerDynamic("118", ["e", "9f", "9b", "6", "12", "119", "a0", "a9"], true, function($__require, exports, module) {
+$__System.registerDynamic("11b", ["e", "9f", "9b", "6", "12", "11c", "a0", "a9"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -37334,7 +38008,7 @@ $__System.registerDynamic("118", ["e", "9f", "9b", "6", "12", "119", "a0", "a9"]
   var reflective_exceptions_1 = $__require('9b');
   var lang_1 = $__require('6');
   var exceptions_1 = $__require('12');
-  var reflective_key_1 = $__require('119');
+  var reflective_key_1 = $__require('11c');
   var metadata_1 = $__require('a0');
   var injector_1 = $__require('a9');
   var __unused;
@@ -38193,7 +38867,7 @@ $__System.registerDynamic("9e", ["6", "12"], true, function($__require, exports,
   return module.exports;
 });
 
-$__System.registerDynamic("9f", ["6", "e", "93", "119", "a0", "9b", "11a", "9e"], true, function($__require, exports, module) {
+$__System.registerDynamic("9f", ["6", "e", "93", "11c", "a0", "9b", "11d", "9e"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -38203,10 +38877,10 @@ $__System.registerDynamic("9f", ["6", "e", "93", "119", "a0", "9b", "11a", "9e"]
   var lang_1 = $__require('6');
   var collection_1 = $__require('e');
   var reflection_1 = $__require('93');
-  var reflective_key_1 = $__require('119');
+  var reflective_key_1 = $__require('11c');
   var metadata_1 = $__require('a0');
   var reflective_exceptions_1 = $__require('9b');
-  var forward_ref_1 = $__require('11a');
+  var forward_ref_1 = $__require('11d');
   var provider_1 = $__require('9e');
   var ReflectiveDependency = (function() {
     function ReflectiveDependency(key, optional, lowerBoundVisibility, upperBoundVisibility, properties) {
@@ -38396,7 +39070,7 @@ $__System.registerDynamic("9f", ["6", "e", "93", "119", "a0", "9b", "11a", "9e"]
   return module.exports;
 });
 
-$__System.registerDynamic("11a", ["6"], true, function($__require, exports, module) {
+$__System.registerDynamic("11d", ["6"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -38423,7 +39097,7 @@ $__System.registerDynamic("11a", ["6"], true, function($__require, exports, modu
   return module.exports;
 });
 
-$__System.registerDynamic("119", ["6", "12", "11a"], true, function($__require, exports, module) {
+$__System.registerDynamic("11c", ["6", "12", "11d"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -38432,7 +39106,7 @@ $__System.registerDynamic("119", ["6", "12", "11a"], true, function($__require, 
   "use strict";
   var lang_1 = $__require('6');
   var exceptions_1 = $__require('12');
-  var forward_ref_1 = $__require('11a');
+  var forward_ref_1 = $__require('11d');
   var ReflectiveKey = (function() {
     function ReflectiveKey(token, id) {
       this.token = token;
@@ -38660,7 +39334,7 @@ $__System.registerDynamic("9b", ["e", "6", "12"], true, function($__require, exp
   return module.exports;
 });
 
-$__System.registerDynamic("11b", ["6"], true, function($__require, exports, module) {
+$__System.registerDynamic("11e", ["6"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -38698,7 +39372,7 @@ $__System.registerDynamic("11b", ["6"], true, function($__require, exports, modu
   return module.exports;
 });
 
-$__System.registerDynamic("40", ["a0", "b9", "11a", "a9", "118", "9e", "9f", "119", "9b", "11b"], true, function($__require, exports, module) {
+$__System.registerDynamic("40", ["a0", "b9", "11d", "a9", "11b", "9e", "9f", "11c", "9b", "11e"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -38719,12 +39393,12 @@ $__System.registerDynamic("40", ["a0", "b9", "11a", "a9", "118", "9e", "9f", "11
   exports.SkipSelfMetadata = metadata_1.SkipSelfMetadata;
   exports.DependencyMetadata = metadata_1.DependencyMetadata;
   __export($__require('b9'));
-  var forward_ref_1 = $__require('11a');
+  var forward_ref_1 = $__require('11d');
   exports.forwardRef = forward_ref_1.forwardRef;
   exports.resolveForwardRef = forward_ref_1.resolveForwardRef;
   var injector_1 = $__require('a9');
   exports.Injector = injector_1.Injector;
-  var reflective_injector_1 = $__require('118');
+  var reflective_injector_1 = $__require('11b');
   exports.ReflectiveInjector = reflective_injector_1.ReflectiveInjector;
   var provider_1 = $__require('9e');
   exports.Binding = provider_1.Binding;
@@ -38735,7 +39409,7 @@ $__System.registerDynamic("40", ["a0", "b9", "11a", "a9", "118", "9e", "9f", "11
   var reflective_provider_1 = $__require('9f');
   exports.ResolvedReflectiveFactory = reflective_provider_1.ResolvedReflectiveFactory;
   exports.ReflectiveDependency = reflective_provider_1.ReflectiveDependency;
-  var reflective_key_1 = $__require('119');
+  var reflective_key_1 = $__require('11c');
   exports.ReflectiveKey = reflective_key_1.ReflectiveKey;
   var reflective_exceptions_1 = $__require('9b');
   exports.NoProviderError = reflective_exceptions_1.NoProviderError;
@@ -38745,7 +39419,7 @@ $__System.registerDynamic("40", ["a0", "b9", "11a", "a9", "118", "9e", "9f", "11
   exports.InvalidProviderError = reflective_exceptions_1.InvalidProviderError;
   exports.NoAnnotationError = reflective_exceptions_1.NoAnnotationError;
   exports.OutOfBoundsError = reflective_exceptions_1.OutOfBoundsError;
-  var opaque_token_1 = $__require('11b');
+  var opaque_token_1 = $__require('11e');
   exports.OpaqueToken = opaque_token_1.OpaqueToken;
   return module.exports;
 });
@@ -39407,7 +40081,7 @@ $__System.registerDynamic("bc", ["40", "6", "12", "7", "93", "66"], true, functi
   return module.exports;
 });
 
-$__System.registerDynamic("fd", ["40", "bc", "6"], true, function($__require, exports, module) {
+$__System.registerDynamic("100", ["40", "bc", "6"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -39482,7 +40156,7 @@ $__System.registerDynamic("fd", ["40", "bc", "6"], true, function($__require, ex
   return module.exports;
 });
 
-$__System.registerDynamic("11c", ["6", "40", "a1", "5c", "78", "8b", "bc", "fd"], true, function($__require, exports, module) {
+$__System.registerDynamic("11f", ["6", "40", "a1", "5c", "78", "8b", "bc", "100"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -39496,7 +40170,7 @@ $__System.registerDynamic("11c", ["6", "40", "a1", "5c", "78", "8b", "bc", "fd"]
   var change_detection_1 = $__require('78');
   var view_utils_1 = $__require('8b');
   var component_resolver_1 = $__require('bc');
-  var dynamic_component_loader_1 = $__require('fd');
+  var dynamic_component_loader_1 = $__require('100');
   var __unused;
   exports.APPLICATION_COMMON_PROVIDERS = lang_1.CONST_EXPR([application_ref_1.APPLICATION_CORE_PROVIDERS, new di_1.Provider(component_resolver_1.ComponentResolver, {useClass: component_resolver_1.ReflectorComponentResolver}), application_tokens_1.APP_ID_RANDOM_PROVIDER, view_utils_1.ViewUtils, new di_1.Provider(change_detection_1.IterableDiffers, {useValue: change_detection_1.defaultIterableDiffers}), new di_1.Provider(change_detection_1.KeyValueDiffers, {useValue: change_detection_1.defaultKeyValueDiffers}), new di_1.Provider(dynamic_component_loader_1.DynamicComponentLoader, {useClass: dynamic_component_loader_1.DynamicComponentLoader_})]);
   return module.exports;
@@ -39517,7 +40191,7 @@ $__System.registerDynamic("94", [], true, function($__require, exports, module) 
   return module.exports;
 });
 
-$__System.registerDynamic("11d", ["6", "12", "e", "94"], true, function($__require, exports, module) {
+$__System.registerDynamic("120", ["6", "12", "e", "94"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -39674,7 +40348,7 @@ $__System.registerDynamic("11d", ["6", "12", "e", "94"], true, function($__requi
   return module.exports;
 });
 
-$__System.registerDynamic("11e", [], true, function($__require, exports, module) {
+$__System.registerDynamic("121", [], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -40673,7 +41347,7 @@ $__System.registerDynamic("e", ["6"], true, function($__require, exports, module
   return module.exports;
 });
 
-$__System.registerDynamic("f8", ["6", "11e", "e"], true, function($__require, exports, module) {
+$__System.registerDynamic("fb", ["6", "121", "e"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -40681,7 +41355,7 @@ $__System.registerDynamic("f8", ["6", "11e", "e"], true, function($__require, ex
       GLOBAL = this;
   "use strict";
   var lang_1 = $__require('6');
-  var base_wrapped_exception_1 = $__require('11e');
+  var base_wrapped_exception_1 = $__require('121');
   var collection_1 = $__require('e');
   var _ArrayLogger = (function() {
     function _ArrayLogger() {
@@ -40796,7 +41470,7 @@ $__System.registerDynamic("f8", ["6", "11e", "e"], true, function($__require, ex
   return module.exports;
 });
 
-$__System.registerDynamic("12", ["11e", "f8"], true, function($__require, exports, module) {
+$__System.registerDynamic("12", ["121", "fb"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -40812,9 +41486,9 @@ $__System.registerDynamic("12", ["11e", "f8"], true, function($__require, export
     }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
   };
-  var base_wrapped_exception_1 = $__require('11e');
-  var exception_handler_1 = $__require('f8');
-  var exception_handler_2 = $__require('f8');
+  var base_wrapped_exception_1 = $__require('121');
+  var exception_handler_1 = $__require('fb');
+  var exception_handler_2 = $__require('fb');
   exports.ExceptionHandler = exception_handler_2.ExceptionHandler;
   var BaseException = (function(_super) {
     __extends(BaseException, _super);
@@ -41095,15 +41769,15 @@ $__System.registerDynamic("bf", ["6", "12"], true, function($__require, exports,
   return module.exports;
 });
 
-$__System.registerDynamic("93", ["11d", "bf"], true, function($__require, exports, module) {
+$__System.registerDynamic("93", ["120", "bf"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
       global = this,
       GLOBAL = this;
   "use strict";
-  var reflector_1 = $__require('11d');
-  var reflector_2 = $__require('11d');
+  var reflector_1 = $__require('120');
+  var reflector_2 = $__require('120');
   exports.Reflector = reflector_2.Reflector;
   exports.ReflectionInfo = reflector_2.ReflectionInfo;
   var reflection_capabilities_1 = $__require('bf');
@@ -41111,7 +41785,7 @@ $__System.registerDynamic("93", ["11d", "bf"], true, function($__require, export
   return module.exports;
 });
 
-$__System.registerDynamic("8", ["54", "f5", "f6", "40", "f7", "6", "5c", "a1", "f9", "fa", "a8", "56", "62", "f4", "9d", "fe", "11c", "93"], true, function($__require, exports, module) {
+$__System.registerDynamic("8", ["54", "f8", "f9", "40", "fa", "6", "5c", "a1", "fc", "fd", "a8", "56", "62", "f7", "9d", "101", "11f", "93"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -41124,10 +41798,10 @@ $__System.registerDynamic("8", ["54", "f5", "f6", "40", "f7", "6", "5c", "a1", "
         exports[p] = m[p];
   }
   __export($__require('54'));
-  __export($__require('f5'));
-  __export($__require('f6'));
+  __export($__require('f8'));
+  __export($__require('f9'));
   __export($__require('40'));
-  __export($__require('f7'));
+  __export($__require('fa'));
   var lang_1 = $__require('6');
   exports.enableProdMode = lang_1.enableProdMode;
   var application_ref_1 = $__require('5c');
@@ -41145,23 +41819,23 @@ $__System.registerDynamic("8", ["54", "f5", "f6", "40", "f7", "6", "5c", "a1", "
   exports.APP_INITIALIZER = application_tokens_1.APP_INITIALIZER;
   exports.PACKAGE_ROOT_URL = application_tokens_1.PACKAGE_ROOT_URL;
   exports.PLATFORM_INITIALIZER = application_tokens_1.PLATFORM_INITIALIZER;
-  __export($__require('f9'));
-  __export($__require('fa'));
+  __export($__require('fc'));
+  __export($__require('fd'));
   __export($__require('a8'));
   var debug_node_1 = $__require('56');
   exports.DebugElement = debug_node_1.DebugElement;
   exports.DebugNode = debug_node_1.DebugNode;
   exports.asNativeElements = debug_node_1.asNativeElements;
   __export($__require('62'));
-  __export($__require('f4'));
+  __export($__require('f7'));
   __export($__require('9d'));
-  __export($__require('fe'));
-  __export($__require('11c'));
+  __export($__require('101'));
+  __export($__require('11f'));
   __export($__require('93'));
   return module.exports;
 });
 
-$__System.register("11f", ["8"], function(exports_1, context_1) {
+$__System.register("122", ["8"], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var core_1;
@@ -41184,19 +41858,19 @@ $__System.register("11f", ["8"], function(exports_1, context_1) {
     }
 });
 
-$__System.register("c3", [], function(exports_1, context_1) {
+$__System.register("c2", [], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var metadata;
     return {
         setters:[],
         execute: function() {
-            exports_1("metadata", metadata = { "library": { "templates": "hey!", "patterns": { "other": "yo", "name": "patterns", "title": "Patterns", "path": "/patterns", "items": { "banners": { "name": "banners", "title": "Banners", "path": "/patterns/banners", "items": { "banner1": { "name": "banner1", "title": "Banner 1", "path": "/patterns/banners/banner1", "html": "test 1!!!!", "md": "" }, "banner2": { "name": "banner2", "title": "Banner 2", "path": "/patterns/banners/banner2", "html": "test 2!!!!" }, "config": { "name": "config", "title": "Config", "path": "/patterns/banners/config" } } }, "colors": { "name": "colors", "title": "Colors", "path": "/patterns/colors" }, "columns": { "name": "columns", "title": "Columns", "path": "/patterns/columns" }, "feedback": { "name": "feedback", "title": "Feedback", "path": "/patterns/feedback" }, "icons": { "name": "icons", "title": "Icons", "path": "/patterns/icons", "js": "" }, "style-guide": { "name": "style-guide", "title": "Style Guide", "path": "/patterns/style-guide", "items": { "colors": { "name": "colors", "title": "Colors", "path": "/patterns/style-guide/colors", "items": { "primary": { "name": "primary", "title": "Primary", "path": "/patterns/style-guide/colors/primary", "items": { "primary-dark": { "name": "primary-dark", "title": "Primary Dark", "path": "/patterns/style-guide/colors/primary/primary-dark", "Hex": "#5CA156", "RGB": "92 161 86" }, "primary-darker": { "name": "primary-darker", "title": "Primary Darker", "path": "/patterns/style-guide/colors/primary/primary-darker", "Hex": "#528F4D", "RGB": "82 143 77" }, "primary": { "name": "primary", "title": "Primary", "path": "/patterns/style-guide/colors/primary/primary", "Hex": "#66B360", "RGB": "102 179 96" } } }, "secondary": { "name": "secondary", "title": "Secondary", "path": "/patterns/style-guide/colors/secondary", "items": { "background-dark": { "name": "background-dark", "title": "Background Dark", "path": "/patterns/style-guide/colors/secondary/background-dark", "Hex": "#000000", "RGB": "0 0 0" }, "background-light": { "name": "background-light", "title": "Background Light", "path": "/patterns/style-guide/colors/secondary/background-light", "Hex": "#DDDDDD", "RGB": "221 221 221" }, "background-lighter": { "name": "background-lighter", "title": "Background Lighter", "path": "/patterns/style-guide/colors/secondary/background-lighter", "Hex": "#EEEEEE", "RGB": "238 238 238" } } }, "ternary": { "name": "ternary", "title": "Ternary", "path": "/patterns/style-guide/colors/ternary", "items": { "bla": { "name": "bla", "title": "Bla", "path": "/patterns/style-guide/colors/ternary/bla", "Hex": 12345, "RGB": "bla" } } } } }, "icons": { "name": "icons", "title": "Icons", "path": "/patterns/style-guide/icons", "items": { "account": { "name": "account", "title": "Account", "path": "/patterns/style-guide/icons/account" } } } } }, "patterns": { "name": "patterns", "title": "Patterns", "path": "/patterns/patterns" } } } }, "site": { "components": { "name": "components", "title": "Components", "path": "/components", "rail": { "selector": "nav[rail]", "name": "rail", "title": "Rail", "path": "/components/rail", "html": "\r\n<div class=\"sidebar-offcanvas\" id=\"sidebar\">\r\n    <nav role=\"navigation\" class=\"pl-menu\">\r\n        <a class=\"block-link\" href=\"/index.php\">\r\n            <span class=\"caret-left\"></span>\r\n            Project Portal\r\n        </a>\r\n        <ul>\r\n            <!--***REPEATER***-->\r\n            <template repeater='navRail' context=\"patterns\"></template>\r\n        </ul>\r\n    </nav>\r\n</div>" }, "pattern-display": { "selector": "pattern-display", "name": "pattern-display", "title": "Pattern Display", "path": "/components/pattern-display", "html": "<div class=\"pl-container\">\r\n    <header>\r\n        <menu-toggle></menu-toggle>\r\n        <!--<div class=\"project-logo\">-->\r\n        <!--\t<img src=\"../../pattern-library/assets/images/portal-logo-bge-small.jpg\" alt=\"BGE\">-->\r\n        <!--</div>-->\r\n        <div class=\"pl-catalog\">\r\n            <div class=\"pl-title\">\r\n                <h2>Style Guide</h2>\r\n            </div>\r\n        </div>\r\n    </header>\r\n\r\n    <template repeater=\"colors\" context=\"patterns/style-guide/{{url.id}}\"></template>\r\n</div>" }, "menu-toggle": { "selector": "menu-toggle", "name": "menu-toggle", "title": "Menu Toggle", "path": "/components/menu-toggle", "html": "<p class=\"pl-menu-toggle\">\r\n    <button type=\"button\" class=\"navbar-toggle btn btn-primary btn-sm\" data-toggle=\"offcanvas\">\r\n        <span class=\"sr-only\">Toggle navigation</span>\r\n        <span class=\"icon-bar\"></span>\r\n        <span class=\"icon-bar\"></span>\r\n        <span class=\"icon-bar\"></span>\r\n    </button>\r\n</p>" }, "main": { "name": "main", "title": "Main", "path": "/components/main", "html": "<body class=\"language-markup\">\r\n<a name=\"0\" id=\"0\"></a>\r\n<div class=\"pl-main row-offcanvas row-offcanvas-right\" >\r\n  <nav rail context=\"patterns\"></nav>\r\n\r\n  <main role=\"main\" class=\"offcanvas-body\">\r\n    <pattern-display *ngIf=\"url.id\" context=\"patterns/{{url.id}}\"></pattern-display>\r\n  </main>\r\n\r\n  <div class=\"pl-container\">\r\n    <footer class=\"pl-footer\" role=\"footer\">\r\n    </footer>\r\n  </div>\r\n</div>\r\n<a href=\"#0\" class=\"cd-top\">Top</a>\r\n</body>\r\n" }, "socialMediaBtn": { "name": "socialMediaBtn", "title": "Social Media Btn", "path": "/components/socialMediaBtn", "html": "<div>an isolated chunk of functionality</div>\r\n" } }, "pages": { "name": "pages", "title": "Pages", "path": "/pages", "index": { "name": "index", "title": "Index", "path": "/pages/index", "html": "<a href=\"/Patterns\">Go to Patterns</a>\r\n" }, "info": { "name": "info", "title": "Info", "path": "/pages/info", "html": "<a [routerLink]=\"['Index']\">Go to Index</a>\r\nyooo" }, "paths": { "name": "paths", "title": "Paths", "path": "/pages/paths", "$note": "you can set a url parameter with this syntax /:parameterName/ and that argument will become available to you in the application", "index": "", "info": "", "patterns": "patterns/:id" }, "patterns": { "name": "patterns", "title": "Patterns", "path": "/pages/patterns", "html": "<main-component context=\"patterns\"></main-component>" }, "readme": { "name": "readme", "title": "Readme", "path": "/pages/readme", "html": "<!--<main-template>-->\r\n    <!--<markdown>-->\r\n        <!--This is the readme for the Pattern Library project-->\r\n        <!---->\r\n        <!---->\r\n        <!--Repeaters-->\r\n        <!--What does a repeater repeat?-->\r\n        <!---->\r\n            <!--There are 4 ways to use a repeater.-->\r\n            <!-- -by specifying it on the repeater-->\r\n                <!--angular 2 makes javascript variables available to your html. -->\r\n                <!--in this case, we are repeating on the *items* javascript object-->\r\n                <!--<example-repeater (on)=\"items\"></example-repeater>-->\r\n                <!--or we can repeat on an object referenced by name from the library.-->\r\n                <!--<example-repeater example-repeater (on)=\"patterns.example\"></example-repeater>-->\r\n            <!-- -by specifying what it should repeat in a configuration file-->\r\n            <!-- -by context. it will use the items property of the repeater it is inside of-->\r\n            <!---->\r\n        <!--The Pages folder defines site structure of your pattern library-->\r\n        <!---->\r\n        <!---->\r\n        <!---->\r\n        <!---->\r\n        <!---->\r\n    <!--</markdown>-->\r\n<!--</main-template>-->\r\n" } }, "repeaters": { "name": "repeaters", "title": "Repeaters", "path": "/repeaters", "colorCards": { "name": "colorCards", "title": "Color Cards", "path": "/repeaters/colorCards", "html": "<div class=\"color-card\">\r\n\t<div class=\"brand {{name}}\"></div>\r\n\t<p>Hex: {{Hex}}</p>\r\n\t<p>RGB: {{RGB}}</p>\r\n\t<p>SCSS: $brand-{{name}}</p>\r\n</div>\r\n" }, "colors": { "name": "colors", "title": "Colors", "path": "/repeaters/colors", "html": "<section class=\"{{name}}-colors\">\r\n\t<h3>{{title}} Colors</h3>\r\n\t<hr>\r\n\t<div class=\"color-wrapper\">\r\n\t\t<template repeater=\"colorCards\"></template>\r\n\t</div>\r\n</section>\r\n" }, "icons": { "name": "icons", "title": "Icons", "path": "/repeaters/icons", "html": "<div class=\"icon-preview\">\r\n\t<h4>{{title}}</h4>\r\n\t<i class=\"exc-icon-{{name}}\"></i>\r\n\t<pre><code><i class=\"exc-icon-{{name}}\"></i></code></pre>\r\n</div>\r\n" }, "navRail": { "name": "navRail", "title": "Nav Rail", "path": "/repeaters/navRail", "html": "<li><a href=\"/index/{{name}}\">{{title}}</a></li>\r\n" }, "pattern": { "name": "pattern", "title": "Pattern", "path": "/repeaters/pattern", "html": "<p>Pattern example - Title: {{title}}, Name: {{name}}</p>\n" } } } });
+            exports_1("metadata", metadata = { "library": { "templates": "hey!", "patterns": { "other": "yo", "name": "patterns", "title": "Patterns", "path": "/patterns", "items": { "banners": {}, "style-guide": { "name": "style-guide", "title": "Style Guide", "path": "/patterns/style-guide", "items": { "colors": { "name": "colors", "title": "Colors", "path": "/patterns/style-guide/colors", "items": { "primary": { "name": "primary", "title": "Primary", "path": "/patterns/style-guide/colors/primary", "items": { "primary-dark": { "name": "primary-dark", "title": "Primary Dark", "path": "/patterns/style-guide/colors/primary/primary-dark", "Hex": "#5CA156", "RGB": "92 161 86" }, "primary-darker": { "name": "primary-darker", "title": "Primary Darker", "path": "/patterns/style-guide/colors/primary/primary-darker", "Hex": "#528F4D", "RGB": "82 143 77" }, "primary": { "name": "primary", "title": "Primary", "path": "/patterns/style-guide/colors/primary/primary", "Hex": "#66B360", "RGB": "102 179 96" } } }, "secondary": { "name": "secondary", "title": "Secondary", "path": "/patterns/style-guide/colors/secondary", "items": { "background-dark": { "name": "background-dark", "title": "Background Dark", "path": "/patterns/style-guide/colors/secondary/background-dark", "Hex": "#000000", "RGB": "0 0 0" }, "background-light": { "name": "background-light", "title": "Background Light", "path": "/patterns/style-guide/colors/secondary/background-light", "Hex": "#DDDDDD", "RGB": "221 221 221" }, "background-lighter": { "name": "background-lighter", "title": "Background Lighter", "path": "/patterns/style-guide/colors/secondary/background-lighter", "Hex": "#EEEEEE", "RGB": "238 238 238" } } }, "ternary": { "name": "ternary", "title": "Ternary", "path": "/patterns/style-guide/colors/ternary", "items": { "bla": { "name": "bla", "title": "Bla", "path": "/patterns/style-guide/colors/ternary/bla", "Hex": 12345, "RGB": "bla" } } } } }, "icons": { "name": "icons", "title": "Icons", "path": "/patterns/style-guide/icons", "items": { "account": { "name": "account", "title": "Account", "path": "/patterns/style-guide/icons/account" } } } } }, "_banners": { "name": "_banners", "title": "Banners", "path": "/patterns/_banners", "items": { "account-summary": { "name": "account-summary", "title": "Account Summary", "path": "/patterns/_banners/account-summary", "html": "<div class=\"exc-banner-account\">\r\n  <div class=\"exc-account-summary\">\r\n    <span class=\"exc-toggle\"><i class=\"exc-icon-account-summary\"></i></span>\r\n    <p>Name: <span class=\"exc-data-neutral\">Southstreet Condominiums Unit Owners Association</span></p>\r\n    <p>Account # <span class=\"exc-data-neutral\">3847450583</span></p>\r\n    <p>Status: <span class=\"exc-data-positive\">Active</span></p>\r\n  </div>\r\n\r\n  <div class=\"exc-account-details\">\r\n    <div class=\"exc-account-group-wrap\">\r\n      <div class=\"exc-account-group\">\r\n        <div class=\"exc-account-data\">\r\n          <p>Address:</p> \r\n            <div class=\"exc-data-neutral exc-account-address\">\r\n              <span>6742 Division Street, APT 1R</span>\r\n              <span>Anytown, ST 48506</span>\r\n            </div>\r\n        </div>\r\n      </div>\r\n\r\n      <div class=\"exc-account-group\">\r\n        <div class=\"exc-account-data\">\r\n          <p>Smart Meter States: <span class=\"exc-data-neutral\">AMI Installed</span></p>\r\n          <p>Last Payment: <span class=\"exc-data-neutral\">$82.11</span></p>\r\n          <p>Recevied: <span class=\"exc-data-neutral\">04/07/2015</span></p>\r\n          <p>Current Bill: <span class=\"exc-data-neutral\">04/30/2015</span></p>\r\n          <p>Amount Due: <span class=\"exc-data-neutral\">$89.12</span></p>\r\n        </div>\r\n      </div>\r\n\r\n      <div class=\"exc-account-group\">\r\n        <div class=\"exc-account-data\">\r\n          <p>Past Due Amount: <span class=\"exc-data-negative\">$89.12</span></p>\r\n          <p>Due Date: <span class=\"exc-data-neutral\">05/12/2015*</span></p>\r\n          <p class=\"exc-content-indent small\">*If you recently changed your energy supplier, a portion of you balance may have an earlier due date. Please view your <a href=\"#\">previous blls and corresponding due dates</a>.</p>\r\n        </div>\r\n      </div>\r\n\r\n      <div class=\"exc-account-group\">\r\n        <div class=\"exc-account-action\">\r\n          <div class=\"exc-action-item\">\r\n            <button class=\"btn btn-primary\">Change Account</button>\r\n          </div>\r\n            <div class=\"exc-action-item\">\r\n                <button class=\"btn btn-primary\">Link Account</button>\r\n            </div>\r\n          <div class=\"exc-action-item\">\r\n            <button class=\"btn btn-primary\" id=\"accountMenu\" type=\"button\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\">I want to... <span class=\"caret\"></span></button> \r\n            <ul class=\"dropdown-menu\" aria-labelledby=\"accountMenu\">\r\n              <li><a href=\"#\">Item 1</a></li>\r\n              <li><a href=\"#\">Item 2</a></li>\r\n              <li><a href=\"#\">Item 3</a></li>\r\n              <li><a href=\"#\">Item 4</a></li>\r\n              <li><a href=\"#\">Item 5</a></li>\r\n            </ul>\r\n          </div>                 \r\n        </div>\r\n      </div>\r\n    </div><!--/exc-account-group-wrap-->\r\n\r\n  </div><!--/account-details-->\r\n\r\n</div><!--/banner-account-->\r\n" }, "banner-image": { "name": "banner-image", "title": "Banner Image", "path": "/patterns/_banners/banner-image", "html": "<div id=\"excBannerBox\" class=\"exc-banner-container\" style=\"background-image: url(../assets/images/sample-banner-image-1.jpg);\"></div>" } } }, "_billboards": { "name": "_billboards", "title": "Billboards", "path": "/patterns/_billboards", "items": { "border-box": { "name": "border-box", "title": "Border Box", "path": "/patterns/_billboards/border-box", "html": "﻿<div class=\"exc-border-box\">\r\n    <p>Content goes here.</p>\r\n</div>" }, "box-with-slats": { "name": "box-with-slats", "title": "Box With Slats", "path": "/patterns/_billboards/box-with-slats", "html": "﻿<div class=\"exc-slats-box\">\r\n    <h4>Bank Accounts \r\n        <button type=\"button\" class=\"btn btn-primary btn-xs\"><i class=\"exc-icon-circle-with-plus\"></i>Add</button>\r\n    </h4>\r\n    <div class=\"exc-action-slat\">\r\n        <div class=\"exc-col1\">\r\n            <span class=\"exc-acct-name\">Federal Credit Union<br />ACH ****XXXX</span>\r\n        </div>\r\n        <div class=\"exc-col2\">\r\n            <button type=\"button\" class=\"btn btn-default btn-xs\"><i class=\"exc-icon-circle-with-cross\"></i>Delete</button>\r\n        </div>\r\n    </div>\r\n    <div class=\"exc-action-slat\">\r\n        <div class=\"exc-col1\">\r\n            <span class=\"exc-msg-processing\">Processing...</span>\r\n            <span class=\"exc-acct-name\">State Credit Union<br />ACH ****XXXX</span>\r\n        </div>\r\n        <div class=\"exc-col2\">\r\n            <button type=\"button\" class=\"btn btn-default btn-xs\"><i class=\"exc-icon-circle-with-cross\"></i>Delete</button>\r\n        </div>\r\n    </div>\r\n    <div class=\"exc-action-slat\">\r\n        <div class=\"exc-col1\">\r\n            <span class=\"exc-msg-success\">Account deleted.</span>\r\n        </div>\r\n        <div class=\"exc-col2\">\r\n        </div>\r\n    </div>\r\n    <div class=\"exc-action-slat\">\r\n        <div class=\"exc-col1\">\r\n            <span class=\"exc-msg-error\">We are unable to delete this account.</span>\r\n            <span class=\"exc-acct-name\">Another Bank<br />ACH ****XXXX</span>\r\n        </div>\r\n        <div class=\"exc-col2\">\r\n            <button type=\"button\" class=\"btn btn-default btn-xs\"><i class=\"exc-icon-circle-with-cross\"></i>Delete</button>\r\n        </div>\r\n    </div>\r\n</div>\r\n<div class=\"exc-slats-box\">\r\n    <h4>\r\n        Credit / Debit Cards\r\n        <button type=\"button\" class=\"btn btn-primary btn-xs\"><i class=\"exc-icon-circle-with-plus\"></i>Add</button>\r\n    </h4>\r\n    <div class=\"exc-action-slat\">\r\n        <div class=\"exc-col1\">\r\n            <span class=\"exc-acct-name\">Credit Card Name<br />VISA ****XXXX</span>\r\n        </div>\r\n        <div class=\"exc-col2\">\r\n            <button type=\"button\" class=\"btn btn-primary btn-xs\"><i class=\"exc-icon-edit\"></i>Edit</button>\r\n            <button type=\"button\" class=\"btn btn-default btn-xs\"><i class=\"exc-icon-circle-with-cross\"></i>Delete</button>\r\n        </div>\r\n    </div>\r\n</div>", "txt": "﻿\"exc-slats-box\" is used for My Wallet, and may be used in other cases where slats are needed." }, "my-account-bill-details-bge-peco": { "name": "my-account-bill-details-bge-peco", "title": "My Account Bill Details Bge Peco", "path": "/patterns/_billboards/my-account-bill-details-bge-peco", "html": "﻿<div class=\"exc-bill-details-box\">\r\n    <!--<div class=\"exc-buttons-slat\">\r\n\r\n    </div>-->\r\n    <div class=\"exc-mybill-slat\">\r\n        <div class=\"exc-col1\">Bill Date:</div>\r\n        <div class=\"exc-col2\">07/05/15</div>\r\n    </div>\r\n    <div class=\"exc-mybill-slat\">\r\n        <div class=\"exc-col1\">Past Due (due immediately):</div>\r\n        <div class=\"exc-col2\">$56.56</div>\r\n    </div>\r\n    <div class=\"exc-mybill-slat\">\r\n        <div class=\"exc-col1\">Current Amount Due:</div>\r\n        <div class=\"exc-col2\">$204.56</div>\r\n    </div>\r\n    <div class=\"exc-mybill-slat exc-mybill-total\">\r\n        <div class=\"exc-col1\">Total Amount Due <small>by 07/28/15</small></div>\r\n        <div class=\"exc-col2\">$261.12</div>\r\n    </div>\r\n    <div class=\"exc-mybill-slat-last\">\r\n        <p class=\"exc-fine-print\">*If you recently changed your energy supplier, a portion of your balance may have an earlier due date.</p>\r\n        <p class=\"small\">Thank you for your payment of <strong>$82.33</strong> on <strong>06/06/15</strong></p>\r\n    </div>\r\n    <div class=\"exc-bill-details-buttons\">\r\n        <button type=\"button\" class=\"btn btn-default\"><i class=\"exc-icon-file-pdf\"></i>Download Bill PDF</button>\r\n        <button type=\"button\" class=\"btn btn-primary\">Pay Bill</button>\r\n    </div>\r\n</div>\r\n<div class=\"exc-bill-details-preferences\">\r\n    <h3>Billing and Payment Preferences</h3>\r\n    <button type=\"button\" class=\"btn btn-primary btn-lg\"><i class=\"exc-icon-circle-with-check\"></i><span>Automatic<br />Payments</span></button>\r\n    <button type=\"button\" class=\"btn btn-primary btn-lg\"><i class=\"exc-icon-circle-with-check\"></i><span>Budget<br />Billing</span></button>\r\n    <button type=\"button\" class=\"btn btn-default btn-lg\"><i class=\"exc-icon-circle-with-cross\"></i><span>eBill</span></button>\r\n</div>\r\n\r\n" }, "my-account-bill-details-comed": { "name": "my-account-bill-details-comed", "title": "My Account Bill Details Comed", "path": "/patterns/_billboards/my-account-bill-details-comed", "html": "﻿<div class=\"exc-bill-details-box exc-short\">\r\n    <div class=\"exc-mybill-slat\">\r\n        <div class=\"exc-col1\">Bill Date:</div>\r\n        <div class=\"exc-col2\">07/05/15</div>\r\n    </div>\r\n    <div class=\"exc-mybill-slat\">\r\n        <div class=\"exc-col1\">Past Due (due immediately):</div>\r\n        <div class=\"exc-col2\">$56.56</div>\r\n    </div>\r\n    <div class=\"exc-mybill-slat\">\r\n        <div class=\"exc-col1\">Current Amount Due:</div>\r\n        <div class=\"exc-col2\">$204.56</div>\r\n    </div>\r\n    <div class=\"exc-mybill-slat exc-mybill-total\">\r\n        <div class=\"exc-col1\">Total Amount Due <small>by 07/28/15</small></div>\r\n        <div class=\"exc-col2\">$261.12</div>\r\n    </div>\r\n    <div class=\"exc-mybill-slat-last\">\r\n        <p class=\"exc-fine-print\">*If you recently changed your energy supplier, a portion of your balance may have an earlier due date.</p>\r\n        <p class=\"small\">Thank you for your payment of <strong>$82.33</strong> on <strong>06/06/15</strong></p>\r\n    </div>\r\n    <div class=\"exc-bill-details-buttons\">\r\n        <button type=\"button\" class=\"btn btn-default\"><i class=\"exc-icon-file-pdf\"></i>Download Bill PDF</button>\r\n        <button type=\"button\" class=\"btn btn-primary\">Pay Bill</button>\r\n    </div>\r\n</div>\r\n<div class=\"exc-current-charges-summary\">\r\n    [Current Charges Summary Goes Here]\r\n</div>\r\n<div class=\"exc-bill-details-preferences\">\r\n    <h3>Billing and Payment Preferences</h3>\r\n    <button type=\"button\" class=\"btn btn-primary btn-lg\"><i class=\"exc-icon-circle-with-check\"></i><span>Automatic<br />Payments</span></button>\r\n    <button type=\"button\" class=\"btn btn-primary btn-lg\"><i class=\"exc-icon-circle-with-check\"></i><span>Budget<br />Billing</span></button>\r\n    <button type=\"button\" class=\"btn btn-default btn-lg\"><i class=\"exc-icon-circle-with-cross\"></i><span>eBill</span></button>\r\n</div>\r\n\r\n\r\n", "txt": "﻿This pattern is the same as my-account-bill-details-bge-peco, except for two changes. 1) A CSS class name \"exc-short\" added here: <div class=\"exc-bill-details-box exc-short\">, 2) An additional <div> for the Current Charges Summary: <div class=\"exc-current-charges-summary\">...</div>" }, "my-account-my-bill-and-usage": { "name": "my-account-my-bill-and-usage", "title": "My Account My Bill And Usage", "path": "/patterns/_billboards/my-account-my-bill-and-usage", "html": "<div class=\"exc-feedback exc-feedback-alert exc-vertical-space-md\">\r\n    <div class=\"container\">\r\n        <i class=\"exc-icon-feedback\"></i>\r\n        [Alert message goes here.]\r\n        <i class=\"exc-icon-close\"></i>\r\n    </div>\r\n</div>\r\n\r\n<div class=\"exc-mybill-box\">\r\n    <div class=\"exc-mybill-left\">\r\n        <h4>My Bill <small>07/05/15</small></h4>\r\n        <div class=\"exc-mybill-slat\">\r\n            <div class=\"exc-col1\">Current Amount Due:</div>\r\n            <div class=\"exc-col2\">$204.56</div>\r\n        </div>\r\n        <div class=\"exc-mybill-slat\">\r\n            <div class=\"exc-col1\">Past Due (due immediately):</div>\r\n            <div class=\"exc-col2\">$56.56</div>\r\n        </div>\r\n        <div class=\"exc-mybill-slat exc-mybill-total\">\r\n            <div class=\"exc-col1\">Total Amount Due <small>by 07/28/15*</small></div>\r\n            <div class=\"exc-col2\">$261.12</div>\r\n        </div>\r\n    </div>\r\n    <div class=\"exc-mybill-right\">\r\n        <h4>Billing and Payment Options</h4>\r\n        <div class=\"exc-mybill-slat\">\r\n            <div class=\"exc-col1\"><span>Auto Pay:</span><span>Not Enrolled</span></div>\r\n            <div class=\"exc-col2\"><button type=\"button\" class=\"btn btn-primary btn-sm\"><i class=\"exc-icon-circle-with-plus\"></i>Enroll</button></div>\r\n        </div>\r\n        <div class=\"exc-mybill-slat\">\r\n            <div class=\"exc-col1\"><span>Budget Bill:</span><span>Enrolled</span></div>\r\n            <div class=\"exc-col2\"><button type=\"button\" class=\"btn btn-default btn-sm\"><i class=\"exc-icon-circle-with-minus\"></i>Unenroll</button></div>\r\n        </div>\r\n        <div class=\"exc-mybill-slat\">\r\n            <div class=\"exc-col1\"><span>eBill:</span><span>Not Enrolled</span></div>\r\n            <div class=\"exc-col2\"><button type=\"button\" class=\"btn btn-primary btn-sm\"><i class=\"exc-icon-circle-with-plus\"></i>Enroll</button></div>\r\n        </div>\r\n    </div>\r\n    <div class=\"exc-mybill-notes\">\r\n        <p class=\"exc-fine-print\">*If you recently changed your energy supplier, a portion of your balance may have an earlier due date.</p>\r\n        <p class=\"small\">Thank you for your payment of <strong>$82.33</strong> on <strong>06/06/15</strong></p>\r\n        <div class=\"exc-mybill-buttons\">\r\n            <button type=\"button\" class=\"btn btn-default\">View Bill</button>\r\n            <button type=\"button\" class=\"btn btn-primary\">Pay Bill</button>\r\n        </div>\r\n    </div>\r\n</div>\r\n\r\n<div class=\"exc-vertical-space-md\">\r\n    <p><strong>Outage Reported:</strong> We are aware of an outage in your area impacting service to 1 customer(s).</p>\r\n    <p><strong>Planned Outage:</strong> There is no planned outage information available for this location.</p>\r\n</div>\r\n<ul class=\"exc-tabs\">\r\n    <li class=\"exc-active\" rel=\"exc-tab1\">Tab 1 Title</li>\r\n    <li rel=\"exc-tab2\">Tab 2 Title</li>\r\n</ul>\r\n<div class=\"exc-tab-container\">\r\n    <div class=\"exc-active exc-acc-header\" rel=\"exc-tab1\">Tab 1 Title<i class=\"exc-icon-plus\"></i></div>\r\n    <div id=\"exc-tab1\" class=\"exc-tab-content\">\r\n        <h2 class=\"exc-hide-acc\">Tab 1 Title</h2>\r\n        [tab 1 content goes here]\r\n    </div>\r\n    <div class=\"exc-acc-header\" rel=\"exc-tab2\">Tab 2 Title<i class=\"exc-icon-plus\"></i></div>\r\n    <div id=\"exc-tab2\" class=\"exc-tab-content\">\r\n        <h2 class=\"exc-hide-acc\">Tab 2 Title</h2>\r\n        [tab 2 content goes here]\r\n    </div>\r\n</div>\r\n" } } }, "_calculators": { "name": "_calculators", "title": "Calculators", "path": "/patterns/_calculators", "items": { "gas-heat-conversion": { "name": "gas-heat-conversion", "title": "Gas Heat Conversion", "path": "/patterns/_calculators/gas-heat-conversion", "html": "<ul class=\"exc-tabs exc-tiny-tabs\">\r\n    <li class=\"exc-active\" rel=\"exc-tab1\">Oil vs. Natural Gas</li>\r\n    <li rel=\"exc-tab2\">Propane vs. Natural Gas</li>\r\n    <li rel=\"exc-tab3\">Electric Resistance Heat vs. Natural Gas</li>\r\n    <li rel=\"exc-tab4\">Payback Calculator</li>\r\n</ul>\r\n<div class=\"exc-tab-container\">\r\n    <div class=\"exc-active exc-acc-header\" rel=\"exc-tab1\">Oil vs. Natural Gas<i class=\"exc-icon-plus\"></i></div>\r\n    <div id=\"exc-tab1\" class=\"exc-tab-content\">\r\n        <h2 class=\"exc-hide-acc\">Oil vs. Natural Gas</h2>\r\n        <!-- begin Oil vs. Natural Gas form content -->\r\n        <p>Intro text.</p>\r\n        <div class=\"form-horizontal\">\r\n            <hr />\r\n            <section>\r\n                <div class=\"form-group\">\r\n                    <label for=\"id1\" class=\"col-sm-9 control-label\">Number of gallons of oil used in the last 12 months:</label>\r\n                    <div class=\"col-sm-3\">\r\n                        <input type=\"text\" class=\"form-control\" id=\"id1\" placeholder=\"0\">\r\n                    </div>\r\n                </div>\r\n                <div class=\"form-group\">\r\n                    <label for=\"id2\" class=\"col-sm-9 control-label\">Average price per gallon of oil:</label>\r\n                    <div class=\"col-sm-3\">\r\n                        <input type=\"text\" class=\"form-control\" id=\"id2\" placeholder=\"0\">\r\n                    </div>\r\n                </div>\r\n                <div class=\"form-group\">\r\n                    <div class=\"col-md-12\">\r\n                        <button type=\"button\" class=\"btn btn-default\">Reset</button>\r\n                        <button type=\"button\" class=\"btn btn-primary pull-right\">Calculate</button>\r\n                    </div>\r\n                </div>\r\n            </section>\r\n            <section>\r\n                <div class=\"form-group\">\r\n                    <label for=\"id3\" class=\"col-sm-9 control-label\">Annual cost of oil:</label>\r\n                    <div class=\"col-sm-3\">\r\n                        <span id=\"id3\" class=\"exc-input-readonly\">$0.00</span>\r\n                    </div>\r\n                </div>\r\n                <div class=\"form-group\">\r\n                    <label for=\"id4\" class=\"col-sm-9 control-label\">Equivalent ccf of natural gas:</label>\r\n                    <div class=\"col-sm-3\">\r\n                        <span id=\"id4\" class=\"exc-input-readonly\">0.00</span>\r\n                    </div>\r\n                </div>\r\n                <div class=\"form-group\">\r\n                    <label for=\"id5\" class=\"col-sm-9 control-label\">Current price per ccf of natural gas:</label>\r\n                    <div class=\"col-sm-3\">\r\n                        <span id=\"id5\" class=\"exc-input-readonly\">$0.00</span>\r\n                    </div>\r\n                </div>\r\n                <div class=\"form-group\">\r\n                    <label for=\"id6\" class=\"col-sm-9 control-label\">Estimated annual cost of natural gas:</label>\r\n                    <div class=\"col-sm-3\">\r\n                        <span id=\"id6\" class=\"exc-input-readonly\">$0.00</span>\r\n                    </div>\r\n                </div>\r\n                <div class=\"form-group\">\r\n                    <label for=\"id7\" class=\"col-sm-9 control-label exc-strong\">Estimated annual savings using natural gas:</label>\r\n                    <div class=\"col-sm-3\">\r\n                        <span id=\"id7\" class=\"exc-input-readonly exc-strong\">$0.00</span>\r\n                    </div>\r\n                </div>\r\n            </section>\r\n        </div>\r\n        <!-- end Oil vs. Natural Gas content -->\r\n    </div>  \r\n    <div class=\"exc-acc-header\" rel=\"exc-tab2\">Propane vs. Natural Gas<i class=\"exc-icon-plus\"></i></div>\r\n    <div id=\"exc-tab2\" class=\"exc-tab-content\">\r\n        <h2 class=\"exc-hide-acc\">Propane vs. Natural Gas</h2>\r\n    </div>\r\n    <div class=\"exc-acc-header\" rel=\"exc-tab3\">Electric Resistance Heat vs. Natural Gas<i class=\"exc-icon-plus\"></i></div>\r\n    <div id=\"exc-tab3\" class=\"exc-tab-content\">\r\n        <h2 class=\"exc-hide-acc\">Electric Resistance Heat vs. Natural Gas</h2>\r\n    </div>\r\n    <div class=\"exc-acc-header\" rel=\"exc-tab4\">Payback Calculator<i class=\"exc-icon-plus\"></i></div>\r\n    <div id=\"exc-tab4\" class=\"exc-tab-content\">\r\n        <h2 class=\"exc-hide-acc\">Payback Calculator</h2>\r\n        <!-- begin Payback Calculator content -->\r\n        <div class=\"form-horizontal\">\r\n            <section>\r\n                <h3>First Costs/Capital Costs/Upfront Costs</h3>\r\n                <h4 class=\"exc-form-sub-hdr\">PECO Charges</h4>\r\n                <div class=\"form-group\">\r\n                    <label for=\"id1\" class=\"col-sm-9 control-label\">PECO charge for gas line installation:</label>\r\n                    <div class=\"col-sm-3\">\r\n                        <input type=\"text\" class=\"form-control\" id=\"id1\" placeholder=\"0\">\r\n                    </div>\r\n                </div>\r\n                <!--  <hr /> -->\r\n                <h4 class=\"exc-form-sub-hdr\">Appliance Costs</h4>\r\n                <div class=\"form-group\">\r\n                    <label for=\"id2\" class=\"col-sm-9 control-label\">Heater/hot water heater/appliance equipment and installation:</label>\r\n                    <div class=\"col-sm-3\">\r\n                        <input type=\"text\" class=\"form-control\" id=\"id2\" placeholder=\"0\">\r\n                    </div>\r\n                </div>\r\n                <div class=\"form-group\">\r\n                    <label for=\"id3\" class=\"col-sm-9 control-label\">Oil/propane tank remove:</label>\r\n                    <div class=\"col-sm-3\">\r\n                        <input type=\"text\" class=\"form-control\" id=\"id3\" placeholder=\"0\">\r\n                    </div>\r\n                </div>\r\n                <div class=\"form-group\">\r\n                    <label for=\"id4\" class=\"col-sm-9 control-label\">Additional related costs:</label>\r\n                    <div class=\"col-sm-3\">\r\n                        <input type=\"text\" class=\"form-control\" id=\"id4\" placeholder=\"0\">\r\n                    </div>\r\n                </div>\r\n                <div class=\"form-group\">\r\n                    <label for=\"id5\" class=\"col-sm-9 control-label exc-strong\">Total Appliance Costs:</label>\r\n                    <div class=\"col-sm-3\">\r\n                        <span id=\"id5\" class=\"exc-input-readonly exc-strong\">$0.00</span>\r\n                    </div>\r\n                </div>\r\n            </section>\r\n            <section>\r\n                <h3>Fuel Commodity Costs/Savings</h3>\r\n                <h4 class=\"exc-form-sub-hdr\">Oil vs. Natural Gas</h4>\r\n                <div class=\"form-group\">\r\n                    <label for=\"id6\" class=\"col-sm-9 control-label\">Number of gallons of oil used in the last 12 months:</label>\r\n                    <div class=\"col-sm-3\">\r\n                        <input type=\"text\" class=\"form-control\" id=\"id6\" placeholder=\"0\">\r\n                    </div>\r\n                </div>\r\n                <div class=\"form-group\">\r\n                    <div class=\"col-md-12\">\r\n                        <button type=\"button\" class=\"btn btn-default\">Reset</button>\r\n                        <button type=\"button\" class=\"btn btn-primary pull-right\">Calculate</button>\r\n                    </div>\r\n                </div>\r\n            </section>\r\n            <section>\r\n                <div class=\"form-group\">\r\n                    <label for=\"id3\" class=\"col-sm-9 control-label\">Annual Costs:</label>\r\n                    <div class=\"col-sm-3\">\r\n                        <span id=\"id3\" class=\"exc-input-readonly\">$0.00</span>\r\n                    </div>\r\n                </div>\r\n                <div class=\"form-group\">\r\n                    <label for=\"id4\" class=\"col-sm-9 control-label\">Savings vs. Oil:</label>\r\n                    <div class=\"col-sm-3\">\r\n                        <span id=\"id4\" class=\"exc-input-readonly\">$0.00</span>\r\n                    </div>\r\n                </div>\r\n                <div class=\"form-group\">\r\n                    <label for=\"id5\" class=\"col-sm-9 control-label\">Savings vs Propane:</label>\r\n                    <div class=\"col-sm-3\">\r\n                        <span id=\"id5\" class=\"exc-input-readonly\">$0.00</span>\r\n                    </div>\r\n                </div>\r\n            </section>\r\n        </div>\r\n        <!-- end Payback Calculator content -->\r\n    </div>\r\n</div>\r\n\r\n\r\n\r\n\r\n\r\n" }, "peak-time-savings": { "name": "peak-time-savings", "title": "Peak Time Savings", "path": "/patterns/_calculators/peak-time-savings", "html": "<div class=\"exc-calc-pts\">\r\n\t<h2>Peak Time Savings Calculator</h2>\r\n\t<p>Use the calculator below to estimate the amount of credits you could potentially earn on your electric bill.</p>\r\n\r\n\t<ol class=\"exc-badge-ordered-list\">\r\n\t\t<li>\r\n\t\t\t<span class=\"badge exc-badge\">1</span>\r\n\t\t\t<p><strong>Home Size: *</strong></p>\r\n\t\t\t<p>Select the size that best represents your home.</p>\r\n\t\t\t<div class=\"exc-calc-choice\">\r\n\t\t\t\t<div class=\"exc-calc-choice-option\">\r\n\t\t\t\t\t<div class=\"radio\">\r\n\t\t\t\t\t  <label>\r\n                        <input type=\"radio\" name=\"excCalcPTSHomeSize\" id=\"excCalcPTSHomeSize1\" value=\"average\" checked=\"checked\">\r\n\t\t\t\t\t    Average Home\r\n\t\t\t\t\t  </label>\r\n\t\t\t\t\t</div> \r\n\t\t\t\t\t<p>Avereage Home: 3000 square feet or smaller</p>\r\n\t\t\t\t</div>\r\n\t\t\t\t<div class=\"exc-calc-choice-option\">\r\n\t\t\t\t\t<div class=\"radio\">\r\n\t\t\t\t\t  <label>\r\n                        <input type=\"radio\" name=\"excCalcPTSHomeSize\" id=\"excCalcPTSHomeSize2\" value=\"large\">\r\n\t\t\t\t\t    Large Home\r\n\t\t\t\t\t  </label>\r\n\t\t\t\t\t</div> \r\n\t\t\t\t\t<p>Large Home: larger than 3000 square feet</p>\r\n\t\t\t\t</div>\r\n\t\t\t</div>\r\n\t\t</li>\r\n\t\t<li>\r\n\t\t\t<span class=\"badge exc-badge\">2</span>\r\n\t\t\t<p><strong>Energy-Saving Actions: *</strong></p>\r\n\t\t\t<p>Select the actions your household can do during Peak Time Savings Hours.</p>\r\n\t\t\t<div class=\"checkbox\">\r\n\t\t    \t<label>\r\n                    <input type=\"checkbox\" name=\"excCalcPTSAction\" id=\"excCalcPTSAction1\" value=\"3.40\"> Set my thermostat 10 degrees higher\r\n\t\t    \t</label>\r\n\t\t  \t</div>\r\n\t\t  \t<div class=\"checkbox\">\r\n\t\t    \t<label>\r\n                    <input type=\"checkbox\" name=\"excCalcPTSAction\" id=\"excCalcPTSAction2\" value=\"4.5\"> Delay using my dishwasher, oven and microwave\r\n\t\t    \t</label>\r\n\t\t  \t</div>\r\n\t\t  \t<div class=\"checkbox\">\r\n\t\t    \t<label>\r\n                    <input type=\"checkbox\" name=\"excCalcPTSAction\" id=\"excCalcPTSAction3\" value=\"3.7\"> Hold off on doing my laundry\r\n\t\t    \t</label>\r\n\t\t  \t</div>\r\n\t\t  \t<div class=\"checkbox\">\r\n\t\t    \t<label>\r\n                    <input type=\"checkbox\" name=\"excCalcPTSAction\" id=\"excCalcPTSAction4\" value=\"0.9\"> Avoid using electronics like my TV and stereo\r\n\t\t    \t</label>\r\n\t\t  \t</div>\r\n\t\t  \t<div class=\"checkbox\">\r\n\t\t    \t<label>\r\n                    <input type=\"checkbox\" name=\"excCalcPTSAction\" id=\"excCalcPTSAction5\" value=\"0.4\"> Wait to use my vacuum cleaner\r\n\t\t    \t</label>\r\n\t\t  \t</div>\r\n            <div id=\"excCalcPTSError\" style=\"display:none;\">\r\n                <p class=\"exc-msg-error\">Please select at least one action.</p>\r\n            </div>\r\n\t\t</li>\r\n\t</ol>\r\n\r\n    <div id=\"excCalcPTSResults\" class=\"exc-calc-pts-results\">\r\n        <div class=\"exc-calc-pts-savings\">\r\n            <p>ComEd could announce 3-5 Peak Time Savings Hours this summer, and you could earn a <span class=\"exc-calc-highlight\">$<span id=\"excCalcPTSEvent3\">0</span> - $<span id=\"excCalcPTSEvent4\">0</span> credit</span> <span class=\"exc-calc-highlight\">on your summmer bills*</span></p>\r\n        </div>\r\n        <div class=\"exc-calc-pts-notice\">\r\n            <p>* Potential credits are based on Peak Time Savings Hours lasting 3 hours each on 3-5 days during the summer. Each credit you receive will vary in amount based on the energy-saving actions you take, your historical electricity use, weather conditions and other factors.</p>\r\n        </div>\r\n    </div>\r\n\r\n    <button type=\"button\" id=\"excCalcPTSCalculate\" class=\"btn btn-primary\">Calculate Savings</button>\r\n    <input type=\"hidden\" id=\"excCalcPTSkwh\">\r\n</div>", "txt": "The JS for this calculator will be included with the web part. For it to function in the Pattern Library, the JS has also been included in pl.common.js in pattern-library/assets/js." } } }, "_content-patterns": { "name": "_content-patterns", "title": "Content Patterns", "path": "/patterns/_content-patterns", "items": { "blank-check": { "name": "blank-check", "title": "Blank Check", "path": "/patterns/_content-patterns/blank-check", "html": "<div class=\"exc-blank-check\">\r\n    <div class=\"exc-blank-check-inner\">\r\n        <div class=\"exc-bc-address\">\r\n            John Doe<br />\r\n            123 Main St.<br />\r\n            Anytown, MD 21230\r\n        </div>\r\n        <div class=\"exc-bc-corner-number\">0123</div>\r\n        <div class=\"exc-bc-date\"><span>Date</span></div>\r\n        <div class=\"exc-bc-pay-to\"><span>Pay to the<br />Order of</span></div>\r\n        <div class=\"exc-bc-amount-number\"></div>\r\n        <div class=\"exc-bc-amount-text\"><span>Dollars</span></div>\r\n        <div class=\"exc-bc-memo\"><span>Memo</span></div>\r\n        <div class=\"exc-bc-bottom\">\r\n            <div class=\"exc-bc-routing\"><span>012345678</span></div>\r\n            <div class=\"exc-bc-account-number\"><span>0011223344</span></div>\r\n            <div class=\"exc-bc-number\"><span>0123</span></div>\r\n        </div>\r\n    </div>\r\n</div>\r\n<div class=\"exc-bc-help\">\r\n    <div class=\"exc-bc-help-routing\">Routing Number</div>\r\n    <div class=\"exc-bc-help-account-number\">Account Number</div>\r\n</div>" }, "content-grid": { "name": "content-grid", "title": "Content Grid", "path": "/patterns/_content-patterns/content-grid", "html": "<div class=\"exc-content-grid-row\">\r\n  <div class=\"exc-content-grid\">\r\n    <a href=\"#\" class=\"exc-content-grid-cta\">\r\n      <img src=\"../../sandbox/assets/images/content-levels/level-3-sample-1.jpg\" alt=\"\">\r\n      <div>\r\n        <h4>Level 4 Option 2</h4>\r\n        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, dolore magna aliqua.</p> \r\n      </div>\r\n    </a>\r\n  </div>\r\n  <div class=\"exc-content-grid\">\r\n    <a href=\"#\" class=\"exc-content-grid-cta\">\r\n      <img src=\"../../sandbox/assets/images/content-levels/level-3-sample-2.jpg\" alt=\"\">\r\n      <div>\r\n        <h4>Level 4 Option 2</h4>\r\n        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, dolore magna aliqua.</p>  \r\n      </div>\r\n    </a>\r\n  </div>\r\n  <div class=\"exc-content-grid\">\r\n    <a href=\"#\" class=\"exc-content-grid-cta\">\r\n      <img src=\"../../sandbox/assets/images/content-levels/level-3-sample-3.jpg\" alt=\"\">\r\n      <div>\r\n        <h4>Level 4 Option 2</h4>\r\n        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, dolore magna aliqua.</p>  \r\n      </div>\r\n    </a>\r\n  </div>\r\n  <div class=\"exc-content-grid\">\r\n    <a href=\"#\" class=\"exc-content-grid-cta\">\r\n      <img src=\"../../sandbox/assets/images/content-levels/level-3-sample-4.jpg\" alt=\"\">\r\n      <div>\r\n        <h4>Level 4 Option 2</h4>\r\n        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, dolore magna aliqua.</p>  \r\n      </div>\r\n    </a>\r\n  </div>\r\n</div>", "txt": "For Content L4" }, "content-panel": { "name": "content-panel", "title": "Content Panel", "path": "/patterns/_content-patterns/content-panel", "html": "<div class=\"exc-content-panel\">\r\n  <div class=\"exc-content-panel-primary\">\r\n    <a href=\"#\">\r\n      <img src=\"../../sandbox/assets/images/content-levels/level-2-sample-1.jpg\" alt=\"\">\r\n      <span>Level 3 Option 1</span>\r\n    </a>\r\n  </div>\r\n  <div class=\"exc-content-panel-secondary\">\r\n    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>\r\n    <a href=\"#\">Level 4 Option 1</a>\r\n    <a href=\"#\">Level 4 Option 2</a>\r\n    <a href=\"#\">View All</a>\r\n  </div>\r\n</div> ", "txt": "For Content L3" }, "content-slat": { "name": "content-slat", "title": "Content Slat", "path": "/patterns/_content-patterns/content-slat", "html": "<div class=\"exc-content-slat\">\r\n  <a href=\"#\" class=\"exc-content-slat-primary\">Level 5 Option 1</a>\r\n  <div class=\"exc-content-slat-secondary\">\r\n    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>\r\n  </div>\r\n</div>", "txt": "For Content L5" }, "marketing-poster-block": { "name": "marketing-poster-block", "title": "Marketing Poster Block", "path": "/patterns/_content-patterns/marketing-poster-block", "html": "<a href=\"#\" class=\"exc-marketing-poster exc-poster-block\">\r\n\t<img src=\"../assets/images/sample-poster-2.jpg\" alt=\"\">\r\n\t<div class=\"exc-poster-caption\">\r\n\t\t<p>Durable connections</p>\r\n\t</div>\r\n</a>" }, "marketing-poster-color-block": { "name": "marketing-poster-color-block", "title": "Marketing Poster Color Block", "path": "/patterns/_content-patterns/marketing-poster-color-block", "html": "<a href=\"#\" class=\"exc-marketing-poster exc-poster-color-block\">\r\n\t<div class=\"exc-poster-text\">Sign Up for Paperless Billing</div>\r\n</a>" }, "marketing-poster-text-block": { "name": "marketing-poster-text-block", "title": "Marketing Poster Text Block", "path": "/patterns/_content-patterns/marketing-poster-text-block", "html": "<div class=\"exc-marketing-poster exc-poster-text-block\">\r\n\t<p class=\"exc-poster-title\">Tell Us What You Think</p>\r\n\t<p>Our goal is to make your experience on peco.com as user friendly.</p>\r\n\t<a href=\"#\">Take the Survey Now</a>\r\n</div>" }, "marketing-poster-wide": { "name": "marketing-poster-wide", "title": "Marketing Poster Wide", "path": "/patterns/_content-patterns/marketing-poster-wide", "html": "<a href=\"#\" class=\"exc-marketing-poster exc-poster-wide\">\r\n\t<img src=\"../assets/images/sample-poster-1.jpg\" alt=\"\">\r\n\t<div class=\"exc-poster-caption\">\r\n\t\t<p class=\"exc-poster-title\">Switch to Natural Gas Heat and Save</p>\r\n\t\t<p>Programs, tools and tips to save money</p>\r\n\t</div>\r\n</a>" }, "press-release-masthead": { "name": "press-release-masthead", "title": "Press Release Masthead", "path": "/patterns/_content-patterns/press-release-masthead", "html": "<div class=\"exc-press-release-masthead\">\r\n\t<div class=\"exc-press-release-notice\">\r\n\t\t<p>For Immediate Release</p>\r\n\t</div>\r\n\t<div class=\"exc-press-release-contact\">\r\n\t\t<p class=\"exc-press-release-label\">Contact</p>\r\n\t\t<p class=\"exc-press-release-name\">Jamie Granger</p>\r\n\t\t<p class=\"exc-press-release-email\"><a href=\"mailto:jaime.granger@opco.com\">jaime.granger@opco.com</a></p>\r\n\t</div>\t\r\n</div>" }, "right-rail-module": { "name": "right-rail-module", "title": "Right Rail Module", "path": "/patterns/_content-patterns/right-rail-module", "html": "﻿<!-- Example -->\r\n\r\n<div class=\"exc-sidebar-right-module\">\r\n    <h3>My Programs</h3>\r\n    <ul>\r\n        <li><a href=\"#\">Peak Time Savings</a></li>\r\n        <li><a href=\"#\">A/C Cycling</a></li>\r\n    </ul>\r\n</div>\r\n\r\n<!-- Email addresses need an ellipsis -->\r\n\r\n<div class=\"exc-sidebar-right-module\">\r\n    <h3><i class=\"exc-icon-mail\"></i>Email Addresses</h3>\r\n    <ul>\r\n        <li class=\"exc-ellipsis\">example@example.com</li>\r\n        <li class=\"exc-ellipsis\">long.email.address@example.com</li>\r\n    </ul>\r\n    <p><button type=\"button\" class=\"btn btn-default\" data-toggle=\"modal\" data-target=\"#editAccountSettingModal\"><i class=\"exc-icon-edit\"></i>Edit</button></p>\r\n</div>\r\n\r\n<!-- Example with icon -->\r\n\r\n<div class=\"exc-sidebar-right-module\">\r\n    <h3><i class=\"exc-icon-file-pdf\"></i>Current Bill Inserts</h3>\r\n    <ul>\r\n        <li><a href=\"#\">Energy@Home August</a></li>\r\n        <li><a href=\"#\">Smart Appliance Recycling</a></li>\r\n    </ul>\r\n</div>\r\n" } } }, "_dialogs": { "name": "_dialogs", "title": "Dialogs", "path": "/patterns/_dialogs", "items": { "responsive-modal-dialog": { "name": "responsive-modal-dialog", "title": "Responsive Modal Dialog", "path": "/patterns/_dialogs/responsive-modal-dialog", "html": "﻿<!-- Button -->\r\n<button type=\"button\" class=\"btn btn-primary\" data-toggle=\"modal\" data-target=\"#exampleModal\">\r\n    Launch Modal\r\n</button>\r\n\r\n<!-- Modal -->\r\n<div class=\"modal fade\" id=\"exampleModal\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"myModalLabel\">\r\n    <div class=\"modal-dialog\" role=\"document\">\r\n        <div class=\"modal-content\">\r\n            <div class=\"modal-header\">\r\n                <h3 class=\"modal-title\" id=\"myModalLabel\">\r\n                    Modal Title\r\n                    <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\"><i class=\"exc-icon-close\"></i></button>\r\n                </h3>\r\n            </div>\r\n            <div class=\"modal-body\">\r\n                <p>Content goes here.</p>\r\n                <p>On small screens, the modal dialog will fill the screen and the content area will be scrollable.</p>\r\n                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris iaculis eleifend orci, ac fringilla turpis mattis id. Suspendisse commodo dolor pellentesque egestas ornare. Suspendisse fermentum diam ac nisi gravida, eu rutrum nisi convallis. Proin sollicitudin elementum diam, non convallis turpis.</p>\r\n                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris iaculis eleifend orci, ac fringilla turpis mattis id. Suspendisse commodo dolor pellentesque egestas ornare. Suspendisse fermentum diam ac nisi gravida, eu rutrum nisi convallis. Proin sollicitudin elementum diam, non convallis turpis.</p>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</div>\r\n" } } }, "_feedback-elements": { "name": "_feedback-elements", "title": "Feedback Elements", "path": "/patterns/_feedback-elements", "items": { "button-with-processing-message": { "name": "button-with-processing-message", "title": "Button With Processing Message", "path": "/patterns/_feedback-elements/button-with-processing-message", "html": "\r\n<p>\r\n    <button type=\"button\" class=\"btn btn-primary\" id=\"Button1\" disabled><span class=\"exc-processing-icon\">Processing...</span><span class=\"hidden\">Continue<span class=\"caret-right\"></span></span></button>\r\n    <button type=\"button\" class=\"btn btn-default\" id=\"Button2\" disabled><span class=\"exc-processing-icon\">Processing...</span><span class=\"hidden\">Continue<span class=\"caret-right\"></span></span></button>\r\n</p>\r\n<p>\r\n    <button type=\"button\" class=\"btn btn-xs btn-primary\" id=\"Button3\" disabled><span class=\"exc-processing-icon\">Processing...</span><span class=\"hidden\">Continue<span class=\"caret-right\"></span></span></button>\r\n    <button type=\"button\" class=\"btn btn-xs btn-default\" id=\"Button4\" disabled><span class=\"exc-processing-icon\">Processing...</span><span class=\"hidden\">Continue<span class=\"caret-right\"></span></span></button>\r\n</p>\r\n\r\n", "txt": "﻿Use Javascript as needed to display a spinner in the button during processing.  The button should be disabled during processing. The processing text may be changed as needed, for example for a Calculate button, it could say \"Calculating...\" " }, "feedback-message-alert": { "name": "feedback-message-alert", "title": "Feedback Message Alert", "path": "/patterns/_feedback-elements/feedback-message-alert", "html": "﻿<div class=\"exc-feedback exc-feedback-alert\">\r\n    <div class=\"container\">\r\n        <i class=\"exc-icon-feedback\"></i>\r\n        [Message goes here.]\r\n        <i class=\"exc-icon-close\"></i>\r\n    </div>\r\n</div>" }, "feedback-message-error": { "name": "feedback-message-error", "title": "Feedback Message Error", "path": "/patterns/_feedback-elements/feedback-message-error", "html": "﻿<div class=\"exc-feedback exc-feedback-error\">\r\n    <div class=\"container\">\r\n        <i class=\"exc-icon-feedback\"></i>\r\n        [Message goes here.]\r\n        <i class=\"exc-icon-close\"></i>\r\n    </div>\r\n</div>\r\n", "txt": "﻿This error message is NOT for forms validation--that is handled differently.  The style guide includes this error message component, but the usage is currenly unknown." }, "feedback-message-info": { "name": "feedback-message-info", "title": "Feedback Message Info", "path": "/patterns/_feedback-elements/feedback-message-info", "html": "﻿<div class=\"exc-feedback exc-feedback-info\">\r\n    <div class=\"container\">\r\n        <i class=\"exc-icon-feedback\"></i>\r\n        [Message goes here.]\r\n        <i class=\"exc-icon-close\"></i>\r\n    </div>\r\n</div>\r\n", "txt": "﻿If the user should not be allowed to close the message, remove <i class=\"exc-icon-close\"></i>." }, "feedback-message-success": { "name": "feedback-message-success", "title": "Feedback Message Success", "path": "/patterns/_feedback-elements/feedback-message-success", "html": "﻿<div class=\"exc-feedback exc-feedback-success\">\r\n    <div class=\"container\">\r\n        <i class=\"exc-icon-feedback\"></i>\r\n        [Message goes here.]\r\n        <i class=\"exc-icon-close\"></i>\r\n    </div>\r\n</div>\r\n" }, "feedback-message-warning": { "name": "feedback-message-warning", "title": "Feedback Message Warning", "path": "/patterns/_feedback-elements/feedback-message-warning", "html": "﻿<div class=\"exc-feedback exc-feedback-warning\">\r\n    <div class=\"container\">\r\n        <i class=\"exc-icon-feedback\"></i>\r\n        [Message goes here.]\r\n        <i class=\"exc-icon-close\"></i>\r\n    </div>\r\n</div>\r\n", "txt": "﻿This pattern is ONLY used for the global warning message that appears above the header in the Master Page." }, "feedback-message-with-buttons-and-table": { "name": "feedback-message-with-buttons-and-table", "title": "Feedback Message With Buttons And Table", "path": "/patterns/_feedback-elements/feedback-message-with-buttons-and-table", "html": "﻿<div class=\"form-group\">\r\n    <div class=\"exc-feedback exc-feedback-info\">\r\n        <div class=\"container\">\r\n            <i class=\"exc-icon-feedback\"></i>\r\n            <p>The following accounts are eligible to enroll in Paperless Billing. Please confirm that you want all accounts to be enrolled by clicking the YES button.  Otherwise, click NO and no accounts will be enrolled.</p>\r\n            <table id=\"feedbackDataTable\" class=\"table exc-vertical-space-sm\">\r\n                <thead>\r\n                    <tr>\r\n                        <th>Account #</th>\r\n                        <th>Street Number</th>\r\n                        <th>Unit Number</th>\r\n                        <th class=\"control\">More</th>\r\n                    </tr>\r\n                </thead>\r\n                <tbody>\r\n                    <tr>\r\n                        <td>******1800</td>\r\n                        <td>513</td>\r\n                        <td>APT 2</td>\r\n                        <td></td>\r\n                    </tr>\r\n                    <tr>\r\n                        <td>******3004</td>\r\n                        <td>517</td>\r\n                        <td>APT 3</td>\r\n                        <td></td>\r\n                    </tr>\r\n                    <tr>\r\n                        <td>******0706</td>\r\n                        <td>20</td>\r\n                        <td>APT 8b</td>\r\n                        <td></td>\r\n                    </tr>\r\n                    <tr>\r\n                        <td>******1800</td>\r\n                        <td>513</td>\r\n                        <td>APT 2</td>\r\n                        <td></td>\r\n                    </tr>\r\n                    <tr>\r\n                        <td>******3004</td>\r\n                        <td>517</td>\r\n                        <td>APT 3</td>\r\n                        <td></td>\r\n                    </tr>\r\n                    <tr>\r\n                        <td>******0706</td>\r\n                        <td>20</td>\r\n                        <td>APT 8b</td>\r\n                        <td></td>\r\n                    </tr>\r\n                    <tr>\r\n                        <td>******1800</td>\r\n                        <td>513</td>\r\n                        <td>APT 2</td>\r\n                        <td></td>\r\n                    </tr>\r\n                    <tr>\r\n                        <td>******3004</td>\r\n                        <td>517</td>\r\n                        <td>APT 3</td>\r\n                        <td></td>\r\n                    </tr>\r\n                    <tr>\r\n                        <td>******0706</td>\r\n                        <td>20</td>\r\n                        <td>APT 8b</td>\r\n                        <td></td>\r\n                    </tr>\r\n                    <tr>\r\n                        <td>******1800</td>\r\n                        <td>513</td>\r\n                        <td>APT 2</td>\r\n                        <td></td>\r\n                    </tr>\r\n                    <tr>\r\n                        <td>******3004</td>\r\n                        <td>517</td>\r\n                        <td>APT 3</td>\r\n                        <td></td>\r\n                    </tr>\r\n                    <tr>\r\n                        <td>******0706</td>\r\n                        <td>20</td>\r\n                        <td>APT 8b</td>\r\n                        <td></td>\r\n                    </tr>\r\n                    <tr>\r\n                        <td>******1800</td>\r\n                        <td>513</td>\r\n                        <td>APT 2</td>\r\n                        <td></td>\r\n                    </tr>\r\n                    <tr>\r\n                        <td>******3004</td>\r\n                        <td>517</td>\r\n                        <td>APT 3</td>\r\n                        <td></td>\r\n                    </tr>\r\n                    <tr>\r\n                        <td>******0706</td>\r\n                        <td>20</td>\r\n                        <td>APT 8b</td>\r\n                        <td></td>\r\n                    </tr>\r\n                    <tr>\r\n                        <td>******1800</td>\r\n                        <td>513</td>\r\n                        <td>APT 2</td>\r\n                        <td></td>\r\n                    </tr>\r\n                    <tr>\r\n                        <td>******3004</td>\r\n                        <td>517</td>\r\n                        <td>APT 3</td>\r\n                        <td></td>\r\n                    </tr>\r\n                    <tr>\r\n                        <td>******0706</td>\r\n                        <td>20</td>\r\n                        <td>APT 8b</td>\r\n                        <td></td>\r\n                    </tr>\r\n                </tbody>\r\n            </table>            \r\n            <div>\r\n                <button class=\"btn btn-default btn-xs\"><i class=\"exc-icon-circle-with-cross\"></i>No</button>\r\n                <button class=\"btn btn-primary btn-xs pull-right\"><i class=\"exc-icon-circle-with-check\"></i>Yes</button>\r\n            </div>\r\n        </div>\r\n    </div>\r\n    <div class=\"exc-form-inner\">\r\n        <div class=\"checkbox\">\r\n            <label>\r\n                <input type=\"checkbox\" id=\"\"> I would like to enroll in eBill - a fast, easy, and secure way to receive and pay bills online.\r\n            </label>\r\n        </div>  \r\n    </div>\r\n</div>\r\n" }, "feedback-message-with-buttons": { "name": "feedback-message-with-buttons", "title": "Feedback Message With Buttons", "path": "/patterns/_feedback-elements/feedback-message-with-buttons", "html": "﻿<!-- One line of text with inline buttons. -->\r\n\r\n<div class=\"exc-feedback exc-feedback-info exc-vertical-space-sm\">\r\n    <div class=\"container\">\r\n        <i class=\"exc-icon-feedback\"></i>\r\n        <div>\r\n            Are you sure you wish to do this?\r\n            <span class=\"exc-confirm-btns\">\r\n                <button class=\"btn btn-default btn-xs\"><i class=\"exc-icon-circle-with-cross\"></i>No</button>\r\n                <button class=\"btn btn-primary btn-xs\"><i class=\"exc-icon-circle-with-check\"></i>Yes</button>\r\n            </span>\r\n        </div>\r\n    </div>\r\n</div>\r\n\r\n<!-- Paragraphs of text with buttons at the bottom. -->\r\n\r\n<div class=\"exc-feedback exc-feedback-info exc-vertical-space-sm\">\r\n    <div class=\"container\">\r\n        <i class=\"exc-icon-feedback\"></i>\r\n        <p>This is a paragraph of text.</p>\r\n        <p>Another paragraph.</p>\r\n        <div>\r\n            <button class=\"btn btn-default btn-xs\"><i class=\"exc-icon-circle-with-cross\"></i>No</button>\r\n            <button class=\"btn btn-primary btn-xs pull-right\"><i class=\"exc-icon-circle-with-check\"></i>Yes</button>\r\n        </div>\r\n    </div>\r\n</div>\r\n\r\n", "txt": "﻿Use the first version for one line of text with inline buttons.  Use the second version for multiple paragraphs of text / content, with buttons at the bottom." }, "input-with-feedback": { "name": "input-with-feedback", "title": "Input With Feedback", "path": "/patterns/_feedback-elements/input-with-feedback", "html": "﻿<div class=\"exc-form-group-double\">\r\n    <div class=\"form-group\">\r\n        <div class=\"exc-feedback exc-feedback-info\">\r\n            <div class=\"container\">\r\n                <i class=\"exc-icon-feedback\"></i>\r\n                <p>This is a paragraph of text. This is a paragraph of text. This is a paragraph of text. This is a paragraph of text. </p>\r\n                <div>\r\n                    <button class=\"btn btn-default btn-xs\"><i class=\"exc-icon-circle-with-cross\"></i>Cancel</button>\r\n                    <button class=\"btn btn-primary btn-xs pull-right\"><i class=\"exc-icon-circle-with-check\"></i>Confirm</button>\r\n                </div>\r\n            </div>\r\n        </div>\r\n        <div class=\"exc-form-inner\">\r\n            <label for=\"\">Field 1:</label>\r\n            <input type=\"text\" class=\"form-control\" id=\"\" placeholder=\"\">\r\n        </div>\r\n    </div>\r\n    <div class=\"form-group has-error\">\r\n        <div class=\"exc-feedback exc-feedback-info\">\r\n            <div class=\"container\">\r\n                <i class=\"exc-icon-feedback\"></i>\r\n                <p>This is a paragraph of text. This is a paragraph of text. This is a paragraph of text. This is a paragraph of text. </p>\r\n                <div>\r\n                    <button class=\"btn btn-default btn-xs\"><i class=\"exc-icon-circle-with-cross\"></i>Cancel</button>\r\n                    <button class=\"btn btn-primary btn-xs pull-right\"><i class=\"exc-icon-circle-with-check\"></i>Confirm</button>\r\n                </div>\r\n            </div>\r\n        </div>\r\n        <div class=\"exc-form-inner\">\r\n            <span class=\"help-block\">Field Name is required.</span>\r\n            <label for=\"\">Field 1:</label>\r\n            <input type=\"text\" class=\"form-control\" id=\"\" placeholder=\"\">\r\n        </div>\r\n    </div>\r\n</div>\r\n" }, "password-strength": { "name": "password-strength", "title": "Password Strength", "path": "/patterns/_feedback-elements/password-strength", "html": "﻿<!-- DEFAULT -->\r\n\r\n<div class=\"exc-form-group-double\">\r\n    <div class=\"form-group exc-pw-blank\">\r\n        <div class=\"exc-form-inner\">\r\n            <label for=\"\" class=\"required\">Password:</label>\r\n            <input type=\"text\" class=\"form-control\" id=\"\" placeholder=\"\">\r\n            <div class=\"exc-pw-meter\">\r\n                <span></span>\r\n                <span></span>\r\n                <span></span>\r\n                <span></span>\r\n                <span></span>\r\n            </div>\r\n            <div class=\"exc-pw-strength\"></div>\r\n        </div>\r\n    </div>\r\n    <div class=\"form-group\">\r\n        <div class=\"exc-form-inner\">\r\n            <label for=\"\" class=\"required\">Confirm Password:</label>\r\n            <input type=\"text\" class=\"form-control\" id=\"\" placeholder=\"\">\r\n        </div>\r\n    </div>\r\n</div>\r\n\r\n<!-- WEAK -->\r\n\r\n<div class=\"exc-form-group-double\">\r\n    <div class=\"form-group exc-pw-weak\">\r\n        <div class=\"exc-form-inner\">\r\n            <label for=\"\" class=\"required\">Password:</label>\r\n            <input type=\"text\" class=\"form-control\" id=\"\" placeholder=\"\">\r\n            <div class=\"exc-pw-meter\">\r\n                <span></span>\r\n                <span></span>\r\n                <span></span>\r\n                <span></span>\r\n                <span></span>\r\n            </div>\r\n            <div class=\"exc-pw-strength\">Weak</div>\r\n        </div>\r\n    </div>\r\n    <div class=\"form-group\">\r\n        <div class=\"exc-form-inner\">\r\n            <label for=\"\" class=\"required\">Confirm Password:</label>\r\n            <input type=\"text\" class=\"form-control\" id=\"\" placeholder=\"\">\r\n        </div>\r\n    </div>\r\n</div>\r\n\r\n<!-- MEDIUM -->\r\n\r\n<div class=\"exc-form-group-double\">\r\n    <div class=\"form-group exc-pw-medium\">\r\n        <div class=\"exc-form-inner\">\r\n            <label for=\"\" class=\"required\">Password:</label>\r\n            <input type=\"text\" class=\"form-control\" id=\"\" placeholder=\"\">\r\n            <div class=\"exc-pw-meter\">\r\n                <span></span>\r\n                <span></span>\r\n                <span></span>\r\n                <span></span>\r\n                <span></span>\r\n            </div>\r\n            <div class=\"exc-pw-strength\">Medium</div>\r\n        </div>\r\n    </div>\r\n    <div class=\"form-group\">\r\n        <div class=\"exc-form-inner\">\r\n            <label for=\"\" class=\"required\">Confirm Password:</label>\r\n            <input type=\"text\" class=\"form-control\" id=\"\" placeholder=\"\">\r\n        </div>\r\n    </div>\r\n</div>\r\n\r\n<!-- STRONG -->\r\n\r\n<div class=\"exc-form-group-double\">\r\n    <div class=\"form-group exc-pw-strong\">\r\n        <div class=\"exc-form-inner\">\r\n            <label for=\"\" class=\"required\">Password:</label>\r\n            <input type=\"text\" class=\"form-control\" id=\"\" placeholder=\"\">\r\n            <div class=\"exc-pw-meter\">\r\n                <span></span>\r\n                <span></span>\r\n                <span></span>\r\n                <span></span>\r\n                <span></span>\r\n            </div>\r\n            <div class=\"exc-pw-strength\">Strong</div>\r\n        </div>\r\n    </div>\r\n    <div class=\"form-group\">\r\n        <div class=\"exc-form-inner\">\r\n            <label for=\"\" class=\"required\">Confirm Password:</label>\r\n            <input type=\"text\" class=\"form-control\" id=\"\" placeholder=\"\">\r\n        </div>\r\n    </div>\r\n</div>\r\n" }, "processing-message": { "name": "processing-message", "title": "Processing Message", "path": "/patterns/_feedback-elements/processing-message", "html": "﻿<div class=\"exc-processing-message\">\r\n    <span>Processing...</span>\r\n</div>\r\n" }, "progress-indicator": { "name": "progress-indicator", "title": "Progress Indicator", "path": "/patterns/_feedback-elements/progress-indicator", "html": "﻿<!-- Plain -->\r\n<ul class=\"exc-progress-bar\">\r\n    <li>\r\n        <span class=\"exc-progress-text\">Account Validation</span>\r\n        <span class=\"exc-progress-alt\">Step 1</span>\r\n    </li>\r\n    <li>\r\n        <span class=\"exc-progress-text\">Payment Information</span>\r\n        <span class=\"exc-progress-alt\">Step 2</span>\r\n    </li>\r\n    <li>\r\n        <span class=\"exc-progress-text\">Review and Submit</span>\r\n        <span class=\"exc-progress-alt\">Step 3</span>\r\n    </li>\r\n    <li>\r\n        <span class=\"exc-progress-text\">Confirmation</span>\r\n        <span class=\"exc-progress-alt\">Step 4</span>\r\n    </li>\r\n</ul>\r\n\r\n<!-- Step 1 Example -->\r\n<ul class=\"exc-progress-bar\">\r\n    <li class=\"exc-progress-current\">\r\n        <span class=\"exc-progress-text\">Account Validation</span>\r\n        <span class=\"exc-progress-alt\">Step 1</span>\r\n    </li>\r\n    <li>\r\n        <span class=\"exc-progress-text\">Payment Information</span>\r\n        <span class=\"exc-progress-alt\">Step 2</span>\r\n    </li>\r\n    <li>\r\n        <span class=\"exc-progress-text\">Review and Submit</span>\r\n        <span class=\"exc-progress-alt\">Step 3</span>\r\n    </li>\r\n    <li>\r\n        <span class=\"exc-progress-text\">Confirmation</span>\r\n        <span class=\"exc-progress-alt\">Step 4</span>\r\n    </li>\r\n</ul>\r\n\r\n<!-- Step 2 Example -->\r\n<ul class=\"exc-progress-bar\">\r\n    <li class=\"exc-progress-done\">\r\n        <span class=\"exc-progress-text\">Account Validation</span>\r\n        <span class=\"exc-progress-alt\">Step 1</span>\r\n    </li>\r\n    <li class=\"exc-progress-current\">\r\n        <span class=\"exc-progress-text\">Payment Information</span>\r\n        <span class=\"exc-progress-alt\">Step 2</span>\r\n    </li>\r\n    <li>\r\n        <span class=\"exc-progress-text\">Review and Submit</span>\r\n        <span class=\"exc-progress-alt\">Step 3</span>\r\n    </li>\r\n    <li>\r\n        <span class=\"exc-progress-text\">Confirmation</span>\r\n        <span class=\"exc-progress-alt\">Step 4</span>\r\n    </li>\r\n</ul>\r\n\r\n<!-- Step 3 Example -->\r\n<ul class=\"exc-progress-bar\">\r\n    <li class=\"exc-progress-done\">\r\n        <span class=\"exc-progress-text\">Account Validation</span>\r\n        <span class=\"exc-progress-alt\">Step 1</span>\r\n    </li>\r\n    <li class=\"exc-progress-done\">\r\n        <span class=\"exc-progress-text\">Payment Information</span>\r\n        <span class=\"exc-progress-alt\">Step 2</span>\r\n    </li>\r\n    <li class=\"exc-progress-current\">\r\n        <span class=\"exc-progress-text\">Review and Submit</span>\r\n        <span class=\"exc-progress-alt\">Step 3</span>\r\n    </li>\r\n    <li>\r\n        <span class=\"exc-progress-text\">Confirmation</span>\r\n        <span class=\"exc-progress-alt\">Step 4</span>\r\n    </li>\r\n</ul>\r\n\r\n<!-- Step 4 Example -->\r\n<ul class=\"exc-progress-bar\">\r\n    <li class=\"exc-progress-done\">\r\n        <span class=\"exc-progress-text\">Account Validation</span>\r\n        <span class=\"exc-progress-alt\">Step 1</span>\r\n    </li>\r\n    <li class=\"exc-progress-done\">\r\n        <span class=\"exc-progress-text\">Payment Information</span>\r\n        <span class=\"exc-progress-alt\">Step 2</span>\r\n    </li>\r\n    <li class=\"exc-progress-done\">\r\n        <span class=\"exc-progress-text\">Review and Submit</span>\r\n        <span class=\"exc-progress-alt\">Step 3</span>\r\n    </li>\r\n    <li class=\"exc-progress-current\">\r\n        <span class=\"exc-progress-text\">Confirmation</span>\r\n        <span class=\"exc-progress-alt\">Step 4</span>\r\n    </li>\r\n</ul>\r\n" } } }, "_form-elements": { "name": "_form-elements", "title": "Form Elements", "path": "/patterns/_form-elements", "items": { "button-accent": { "name": "button-accent", "title": "Button Accent", "path": "/patterns/_form-elements/button-accent", "html": "<button type=\"button\" class=\"btn btn-accent\">Sign In</button>" }, "button-caret-next": { "name": "button-caret-next", "title": "Button Caret Next", "path": "/patterns/_form-elements/button-caret-next", "html": "<button type=\"button\" class=\"btn btn-default\">Continue<span class=\"caret-right\"></span></button>" }, "button-caret-previous": { "name": "button-caret-previous", "title": "Button Caret Previous", "path": "/patterns/_form-elements/button-caret-previous", "html": "<button type=\"button\" class=\"btn btn-default\"><span class=\"caret-left\"></span>Back</button>" }, "button-default": { "name": "button-default", "title": "Button Default", "path": "/patterns/_form-elements/button-default", "html": "<button type=\"button\" class=\"btn btn-default\">Button</button>" }, "button-group-double": { "name": "button-group-double", "title": "Button Group Double", "path": "/patterns/_form-elements/button-group-double", "html": "<div class=\"exc-form-actions\">\r\n    <button type=\"button\" class=\"btn btn-default\">Cancel</button>\r\n    <button type=\"button\" class=\"btn btn-primary pull-right\">Continue<span class=\"caret-right\"></span></button>\r\n</div>" }, "button-group-triple": { "name": "button-group-triple", "title": "Button Group Triple", "path": "/patterns/_form-elements/button-group-triple", "html": "<div class=\"exc-form-actions\">\r\n    <button type=\"button\" class=\"btn btn-default\">Cancel</button>\r\n    <div class=\"pull-right\">\r\n        <button type=\"button\" class=\"btn btn-default\"><span class=\"caret-left\"></span>Back</button>\r\n        <button type=\"button\" class=\"btn btn-primary\">Continue<span class=\"caret-right\"></span></button>\r\n    </div>\r\n</div>" }, "button-horizontal-group": { "name": "button-horizontal-group", "title": "Button Horizontal Group", "path": "/patterns/_form-elements/button-horizontal-group", "html": "﻿<div class=\"exc-small-button-group\">\r\n    <button type=\"button\" class=\"btn btn-primary btn-sm\">Button Example One</button>\r\n    <button type=\"button\" class=\"btn btn-primary btn-sm\">Another Button Example</button>\r\n    <button type=\"button\" class=\"btn btn-primary btn-sm\">Third Button</button>\r\n</div>\r\n" }, "button-inverted": { "name": "button-inverted", "title": "Button Inverted", "path": "/patterns/_form-elements/button-inverted", "html": "<button type=\"button\" class=\"btn btn-inverted\">Button</button>" }, "button-primary-call-to-action": { "name": "button-primary-call-to-action", "title": "Button Primary Call To Action", "path": "/patterns/_form-elements/button-primary-call-to-action", "html": "<button type=\"button\" class=\"btn btn-primary\">Button</button>" }, "button-small": { "name": "button-small", "title": "Button Small", "path": "/patterns/_form-elements/button-small", "html": "<button type=\"button\" class=\"btn btn-default btn-sm\">Small Button</button> " }, "button-smallest": { "name": "button-smallest", "title": "Button Smallest", "path": "/patterns/_form-elements/button-smallest", "html": "<button type=\"button\" class=\"btn btn-default btn-xs\">Small Button</button> " }, "checkbox-toggle-panel": { "name": "checkbox-toggle-panel", "title": "Checkbox Toggle Panel", "path": "/patterns/_form-elements/checkbox-toggle-panel", "html": "<!-- Content hidden AFTER checkbox group. -->\r\n<div class=\"form-group\">\r\n    <div class=\"checkbox\">       \r\n        <label>\r\n            <input type=\"checkbox\" id=\"id2\" class=\"exc-toggle\"> To display a hidden form section, click here.\r\n        </label>\r\n    </div>      \r\n</div>\r\n<div class=\"exc-toggle-panel\">\r\n    <div class=\"exc-form-group-double\">\r\n        <div class=\"form-group\">\r\n            <label for=\"hidden1\">Hidden Field 1:</label>\r\n            <input type=\"text\" class=\"form-control\" id=\"hidden1\" placeholder=\"Hidden Field 1\">\r\n        </div>\r\n        <div class=\"form-group\">\r\n            <label for=\"hidden2\">Hidden Field 2:</label>\r\n            <input type=\"text\" class=\"form-control\" id=\"hidden2\" placeholder=\"Hidden Field 2\">\r\n        </div>\r\n    </div>\r\n</div>\r\n\r\n<!-- Content hidden INSIDE checkbox group. -->\r\n<div class=\"form-group\">\r\n    <div class=\"checkbox\">\r\n        <label>\r\n            <input type=\"checkbox\" id=\"id2\" class=\"exc-sub-toggle\"> To display hidden content within a checkbox group, click here.\r\n        </label>\r\n        <div class=\"exc-toggle-panel\">\r\n            <p>This is hidden content.</p>\r\n        </div>\r\n    </div>\r\n</div>", "txt": "A toggle panel after the checkbox form-group is styled independently from the checkbox area.  Content hidden inside a checkbox group will be indented." }, "field-layout-double-column": { "name": "field-layout-double-column", "title": "Field Layout Double Column", "path": "/patterns/_form-elements/field-layout-double-column", "html": "<div class=\"exc-form-group-double\">\r\n    <div class=\"form-group\">\r\n        <div class=\"exc-form-inner\">\r\n            <label for=\"id1\">Field 1:</label>\r\n            <input type=\"text\" class=\"form-control\" id=\"id1\" placeholder=\"Field 1\">\r\n        </div>\r\n    </div>\r\n    <div class=\"form-group\">\r\n        <div class=\"exc-form-inner\">\r\n            <label for=\"id2\">Field 2:</label>\r\n            <input type=\"text\" class=\"form-control\" id=\"id2\" placeholder=\"Field 2\">\r\n        </div>\r\n    </div>\r\n</div>", "txt": "Nest two <div class=\"form-group\"> inside one <div class=\"exc-form-group-double\"> to create one row.  To add another row, start with <div class=\"exc-form-group-double\"> again." }, "field-layout-single-column": { "name": "field-layout-single-column", "title": "Field Layout Single Column", "path": "/patterns/_form-elements/field-layout-single-column", "html": "  <div class=\"form-group\">\r\n      <div class=\"exc-form-inner\">\r\n          <label for=\"id1\">Field 1:</label>\r\n          <input type=\"text\" class=\"form-control\" id=\"id1\" placeholder=\"Field 1\">\r\n      </div>\r\n</div>", "txt": "Some shorter forms use a single column layout." }, "form-section-active": { "name": "form-section-active", "title": "Form Section Active", "path": "/patterns/_form-elements/form-section-active", "html": "<div class=\"exc-panel panel panel-primary\">\r\n  <div class=\"panel-heading\">\r\n    <h3 class=\"panel-title\">Active Section Title</h3>\r\n  </div>\r\n  <div class=\"panel-body\">\r\n    [form fields go here]\r\n  </div>\r\n</div>\r\n", "txt": "﻿PANELS SHOULD ONLY BE USED IN MULTI-STEP ACCORDION FORMS." }, "form-section-inactive": { "name": "form-section-inactive", "title": "Form Section Inactive", "path": "/patterns/_form-elements/form-section-inactive", "html": "<div class=\"exc-panel panel panel-default\">\r\n    <div class=\"panel-heading\">\r\n        <h3 class=\"panel-title\">Inactive Section Title</h3>\r\n    </div>\r\n    <div class=\"panel-body\" style=\"display: none;\">\r\n        [form fields go here]\r\n    </div>\r\n</div>", "txt": "﻿PANELS SHOULD ONLY BE USED IN MULTI-STEP ACCORDION FORMS." }, "form-sections-combined-example": { "name": "form-sections-combined-example", "title": "Form Sections Combined Example", "path": "/patterns/_form-elements/form-sections-combined-example", "html": "<div class=\"exc-panel panel panel-default\">\r\n    <div class=\"panel-heading\">\r\n        <h3 class=\"panel-title\">Inactive Section Title</h3>\r\n    </div>\r\n    <div class=\"panel-body\" style=\"display: none;\">\r\n        [form fields go here]\r\n    </div>\r\n</div>\r\n<div class=\"exc-panel panel panel-primary\">\r\n    <div class=\"panel-heading\">\r\n        <h3 class=\"panel-title\">Active Section Title</h3>\r\n    </div>\r\n    <div class=\"panel-body\">\r\n        <div class=\"exc-form-group-double\">\r\n            <div class=\"form-group\">\r\n                <label for=\"id1\">Field 1:</label>\r\n                <input type=\"text\" class=\"form-control\" id=\"id1\" placeholder=\"Field 1\" />\r\n            </div>\r\n            <div class=\"form-group\">\r\n                <label for=\"id2\">Field 2:</label>\r\n                <input type=\"text\" class=\"form-control\" id=\"id2\" placeholder=\"Field 2\" />\r\n            </div>\r\n        </div>\r\n        <div class=\"exc-form-group-double\">\r\n            <div class=\"form-group\">\r\n                <label for=\"id3\">Field 3:</label>\r\n                <input type=\"text\" class=\"form-control\" id=\"id3\" placeholder=\"Field 3\" />\r\n            </div>\r\n            <div class=\"form-group\">\r\n                <label for=\"id4\">Field 4:</label>\r\n                <input type=\"text\" class=\"form-control\" id=\"id4\" placeholder=\"Field 4\" />\r\n            </div>\r\n        </div>\r\n        <div class=\"exc-form-actions\">\r\n            <button type=\"button\" class=\"btn btn-default\">Cancel</button>\r\n            <div class=\"pull-right\">\r\n                <button type=\"button\" class=\"btn btn-default\"><span class=\"caret-left\"></span>Back</button>\r\n                <button type=\"button\" class=\"btn btn-primary\">Continue<span class=\"caret-right\"></span></button>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</div>\r\n<div class=\"exc-panel panel panel-default\">\r\n    <div class=\"panel-heading\">\r\n        <h3 class=\"panel-title\">Inactive Section Title</h3>\r\n    </div>\r\n    <div class=\"panel-body\" style=\"display: none;\">\r\n        [form fields go here]\r\n    </div>\r\n</div>\r\n", "txt": "PANELS SHOULD ONLY BE USED IN MULTI-STEP ACCORDION FORMS.  See more examples in Form Templates." }, "form-subsection": { "name": "form-subsection", "title": "Form Subsection", "path": "/patterns/_form-elements/form-subsection", "html": "<h4 class=\"exc-form-sub-hdr\">Subsection Title</h4>\r\n<p>Paragraph with instructions, if needed.</p>\r\n[form fields go here]\r\n<hr>", "txt": "See example in Form Templates. " }, "input-checkbox-group": { "name": "input-checkbox-group", "title": "Input Checkbox Group", "path": "/patterns/_form-elements/input-checkbox-group", "html": "<div class=\"form-group\">\r\n    <div class=\"exc-form-inner\">\r\n        <label>Checkbox Group Label:</label>\r\n        <div class=\"checkbox\">\r\n            <label>\r\n                <input type=\"checkbox\" value=\"option1\">\r\n                Option One\r\n            </label>\r\n        </div>\r\n        <div class=\"checkbox\">\r\n            <label>\r\n                <input type=\"checkbox\" value=\"option2\">\r\n                Option Two\r\n            </label>\r\n        </div>\r\n        <div class=\"checkbox\">\r\n            <label>\r\n                <input type=\"checkbox\" value=\"option3\">\r\n                Option Three\r\n            </label>\r\n        </div>\r\n    </div>\r\n</div>" }, "input-cvv2": { "name": "input-cvv2", "title": "Input Cvv 2", "path": "/patterns/_form-elements/input-cvv2", "html": "<div class=\"form-group\">\r\n    <div class=\"exc-form-inner\">\r\n        <label for=\"cvv2\">CVV2:</label>\r\n        <input type=\"text\" class=\"form-control exc-very-small\" id=\"cvv2\" placeholder=\"CVV2\">\r\n    </div>\r\n</div>" }, "input-date-picker": { "name": "input-date-picker", "title": "Input Date Picker", "path": "/patterns/_form-elements/input-date-picker", "html": "<p>Datepicker</p>\r\n<div class=\"form-group\">\r\n    <div class=\"exc-form-inner\">\r\n        <label for=\"id-datepicker\">Datepicker:</label>\r\n        <span class=\"exc-datepicker-icon\"><input type=\"text\" id=\"id-datepicker\" class=\"form-control exc-datepicker\"></span>\r\n    </div>\r\n</div>\r\n<p>Datepicker plus tooltip:</p>\r\n<div class=\"form-group exc-tooltip\">\r\n    <div class=\"exc-form-inner\">\r\n        <label for=\"id-datepicker\">Datepicker:</label>\r\n        <span class=\"exc-datepicker-icon\"><input type=\"text\" id=\"id-datepicker\" class=\"form-control exc-datepicker\"></span>\r\n        <div class=\"exc-tooltip-icon\" data-toggle=\"tooltip\" data-placement=\"left\" title=\"Tooltip text goes here.\">?</div>\r\n    </div>\r\n</div>\r\n", "txt": "jQuery UI Datepicker.  Initialize each datepicker field and add parameters in js file." }, "input-expiration-date": { "name": "input-expiration-date", "title": "Input Expiration Date", "path": "/patterns/_form-elements/input-expiration-date", "html": "﻿<div class=\"form-group exc-form-group-exp-date\">\r\n    <div class=\"form-group\">\r\n        <div class=\"exc-form-inner\">\r\n            <label for=\"\" class=\"required\">Expiration Date<span class=\"sr-only\"> Month</span>:</label>\r\n            <select class=\"form-control exc-small\" id=\"\">\r\n                <option>01 - January</option>\r\n                <option>02 - February</option>\r\n                <option>03 - March</option>\r\n                <option>04 - April</option>\r\n                <option>05 - May</option>\r\n                <option>06 - June</option>\r\n                <option>07 - July</option>\r\n                <option>08 - August</option>\r\n                <option>09 - September</option>\r\n                <option>10 - October</option>\r\n                <option>11 - November</option>\r\n                <option>12 - December</option>\r\n            </select>\r\n        </div>\r\n    </div>\r\n    <div class=\"form-group\">\r\n        <div class=\"exc-form-inner\">\r\n            <label for=\"\" class=\"sr-only\">Expiration Date Year:</label>\r\n            <select class=\"form-control exc-very-small\" id=\"\">\r\n                <option>2016</option>\r\n                <option>2017</option>\r\n                <option>2018</option>\r\n            </select>\r\n        </div>\r\n    </div>\r\n</div>\r\n" }, "input-file-upload": { "name": "input-file-upload", "title": "Input File Upload", "path": "/patterns/_form-elements/input-file-upload", "html": "﻿<div class=\"form-group exc-file-upload\">\r\n    <div class=\"exc-form-inner\">\r\n        <label>Upload Your File:</label>\r\n        <input type=\"file\" class=\"form-control\" />\r\n    </div>\r\n</div>\r\n" }, "input-multi-select": { "name": "input-multi-select", "title": "Input Multi Select", "path": "/patterns/_form-elements/input-multi-select", "html": "﻿<div class=\"form-group\">\r\n    <div class=\"exc-form-inner\">\r\n        <label for=\"\">Select:</label>\r\n        <select multiple class=\"form-control\" id=\"\">\r\n            <option>Option 1</option>\r\n            <option>Option 2</option>\r\n            <option>Option 3</option>\r\n            <option>Option 4</option>\r\n            <option>Option 5</option>\r\n        </select>\r\n    </div>\r\n</div>\r\n" }, "input-phone-number-ext": { "name": "input-phone-number-ext", "title": "Input Phone Number Ext", "path": "/patterns/_form-elements/input-phone-number-ext", "html": "<div class=\"form-group\">\r\n    <div class=\"exc-form-inner exc-input-phone\">\r\n        <label for=\"PhoneNumber1\">Phone Number:</label>\r\n        <input type=\"text\" class=\"form-control\" id=\"PhoneNumber1\" placeholder=\"xxx-xxx-xxxx\">\r\n        <span>ext.:</span>\r\n        <input type=\"text\" class=\"form-control\" id=\"PhoneExt1\" placeholder=\"\">\r\n    </div>\r\n</div>" }, "input-phone-number": { "name": "input-phone-number", "title": "Input Phone Number", "path": "/patterns/_form-elements/input-phone-number", "html": "<div class=\"form-group\">\r\n    <div class=\"exc-form-inner exc-input-phone\">\r\n        <label for=\"PhoneNumber1\">Phone Number:</label>\r\n        <input type=\"text\" class=\"form-control\" id=\"PhoneNumber1\" placeholder=\"xxx-xxx-xxxx\">\r\n    </div>\r\n</div>\r\n" }, "input-radio-more-than-two": { "name": "input-radio-more-than-two", "title": "Input Radio More Than Two", "path": "/patterns/_form-elements/input-radio-more-than-two", "html": "<div class=\"form-group\">\r\n    <div class=\"exc-form-inner\">\r\n        <label>Radio Buttons Label:</label>\r\n        <div class=\"radio\">\r\n            <label>\r\n                <input type=\"radio\" name=\"RadioOptions\" id=\"id1\" value=\"option1\">\r\n                Option One\r\n            </label>\r\n        </div>\r\n        <div class=\"radio\">\r\n            <label>\r\n                <input type=\"radio\" name=\"RadioOptions\" id=\"id2\" value=\"option2\">\r\n                Option Two\r\n            </label>\r\n        </div>\r\n        <div class=\"radio disabled\">\r\n            <label>\r\n                <input type=\"radio\" name=\"RadioOptions\" id=\"id3\" value=\"option3\">\r\n                Option Three\r\n            </label>\r\n        </div>\r\n    </div>\r\n</div>", "txt": "For radio groups that have three or more options, the radio buttons will be stacked." }, "input-radio-two": { "name": "input-radio-two", "title": "Input Radio Two", "path": "/patterns/_form-elements/input-radio-two", "html": "<div class=\"form-group form-inline\">\r\n    <div class=\"exc-form-inner\">\r\n        <label>Radio Buttons Label:</label>\r\n        <label class=\"radio-inline\" for=\"\">\r\n            <input type=\"radio\" name=\"\" id=\"\" value=\"Yes\"> Yes\r\n        </label>\r\n        <label class=\"radio-inline\" for=\"\">\r\n            <input type=\"radio\" name=\"\" id=\"\" value=\"No\"> No\r\n        </label>\r\n    </div>\r\n</div>", "txt": "For radio groups that have only two options, we use an inline layout." }, "input-required": { "name": "input-required", "title": "Input Required", "path": "/patterns/_form-elements/input-required", "html": "<div class=\"form-group\">\r\n    <div class=\"exc-form-inner\">\r\n        <label class=\"required\" for=\"id1\">Required Field:</label>\r\n        <input type=\"text\" class=\"form-control\" id=\"id1\" placeholder=\"Required Field\">\r\n    </div>\r\n</div>", "txt": "Add css class=\"required\" to <label>." }, "input-select-group": { "name": "input-select-group", "title": "Input Select Group", "path": "/patterns/_form-elements/input-select-group", "html": "<div class=\"form-inline exc-input-group\">\r\n\t<div class=\"form-group\">\r\n        <div class=\"exc-form-inner\">\r\n            <label for=\"exampleInput\">Group Field 1:</label>\r\n            <div class=\"input-group exc-input-select\">\r\n                <input type=\"text\" class=\"form-control\" id=\"exampleInput\" placeholder=\"Search\">\r\n                <select class=\"form-control\">\r\n                    <option>Category 1</option>\r\n                    <option>Category 2</option>\r\n                    <option>Category 3</option>\r\n                    <option>Category 4</option>\r\n                </select>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</div>" }, "input-select": { "name": "input-select", "title": "Input Select", "path": "/patterns/_form-elements/input-select", "html": "<div class=\"form-group\">\r\n    <div class=\"exc-form-inner\">\r\n        <label for=\"id1\">Select:</label>\r\n        <select class=\"form-control\" id=\"id1\">\r\n            <option>Option 1</option>\r\n            <option>Option 2</option>\r\n            <option>Option 3</option>\r\n            <option>Option 4</option>\r\n            <option>Option 5</option>\r\n        </select>\r\n    </div>\r\n</div>\r\n" }, "input-small": { "name": "input-small", "title": "Input Small", "path": "/patterns/_form-elements/input-small", "html": "<div class=\"form-group\">\r\n    <div class=\"exc-form-inner\">\r\n        <label for=\"id1\">Field 1:</label>\r\n        <input type=\"text\" class=\"form-control exc-small\" id=\"id1\" placeholder=\"Field 1\">\r\n    </div>\r\n</div>" }, "input-smaller": { "name": "input-smaller", "title": "Input Smaller", "path": "/patterns/_form-elements/input-smaller", "html": "<div class=\"form-group\">\r\n    <div class=\"exc-form-inner\">\r\n        <label for=\"id1\">Field 1:</label>\r\n        <input type=\"text\" class=\"form-control exc-very-small\" id=\"id1\" placeholder=\"Field 1\">\r\n    </div>\r\n</div>" }, "input-smallest": { "name": "input-smallest", "title": "Input Smallest", "path": "/patterns/_form-elements/input-smallest", "html": "﻿<div class=\"form-group\">\r\n    <div class=\"exc-form-inner\">\r\n        <label for=\"id1\">Field 1:</label>\r\n        <input type=\"text\" class=\"form-control exc-x-small\" id=\"id1\" placeholder=\"Field 1\">\r\n    </div>\r\n</div>\r\n" }, "input-state-zipcode": { "name": "input-state-zipcode", "title": "Input State Zipcode", "path": "/patterns/_form-elements/input-state-zipcode", "html": "<div class=\"form-group exc-form-group-pair\">\r\n    <div class=\"form-group\">\r\n        <div class=\"exc-form-inner\">\r\n            <label for=\"id1\">State:</label>\r\n            <select class=\"form-control exc-small\" id=\"id1\">\r\n                <option>Option 1</option>\r\n                <option>Option 2</option>\r\n                <option>Option 3</option>\r\n                <option>Option 4</option>\r\n                <option>Option 5</option>\r\n            </select>\r\n        </div>\r\n    </div>\r\n    <div class=\"form-group\">\r\n        <div class=\"exc-form-inner\">\r\n            <label for=\"id2\">Zip Code:</label>\r\n            <input type=\"text\" class=\"form-control exc-small\" id=\"id2\" placeholder=\"Zip Code\">\r\n        </div>\r\n    </div>\r\n</div>" }, "input-textarea-with-counter": { "name": "input-textarea-with-counter", "title": "Input Textarea With Counter", "path": "/patterns/_form-elements/input-textarea-with-counter", "html": "<div class=\"form-group\">\r\n    <div class=\"exc-form-inner\">\r\n        <label for=\"id1\">Textarea Label:</label>\r\n        <textarea class=\"form-control\" id=\"id1\"></textarea>\r\n        <p class=\"exc-caption\">250 characters remaining (250 maximum)</p>\r\n    </div>\r\n</div>\r\n", "txt": "This should be used in a single column only (one per row)." }, "input-textarea": { "name": "input-textarea", "title": "Input Textarea", "path": "/patterns/_form-elements/input-textarea", "html": "<div class=\"form-group\">\r\n    <div class=\"exc-form-inner\">\r\n        <label for=\"id1\">Textarea Label:</label>\r\n        <textarea class=\"form-control\" id=\"id1\"></textarea>\r\n    </div>\r\n</div>\r\n", "txt": "This should be used in a single column only (one per row)." }, "input-with-either-or": { "name": "input-with-either-or", "title": "Input With Either Or", "path": "/patterns/_form-elements/input-with-either-or", "html": "﻿<div class=\"form-group exc-either-or-input\">\r\n    <div class=\"exc-form-inner\">\r\n        <label for=\"\" class=\"sr-only\">Enter Tax ID Number or Social Security Number</label>\r\n        <span class=\"radio-inline\">\r\n            <input type=\"radio\" name=\"\" id=\"\" value=\"\">Tax ID Number\r\n        </span>\r\n        <span class=\"exc-or required\">or</span>\r\n        <span class=\"radio-inline\">\r\n            <input type=\"radio\" name=\"\" id=\"\" value=\"\">Soc Sec Number\r\n        </span>\r\n        <p><a href=\"#\">Privacy Policy</a></p>\r\n        <input type=\"text\" class=\"form-control\" id=\"\" placeholder=\"\">\r\n    </div>\r\n</div>", "txt": "﻿The hidden label is for screen readers.  (class=\"sr-only\")" }, "input-with-hint": { "name": "input-with-hint", "title": "Input With Hint", "path": "/patterns/_form-elements/input-with-hint", "html": "﻿<div class=\"form-group exc-input-hint\">\r\n    <div class=\"exc-form-inner\">\r\n        <label for=\"id1\">Field 1:</label>\r\n        <input type=\"text\" class=\"form-control exc-small\" id=\"id1\" placeholder=\"Field 1\">\r\n        <span class=\"exc-input-hint-text\">MM/DD/YYYY</span>\r\n    </div>\r\n</div>\r\n" }, "input-with-tooltip": { "name": "input-with-tooltip", "title": "Input With Tooltip", "path": "/patterns/_form-elements/input-with-tooltip", "html": "<!-- text input with tooltip -->\r\n\r\n<div class=\"form-group exc-tooltip\">  \r\n    <div class=\"exc-form-inner\">\r\n        <label for=\"id1\">Field 1:</label>\r\n        <input type=\"text\" class=\"form-control\" id=\"id1\" placeholder=\"Field 1\">\r\n        <div class=\"exc-tooltip-icon\" data-toggle=\"tooltip\" data-placement=\"left\" title=\"Tooltip text goes here.\">?</div>\r\n    </div>\r\n</div>\r\n\r\n<div class=\"exc-form-group-double\">\r\n    <div class=\"form-group exc-tooltip\">\r\n        <!-- small input with tooltip -->\r\n        <div class=\"exc-form-inner\">\r\n            <label for=\"id1\">Field 2:</label>\r\n            <input type=\"text\" class=\"form-control exc-small\" id=\"id2\" placeholder=\"Field 2\">\r\n            <div class=\"exc-tooltip-icon\" data-toggle=\"tooltip\" data-placement=\"left\" title=\"Tooltip text goes here.\">?</div>\r\n        </div>\r\n    </div>\r\n    <!-- very small input with tooltip -->\r\n    <div class=\"form-group exc-tooltip\">\r\n        <div class=\"exc-form-inner\">\r\n            <label for=\"id5\">Field 5:</label>\r\n            <input type=\"text\" class=\"form-control exc-very-small\" id=\"id5\" placeholder=\"Field 5\">\r\n            <div class=\"exc-tooltip-icon\" data-toggle=\"tooltip\" data-placement=\"left\" title=\"Tooltip text goes here.\">?</div>\r\n        </div>\r\n    </div>\r\n</div>\r\n\r\n\r\n<div class=\"exc-form-group-double\">\r\n    <!-- select input with tooltip -->\r\n    <div class=\"form-group exc-tooltip\">\r\n        <div class=\"exc-form-inner\">\r\n            <label for=\"id4\">Select 4:</label>\r\n            <select class=\"form-control\" id=\"id4\">\r\n                <option>Option 1</option>\r\n                <option>Option 2</option>\r\n                <option>Option 3</option>\r\n                <option>Option 4</option>\r\n                <option>Option 5</option>\r\n            </select>\r\n            <div class=\"exc-tooltip-icon\" data-toggle=\"tooltip\" data-placement=\"left\" title=\"Tooltip text goes here.\">?</div>\r\n        </div>\r\n    </div>\r\n    <!-- datepicker input with tooltip -->\r\n    <div class=\"form-group exc-tooltip\">\r\n        <div class=\"exc-form-inner\">\r\n            <label for=\"id-datepicker\">Datepicker:</label>\r\n            <span class=\"exc-datepicker-icon\"><input type=\"text\" id=\"id-datepicker\" class=\"form-control exc-datepicker\"></span>\r\n            <div class=\"exc-tooltip-icon\" data-toggle=\"tooltip\" data-placement=\"left\" title=\"Tooltip text goes here.\">?</div>\r\n        </div>\r\n    </div>\r\n</div>\r\n<div class=\"exc-form-group-double\">\r\n    <!-- checkbox with tooltip -->\r\n    <div class=\"form-group exc-tooltip\">\r\n        <div class=\"exc-form-inner\">\r\n            <div class=\"checkbox\">\r\n                <label>\r\n                    <input type=\"checkbox\" value=\"option1\">\r\n                    Save this bank account.\r\n                    <div class=\"exc-tooltip-icon\" data-toggle=\"tooltip\" data-placement=\"left\" title=\"Tooltip text goes here.\">?</div>\r\n                </label>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</div>\r\n\r\n" }, "powered-by-billmatrix": { "name": "powered-by-billmatrix", "title": "Powered By Billmatrix", "path": "/patterns/_form-elements/powered-by-billmatrix", "html": "﻿<div class=\"exc-partner-badge\">\r\n    <img src=\"../../Exelon/exc-images/BMPoweredBy.jpg\" alt=\"Powered by BillMatrix\" /><br />\r\n    <a href=\"#\">Privacy Policy</a>\r\n</div>\r\n\r\n", "txt": "﻿For SharePoint implementation, change the image source to src=\"/Style Library/Exelon/exc-images/BMPoweredBy.gif\"" }, "recaptcha": { "name": "recaptcha", "title": "Recaptcha", "path": "/patterns/_form-elements/recaptcha", "html": "﻿<div class=\"form-group exc-recaptcha\">\r\n    <div class=\"form-inner\">\r\n        [reCAPTCHA goes here]\r\n    </div>\r\n</div>", "txt": "﻿This code block should be on its own, outside of any other form groups, double form groups, rows, etc.  Generally it should go before the <div class=\"row\"> that contains action buttons." }, "review-and-submit": { "name": "review-and-submit", "title": "Review And Submit", "path": "/patterns/_form-elements/review-and-submit", "html": "\r\n<h3>Section 1</h3>\r\n<p class=\"exc-form-review\"><span>First Name:</span>Jane</p>\r\n<p class=\"exc-form-review\"><span>Last Name:</span>Doe</p>\r\n<p class=\"exc-form-review\"><span>Phone Number:</span>410-123-4567</p>\r\n<p class=\"exc-form-review\"><span>Email Address:</span>test@test.com</p>\r\n\r\n<h3>Section 2</h3>\r\n<p class=\"exc-form-review\"><span>Address:</span>123 Main Street</p>\r\n<p class=\"exc-form-review\"><span>City:</span>Baltimore</p>\r\n<p class=\"exc-form-review\"><span>State:</span>Maryland</p>\r\n<p class=\"exc-form-review\"><span>Zip Code:</span>21036</p>\r\n\r\n\r\n<div class=\"exc-form-actions\">\r\n    <button type=\"button\" class=\"btn btn-default\">Cancel</button>\r\n    <div class=\"pull-right\">\r\n        <button type=\"button\" class=\"btn btn-default\"><span class=\"caret-left\"></span>Back</button>\r\n        <button type=\"button\" class=\"btn btn-primary\">Submit</button>\r\n    </div>\r\n</div>\r\n ", "txt": "Some \"Review and Submit\" pages will display all the field names from the form, with associated field values entered by the user.  For forms with multiple sections, the fields displayed from each section should be proceeded by an <h3> tag with the name of that section." }, "terms-conditions-with-checkbox": { "name": "terms-conditions-with-checkbox", "title": "Terms Conditions With Checkbox", "path": "/patterns/_form-elements/terms-conditions-with-checkbox", "html": "<div class=\"form-group\">\r\n    <div class=\"exc-form-inner\">\r\n        <div class=\"exc-terms-conditions small\">\r\n            [READ-ONLY TEXT CONTENT GOES HERE]\r\n        </div>\r\n        <div class=\"checkbox\">\r\n            <label class=\"required\">\r\n                <input type=\"checkbox\" id=\"id2\"> Yes, I have read, understand, and agree to these terms and conditions.\r\n            </label>\r\n        </div>\r\n    </div>\r\n</div>" }, "toggle-switch": { "name": "toggle-switch", "title": "Toggle Switch", "path": "/patterns/_form-elements/toggle-switch", "html": "<div class=\"toggle-switch-group\">\r\n    <div class=\"exc-form-inner\">\r\n        <input type=\"checkbox\" id=\"switch1\" name=\"switch1\" class=\"toggle-switch\" />\r\n        <label for=\"switch1\"></label>\r\n    </div>\r\n</div>" }, "verify-text": { "name": "verify-text", "title": "Verify Text", "path": "/patterns/_form-elements/verify-text", "html": "﻿<div class=\"exc-form-group-double\">\r\n    <div class=\"form-group exc-tooltip\">\r\n        <div class=\"exc-form-inner\">\r\n            <div class=\"exc-form-input\">\r\n                <label for=\"id1\" class=\"required\">Routing Number:</label>\r\n                <input type=\"text\" class=\"form-control\" id=\"id1\" placeholder=\"Routing Number\">\r\n                <div class=\"exc-tooltip-icon\" data-toggle=\"tooltip\" data-placement=\"left\" title=\"Tooltip text goes here.\">?</div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n    <div class=\"form-group\">      \r\n        <label>This routing number is associated with:</label>\r\n        <span class=\"exc-verify-text\">PNC_BANK</span>        \r\n    </div>\r\n</div>\r\n" } } }, "_form-templates": { "name": "_form-templates", "title": "Form Templates", "path": "/patterns/_form-templates", "items": { "confirmation-with-info-bar": { "name": "confirmation-with-info-bar", "title": "Confirmation With Info Bar", "path": "/patterns/_form-templates/confirmation-with-info-bar", "html": "﻿<div class=\"exc-panel panel panel-default\">\r\n    <div class=\"panel-heading\">\r\n        <h3 class=\"panel-title\">Inactive Section Title</h3>\r\n    </div>\r\n    <div class=\"panel-body\" style=\"display: none;\">\r\n        [form fields go here]\r\n    </div>\r\n</div>\r\n<div class=\"exc-panel panel panel-primary\">\r\n    <div class=\"panel-heading\">\r\n        <h3 class=\"panel-title\">Confirmation</h3>\r\n    </div>\r\n    <div class=\"panel-body\">\r\n        <p><strong>Thank You</strong></p>\r\n        <p>Your request has been received.</p>\r\n        <p>Your confirmation number is <strong>123456789</strong></p>\r\n        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus tincidunt mollis volutpat. Vestibulum porttitor sed lectus id convallis.</p>\r\n        <!-- info bar -->\r\n        <div class=\"exc-feedback exc-feedback-info\">\r\n            <div class=\"container\">\r\n                <i class=\"exc-icon-feedback\"></i>\r\n                [Message goes here.]\r\n            </div>\r\n        </div> \r\n        <!-- end info bar -->       \r\n    </div>\r\n</div>", "txt": "﻿This example shows an info bar below the confirmation text.  Not all confirmation screens have an info bar." }, "either-or-1": { "name": "either-or-1", "title": "Either Or 1", "path": "/patterns/_form-templates/either-or-1", "html": "﻿<div class=\"form-group form-inline\">\r\n    <div class=\"exc-form-inner\">\r\n        <label class=\"radio-inline\" for=\"\">\r\n            <input type=\"radio\" name=\"inlineRadioOptions\" id=\"id1\" value=\"Yes\"> New Customer\r\n        </label>\r\n        <span class=\"exc-or\">- OR -</span>\r\n        <label class=\"radio-inline\" for=\"\">\r\n            <input type=\"radio\" name=\"inlineRadioOptions\" id=\"id2\" value=\"No\"> Current Customer\r\n        </label>\r\n    </div>\r\n</div>\r\n" }, "either-or-2": { "name": "either-or-2", "title": "Either Or 2", "path": "/patterns/_form-templates/either-or-2", "html": "﻿<p><strong>Note:</strong> Either Social Security Number or Date of Birth (with Driver's License and State of Issue) is required.</p>\r\n<div class=\"exc-either-or\">\r\n    <div class=\"radio-wrap\">\r\n        <div class=\"radio\">\r\n            <label>\r\n                <span class=\"exc-radio-label\">I want to enter my Social Security Number</span>\r\n                <input type=\"radio\" name=\"optionsRadios\" id=\"optionsRadios1\" value=\"option1\" checked=\"\">\r\n                <div class=\"form-group-wrap\">\r\n                    <div class=\"form-group exc-tooltip\">\r\n                        <div class=\"exc-form-inner\">\r\n                            <label for=\"exampleInput1\">Social Security Number:</label>\r\n                            <p><a href=\"#\">Privacy Policy</a></p>\r\n                            <input type=\"text\" class=\"form-control\" id=\"exampleInput1\" placeholder=\"Social Security Number\">\r\n                            <div class=\"exc-tooltip-icon\" data-toggle=\"tooltip\" data-placement=\"left\" title=\"Tooltip text goes here.\">?</div>\r\n                        </div>\r\n                    </div>\r\n                    <div class=\"form-group exc-tooltip\">\r\n                        <div class=\"exc-form-inner\">\r\n                            <label for=\"exampleInput2\">Confirm Social Security Number:</label>\r\n                            <input type=\"text\" class=\"form-control\" id=\"exampleInput2\" placeholder=\"Confirm Social Security Number\">\r\n                            <div class=\"exc-tooltip-icon\" data-toggle=\"tooltip\" data-placement=\"left\" title=\"Tooltip text goes here.\">?</div>\r\n                        </div>\r\n                    </div>\r\n                </div>\r\n            </label>\r\n        </div>\r\n    </div>\r\n    <div class=\"radio-wrap\">\r\n        <div class=\"radio\">\r\n            <label>\r\n                <span class=\"exc-radio-label\">I want to enter my Date of Birth with my Driver's License</span>\r\n                <input type=\"radio\" name=\"optionsRadios\" id=\"optionsRadios1\" value=\"option1\" checked=\"\">\r\n                <div class=\"form-group-wrap\">\r\n                    <div class=\"form-group exc-input-hint\">\r\n                        <div class=\"exc-form-inner\">\r\n                            <label for=\"exampleInput3\">Date of Birth:</label>\r\n                            <input type=\"text\" class=\"form-control exc-small\" id=\"exampleInput3\" placeholder=\"Date of Birth\">\r\n                            <span class=\"exc-input-hint-text\">MM/DD/YYYY</span>\r\n                        </div>\r\n                    </div>\r\n                    <div class=\"form-group exc-tooltip\">\r\n                        <div class=\"exc-form-inner\">\r\n                            <label for=\"exampleInput4\">Driver's License Number</label>\r\n                            <input type=\"text\" class=\"form-control\" id=\"exampleInput4\" placeholder=\"Driver's License Number\">\r\n                            <div class=\"exc-tooltip-icon\" data-toggle=\"tooltip\" data-placement=\"left\" title=\"Tooltip text goes here.\">?</div>\r\n                        </div>\r\n                    </div>\r\n                    <div class=\"form-group\">\r\n                        <div class=\"exc-form-inner\">\r\n                            <label for=\"exampleInput5\">State of Issue:</label>\r\n                            <select class=\"form-control exc-small\" id=\"exampleInput5\">\r\n                                <option>Option 1</option>\r\n                                <option>Option 2</option>\r\n                                <option>Option 3</option>\r\n                                <option>Option 4</option>\r\n                                <option>Option 5</option>\r\n                            </select>\r\n                        </div>\r\n                    </div>\r\n                </div>\r\n            </label>\r\n        </div>\r\n    </div>\r\n</div>" }, "either-or-3": { "name": "either-or-3", "title": "Either Or 3", "path": "/patterns/_form-templates/either-or-3", "html": "﻿<div class=\"exc-either-or\">\r\n    <div class=\"radio-wrap\">\r\n        <div class=\"radio\">\r\n            <label>\r\n                <span class=\"exc-radio-label\">I want to enter my Account Number.</span>\r\n                <input type=\"radio\" name=\"optionsRadios\" id=\"optionsRadios1\" value=\"option1\" checked=\"\">\r\n                <div class=\"form-group-wrap\">\r\n                    <div class=\"form-group\">\r\n                        <div class=\"exc-form-inner\">\r\n                            <label for=\"id1\">Account Number:</label>\r\n                            <input type=\"text\" class=\"form-control\" id=\"id1\" placeholder=\"Account Number\">\r\n                        </div>\r\n                    </div>\r\n                </div>\r\n            </label>\r\n        </div>\r\n    </div>\r\n    <div class=\"radio-wrap\">\r\n        <div class=\"radio\">\r\n            <label>\r\n                <span class=\"exc-radio-label\">I want to enter my Phone Number.</span>\r\n                <input type=\"radio\" name=\"optionsRadios\" id=\"optionsRadios1\" value=\"option1\" checked=\"\">\r\n                <div class=\"form-group-wrap\">\r\n                    <div class=\"form-group\">\r\n                        <div class=\"exc-form-inner\">\r\n                            <label for=\"id2\">Phone Number:</label>\r\n                            <input type=\"text\" class=\"form-control\" id=\"id2\" placeholder=\"Phone Number\">\r\n                        </div>\r\n                    </div>\r\n                </div>\r\n            </label>\r\n        </div>\r\n    </div>\r\n</div>\r\n" }, "form-example-single-form-no-accordion-panels": { "name": "form-example-single-form-no-accordion-panels", "title": "Form Example Single Form No Accordion Panels", "path": "/patterns/_form-templates/form-example-single-form-no-accordion-panels", "html": "﻿<h3 class=\"exc-form-title\">Form Title - Some Pages Include This, Some Do Not</h3>\r\n<h4 class=\"exc-form-sub-hdr\">Section Title</h4>\r\n<div class=\"exc-form-group-double\">\r\n    <div class=\"form-group\">\r\n        <div class=\"exc-form-inner\">\r\n            <label for=\"id1\">Field 1:</label>\r\n            <input type=\"text\" class=\"form-control\" id=\"id1\" placeholder=\"Field 1\">\r\n        </div>\r\n    </div>\r\n    <div class=\"form-group\">\r\n        <div class=\"exc-form-inner\">\r\n            <label for=\"id2\">Field 2:</label>\r\n            <input type=\"text\" class=\"form-control\" id=\"id2\" placeholder=\"Field 2\">\r\n        </div>\r\n    </div>\r\n</div>\r\n<hr>\r\n<h4 class=\"exc-form-sub-hdr\">Section Title</h4>\r\n<p>Paragraph with instructions, if needed.</p>\r\n<div class=\"exc-form-group-double\">\r\n    <div class=\"form-group\">\r\n        <div class=\"exc-form-inner\">\r\n            <label for=\"id3\">Field 3:</label>\r\n            <input type=\"text\" class=\"form-control\" id=\"id3\" placeholder=\"Field 3\">\r\n        </div>\r\n    </div>\r\n    <div class=\"form-group\">\r\n        <div class=\"exc-form-inner\">\r\n            <label for=\"id4\">Field 4:</label>\r\n            <input type=\"text\" class=\"form-control\" id=\"id4\" placeholder=\"Field 4\">\r\n        </div>\r\n    </div>\r\n</div>\r\n<div class=\"exc-form-group-double\">\r\n    <div class=\"form-group\">\r\n        <div class=\"exc-form-inner\">\r\n            <label for=\"id5\">Field 5:</label>\r\n            <input type=\"text\" class=\"form-control\" id=\"id5\" placeholder=\"Field 5\">\r\n        </div>\r\n    </div>\r\n    <div class=\"form-group\">\r\n        <div class=\"exc-form-inner\">\r\n            <label for=\"id6\">Field 6:</label>\r\n            <input type=\"text\" class=\"form-control\" id=\"id6\" placeholder=\"Field 6\">\r\n        </div>\r\n    </div>\r\n</div>\r\n<hr>\r\n<div class=\"exc-form-actions\">\r\n    <button type=\"button\" class=\"btn btn-default\">Cancel</button>\r\n    <button type=\"button\" class=\"btn btn-primary pull-right\">Save</button>\r\n</div>", "txt": "﻿Some pages have the name of the form as the SharePoint Page Title, and therefore do not need a title in the form itself.  But some pages use a different SP Page Title, and have a title/header on the form itself <h3 class=\"exc-form-title\">. <h3 class=\"exc-form-title\"> should not be confused with the SharePoint Page Title." }, "form-example1-with-subsections": { "name": "form-example1-with-subsections", "title": "Form Example 1 With Subsections", "path": "/patterns/_form-templates/form-example1-with-subsections", "html": "<div class=\"exc-panel panel panel-default\">\r\n    <div class=\"panel-heading\">\r\n        <h3 class=\"panel-title\">Inactive Section Title</h3>\r\n    </div>\r\n    <div class=\"panel-body\" style=\"display: none;\">\r\n        [form fields go here]\r\n    </div>\r\n</div>\r\n<div class=\"exc-panel panel panel-primary\">\r\n    <div class=\"panel-heading\">\r\n        <h3 class=\"panel-title\">Active Section Title</h3>\r\n    </div>\r\n    <div class=\"panel-body\">\r\n        <h4 class=\"exc-form-sub-hdr\">Subsection Title</h4>\r\n        <div class=\"exc-form-group-double\">\r\n            <div class=\"form-group\">\r\n                <div class=\"exc-form-inner\">\r\n                    <label for=\"id1\">Field 1:</label>\r\n                    <input type=\"text\" class=\"form-control\" id=\"id1\" placeholder=\"Field 1\">\r\n                </div>\r\n            </div>\r\n            <div class=\"form-group\">\r\n                <div class=\"exc-form-inner\">\r\n                    <label for=\"id2\">Field 2:</label>\r\n                    <input type=\"text\" class=\"form-control\" id=\"id2\" placeholder=\"Field 2\">\r\n                </div>\r\n            </div>\r\n        </div>\r\n        <hr>\r\n        <h4 class=\"exc-form-sub-hdr\">Subsection Title</h4>\r\n        <p>Paragraph with instructions, if needed.</p>\r\n        <div class=\"exc-form-group-double\">\r\n            <div class=\"form-group\">\r\n                <div class=\"exc-form-inner\">\r\n                    <label for=\"id3\">Field 3:</label>\r\n                    <input type=\"text\" class=\"form-control\" id=\"id3\" placeholder=\"Field 3\">\r\n                </div>\r\n            </div>\r\n            <div class=\"form-group\">\r\n                <div class=\"exc-form-inner\">\r\n                    <label for=\"id4\">Field 4:</label>\r\n                    <input type=\"text\" class=\"form-control\" id=\"id4\" placeholder=\"Field 4\">\r\n                </div>\r\n            </div>\r\n        </div>\r\n        <div class=\"exc-form-group-double\">\r\n            <div class=\"form-group\">\r\n                <div class=\"exc-form-inner\">\r\n                    <label for=\"id5\">Field 5:</label>\r\n                    <input type=\"text\" class=\"form-control\" id=\"id5\" placeholder=\"Field 5\">\r\n                </div>\r\n            </div>\r\n            <div class=\"form-group\">\r\n                <div class=\"exc-form-inner\">\r\n                    <label for=\"id6\">Field 6:</label>\r\n                    <input type=\"text\" class=\"form-control\" id=\"id6\" placeholder=\"Field 6\">\r\n                </div>\r\n            </div>\r\n        </div>\r\n        <div class=\"exc-form-actions\">\r\n            <button type=\"button\" class=\"btn btn-default\">Cancel</button>\r\n            <div class=\"pull-right\">\r\n                <button type=\"button\" class=\"btn btn-default\"><span class=\"caret-left\"></span>Back</button>\r\n                <button type=\"button\" class=\"btn btn-primary\">Continue<span class=\"caret-right\"></span></button>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</div>\r\n<div class=\"exc-panel panel panel-default\">\r\n    <div class=\"panel-heading\">\r\n        <h3 class=\"panel-title\">Inactive Section Title</h3>\r\n    </div>\r\n    <div class=\"panel-body\" style=\"display: none;\">\r\n        [form fields go here]\r\n    </div>\r\n</div>\r\n", "txt": "﻿PANELS SHOULD ONLY BE USED IN MULTI-STEP ACCORDION FORMS." }, "form-example2-mixed-inputs": { "name": "form-example2-mixed-inputs", "title": "Form Example 2 Mixed Inputs", "path": "/patterns/_form-templates/form-example2-mixed-inputs", "html": "<div class=\"exc-panel panel panel-default\">\r\n    <div class=\"panel-heading\">\r\n        <h3 class=\"panel-title\">Inactive Section Title</h3>\r\n    </div>\r\n    <div class=\"panel-body\" style=\"display: none;\">\r\n        [form fields go here]\r\n    </div>\r\n</div>\r\n<div class=\"exc-panel panel panel-primary\">\r\n    <div class=\"panel-heading\">\r\n        <h3 class=\"panel-title\">Active Section Title</h3>\r\n    </div>\r\n    <div class=\"panel-body\">\r\n        <div class=\"exc-form-group-double\">\r\n            <div class=\"form-group\">\r\n                <label for=\"id1\">Field 1:</label>\r\n                <input type=\"text\" class=\"form-control\" id=\"id1\" placeholder=\"Field 1\">\r\n            </div>\r\n            <div class=\"form-group\">\r\n                <label>Radio Buttons Stacked:</label>\r\n                <div class=\"radio\">\r\n                  <label>\r\n                    <input type=\"radio\" name=\"RadioOptions\" id=\"id1\" value=\"option1\">\r\n                    Option One\r\n                  </label>\r\n                </div>\r\n                <div class=\"radio\">\r\n                  <label>\r\n                    <input type=\"radio\" name=\"RadioOptions\" id=\"id2\" value=\"option2\">\r\n                    Option Two\r\n                  </label>\r\n                </div>\r\n                <div class=\"radio disabled\">\r\n                  <label>\r\n                    <input type=\"radio\" name=\"RadioOptions\" id=\"id3\" value=\"option3\">\r\n                    Option Three\r\n                  </label>\r\n                </div>\r\n            </div>\r\n        </div>\r\n        <div class=\"exc-form-group-double\">\r\n            <div class=\"form-group form-inline\">\r\n                <label>Radio Buttons Inline:</label>\r\n                <label class=\"radio-inline\">\r\n                    <input type=\"radio\" name=\"inlineRadioOptions\" id=\"id1\" value=\"Yes\"> Yes\r\n                </label>\r\n                <label class=\"radio-inline\">\r\n                    <input type=\"radio\" name=\"inlineRadioOptions\" id=\"id2\" value=\"No\"> No\r\n                </label>\r\n            </div>\r\n            <div class=\"form-group\">\r\n                <label for=\"id4\">Field 4:</label>\r\n                <input type=\"text\" class=\"form-control\" id=\"id4\" placeholder=\"Field 4\">\r\n            </div>\r\n        </div>\r\n        <div class=\"exc-form-group-double\">\r\n            <div class=\"form-group\">\r\n                <label for=\"id5\">Field 5:</label>\r\n                <input type=\"text\" class=\"form-control\" id=\"id5\" placeholder=\"Field 5\">\r\n            </div>\r\n            <div class=\"form-group\">\r\n                <label for=\"id6\">Field 6:</label>\r\n                <input type=\"text\" class=\"form-control\" id=\"id6\" placeholder=\"Field 6\">\r\n            </div>\r\n        </div>\r\n        <div class=\"exc-form-group-double\">\r\n            <div class=\"form-group exc-input-hint\">\r\n                <label for=\"id7\">Field 7:</label>\r\n                <input type=\"text\" class=\"form-control exc-small\" id=\"id7\" placeholder=\"Field 7\">\r\n                <span class=\"exc-input-hint-text\">MM/DD/YYYY</span>\r\n            </div>\r\n            <div class=\"form-group exc-form-group-pair\">\r\n                <div class=\"form-group\">\r\n                    <label for=\"id1\">State:</label>\r\n                    <select class=\"form-control exc-small\" id=\"id1\">\r\n                        <option>Option 1</option>\r\n                        <option>Option 2</option>\r\n                        <option>Option 3</option>\r\n                        <option>Option 4</option>\r\n                        <option>Option 5</option>\r\n                    </select>\r\n                </div>\r\n                <div class=\"form-group\">\r\n                    <label for=\"id2\">Zip Code:</label>\r\n                    <input type=\"text\" class=\"form-control exc-small\" id=\"id2\" placeholder=\"Zip Code\">\r\n                </div>\r\n            </div>\r\n        </div>\r\n        <div class=\"exc-form-group-double\">\r\n            <div class=\"form-group\">\r\n                <label for=\"id8\">Field 8:</label>\r\n                <input type=\"text\" class=\"form-control\" id=\"id8\" placeholder=\"Field 8\">\r\n            </div>\r\n            <div class=\"form-group\">\r\n                <label for=\"id9\">This Field Has a Really Long Title That Will Sometimes Wrap To Two Lines:</label>\r\n                <input type=\"text\" class=\"form-control\" id=\"id9\" placeholder=\"Field 9\">\r\n            </div>\r\n        </div>\r\n        <div class=\"form-group\">\r\n            <div class=\"checkbox\">\r\n                <label>\r\n                    <input type=\"checkbox\" id=\"id2\" class=\"exc-toggle\"> This checkbox will open a panel when checked.\r\n                </label>\r\n            </div>\r\n        </div>\r\n        <div class=\"exc-toggle-panel\">\r\n            <!-- begin hidden form elements -->\r\n            <div class=\"exc-form-group-double\">\r\n                <div class=\"form-group\">\r\n                    <label for=\"hidden1\">Hidden Field 1:</label>\r\n                    <input type=\"text\" class=\"form-control\" id=\"hidden1\" placeholder=\"Hidden Field 1\">\r\n                </div>\r\n                <div class=\"form-group\">\r\n                    <label for=\"hidden2\">Hidden Field 2:</label>\r\n                    <input type=\"text\" class=\"form-control\" id=\"hidden2\" placeholder=\"Hidden Field 2\">\r\n                </div>\r\n            </div>\r\n            <!-- end hidden form elements -->\r\n        </div>\r\n        <div class=\"row\">\r\n            <div class=\"col-md-12\">\r\n                <label for=\"id1\">Textarea:</label>\r\n                <textarea class=\"form-control\" id=\"id1\"></textarea>\r\n                <p class=\"exc-caption\">250 characters remaining (250 maximum)</p>\r\n            </div>\r\n        </div>\r\n        <div class=\"exc-form-group-double\">\r\n            <div class=\"form-group\">\r\n                <label>Checkbox Group Label:</label>\r\n                <div class=\"checkbox\">\r\n                    <label>\r\n                        <input type=\"checkbox\" value=\"option1\">\r\n                        Option One\r\n                    </label>\r\n                </div>\r\n                <div class=\"checkbox\">\r\n                    <label>\r\n                        <input type=\"checkbox\" value=\"option2\">\r\n                        Option Two\r\n                    </label>\r\n                </div>\r\n                <div class=\"checkbox\">\r\n                    <label>\r\n                        <input type=\"checkbox\" value=\"option3\">\r\n                        Option Three\r\n                    </label>\r\n                </div>\r\n            </div>\r\n            <div class=\"form-group\">\r\n                <label for=\"id10\">Field 10:</label>\r\n                <input type=\"text\" class=\"form-control\" id=\"id10\" placeholder=\"Field 10\">\r\n            </div>\r\n        </div>\r\n        <div class=\"exc-form-group-double\">\r\n            <div class=\"form-group\">\r\n                <label for=\"id11\">Field 11:</label>\r\n                <input type=\"text\" class=\"form-control\" id=\"id11\" placeholder=\"Field 11\">\r\n            </div>\r\n            <div class=\"form-group\">\r\n                <label for=\"id12\">Field 12:</label>\r\n                <input type=\"text\" class=\"form-control\" id=\"id12\" placeholder=\"Field 12\">\r\n            </div>\r\n        </div>\r\n        <div class=\"exc-form-actions\">\r\n            <button type=\"button\" class=\"btn btn-default\">Cancel</button>\r\n            <div class=\"pull-right\">\r\n                <button type=\"button\" class=\"btn btn-default\"><span class=\"caret-left\"></span>Back</button>\r\n                <button type=\"button\" class=\"btn btn-primary\">Continue<span class=\"caret-right\"></span></button>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</div>\r\n<div class=\"exc-panel panel panel-default\">\r\n    <div class=\"panel-heading\">\r\n        <h3 class=\"panel-title\">Inactive Section Title</h3>\r\n    </div>\r\n    <div class=\"panel-body\" style=\"display: none;\">\r\n        [form fields go here]\r\n    </div>\r\n</div>\r\n", "txt": "﻿PANELS SHOULD ONLY BE USED IN MULTI-STEP ACCORDION FORMS." }, "form-example3-search-filter-with-table": { "name": "form-example3-search-filter-with-table", "title": "Form Example 3 Search Filter With Table", "path": "/patterns/_form-templates/form-example3-search-filter-with-table", "html": "<section class=\"form-group\">\r\n\t<div class=\"form-inline exc-input-group\">\r\n\t\t<div class=\"form-group\">\r\n\t\t\t<label for=\"exampleInput\">Group Field 1:</label>\r\n\t\t\t<div class=\"input-group exc-input-select\">\r\n\t\t\t  \t<input type=\"text\" class=\"form-control\" id=\"exampleInput\" placeholder=\"Search\">\r\n\t\t\t\t<select class=\"form-control\">\r\n\t\t\t\t  <option>Category 1</option>\r\n\t\t\t\t  <option>Category 2</option>\r\n\t\t\t\t  <option>Category 3</option>\r\n\t\t\t\t  <option>Category 4</option>\r\n\t\t\t\t</select>\r\n\t    \t</div>\r\n\t  \t</div>\r\n\t</div>\r\n\r\n  <label>Label for Group:</label>\r\n\t<div class=\"exc-form-group-double\">\r\n\t    <div class=\"form-group\">\r\n\t        <label for=\"id1\">Field 1:</label>\r\n\t        <select class=\"form-control\">\r\n\t\t\t  <option>Category 1</option>\r\n\t\t\t  <option>Category 2</option>\r\n\t\t\t  <option>Category 3</option>\r\n\t\t\t  <option>Category 4</option>\r\n\t\t\t</select>\r\n\t    </div>\r\n\t    <div class=\"form-group\">\r\n\t        <label for=\"id2\">Field 2:</label>\r\n\t        <select class=\"form-control\">\r\n\t\t\t  <option>Category 1</option>\r\n\t\t\t  <option>Category 2</option>\r\n\t\t\t  <option>Category 3</option>\r\n\t\t\t  <option>Category 4</option>\r\n\t\t\t</select>\r\n\t    </div>\r\n\t</div>\r\n\t<div class=\"row\">\r\n\t\t<div class=\"col-md-12\">\r\n\t\t\t<button type=\"button\" class=\"btn btn-primary pull-right\">Button</button>\r\n\t\t</div>\r\n\t</div>\r\n\r\n</section>\r\n\r\n<table id=\"dataTable\" class=\"table\">\r\n  <thead>\r\n    <tr>\r\n      <th>Store</th>\r\n      <th>Address</th>\r\n      <th>City</th>\r\n      <th>Zip Code</th>\r\n      <th class=\"control\">More</th>\r\n  </tr>\r\n  </thead>\r\n  <tbody>\r\n    <tr>\r\n      <td>Abt Electronics</td>\r\n      <td>1200 N Milwaukee</td>\r\n      <td>Glenview</td>\r\n      <td>60025</td>\r\n      <td></td>\r\n    </tr>\r\n    <tr>\r\n      <td>Ace Hardware</td>\r\n      <td>30 West Lake St</td>\r\n      <td>Addison</td>\r\n      <td>60101</td>\r\n      <td></td>\r\n    </tr>\r\n    <tr>\r\n      <td>Ace Hardware</td>\r\n      <td>1001 Route 59</td>\r\n      <td>Antioch</td>\r\n      <td>60002</td>\r\n      <td></td>\r\n    </tr>\r\n    <tr>\r\n      <td>Ace Hardware</td>\r\n      <td>1705 West Campbell St.</td>\r\n      <td>Arlington Heights</td>\r\n      <td>60005</td>\r\n      <td></td>\r\n    </tr>\r\n    <tr>\r\n      <td>Ace Hardware</td>\r\n      <td>2144 West Galena Blvd</td>\r\n      <td>Aurora</td>\r\n      <td>60506</td>\r\n      <td></td>\r\n    </tr>\r\n    <tr>\r\n      <td>Ace Hardware</td>\r\n      <td>994 North Lake</td>\r\n      <td>Aurora</td>\r\n      <td>60506</td>\r\n      <td></td>\r\n    </tr>\r\n    <tr>\r\n      <td>Ace Hardware</td>\r\n      <td>906 S Northwest Hwy</td>\r\n      <td>Barrington</td>\r\n      <td>60010</td>\r\n      <td></td>\r\n    </tr>\r\n    <tr>\r\n      <td>Ace Hardware</td>\r\n      <td>1901 West Wilson</td>\r\n      <td>Batavia</td>\r\n      <td>60510</td>\r\n      <td></td>\r\n    </tr>\r\n    <tr>\r\n      <td>Ace Hardware</td>\r\n      <td>302 Meadow St</td>\r\n      <td>Belvidere</td>\r\n      <td>61008</td>\r\n      <td></td>\r\n    </tr>\r\n    <tr>\r\n      <td>Ace Hardware</td>\r\n      <td>6316 Ogden Ave</td>\r\n      <td>Berwyn</td>\r\n      <td>60402</td>\r\n      <td></td>\r\n    </tr>\r\n    <tr>\r\n      <td>Ace Hardware</td>\r\n      <td>6604 West Cermak Rd</td>\r\n      <td>Berwyn</td>\r\n      <td>60402</td>\r\n      <td></td>\r\n    </tr>\r\n    <tr>\r\n      <td>Ace Hardware</td>\r\n      <td>272 West Lake St</td>\r\n      <td>Bloomingdale</td>\r\n      <td>60108</td>\r\n      <td></td>\r\n    </tr>\r\n    <tr>\r\n      <td>Ace Hardware</td>\r\n      <td>237 N Front St</td>\r\n      <td>Braidwood</td>\r\n      <td>60408</td>\r\n      <td></td>\r\n    </tr>\r\n    <tr>\r\n      <td>Ace Hardware</td>\r\n      <td>5634 West 87th St</td>\r\n      <td>Burbank</td>\r\n      <td>60459</td>\r\n      <td></td>\r\n    </tr>\r\n    <tr>\r\n      <td>Ace Hardware</td>\r\n      <td>150 S Kennedy Dr</td>\r\n      <td>Carpentersville</td>\r\n      <td>60110</td>\r\n      <td></td>\r\n    </tr>\r\n    <tr>\r\n      <td>Ace Hardware</td>\r\n      <td>642 Northwest Highway</td>\r\n      <td>Cary</td>\r\n      <td>60013</td>\r\n      <td></td>\r\n    </tr>\r\n  </tbody>\r\n</table>" }, "tabbed-form": { "name": "tabbed-form", "title": "Tabbed Form", "path": "/patterns/_form-templates/tabbed-form", "html": "﻿<div class=\"exc-tabbed-form\">\r\n    <ul class=\"exc-tabs exc-form-tabs\">\r\n        <li class=\"exc-active\" rel=\"exc-tab1\">Tab 1 Title</li>\r\n        <li rel=\"exc-tab2\">Tab 2 Title</li>\r\n    </ul>\r\n    <div class=\"exc-tab-container\">\r\n        <div class=\"exc-active exc-acc-header\" rel=\"exc-tab1\">Tab 1 Title<i class=\"exc-icon-plus\"></i></div>\r\n        <div id=\"exc-tab1\" class=\"exc-tab-content\">\r\n            <h3 class=\"exc-hide-acc\">Tab 1 Title</h3>\r\n            [tab 1 content goes here]\r\n        </div>\r\n        <div class=\"exc-acc-header\" rel=\"exc-tab2\">Tab 2 Title<i class=\"exc-icon-plus\"></i></div>\r\n        <div id=\"exc-tab2\" class=\"exc-tab-content\">\r\n            <h3 class=\"exc-hide-acc\">Tab 2 Title</h3>\r\n            [tab 2 content goes here]\r\n        </div>\r\n    </div> \r\n</div>   \r\n\r\n\r\n", "txt": "﻿To hide elements in accordion view (such as the content title), use class=\"exc-hide-acc\".\r\n\r\nFor basic tabbing functionality, link to the exc.tabs.js file.  Please note that this will reset the tabs to open the first tab (and its content) any time the page reloads.\r\n\r\nFor customized functionality, such as when a related form causes a postback and you need the correct tab to stay open, copy the javascript from exc.tabs.js, use it as your base, and customize as needed.  In that case you would not need to link to exc.tabs.js." } } }, "_form-validation": { "name": "_form-validation", "title": "Form Validation", "path": "/patterns/_form-validation", "items": { "either-or-2": { "name": "either-or-2", "title": "Either Or 2", "path": "/patterns/_form-validation/either-or-2", "html": "﻿<p class=\"has-error help-block\"><strong>Note:</strong> Either Social Security Number or Date of Birth (with Driver's License and State of Issue) is required.</p>\r\n<div class=\"exc-either-or\">\r\n    <div class=\"radio-wrap\">\r\n        <div class=\"radio\">\r\n            <label>\r\n                <span class=\"exc-radio-label\">I want to enter my Social Security Number</span>\r\n                <input type=\"radio\" name=\"optionsRadios\" id=\"optionsRadios1\" value=\"option1\" checked=\"\">\r\n                <div class=\"form-group-wrap\">\r\n                    <div class=\"form-group exc-tooltip\">\r\n                        <div class=\"exc-form-inner\">\r\n                            <label for=\"exampleInput1\">Social Security Number:</label>\r\n                            <p><a href=\"#\">Privacy Policy</a></p>\r\n                            <input type=\"text\" class=\"form-control\" id=\"exampleInput1\" placeholder=\"Social Security Number\">\r\n                            <div class=\"exc-tooltip-icon\" data-toggle=\"tooltip\" data-placement=\"left\" title=\"Tooltip text goes here.\">?</div>\r\n                        </div>\r\n                    </div>\r\n                    <div class=\"form-group exc-tooltip has-error\">\r\n                        <div class=\"exc-form-inner\">\r\n                            <div class=\"help-block\">Social Security Number must be numeric.</div>\r\n                            <label for=\"exampleInput2\">Confirm Social Security Number:</label>\r\n                            <input type=\"text\" class=\"form-control\" id=\"exampleInput2\" placeholder=\"Confirm Social Security Number\">\r\n                            <div class=\"exc-tooltip-icon\" data-toggle=\"tooltip\" data-placement=\"left\" title=\"Tooltip text goes here.\">?</div>\r\n                        </div>\r\n                    </div>\r\n                </div>\r\n            </label>\r\n        </div>\r\n    </div>\r\n    <div class=\"radio-wrap\">\r\n        <div class=\"radio\">\r\n            <label>\r\n                <span class=\"exc-radio-label\">I want to enter my Date of Birth with my Driver's License</span>\r\n                <input type=\"radio\" name=\"optionsRadios\" id=\"optionsRadios1\" value=\"option1\" checked=\"\">\r\n                <div class=\"form-group-wrap\">\r\n                    <div class=\"form-group exc-input-hint\">\r\n                        <div class=\"exc-form-inner\">\r\n                            <label for=\"exampleInput3\">Date of Birth:</label>\r\n                            <input type=\"text\" class=\"form-control exc-small\" id=\"exampleInput3\" placeholder=\"Date of Birth\">\r\n                            <span class=\"exc-input-hint-text\">MM/DD/YYYY</span>\r\n                        </div>\r\n                    </div>\r\n                    <div class=\"form-group exc-tooltip\">\r\n                        <div class=\"exc-form-inner\">\r\n                            <label for=\"exampleInput4\">Driver's License Number</label>\r\n                            <input type=\"text\" class=\"form-control\" id=\"exampleInput4\" placeholder=\"Driver's License Number\">\r\n                            <div class=\"exc-tooltip-icon\" data-toggle=\"tooltip\" data-placement=\"left\" title=\"Tooltip text goes here.\">?</div>\r\n                        </div>\r\n                    </div>\r\n                    <div class=\"form-group\">\r\n                        <div class=\"exc-form-inner\">\r\n                            <label for=\"exampleInput5\">State of Issue:</label>\r\n                            <select class=\"form-control exc-small\" id=\"exampleInput5\">\r\n                                <option>Option 1</option>\r\n                                <option>Option 2</option>\r\n                                <option>Option 3</option>\r\n                                <option>Option 4</option>\r\n                                <option>Option 5</option>\r\n                            </select>\r\n                        </div>\r\n                    </div>\r\n                </div>\r\n            </label>\r\n        </div>\r\n    </div>\r\n</div>" }, "field-layout-double-column": { "name": "field-layout-double-column", "title": "Field Layout Double Column", "path": "/patterns/_form-validation/field-layout-double-column", "html": "<!--With Validation-->\r\n<div class=\"exc-form-group-double\">\r\n    <div class=\"form-group has-error\">\r\n        <div class=\"exc-form-inner\">\r\n            <span class=\"help-block\">Field Name is required.</span>\r\n            <label for=\"id1\">Field 1:</label>\r\n            <input type=\"text\" class=\"form-control\" id=\"id1\" placeholder=\"Field 1\">\r\n        </div>\r\n    </div>\r\n    <div class=\"form-group has-error\">\r\n        <div class=\"exc-form-inner\">\r\n            <span class=\"help-block\">Field Name is required.</span>\r\n            <label for=\"id2\">Field 2:</label>\r\n            <input type=\"text\" class=\"form-control\" id=\"id2\" placeholder=\"Field 2\">\r\n        </div>\r\n    </div>\r\n</div>", "txt": "Nest two <div class=\"form-group\"> inside one <div class=\"exc-form-group-double\"> to create one row.  To add another row, start with <div class=\"exc-form-group-double\"> again." }, "field-layout-single-column": { "name": "field-layout-single-column", "title": "Field Layout Single Column", "path": "/patterns/_form-validation/field-layout-single-column", "html": "<!--With Validation-->\r\n<div class=\"form-group has-error\">\r\n    <div class=\"exc-form-inner\">\r\n        <span class=\"help-block\">Field Name is required.</span>\r\n        <label for=\"id1\">Field 1:</label>\r\n        <input type=\"text\" class=\"form-control\" id=\"id1\" placeholder=\"Field 1\">\r\n    </div>\r\n</div>", "txt": "Some shorter forms use a single column layout." }, "input-checkbox-group": { "name": "input-checkbox-group", "title": "Input Checkbox Group", "path": "/patterns/_form-validation/input-checkbox-group", "html": "<!--With Validation-->\r\n<div class=\"form-group has-error\">\r\n    <div class=\"exc-form-inner\">\r\n        <span class=\"help-block\">Field Name is required.</span>\r\n        <label>Checkbox Group Label:</label>\r\n        <div class=\"checkbox\">\r\n            <label>\r\n                <input type=\"checkbox\" value=\"option1\">\r\n                Option One\r\n            </label>\r\n        </div>\r\n        <div class=\"checkbox\">\r\n            <label>\r\n                <input type=\"checkbox\" value=\"option2\">\r\n                Option Two\r\n            </label>\r\n        </div>\r\n        <div class=\"checkbox\">\r\n            <label>\r\n                <input type=\"checkbox\" value=\"option3\">\r\n                Option Three\r\n            </label>\r\n        </div>\r\n    </div>\r\n</div>" }, "input-cvv2": { "name": "input-cvv2", "title": "Input Cvv 2", "path": "/patterns/_form-validation/input-cvv2", "html": "<!--With Validation-->\r\n<div class=\"form-group has-error\">\r\n    <div class=\"exc-form-inner\">\r\n        <span class=\"help-block\">Field Name is required.</span>\r\n        <label for=\"cvv2\">CVV2:</label>\r\n        <input type=\"text\" class=\"form-control exc-very-small\" id=\"cvv2\" placeholder=\"CVV2\">\r\n    </div>\r\n</div>" }, "input-date-picker": { "name": "input-date-picker", "title": "Input Date Picker", "path": "/patterns/_form-validation/input-date-picker", "html": "<!--With Validation-->\r\n<div class=\"form-group has-error\">\r\n    <div class=\"exc-form-inner\">\r\n        <span class=\"help-block\">Field Name is required.</span>\r\n        <label for=\"id-datepicker\">Datepicker:</label>\r\n        <span class=\"exc-datepicker-icon\"><input type=\"text\" id=\"id-datepicker\" class=\"form-control exc-datepicker\"></span>\r\n    </div>\r\n</div>\r\n", "txt": "jQuery UI Datepicker.  Initialize each datepicker field and add parameters in js file." }, "input-phone-number-ext": { "name": "input-phone-number-ext", "title": "Input Phone Number Ext", "path": "/patterns/_form-validation/input-phone-number-ext", "html": "<!--With Validation-->\r\n<div class=\"form-group has-error\">\r\n    <div class=\"exc-form-inner exc-input-phone\">\r\n        <span class=\"help-block\">Field Name is required.</span>\r\n        <label for=\"PhoneNumber1\">Phone Number:</label>\r\n        <input type=\"text\" class=\"form-control\" id=\"PhoneNumber1\" placeholder=\"xxx-xxx-xxxx\">\r\n        <span>ext.:</span>\r\n        <input type=\"text\" class=\"form-control\" id=\"PhoneExt1\" placeholder=\"\">\r\n    </div>\r\n</div>" }, "input-phone-number": { "name": "input-phone-number", "title": "Input Phone Number", "path": "/patterns/_form-validation/input-phone-number", "html": "<!--With Validation-->\r\n<div class=\"form-group has-error\">\r\n    <div class=\"exc-form-inner exc-input-phone\">\r\n        <span class=\"help-block\">Field Name is required.</span>\r\n        <label for=\"PhoneNumber1\">Phone Number:</label>\r\n        <input type=\"text\" class=\"form-control\" id=\"PhoneNumber1\" placeholder=\"xxx-xxx-xxxx\">\r\n    </div>\r\n</div>" }, "input-radio-more-than-two": { "name": "input-radio-more-than-two", "title": "Input Radio More Than Two", "path": "/patterns/_form-validation/input-radio-more-than-two", "html": "<!--With Validation-->\r\n<div class=\"form-group has-error\">\r\n    <div class=\"exc-form-inner\">\r\n        <span class=\"help-block\">Field Name is required.</span>\r\n        <label>Radio Buttons Label:</label>\r\n        <div class=\"radio\">\r\n            <label>\r\n                <input type=\"radio\" name=\"RadioOptions\" id=\"id1\" value=\"option1\">\r\n                Option One\r\n            </label>\r\n        </div>\r\n        <div class=\"radio\">\r\n            <label>\r\n                <input type=\"radio\" name=\"RadioOptions\" id=\"id2\" value=\"option2\">\r\n                Option Two\r\n            </label>\r\n        </div>\r\n        <div class=\"radio disabled\">\r\n            <label>\r\n                <input type=\"radio\" name=\"RadioOptions\" id=\"id3\" value=\"option3\">\r\n                Option Three\r\n            </label>\r\n        </div>\r\n    </div>\r\n</div>", "txt": "For radio groups that have three or more options, the radio buttons will be stacked." }, "input-radio-two": { "name": "input-radio-two", "title": "Input Radio Two", "path": "/patterns/_form-validation/input-radio-two", "html": "<!--With Validation-->\r\n<div class=\"form-group form-inline has-error\">\r\n    <div class=\"exc-form-inner\">\r\n        <span class=\"help-block\">Field Name is required.</span>\r\n        <label>Radio Buttons Label:</label>\r\n        <span class=\"radio-inline\">\r\n            <input type=\"radio\" name=\"inlineRadioOptions\" id=\"id1\" value=\"Yes\"> Yes\r\n        </span>\r\n        <span class=\"radio-inline\">\r\n            <input type=\"radio\" name=\"inlineRadioOptions\" id=\"id2\" value=\"No\"> No\r\n        </span>\r\n    </div>\r\n</div>", "txt": "For radio groups that have only two options, we use an inline layout." }, "input-required": { "name": "input-required", "title": "Input Required", "path": "/patterns/_form-validation/input-required", "html": "<!--With Validation-->\r\n<div class=\"form-group has-error\">\r\n    <div class=\"exc-form-inner\">\r\n        <span class=\"help-block\">Field Name is required.</span>\r\n        <label class=\"required\" for=\"id1\">Required Field:</label>\r\n        <input type=\"text\" class=\"form-control\" id=\"id1\" placeholder=\"Required Field\">\r\n    </div>\r\n</div>", "txt": "Add css class=\"required\" to <label>." }, "input-select-group": { "name": "input-select-group", "title": "Input Select Group", "path": "/patterns/_form-validation/input-select-group", "html": "<!--With Validation-->\r\n<div class=\"form-inline exc-input-group\">\r\n    <div class=\"form-group has-error\">\r\n        <div class=\"exc-form-inner\">\r\n            <span class=\"help-block\">Field Name is required.</span>\r\n            <label for=\"exampleInput\">Group Field 1:</label>\r\n            <div class=\"input-group exc-input-select\">\r\n                <input type=\"text\" class=\"form-control\" id=\"exampleInput\" placeholder=\"Search\">\r\n                <select class=\"form-control\">\r\n                    <option>Category 1</option>\r\n                    <option>Category 2</option>\r\n                    <option>Category 3</option>\r\n                    <option>Category 4</option>\r\n                </select>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</div>" }, "input-select": { "name": "input-select", "title": "Input Select", "path": "/patterns/_form-validation/input-select", "html": "<!--With Validation-->\r\n<div class=\"form-group has-error\">\r\n    <div class=\"exc-form-inner\">\r\n        <span class=\"help-block\">Field Name is required.</span>\r\n        <label for=\"id1\">Select:</label>\r\n        <select class=\"form-control\" id=\"id1\">\r\n            <option>Option 1</option>\r\n            <option>Option 2</option>\r\n            <option>Option 3</option>\r\n            <option>Option 4</option>\r\n            <option>Option 5</option>\r\n        </select>\r\n    </div>\r\n</div>" }, "input-small": { "name": "input-small", "title": "Input Small", "path": "/patterns/_form-validation/input-small", "html": "<!--With Validation-->\r\n<div class=\"form-group has-error\">\r\n    <div class=\"exc-form-inner\">\r\n        <span class=\"help-block\">Field Name is required.</span>\r\n        <label for=\"id1\">Field 1:</label>\r\n        <input type=\"text\" class=\"form-control exc-small\" id=\"id1\" placeholder=\"Field 1\">\r\n    </div>\r\n</div>" }, "input-smaller": { "name": "input-smaller", "title": "Input Smaller", "path": "/patterns/_form-validation/input-smaller", "html": "<!--With Validation-->\r\n<div class=\"form-group has-error\">\r\n    <div class=\"exc-form-inner\">\r\n        <span class=\"help-block\">Field Name is required.</span>\r\n        <label for=\"id1\">Field 1:</label>\r\n        <input type=\"text\" class=\"form-control exc-very-small\" id=\"id1\" placeholder=\"Field 1\">\r\n    </div>\r\n</div>" }, "input-state-zipcode": { "name": "input-state-zipcode", "title": "Input State Zipcode", "path": "/patterns/_form-validation/input-state-zipcode", "html": "<!--With Validation-->\r\n<div class=\"form-group exc-form-group-pair\">\r\n    <div class=\"form-group has-error\">\r\n        <div class=\"exc-form-inner\">\r\n            <span class=\"help-block\">Field Name is required.</span>\r\n            <label for=\"id1\">State:</label>\r\n            <select class=\"form-control exc-small\" id=\"id1\">\r\n                <option>Option 1</option>\r\n                <option>Option 2</option>\r\n                <option>Option 3</option>\r\n                <option>Option 4</option>\r\n                <option>Option 5</option>\r\n            </select>\r\n        </div>\r\n    </div>\r\n    <div class=\"form-group has-error\">\r\n        <div class=\"exc-form-inner\">\r\n            <span class=\"help-block\">Field Name is required.</span>\r\n            <label for=\"id2\">Zip Code:</label>\r\n            <input type=\"text\" class=\"form-control exc-small\" id=\"id2\" placeholder=\"Zip Code\">\r\n        </div>\r\n    </div>\r\n</div>" }, "input-textarea-with-counter": { "name": "input-textarea-with-counter", "title": "Input Textarea With Counter", "path": "/patterns/_form-validation/input-textarea-with-counter", "html": "<!--With Validation-->\r\n<div class=\"form-group has-error\">\r\n    <div class=\"exc-form-inner\">\r\n        <span class=\"help-block\">Field Name is required.</span>\r\n        <label for=\"id1\">Textarea Label:</label>\r\n        <textarea class=\"form-control\" id=\"id1\"></textarea>\r\n        <p class=\"exc-caption\">250 characters remaining (250 maximum)</p>\r\n    </div>\r\n</div>\r\n", "txt": "This should be used in a single column only (one per row)." }, "input-textarea": { "name": "input-textarea", "title": "Input Textarea", "path": "/patterns/_form-validation/input-textarea", "html": "<!--With Validation-->\r\n<div class=\"form-group has-error\">\r\n    <div class=\"exc-form-inner\">\r\n        <span class=\"help-block\">Field Name is required.</span>\r\n        <label for=\"id1\">Textarea Label:</label>\r\n        <textarea class=\"form-control\" id=\"id1\"></textarea>\r\n    </div>\r\n</div>", "txt": "This should be used in a single column only (one per row)." }, "input-with-tooltip": { "name": "input-with-tooltip", "title": "Input With Tooltip", "path": "/patterns/_form-validation/input-with-tooltip", "html": "<!--With Validation-->\r\n\r\n<!-- text input with tooltip -->\r\n\r\n<div class=\"form-group exc-tooltip has-error\">\r\n    <div class=\"exc-form-inner\">\r\n        <span class=\"help-block\">Field Name is required.</span>\r\n        <label for=\"id1\">Field 1:</label>\r\n        <input type=\"text\" class=\"form-control\" id=\"id1\" placeholder=\"Field 1\">\r\n        <div class=\"exc-tooltip-icon\" data-toggle=\"tooltip\" data-placement=\"left\" title=\"Tooltip text goes here.\">?</div>\r\n    </div>\r\n</div>\r\n\r\n<!-- example of double column with tooltips -->\r\n\r\n<div class=\"exc-form-group-double\">\r\n    <div class=\"form-group exc-tooltip has-error\">\r\n        <div class=\"exc-form-inner\">\r\n            <span class=\"help-block\">Field Name is required.</span>\r\n            <label for=\"id1\">Field 2:</label>\r\n            <input type=\"text\" class=\"form-control\" id=\"id2\" placeholder=\"Field 2\">\r\n            <div class=\"exc-tooltip-icon\" data-toggle=\"tooltip\" data-placement=\"left\" title=\"Tooltip text goes here.\">?</div>\r\n        </div>\r\n    </div>\r\n    <div class=\"form-group exc-tooltip has-error\">\r\n        <div class=\"exc-form-inner\">\r\n            <span class=\"help-block\">Field Name is required.</span>\r\n            <label for=\"id2\">Field 3:</label>\r\n            <input type=\"text\" class=\"form-control\" id=\"id3\" placeholder=\"Field 3\">\r\n            <div class=\"exc-tooltip-icon\" data-toggle=\"tooltip\" data-placement=\"left\" title=\"Tooltip text goes here.\">?</div>\r\n        </div>\r\n    </div>\r\n</div>\r\n\r\n<!-- select input with tooltip -->\r\n\r\n<div class=\"form-group exc-tooltip has-error\">\r\n    <div class=\"exc-form-inner\">\r\n        <span class=\"help-block\">Field Name is required.</span>\r\n        <label for=\"id4\">Select 4:</label>\r\n        <select class=\"form-control\" id=\"id4\">\r\n            <option>Option 1</option>\r\n            <option>Option 2</option>\r\n            <option>Option 3</option>\r\n            <option>Option 4</option>\r\n            <option>Option 5</option>\r\n        </select>\r\n        <div class=\"exc-tooltip-icon\" data-toggle=\"tooltip\" data-placement=\"left\" title=\"Tooltip text goes here.\">?</div>\r\n    </div>\r\n</div>\r\n\r\n<!-- small input with tooltip -->\r\n\r\n<div class=\"form-group exc-tooltip has-error\">\r\n    <div class=\"exc-form-inner\">\r\n        <span class=\"help-block\">Field Name is required.</span>\r\n        <label for=\"id5\">Field 5:</label>\r\n        <input type=\"text\" class=\"form-control exc-small\" id=\"id5\" placeholder=\"Field 5\">\r\n        <div class=\"exc-tooltip-icon\" data-toggle=\"tooltip\" data-placement=\"left\" title=\"Tooltip text goes here.\">?</div>\r\n    </div>\r\n</div>\r\n" }, "recaptcha": { "name": "recaptcha", "title": "Recaptcha", "path": "/patterns/_form-validation/recaptcha", "html": "﻿<div class=\"form-group exc-recaptcha has-error\">\r\n    <div class=\"form-inner\">\r\n        <div class=\"help-block\">Validation message goes here.</div>\r\n        [reCAPTCHA goes here]\r\n    </div>\r\n</div>" }, "terms-conditions-with-checkbox": { "name": "terms-conditions-with-checkbox", "title": "Terms Conditions With Checkbox", "path": "/patterns/_form-validation/terms-conditions-with-checkbox", "html": "<!--With Validation-->\r\n<div class=\"form-group has-error\">\r\n    <div class=\"exc-form-inner\">\r\n        <span class=\"help-block\">Please agree to the terms and conditions.</span>\r\n        <div class=\"exc-terms-conditions small\">\r\n            [READ-ONLY TEXT CONTENT GOES HERE]\r\n        </div>\r\n        <div class=\"checkbox\">\r\n            <label class=\"required\">\r\n                <input type=\"checkbox\" id=\"id2\"> Yes, I have read, understand, and agree to these terms and conditions.\r\n            </label>\r\n        </div>\r\n    </div>\r\n</div>" }, "toggle-switch": { "name": "toggle-switch", "title": "Toggle Switch", "path": "/patterns/_form-validation/toggle-switch", "html": "<!--With Validation-->\r\n<div class=\"toggle-switch-group has-error\">\r\n    <div class=\"exc-form-inner\">\r\n        <span class=\"help-block\">Field Name is required.</span>\r\n        <input type=\"checkbox\" id=\"switch2\" name=\"switch2\" class=\"toggle-switch\" />\r\n        <label for=\"switch2\"></label>\r\n    </div>\r\n</div>" } } }, "_global-patterns": { "name": "_global-patterns", "title": "Global Patterns", "path": "/patterns/_global-patterns", "items": { "footer-company": { "name": "footer-company", "title": "Footer Company", "path": "/patterns/_global-patterns/footer-company", "html": "<footer role=\"footer\" class=\"exc-footer-company\">\r\n\t<div class=\"container\">\r\n\t\t© Company Name, 2016. <span>All Rights Reserved.</span>\r\n    </div>\r\n</footer>" }, "footer-lists": { "name": "footer-lists", "title": "Footer Lists", "path": "/patterns/_global-patterns/footer-lists", "html": "<footer role=\"footer\" class=\"exc-footer-lists\">\r\n    <div class=\"container\">\r\n        <nav role=\"navigation\" class=\"row\">\r\n            <div class=\"col-md-2\">\r\n                <ul>\r\n                    <li><a href=\"#\">Popular</a></li>\r\n                    <li><a href=\"#\">View My Bill</a></li>\r\n                    <li><a href=\"#\">Pay My Bill</a></li>\r\n                    <li><a href=\"#\">Change of Service</a></li>\r\n                    <li><a href=\"#\">Application Status</a></li>\r\n                </ul>\r\n            </div>\r\n            <div class=\"col-md-2\">\r\n                <ul>\r\n                    <li><a href=\"#\">Recommended</a></li>\r\n                    <li><a href=\"#\">Spring Cleaning</a></li>\r\n                    <li><a href=\"#\">Discount Offers</a></li>\r\n                    <li><a href=\"#\">Upcoming Community Events</a></li>\r\n                </ul>\r\n            </div>\r\n            <div class=\"col-md-2\">\r\n                <ul>\r\n                    <li><a href=\"#\">Outages</a></li>\r\n                    <li><a href=\"#\">Report an Outage</a></li>\r\n                    <li><a href=\"#\">View Outage Status</a></li>\r\n                    <li><a href=\"#\">View Outages Map</a></li>\r\n                </ul>\r\n            </div>\r\n            <div class=\"col-md-2\">\r\n                <ul>\r\n                    <li><a href=\"#\">About Us</a></li>\r\n                    <li><a href=\"#\">Company Profile</a></li>\r\n                    <li><a href=\"#\">News Releases</a></li>\r\n                    <li><a href=\"#\">OpCo in the News</a></li>\r\n                    <li><a href=\"#\">Exelon Profile</a></li>\r\n                    <li><a href=\"#\">Investor Relations</a></li>\r\n                    <li><a href=\"#\">Doing Business with Us</a></li>\r\n                </ul>\r\n            </div>\r\n            <div class=\"col-md-4\">\r\n                <ul>\r\n                    <li><a href=\"#\">Contact Us</a></li>\r\n                    <li>Customer Service 800-123-4567</li>\r\n                    <li>Billing 773-436-7122</li>\r\n                    <li><a href=\"#\">Find a Payment Location</a></li>\r\n                    <li><a href=\"#\">Email Us</a></li>\r\n                </ul>\r\n                <p>Company Name<br>\r\n                1228 Street Address<br>\r\n                Anytown, ST 22001</p>\r\n            </div>\r\n        </nav>\r\n    </div>\r\n</footer>" }, "footer-nav": { "name": "footer-nav", "title": "Footer Nav", "path": "/patterns/_global-patterns/footer-nav", "html": "<footer role=\"footer\" class=\"exc-footer-nav\">\r\n    <div class=\"container\">\r\n        <div class=\"row\">\r\n            <nav role=\"navigation\" class=\"col-md-6\">\r\n                <ul>\r\n                    <li><a href=\"\">About Us</a></li>\r\n                    <li><a href=\"\">Doing Business With Us</a></li>\r\n                    <li><a href=\"\">News</a></li>\r\n                    <li><a href=\"\">Privacy</a></li>\r\n                </ul>\r\n            </nav>\r\n            <div class=\"exc-social-links col-md-6\">\r\n                <ul>\r\n                    <li><a href=\"http://twitter.com/mybge\" target=\"_new\"><i class=\"exc-icon-social-twitter\"></i></a></li>\r\n                    <li><a href=\"http://www.facebook.com/myBGE\" target=\"_new\"><i class=\"exc-icon-social-facebook\"></i></a></li>\r\n                    <li><a href=\"http://www.youtube.com/BALTIMOREGASELECTRIC\" target=\"_new\"><i class=\"exc-icon-social-youtube\"></i></a></li>\r\n                    <li><a href=\"http://www.linkedin.com/company/5115\" target=\"_new\"><i class=\"exc-icon-social-linkedin\"></i></a></li>\r\n                    <li><a href=\"http://www.flickr.com/photos/mybge\" target=\"_new\"><i class=\"exc-icon-social-flickr\"></i></a></li>\r\n                </ul>\r\n            </div>                \r\n        </div>\r\n    </div>\r\n</footer>" }, "header": { "name": "header", "title": "Header", "path": "/patterns/_global-patterns/header", "html": "Click here to see a template for <a href=\"templates/header-topnav.php\">Header and Top Navigation</a>.", "txt": "The file \"exc.common.js\" is required for responsive functionality of the Header and Top Navigation." } } }, "_grid": { "name": "_grid", "title": "Grid", "path": "/patterns/_grid" }, "_lists": { "name": "_lists", "title": "Lists", "path": "/patterns/_lists", "items": { "supplier-list": { "name": "supplier-list", "title": "Supplier List", "path": "/patterns/_lists/supplier-list", "html": "<ul class=\"exc-supplier-list\">\r\n    <li>\r\n        <div class=\"exc-supplier\" data-type=\"Business\">\r\n            <div class=\"exc-supplier-logo\">\r\n                <img src=\"../assets/images/supplier-logo-1.jpg\" title=\"\">\r\n            </div>\r\n            <div class=\"exc-supplier-details\">\r\n                <span class=\"exc-supplier-name\"><a href=\"https://www.ageraenergy.com/\">Agera Energy LLC</a></span>\r\n                <p>\r\n                    <span class=\"exc-white-space\">555 Pleasantville RoadSuite S-107</span><br>\r\n                    Briarcliff Manor, NY 10510<br>\r\n                    844.692.4372 (844-MY-AGERA)\r\n                </p>\r\n            </div>\r\n            <div class=\"exc-supplier-type\">\r\n                <p>\r\n                    <i class=\"exc-icon-gas-flame\"> </i> Gas\r\n                </p>\r\n            </div>\r\n            <div class=\"exc-supplier-type\">\r\n                <p>\r\n                    <i class=\"exc-icon-light-bulb\"> </i> Electric\r\n                </p>\r\n            </div>\r\n        </div>\r\n    </li>\r\n    <li>\r\n        <div class=\"exc-supplier\" data-type=\"BusinessResidential\">\r\n            <div class=\"exc-supplier-logo\">\r\n                <img src=\"../assets/images/supplier-logo-2.jpg\" alt=\"\">\r\n            </div>\r\n            <div class=\"exc-supplier-details\">\r\n                <span class=\"exc-supplier-name\"><a href=\"#\">Ambit Energy</a></span>\r\n                <p>\r\n                    1801 N. Lamar Street<br>\r\n                    Suite 200<br>\r\n                    Dallas, TX 75202<br>\r\n                    877-282-6248\r\n                </p>\r\n            </div>\r\n            <div class=\"exc-supplier-type\">\r\n                <p>\r\n                    <i class=\"exc-icon-gas-flame\"></i>\r\n                    Gas\r\n                </p>\r\n            </div>\r\n            <div class=\"exc-supplier-type\">\r\n                <p>\r\n                    <i class=\"exc-icon-light-bulb\"></i>\r\n                    Electric\r\n                </p>\r\n            </div>\r\n        </div>\r\n    </li>\r\n    <li>\r\n        <div class=\"exc-supplier\" data-type=\"BusinessResidential\">\r\n            <div class=\"exc-supplier-logo\">\r\n                <img src=\"../assets/images/supplier-logo-3.jpg\" alt=\"\">\r\n            </div>\r\n            <div class=\"exc-supplier-details\">\r\n                <span class=\"exc-supplier-name\"><a href=\"#\">Blue Pilot Energy, LLC</a></span>\r\n                <p>\r\n                    197 State Route 18, South<br>\r\n                    Suite 3000<br>\r\n                    East Brunswick, NJ 08816<br>\r\n                    877-344-2908\r\n                </p>\r\n            </div>\r\n            <div class=\"exc-supplier-type\">\r\n                <p>\r\n                    <i class=\"exc-icon-gas-flame\"></i>\r\n                    Gas\r\n                </p>\r\n            </div>\r\n            <div class=\"exc-supplier-type\">\r\n                <p>\r\n                    <i class=\"exc-icon-light-bulb\"></i>\r\n                    Electric\r\n                </p>\r\n            </div>\r\n        </div>\r\n    </li>\r\n    <li>\r\n        <div class=\"exc-supplier\" data-type=\"BusinessResidential\">\r\n            <div class=\"exc-supplier-logo\">\r\n                <img src=\"../assets/images/supplier-logo-4.jpg\" alt=\"\">\r\n            </div>\r\n            <div class=\"exc-supplier-details\">\r\n                <span class=\"exc-supplier-name\"><a href=\"#\">Constellation Energy Gas Choice, Inc.</a></span>\r\n                <p>\r\n                    P.O. Box<br>\r\n                    Houston, TX 77210<br>\r\n                    1-800-785-4373\r\n                </p>\r\n            </div>\r\n            <div class=\"exc-supplier-type\">\r\n                <p>\r\n                    <i class=\"exc-icon-gas-flame\"></i>\r\n                    Gas\r\n                </p>\r\n            </div>\r\n            <div class=\"exc-supplier-type\"></div>\r\n        </div>\r\n    </li>\r\n    <li>\r\n        <div class=\"exc-supplier\" data-type=\"Residential\">\r\n            <div class=\"exc-supplier-logo\">\r\n                <img src=\"../assets/images/supplier-logo-4.jpg\" alt=\"\">\r\n            </div>\r\n            <div class=\"exc-supplier-details\">\r\n                <span class=\"exc-supplier-name\"><a href=\"#\">Constellation Energy Power Choice, Inc.</a></span>\r\n                <p>\r\n                    P.O. Box<br>\r\n                    Houston, TX 77210<br>\r\n                    1-800-785-4373\r\n                </p>\r\n            </div>\r\n            <div class=\"exc-supplier-type\"></div>\r\n            <div class=\"exc-supplier-type\">\r\n                <p>\r\n                    <i class=\"exc-icon-light-bulb\"></i>\r\n                    Electric\r\n                </p>\r\n            </div>\r\n        </div>\r\n    </li>\r\n</ul>" }, "toggle-list-leadership": { "name": "toggle-list-leadership", "title": "Toggle List Leadership", "path": "/patterns/_lists/toggle-list-leadership", "html": "<ul class=\"exc-toggle-list exc-leadership\">\r\n\t<li>\r\n        <div class=\"exc-toggle-title\">\r\n            <span class=\"exc-icon-toggle\"></span>\r\n            <div class=\"exc-leadership-image\">\r\n               \r\n            </div>\r\n            <div class=\"exc-leadership-intro\">\r\n                <h3>Calvin G. Butler Jr.</h3>\r\n                <p>Chief Executive Officer Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis consequat nibh sit amet nulla tincidunt scelerisque. </p>\r\n                <p>Baltimore Gas and Electric Company (BGE)</p>\r\n            </div>\r\n        </div>\r\n        <div class=\"exc-toggle-item exc-leadership-bio\">\r\n            <h4>Profile</h4>\r\n            <p>Calvin G. Butler Jr. became chief executive officer of Baltimore Gas and Electric Company (BGE) on March 1, 2014. Butler previously served as BGE’s senior vice president, regulatory and exte&#8203;rnal affairs. In that role, he was responsible for executing the company’s strategic direction and cultivating relationships with government, regulatory, community and other key stakeholders. Butler also served as Exelon’s senior vice president of corporate affairs and held other leadership positions within Exelon and BGE’s sister company, ComEd (Chicago). Butler played a critical role in helping to successfully navigate company and stakeholder relations during the merger between Exelon and Constellation Energy.</p>\r\n            <h4>Professional History</h4>\r\n            <p>Before joining Exelon in 2008, Butler held leadership positions for eight years with the print, digital and supply chain solutions company RR Donnelley, including senior director of government affairs, vice president of manufacturing and senior vice president of external affairs. Butler also managed RR Donnelley’s supplier diversity and oversaw government sales efforts at the local, state and federal levels and served as president of RR Donnelley’s nonprofit foundation. Butler spent his early career with CILCORP (Central Illinois Light Co.), where he worked in government affairs, legal and strategy.</p>\r\n            <h4>Civic Involvement</h4>\r\n            <p>Butler is very active in civic and community relations. Butler currently serves on the board of directors for the University of Maryland Medical Center, the Kennedy Krieger Institute, the Greater Baltimore Committee, the Maryland Zoological Society (Maryland Zoo in Baltimore), the Enoch Pratt Free Library and the Cal Ripken, Sr. Foundation. He serves as Co-Chair of the Maryland Chamber of Commerce’s Competitiveness Coalition, on the board of governors for The Center Club, the board of trustees for the Baltimore Community Foundation and is a Governor appointee to the Maryland Private Sector Economic Development Commission. Butler is a member of the Economic Club of Washington, D.C. and also serves in multiple leadership capacities at his alma mater, Bradley University. He is currently vice chairman, member of the executive committee and chairman of the Presidential Search Committee. In 2014, Butler served as the chair of the American Heart Association’s Greater Baltimore Heart Walk.</p>\r\n            <p>Butler has received several honors and recognitions for his business, civic and community contributions. In 2015, Butler was recognized as one of the top 35 Influential Marylanders by the Daily Record. In 2014, Butler received an honorary doctorate of Humane Letters from Morgan State University, the Presidents’ Roundtable Corporate Executive Trailblazer Award and the Icon Award from Associated Black Charities. From 2011 to 2014, he was recognized by Uptown Professional Magazine as one of the top \"100 Executives in America.\"</p>\r\n            <h4>Education</h4>\r\n            <p>Butler earned a bachelor’s degree from Bradley University in Peoria, Ill., and a Juris Doctor degree from Washington University School of Law in St. Louis, Mo.</p>\r\n            <h4>Family</h4>\r\n            <p>Butler is married to Sharon Crawford and has two children, Blake Calvin and Raini Alexis.</p>\r\n        </div>\r\n\t</li>\r\n\t<li>\r\n        <div class=\"exc-toggle-title\">\r\n            <span class=\"exc-icon-toggle\"></span>\r\n            <div class=\"exc-leadership-image\">\r\n                <img class=\"image\" src=\"../assets/images/example-headshot.jpg\" title=\"\">\r\n            </div>\r\n            <div class=\"exc-leadership-intro\">\r\n                <h3>Calvin G. Butler Jr.</h3>\r\n                <p>Chief Executive Officer</p>\r\n                <p>Baltimore Gas and Electric Company (BGE)</p>\r\n            </div>\r\n        </div>\r\n        <div class=\"exc-toggle-item exc-leadership-bio\">\r\n            <h4>Profile</h4>\r\n            <p>Calvin G. Butler Jr. became chief executive officer of Baltimore Gas and Electric Company (BGE) on March 1, 2014. Butler previously served as BGE’s senior vice president, regulatory and exte&#8203;rnal affairs. In that role, he was responsible for executing the company’s strategic direction and cultivating relationships with government, regulatory, community and other key stakeholders. Butler also served as Exelon’s senior vice president of corporate affairs and held other leadership positions within Exelon and BGE’s sister company, ComEd (Chicago). Butler played a critical role in helping to successfully navigate company and stakeholder relations during the merger between Exelon and Constellation Energy.</p>\r\n            <h4>Professional History</h4>\r\n            <p>Before joining Exelon in 2008, Butler held leadership positions for eight years with the print, digital and supply chain solutions company RR Donnelley, including senior director of government affairs, vice president of manufacturing and senior vice president of external affairs. Butler also managed RR Donnelley’s supplier diversity and oversaw government sales efforts at the local, state and federal levels and served as president of RR Donnelley’s nonprofit foundation. Butler spent his early career with CILCORP (Central Illinois Light Co.), where he worked in government affairs, legal and strategy.</p>\r\n            <h4>Civic Involvement</h4>\r\n            <p>Butler is very active in civic and community relations. Butler currently serves on the board of directors for the University of Maryland Medical Center, the Kennedy Krieger Institute, the Greater Baltimore Committee, the Maryland Zoological Society (Maryland Zoo in Baltimore), the Enoch Pratt Free Library and the Cal Ripken, Sr. Foundation. He serves as Co-Chair of the Maryland Chamber of Commerce’s Competitiveness Coalition, on the board of governors for The Center Club, the board of trustees for the Baltimore Community Foundation and is a Governor appointee to the Maryland Private Sector Economic Development Commission. Butler is a member of the Economic Club of Washington, D.C. and also serves in multiple leadership capacities at his alma mater, Bradley University. He is currently vice chairman, member of the executive committee and chairman of the Presidential Search Committee. In 2014, Butler served as the chair of the American Heart Association’s Greater Baltimore Heart Walk.</p>\r\n            <p>Butler has received several honors and recognitions for his business, civic and community contributions. In 2015, Butler was recognized as one of the top 35 Influential Marylanders by the Daily Record. In 2014, Butler received an honorary doctorate of Humane Letters from Morgan State University, the Presidents’ Roundtable Corporate Executive Trailblazer Award and the Icon Award from Associated Black Charities. From 2011 to 2014, he was recognized by Uptown Professional Magazine as one of the top \"100 Executives in America.\"</p>\r\n            <h4>Education</h4>\r\n            <p>Butler earned a bachelor’s degree from Bradley University in Peoria, Ill., and a Juris Doctor degree from Washington University School of Law in St. Louis, Mo.</p>\r\n            <h4>Family</h4>\r\n            <p>Butler is married to Sharon Crawford and has two children, Blake Calvin and Raini Alexis.</p>\r\n        </div>\r\n\t</li>\r\n\t<li>\r\n        <div class=\"exc-toggle-title\">\r\n            <span class=\"exc-icon-toggle\"></span>\r\n            <div class=\"exc-leadership-image\">\r\n                <img class=\"image\" src=\"../assets/images/example-headshot.jpg\" title=\"\">\r\n            </div>\r\n            <div class=\"exc-leadership-intro\">\r\n                <h3>Calvin G. Butler Jr.</h3>\r\n                <p>Chief Executive Officer</p>\r\n                <p>Baltimore Gas and Electric Company (BGE)</p>\r\n            </div>\r\n        </div>\r\n        <div class=\"exc-toggle-item exc-leadership-bio\">\r\n            <h4>Profile</h4>\r\n            <p>Calvin G. Butler Jr. became chief executive officer of Baltimore Gas and Electric Company (BGE) on March 1, 2014. Butler previously served as BGE’s senior vice president, regulatory and exte&#8203;rnal affairs. In that role, he was responsible for executing the company’s strategic direction and cultivating relationships with government, regulatory, community and other key stakeholders. Butler also served as Exelon’s senior vice president of corporate affairs and held other leadership positions within Exelon and BGE’s sister company, ComEd (Chicago). Butler played a critical role in helping to successfully navigate company and stakeholder relations during the merger between Exelon and Constellation Energy.</p>\r\n            <h4>Professional History</h4>\r\n            <p>Before joining Exelon in 2008, Butler held leadership positions for eight years with the print, digital and supply chain solutions company RR Donnelley, including senior director of government affairs, vice president of manufacturing and senior vice president of external affairs. Butler also managed RR Donnelley’s supplier diversity and oversaw government sales efforts at the local, state and federal levels and served as president of RR Donnelley’s nonprofit foundation. Butler spent his early career with CILCORP (Central Illinois Light Co.), where he worked in government affairs, legal and strategy.</p>\r\n            <h4>Civic Involvement</h4>\r\n            <p>Butler is very active in civic and community relations. Butler currently serves on the board of directors for the University of Maryland Medical Center, the Kennedy Krieger Institute, the Greater Baltimore Committee, the Maryland Zoological Society (Maryland Zoo in Baltimore), the Enoch Pratt Free Library and the Cal Ripken, Sr. Foundation. He serves as Co-Chair of the Maryland Chamber of Commerce’s Competitiveness Coalition, on the board of governors for The Center Club, the board of trustees for the Baltimore Community Foundation and is a Governor appointee to the Maryland Private Sector Economic Development Commission. Butler is a member of the Economic Club of Washington, D.C. and also serves in multiple leadership capacities at his alma mater, Bradley University. He is currently vice chairman, member of the executive committee and chairman of the Presidential Search Committee. In 2014, Butler served as the chair of the American Heart Association’s Greater Baltimore Heart Walk.</p>\r\n            <p>Butler has received several honors and recognitions for his business, civic and community contributions. In 2015, Butler was recognized as one of the top 35 Influential Marylanders by the Daily Record. In 2014, Butler received an honorary doctorate of Humane Letters from Morgan State University, the Presidents’ Roundtable Corporate Executive Trailblazer Award and the Icon Award from Associated Black Charities. From 2011 to 2014, he was recognized by Uptown Professional Magazine as one of the top \"100 Executives in America.\"</p>\r\n            <h4>Education</h4>\r\n            <p>Butler earned a bachelor’s degree from Bradley University in Peoria, Ill., and a Juris Doctor degree from Washington University School of Law in St. Louis, Mo.</p>\r\n            <h4>Family</h4>\r\n            <p>Butler is married to Sharon Crawford and has two children, Blake Calvin and Raini Alexis.</p>\r\n        </div>\r\n\t</li>\t\r\n</ul>\r\n\r\n" }, "toggle-list": { "name": "toggle-list", "title": "Toggle List", "path": "/patterns/_lists/toggle-list", "html": "<dl class=\"exc-toggle-list\">\r\n    <dt class=\"exc-toggle-title\">What is a smart meter? What is the benefit of the smart meter? <i class=\"exc-icon-toggle\"></i></dt>\r\n    <dd class=\"exc-toggle-item\">\r\n        <p>A smart meter is a digital meter that allows two-way communication between your home and BGE via a wireless network. Customers iwht smart meters have access to information and tools to help manage energy use, leading to lower bills.</p>\r\n    </dd>\r\n    <dt class=\"exc-toggle-title\">Can I optout, or choose not to have a meter installed? <i class=\"exc-icon-toggle\"></i></dt>\r\n    <dd class=\"exc-toggle-item\">\r\n        <p>On February 26, 2014, the Maryland Public Service Commission (PSC) made a decision on smart meter opt out and related costs for customers who do not want a smart meter. If you choose to have a smart meter installed, or keep the smart meter that is already installed, these fees will not apply to you.</p>\r\n        <p>Customers who opt out of having a smart meter installed will be charged a one-time fee of $75, which will be billed in three equal monthly installments, and an additional monthly fee of $11. Customers may <a href=\"#\">opt out online</a>.</p>\r\n        <p>Customers can also call BGE at 800.685.0123, or send a letter to: Smart Meter Opt Out BGE, P.O. Box 1475, Baltimore, MD 21203 and include the following information:</p>\r\n        <ol>\r\n            <li>Name(s)</li>\r\n            <li>Address</li>\r\n            <li>Account Number</li>\r\n            <li>Phone Number</li>\r\n            <li>Email Address</li>\r\n        </ol>\r\n        <p>Customers who contacted BGE before the February 26, 2014 PSC order asking to defer their smart meter installation must let us know if they have reconsidered. If we do not hear from these customers, the PSC order provides that we assume these customers will continue as opt-outs and incur the related costs.</p>\r\n        <p>BGE will notify in writing those customers who had previously deferred a smart meter installation. That communication will specifically reference the customer’s right to retain their legacy meter, the fee structure that will apply should they continue to exercise their choice to opt out, and when they can expect to see such one-time and monthly fees applied to their bills.</p>\r\n        <p>BGE will begin billing customers who opted out starting their first full billing cycle after July 1, 2014.</p>\r\n        <p>If you previously opted out but would now like a smart meter, you may <a href=\"#\">opt back in</a>.</p>\r\n    </dd>\r\n    <dt class=\"exc-toggle-title\">Is the appearance of my smart meter different than my old meter? <i class=\"exc-icon-toggle\"></i></dt>\r\n    <dd class=\"exc-toggle-item\">\r\n        <p>​While very similar to the existing electric meters, there is one big difference in the appearance of the new smart electric meter: an easy-to-read digital display instead of the spinning wheel or dial that many customers have today.  For most customers, this will be the only obvious difference between the appearance of the old and the new meter. In most cases, we are not replacing your entire gas meter.  We are replacing, or upgrading, one component of the gas meter that will allow two-way communication with BGE. For all BGE customers, the features and benefits that the new meter will bring are far more advanced.</p>\r\n    </dd>\r\n    <dt class=\"exc-toggle-title\">Who manufactures smart meters? <i class=\"exc-icon-toggle\"></i></dt>\r\n    <dd class=\"exc-toggle-item\">\r\n        <p>The smart meters BGE will installed are made by two companies, GE (General Electric) and Landis and Gyr. BGE is also working with a company called Silver Spring Networks that provides the smart grid platform and related software and services.</p>\r\n    </dd>\r\n    <dt class=\"exc-toggle-title\">I rent my home, should I contact my landlord about installing a smart meter? <i class=\"exc-icon-toggle\"></i></dt>\r\n    <dd class=\"exc-toggle-item\">\r\n        <p>It is BGE policy that the account holder (the person who receives the BGE bill) is the person who can make changes or requests regarding an electric or gas account. In the case of smart meters, the account holder or an authorized person can make an appointment to have a smart meter installed --- appointments are needed if at least one meter is located indoors.  If your landlord is the BGE account holder, the landlord should schedule the appointment.  If both the electric and gas meters at the property are located outdoors, no appointment is necessary and BGE will upgrade the meters when next in your neighborhood.</p>\r\n    </dd>\r\n    <dt class=\"exc-toggle-title\">Then what is the difference between my old meter and the smart meter? <i class=\"exc-icon-toggle\"></i></dt>\r\n    <dd class=\"exc-toggle-item\">\r\n        <p>Initially, your new smart meter will perform exactly the way your old meter did. BGE will use it to determine how much energy you have used at the end of each billing period. As more smart meters are installed and enhanced technologies are put into place, many new features will be available to you for use with BGE energy management tools, such as ongoing usage tracking and bill forecasting. These new features will be phased in gradually through 2014; many will be available beginning in late 2012.  BGE will let you know when you can start accessing these features and how to use them.</p>\r\n    </dd>\r\n    <dt class=\"exc-toggle-title\">Do both electric and gas meters have two way capability? <i class=\"exc-icon-toggle\"></i></dt>\r\n    <dd class=\"exc-toggle-item\">\r\n        <p>Yes, but the gas and electric meters do not function in exactly the same way. Electric meters will receive a signal every four hours that prompt the meters to provide usage data.  Gas meters send usage updates to BGE once every 24 hours. Both types of meters can receive programming updates from BGE.</p>\r\n    </dd>\r\n</dl>" } } }, "_login": { "name": "_login", "title": "Login", "path": "/patterns/_login", "items": { "home-user-panel-authenticated": { "name": "home-user-panel-authenticated", "title": "Home User Panel Authenticated", "path": "/patterns/_login/home-user-panel-authenticated", "html": "<div class=\"exc-user-panel\">\r\n    <div class=\"exc-balance-box\">\r\n        <p>Account #: <span><strong>XXXXXXXXX</strong></span></p>\r\n        <ul>\r\n            <li>Issue date: <span>03/22/2015</span></li>\r\n            <li>Balance: <span>$25.34</span></li>\r\n            <li>Due Date: <span><strong>03/22/2015</strong></span></li>\r\n            <li>Last Payment: <span>$166.49</span></li>\r\n            <li>Auto Pay: <span>Active</span></li>\r\n            <li>KPI #2: <span>TBD</span></li>\r\n        </ul>\r\n        <a href=\"#\" class=\"btn btn-primary\">Pay Now</a>\r\n        <a href=\"#\">Download PDF</a>\r\n    </div>\r\n</div>\r\n" }, "home-user-panel-unauthenticated": { "name": "home-user-panel-unauthenticated", "title": "Home User Panel Unauthenticated", "path": "/patterns/_login/home-user-panel-unauthenticated", "html": "<div class=\"exc-user-panel\">\r\n\t<div class=\"exc-sign-in-form\">\r\n\t    <h4>My Account</h4>\r\n\t    <input type=\"text\" class=\"form-control\" placeholder=\"Username\" />\r\n\t    <input type=\"text\" class=\"form-control\" placeholder=\"Password\" />\r\n        <div class=\"checkbox\">\r\n            <div class=\"exc-form-inner\">\r\n                <label>\r\n                    <input type=\"checkbox\"> Remember Me\r\n                </label>\r\n            </div>\r\n        </div>\r\n\t    <button type=\"button\" class=\"btn btn-accent\">Sign In</button>\r\n\t    <p>Forgot <a href=\"#\">Username</a> or <a href=\"#\">Password</a></p>\r\n\t    <button type=\"button\" class=\"btn btn-inverted\">Register</button>\r\n\t</div> \r\n</div>" }, "login-page": { "name": "login-page", "title": "Login Page", "path": "/patterns/_login/login-page", "html": "﻿<div class=\"exc-billboard row\">\r\n    <div class=\"exc-billboard-left col-md-7 no-bottom-pad\">\r\n        <h3>Please enter your Username and Password to access your account.</h3>\r\n        <div class=\"form-group exc-tooltip\">\r\n            <div class=\"exc-form-inner\">\r\n                <label class=\"required\" for=\"id1\">Username (Email Address):</label>\r\n                <input type=\"text\" class=\"form-control\" id=\"id1\" placeholder=\"Username (Email Address)\">\r\n                <div class=\"exc-tooltip-icon\" data-toggle=\"tooltip\" data-placement=\"left\" title=\"Tooltip text goes here.\">?</div>\r\n            </div>\r\n        </div>\r\n        <div class=\"form-group\">\r\n            <div class=\"exc-form-inner\">\r\n                <label class=\"required\" for=\"id1\">Password:</label>\r\n                <input type=\"text\" class=\"form-control\" id=\"id1\" placeholder=\"Password\">\r\n            </div>\r\n        </div>\r\n        <p><input type=\"checkbox\" value=\"\"> Remember Me</p>\r\n        <p>Forgot <a href=\"#\">Username</a> or <a href=\"#\">Password</a>?</p>\r\n    </div> \r\n    <button type=\"button\" class=\"btn btn-primary exc-corner-btn\">Sign In</button>\r\n    <div class=\"exc-billboard-right col-md-5\">\r\n        <h3>Not Registered?</h3>\r\n        <p>Creating an online profile will allow you to view and pay your bill electronically, as well as other useful tasks.</p>       \r\n    </div> \r\n    <button type=\"button\" class=\"btn btn-default exc-corner-btn\">Register Now</button>\r\n</div>\r\n" }, "sign-in-form": { "name": "sign-in-form", "title": "Sign In Form", "path": "/patterns/_login/sign-in-form", "html": "﻿<div class=\"exc-sign-in-form\">\r\n    <h4>My Account</h4>\r\n    <input type=\"text\" class=\"form-control\" placeholder=\"Username\" />\r\n    <input type=\"text\" class=\"form-control\" placeholder=\"Password\" />\r\n    <div class=\"checkbox\">\r\n        <div class=\"exc-form-inner\">\r\n            <label>\r\n                <input type=\"checkbox\"> Remember Me\r\n            </label>\r\n        </div>\r\n    </div>\r\n    <button type=\"button\" class=\"btn btn-accent\">Sign In</button>\r\n    <p class=\"text-center\">Forgot <a href=\"#\">Username</a> or <a href=\"#\">Password</a></p>\r\n    <button type=\"button\" class=\"btn btn-inverted\">Register</button>\r\n</div> " } } }, "_media": { "name": "_media", "title": "Media", "path": "/patterns/_media", "items": { "responsive-video-16x9": { "name": "responsive-video-16x9", "title": "Responsive Video 16 X 9", "path": "/patterns/_media/responsive-video-16x9", "html": "<div class=\"embed-responsive embed-responsive-16by9\">\r\n\t<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/92Co5HzRFI0\" frameborder=\"0\" allowfullscreen></iframe>\r\n</div>" }, "responsive-video-4x3": { "name": "responsive-video-4x3", "title": "Responsive Video 4 X 3", "path": "/patterns/_media/responsive-video-4x3", "html": "<div class=\"embed-responsive embed-responsive-4by3\">\r\n\t<iframe width=\"420\" height=\"315\" src=\"https://www.youtube.com/embed/9fclnJtkBF0\" frameborder=\"0\" allowfullscreen></iframe>\r\n</div>" } } }, "_navigation": { "name": "_navigation", "title": "Navigation", "path": "/patterns/_navigation", "items": { "navigation-breadcrumb": { "name": "navigation-breadcrumb", "title": "Navigation Breadcrumb", "path": "/patterns/_navigation/navigation-breadcrumb", "html": "<nav class=\"breadcrumb\">\r\n\t<ul>\r\n\t\t<li><a href=\"/\"><span>Home</span></a></li><li>My Account<span>:</span></li>\r\n\t\t<li>My Service<span>:</span></li><li>Customer Choice<span>:</span></li>\r\n\t\t<li>Customer Choice Options<span>:</span></li>\r\n\t\t<li><a href=\"/MyAccount/MyService/Pages/FAQs.aspx\"><span>FAQs</span></a></li>\r\n\t</ul>\r\n</nav> " }, "navigation-left": { "name": "navigation-left", "title": "Navigation Left", "path": "/patterns/_navigation/navigation-left", "html": "<div id=\"excNavLeft\" class=\"left-nav-wrap\">        \r\n  <ul class=\"exc-nav-left\">\r\n    <li class=\"exc-nav-left-active\">\r\n      <div><a href=\"/AboutUs/Pages/default.aspx\">Assistance Programs</a><span class=\"exc-nav-expand\"><i class=\"exc-icon-nav-left\"></i></span></div>\r\n        <ul>\r\n          <li class=\"exc-nav-left-inactive\">\r\n            <div><a href=\"\">Energy Assistance</a><span class=\"exc-nav-expand\"><i class=\"exc-icon-nav-left\"></i></span></div>\r\n              <ul></ul>\r\n          </li>\r\n          <li class=\"exc-nav-left-active\">\r\n            <div><a href=\"\">How You Can Help</a><span class=\"exc-nav-expand\"><i class=\"exc-icon-nav-left\"></i></span></div>\r\n              <ul>\r\n                  <li class=\"exc-nav-left-inactive\">\r\n                      <div><a href=\"\">Fuel Fund</a><span class=\"exc-nav-expand\"><i class=\"exc-icon-nav-left\"></i></span></div>\r\n                      <ul>\r\n                          <li class=\"exc-nav-left-inactive\">\r\n                              <div><a href=\"\">Fifth Level</a><span class=\"exc-nav-expand\"><i class=\"exc-icon-nav-left\"></i></span></div>\r\n                              <ul></ul>\r\n                          </li>\r\n                          <li class=\"exc-nav-left-inactive\">\r\n                              <div><a href=\"\">Fifth Level</a><span class=\"exc-nav-expand\"><i class=\"exc-icon-nav-left\"></i></span></div>\r\n                              <ul></ul>\r\n                          </li>\r\n                      </ul>\r\n                  </li>\r\n                <li><div><a href=\"\">Making Gift Payments</a><span class=\"exc-nav-expand\"><i class=\"exc-icon-nav-left\"></i></span></div>\r\n                  <ul></ul>\r\n                </li>\r\n              </ul>\r\n\r\n            </li>\r\n          <li class=\"exc-nav-left-inactive\">\r\n            <div><a href=\"\">Special Needs Customers</a><span class=\"exc-nav-expand\"><i class=\"exc-icon-nav-left\"></i></span></div>\r\n              <ul></ul>\r\n          </li>\r\n        </ul>\r\n    </li>\r\n    <li class=\"exc-nav-left-inactive\">\r\n      <div><a href=\"\">Contact Us</a><span class=\"exc-nav-expand\"><i class=\"exc-icon-nav-left\"></i></span></div>\r\n        <ul>\r\n          <li class=\"exc-nav-left-inactive\"><div><a href=\"\">Contact Us Forms</a><span class=\"exc-nav-expand\"><i class=\"exc-icon-nav-left\"></i></span></div>\r\n            <ul></ul>\r\n          </li>\r\n          <li class=\"exc-nav-left-inactive\">\r\n            <div><a href=\"\">Customer Feedback</a><span class=\"exc-nav-expand\"><i class=\"exc-icon-nav-left\"></i></span></div>\r\n            <ul></ul>\r\n          </li>\r\n        </ul>\r\n    </li>\r\n    <li class=\"exc-nav-left-inactive\">\r\n      <div><a href=\"\">Damage and Theft</a><span class=\"exc-nav-expand\"><i class=\"exc-icon-nav-left\"></i></span></div>\r\n        <ul>\r\n          <li class=\"exc-nav-left-inactive\">\r\n            <div><a href=\"\">Imposter and Energy Theft Awareness</a><span class=\"exc-nav-expand\"><i class=\"exc-icon-nav-left\"></i></span></div>\r\n              <ul></ul>\r\n          </li>\r\n          <li class=\"exc-nav-left-inactive\">\r\n            <div><a href=\"\">Property Damage Claims</a><span class=\"exc-nav-expand\"><i class=\"exc-icon-nav-left\"></i></span></div>\r\n              <ul></ul>\r\n          </li>\r\n        </ul>\r\n    </li>\r\n    <li class=\"exc-nav-left-inactive\">\r\n      <div><a href=\"\">FAQs</a><span class=\"exc-nav-expand\"><i class=\"exc-icon-nav-left\"></i></span></div>\r\n        <ul>\r\n          <li class=\"exc-nav-left-inactive\"><div><a href=\"\">Careers</a><span class=\"exc-nav-expand\"><i class=\"exc-icon-nav-left\"></i></span></div>\r\n            <ul></ul>\r\n          </li>\r\n          <li class=\"exc-nav-left-inactive\">\r\n            <div><a href=\"\">Construction ＆ Remodeling</a><span class=\"exc-nav-expand\"><i class=\"exc-icon-nav-left\"></i></span></div>\r\n              <ul></ul>\r\n          </li>\r\n          <li class=\"exc-nav-left-inactive\">\r\n            <div><a href=\"\">Energy Choice</a><span class=\"exc-nav-expand\"><i class=\"exc-icon-nav-left\"></i></span></div>\r\n              <ul></ul>\r\n          </li>\r\n          <li class=\"exc-nav-left-inactive\">\r\n            <div><a href=\"\">Help</a><span class=\"exc-nav-expand\"><i class=\"exc-icon-nav-left\"></i></span></div>\r\n              <ul>\r\n                <li class=\"exc-nav-left-inactive\">\r\n                  <div><a href=\"\">Enhancements to our Customer Account System</a><span class=\"exc-nav-expand\"><i class=\"exc-icon-nav-left\"></i></span></div>\r\n                    <ul></ul>\r\n                </li>\r\n              </ul>\r\n          </li>\r\n          <li class=\"exc-nav-left-inactive\">\r\n            <div><a href=\"\">LightSpeed Communications</a><span class=\"exc-nav-expand\"><i class=\"exc-icon-nav-left\"></i></span></div>\r\n              <ul></ul>\r\n          </li>\r\n          <li class=\"exc-nav-left-inactive\">\r\n            <div><a href=\"\">Manage My Account</a><span class=\"exc-nav-expand\"><i class=\"exc-icon-nav-left\"></i></span></div>\r\n            <ul></ul>\r\n          </li>\r\n          <li class=\"exc-nav-left-inactive\">\r\n            <div><a href=\"\">Mobile</a><span class=\"exc-nav-expand\"><i class=\"exc-icon-nav-left\"></i></span></div>\r\n              <ul></ul>\r\n          </li>\r\n          <li class=\"exc-nav-left-inactive\">\r\n            <div><a href=\"\">PEVs</a><span class=\"exc-nav-expand\"><i class=\"exc-icon-nav-left\"></i></span></div>\r\n              <ul></ul>\r\n          </li>\r\n          <li class=\"exc-nav-left-inactive\">\r\n            <div><a href=\"\">Property Managers</a><span class=\"exc-nav-expand\"><i class=\"exc-icon-nav-left\"></i></span></div>\r\n              <ul></ul>\r\n          </li>\r\n          <li class=\"exc-nav-left-inactive\">\r\n            <div><a href=\"\">Smart Energy Rewards</a><span class=\"exc-nav-expand\"><i class=\"exc-icon-nav-left\"></i></span></div>\r\n              <ul></ul>\r\n          </li>\r\n          <li class=\"exc-nav-left-inactive\">\r\n            <div><a href=\"\">Smart Energy Savers</a><span class=\"exc-nav-expand\"><i class=\"exc-icon-nav-left\"></i></span></div>\r\n              <ul></ul>\r\n          </li>\r\n          <li class=\"exc-nav-left-inactive\">\r\n            <div><a href=\"\">Smart Meters</a><span class=\"exc-nav-expand\"><i class=\"exc-icon-nav-left\"></i></span></div>\r\n              <ul></ul>\r\n          </li>\r\n          <li class=\"exc-nav-left-inactive\">\r\n            <div><a href=\"\">Tree Trimming</a><span class=\"exc-nav-expand\"><i class=\"exc-icon-nav-left\"></i></span></div>\r\n              <ul></ul>\r\n          </li>\r\n          <li class=\"exc-nav-left-inactive\">\r\n            <div><a href=\"\">Ways to Pay</a><span class=\"exc-nav-expand\"><i class=\"exc-icon-nav-left\"></i></span></div>\r\n              <ul></ul>\r\n          </li>\r\n          <li class=\"exc-nav-left-inactive\">\r\n            <div><a href=\"\">Ways to Save</a><span class=\"exc-nav-expand\"><i class=\"exc-icon-nav-left\"></i></span></div>\r\n              <ul></ul>\r\n          </li>\r\n        </ul>\r\n    </li>\r\n  </ul>\r\n</div>" }, "navigation-page": { "name": "navigation-page", "title": "Navigation Page", "path": "/patterns/_navigation/navigation-page", "html": "[coming soon]" }, "navigation-primary-tasks": { "name": "navigation-primary-tasks", "title": "Navigation Primary Tasks", "path": "/patterns/_navigation/navigation-primary-tasks", "html": "<ul class=\"exc-primary-tasks\">\r\n\t<li><a href=\"#\"><span class=\"exc-icon-power\"></span><p>Outage</p></a></li>\r\n\t<li><a href=\"#\"> <span class=\"exc-icon-bill\"></span><p>Pay Bill</p></a></li>\r\n\t<li><a href=\"#\"><span class=\"exc-icon-move\"></span><p>Moving</p></a></li>\r\n</ul>" }, "navigation-tabbed": { "name": "navigation-tabbed", "title": "Navigation Tabbed", "path": "/patterns/_navigation/navigation-tabbed", "html": "<ul class=\"exc-tabs\">\r\n    <li class=\"exc-active\" rel=\"exc-tab1\">Tab 1 Title</li>\r\n    <li rel=\"exc-tab2\">Tab 2 Title</li>\r\n</ul>\r\n<div class=\"exc-tab-container\">\r\n    <div class=\"exc-active exc-acc-header\" rel=\"exc-tab1\">Tab 1 Title<i class=\"exc-icon-plus\"></i></div>\r\n    <div id=\"exc-tab1\" class=\"exc-tab-content\">\r\n        <h3 class=\"exc-hide-acc\">Tab 1 Title</h3>\r\n        [tab 1 content goes here]\r\n    </div>  \r\n    <div class=\"exc-acc-header\" rel=\"exc-tab2\">Tab 2 Title<i class=\"exc-icon-plus\"></i></div>\r\n    <div id=\"exc-tab2\" class=\"exc-tab-content\">\r\n        <h3 class=\"exc-hide-acc\">Tab 2 Title</h3>\r\n        [tab 2 content goes here]\r\n    </div>\r\n</div>", "txt": "For basic tabbing functionality, link to the exc.tabs.js file.  Please note that this will reset the tabs to open the first tab (and its content) any time the page reloads.\r\n\r\nFor customized functionality, such as when a related form causes a postback and you need the correct tab to stay open, copy the javascript from exc.tabs.js, use it as your base, and customize as needed.  In that case you would not need to link to exc.tabs.js." }, "navigation-vertical": { "name": "navigation-vertical", "title": "Navigation Vertical", "path": "/patterns/_navigation/navigation-vertical", "html": "[coming soon]" }, "navigation": { "name": "navigation", "title": "Navigation", "path": "/patterns/_navigation/navigation", "html": "[coming soon]" } } }, "_page-templates": { "name": "_page-templates", "title": "Page Templates", "path": "/patterns/_page-templates" }, "_project-specific": { "name": "_project-specific", "title": "Project Specific", "path": "/patterns/_project-specific", "items": { "bge": { "name": "bge", "title": "Bge", "path": "/patterns/_project-specific/bge", "items": { "list-tags": { "name": "list-tags", "title": "List Tags", "path": "/patterns/_project-specific/bge/list-tags", "html": "<ol class=\"tags\">\n\t<li><a href=\"#\" rel=\"tag\" data-rank=\"1\">Clavicle</a></li>\n\t<li><a href=\"#\" rel=\"tag\" data-rank=\"4\">Ethmoid</a></li>\n\t<li><a href=\"#\" rel=\"tag\" data-rank=\"6\">Frontal</a></li>\n\t<li><a href=\"#\" rel=\"tag\" data-rank=\"2\">Incus</a></li>\n\t<li><a href=\"#\" rel=\"tag\" data-rank=\"2\">Lacrimal</a></li>\n\t<li><a href=\"#\" rel=\"tag\" data-rank=\"2\">Malleus</a></li>\n\t<li><a href=\"#\" rel=\"tag\" data-rank=\"3\">Mandible</a></li>\n\t<li><a href=\"#\" rel=\"tag\" data-rank=\"3\">Maxilla</a></li>\n\t<li><a href=\"#\" rel=\"tag\" data-rank=\"3\">Palatine</a></li>\n\t<li><a href=\"#\" rel=\"tag\" data-rank=\"5\">Parietal</a></li>\n\t<li><a href=\"#\" rel=\"tag\" data-rank=\"4\">Occipital</a></li>\n\t<li><a href=\"#\" rel=\"tag\" data-rank=\"1\">Ribs</a></li>\n\t<li><a href=\"#\" rel=\"tag\" data-rank=\"1\">Scapula</a></li>\n\t<li><a href=\"#\" rel=\"tag\" data-rank=\"4\">Sphenoid</a></li>\n\t<li><a href=\"#\" rel=\"tag\" data-rank=\"1\">Stapes</a></li>\n\t<li><a href=\"#\" rel=\"tag\" data-rank=\"1\">Sternum</a></li>\n\t<li><a href=\"#\" rel=\"tag\" data-rank=\"5\">Temporal</a></li>\n\t<li><a href=\"#\" rel=\"tag\" data-rank=\"2\">Vomer</a></li>\n\t<li><a href=\"#\" rel=\"tag\" data-rank=\"2\">Vomer</a></li>\n\t<li><a href=\"#\" rel=\"tag\" data-rank=\"3\">Zygomatic</a></li>\n</ol><!--/.tags-->" } } }, "comed": { "name": "comed", "title": "Comed", "path": "/patterns/_project-specific/comed", "items": { "list-tags": { "name": "list-tags", "title": "List Tags", "path": "/patterns/_project-specific/comed/list-tags", "html": "<ol class=\"tags\">\n\t<li><a href=\"#\" rel=\"tag\" data-rank=\"1\">Clavicle</a></li>\n\t<li><a href=\"#\" rel=\"tag\" data-rank=\"4\">Ethmoid</a></li>\n\t<li><a href=\"#\" rel=\"tag\" data-rank=\"6\">Frontal</a></li>\n\t<li><a href=\"#\" rel=\"tag\" data-rank=\"2\">Incus</a></li>\n\t<li><a href=\"#\" rel=\"tag\" data-rank=\"2\">Lacrimal</a></li>\n\t<li><a href=\"#\" rel=\"tag\" data-rank=\"2\">Malleus</a></li>\n\t<li><a href=\"#\" rel=\"tag\" data-rank=\"3\">Mandible</a></li>\n\t<li><a href=\"#\" rel=\"tag\" data-rank=\"3\">Maxilla</a></li>\n\t<li><a href=\"#\" rel=\"tag\" data-rank=\"3\">Palatine</a></li>\n\t<li><a href=\"#\" rel=\"tag\" data-rank=\"5\">Parietal</a></li>\n\t<li><a href=\"#\" rel=\"tag\" data-rank=\"4\">Occipital</a></li>\n\t<li><a href=\"#\" rel=\"tag\" data-rank=\"1\">Ribs</a></li>\n\t<li><a href=\"#\" rel=\"tag\" data-rank=\"1\">Scapula</a></li>\n\t<li><a href=\"#\" rel=\"tag\" data-rank=\"4\">Sphenoid</a></li>\n\t<li><a href=\"#\" rel=\"tag\" data-rank=\"1\">Stapes</a></li>\n\t<li><a href=\"#\" rel=\"tag\" data-rank=\"1\">Sternum</a></li>\n\t<li><a href=\"#\" rel=\"tag\" data-rank=\"5\">Temporal</a></li>\n\t<li><a href=\"#\" rel=\"tag\" data-rank=\"2\">Vomer</a></li>\n\t<li><a href=\"#\" rel=\"tag\" data-rank=\"2\">Vomer</a></li>\n\t<li><a href=\"#\" rel=\"tag\" data-rank=\"3\">Zygomatic</a></li>\n</ol><!--/.tags-->" } } }, "peco": { "name": "peco", "title": "Peco", "path": "/patterns/_project-specific/peco", "items": { "list-tags": { "name": "list-tags", "title": "List Tags", "path": "/patterns/_project-specific/peco/list-tags", "html": "<ol class=\"tags\">\n\t<li><a href=\"#\" rel=\"tag\" data-rank=\"1\">Clavicle</a></li>\n\t<li><a href=\"#\" rel=\"tag\" data-rank=\"4\">Ethmoid</a></li>\n\t<li><a href=\"#\" rel=\"tag\" data-rank=\"6\">Frontal</a></li>\n\t<li><a href=\"#\" rel=\"tag\" data-rank=\"2\">Incus</a></li>\n\t<li><a href=\"#\" rel=\"tag\" data-rank=\"2\">Lacrimal</a></li>\n\t<li><a href=\"#\" rel=\"tag\" data-rank=\"2\">Malleus</a></li>\n\t<li><a href=\"#\" rel=\"tag\" data-rank=\"3\">Mandible</a></li>\n\t<li><a href=\"#\" rel=\"tag\" data-rank=\"3\">Maxilla</a></li>\n\t<li><a href=\"#\" rel=\"tag\" data-rank=\"3\">Palatine</a></li>\n\t<li><a href=\"#\" rel=\"tag\" data-rank=\"5\">Parietal</a></li>\n\t<li><a href=\"#\" rel=\"tag\" data-rank=\"4\">Occipital</a></li>\n\t<li><a href=\"#\" rel=\"tag\" data-rank=\"1\">Ribs</a></li>\n\t<li><a href=\"#\" rel=\"tag\" data-rank=\"1\">Scapula</a></li>\n\t<li><a href=\"#\" rel=\"tag\" data-rank=\"4\">Sphenoid</a></li>\n\t<li><a href=\"#\" rel=\"tag\" data-rank=\"1\">Stapes</a></li>\n\t<li><a href=\"#\" rel=\"tag\" data-rank=\"1\">Sternum</a></li>\n\t<li><a href=\"#\" rel=\"tag\" data-rank=\"5\">Temporal</a></li>\n\t<li><a href=\"#\" rel=\"tag\" data-rank=\"2\">Vomer</a></li>\n\t<li><a href=\"#\" rel=\"tag\" data-rank=\"2\">Vomer</a></li>\n\t<li><a href=\"#\" rel=\"tag\" data-rank=\"3\">Zygomatic</a></li>\n</ol><!--/.tags-->" } } } } }, "_scenarios": { "name": "_scenarios", "title": "Scenarios", "path": "/patterns/_scenarios", "items": { "UI-134-report-an-outage": { "name": "UI-134-report-an-outage", "title": "Ui 134 Report An Outage", "path": "/patterns/_scenarios/UI-134-report-an-outage", "html": "﻿<div class=\"exc-content-banner exc-banner-outage\"></div>\r\n<div class=\"exc-account-slat\">\r\n    <i class=\"exc-img-icon-ami\"></i>\r\n    <div class=\"exc-ami-message\">Before processing, we want to check your property's meter</div>\r\n    <div class=\"exc-ami-feedback-processing\"></div>\r\n</div>\r\n<div class=\"exc-account-slat\">\r\n    <i class=\"exc-img-icon-ami\"></i>\r\n    <div class=\"exc-ami-message\">\r\n        <span>Verifying your property's meter has power</span>\r\n        <div class=\"exc-ami-feedback-message exc-ami-info\">Passed Check <i class=\"exc-icon-circle-with-check\"></i></div>\r\n    </div>\r\n    \r\n</div>\r\n<div class=\"exc-account-slat\">\r\n    <i class=\"exc-img-icon-ami\"></i>\r\n    <div class=\"exc-ami-message\">\r\n        <span>Verifying the voltage level to your property's meter</span>\r\n        <div class=\"exc-ami-feedback-message exc-ami-error\">Problems Found <i class=\"exc-icon-warning-alt\"></i></div>\r\n    </div>\r\n    \r\n</div>\r\n<div class=\"exc-account-slat-content\">\r\n    <p class=\"exc-ami-outage-message exc-ami-info\">No problems were found</p>\r\n    <p>Our status check verified your property's meter is operational and ComEd electrical services is being delivered to\r\n        your home. Please check your circuit breakers or fuses.</p>\r\n    <p><strong>Continue ONLY if you still need to report an outage</strong></p>\r\n    <div class=\"form-group\">\r\n        <div class=\"checkbox\">\r\n            <label>\r\n                <input type=\"checkbox\" id=\"id2\"> I have checked my circuit breakers, or, if my home has a fuse box, have checked that my fuses are in\r\n                good working condition, and I would still like to report my outage.\r\n            </label>\r\n        </div>\r\n    </div>\r\n    <div class=\"exc-form-actions\">\r\n        <button type=\"button\" class=\"btn btn-default\">Cancel</button>\r\n        <button type=\"button\" class=\"btn btn-primary pull-right\">Continue<span class=\"caret-right\"></span></button>\r\n    </div>\r\n</div>\r\n\r\n<div class=\"exc-account-slat\">\r\n    <i class=\"exc-img-icon-ami\"></i>\r\n    <div class=\"exc-ami-message\">Please answer the additional questions below and submit:</div>\r\n</div>\r\n<div class=\"exc-account-slat-content\">\r\n    <div class=\"form-group\">\r\n        <div class=\"exc-form-inner\">\r\n            <label class=\"required\">Outage Issue:</label>\r\n            <div class=\"checkbox\">\r\n                <label>\r\n                    <input type=\"checkbox\" value=\"option1\"> My lights are out\r\n                </label>\r\n            </div>\r\n            <div class=\"checkbox\">\r\n                <label>\r\n                    <input type=\"checkbox\" value=\"option2\"> My lights are partially out\r\n                </label>\r\n            </div>\r\n            <div class=\"checkbox\">\r\n                <label>\r\n                    <input type=\"checkbox\" value=\"option3\"> Dim or Flickering lights\r\n                </label>\r\n            </div>\r\n        </div>\r\n    </div>\r\n\r\n    <div class=\"form-group\">\r\n        <div class=\"exc-form-inner\">\r\n            <label class=\"required\">Did you hear or see anything unusual before the problem began (loud banging or bright flash of light?)</label>\r\n            <div class=\"checkbox\">\r\n                <label>\r\n                    <input type=\"checkbox\" value=\"option1\"> Yes\r\n                </label>\r\n            </div>\r\n            <div class=\"checkbox\">\r\n                <label>\r\n                    <input type=\"checkbox\" value=\"option2\"> No\r\n                </label>\r\n            </div>\r\n            <div class=\"checkbox\">\r\n                <label>\r\n                    <input type=\"checkbox\" value=\"option3\"> Unsure\r\n                </label>\r\n            </div>\r\n        </div>\r\n    </div>\r\n    <div class=\"form-group\">\r\n        <div class=\"exc-form-inner\">\r\n            <label class=\"required\" for=\"id1\">If yes, please specify:</label>\r\n            <textarea class=\"form-control\" id=\"id1\"></textarea>\r\n        </div>\r\n    </div>\r\n\r\n    <div class=\"form-group\">\r\n        <div class=\"exc-form-inner\">\r\n            <label class=\"required\">Are your neighbor's lights out also?</label>\r\n            <div class=\"checkbox\">\r\n                <label>\r\n                    <input type=\"checkbox\" value=\"option1\"> Yes\r\n                </label>\r\n            </div>\r\n            <div class=\"checkbox\">\r\n                <label>\r\n                    <input type=\"checkbox\" value=\"option2\"> No\r\n                </label>\r\n            </div>\r\n            <div class=\"checkbox\">\r\n                <label>\r\n                    <input type=\"checkbox\" value=\"option3\"> Unsure\r\n                </label>\r\n            </div>\r\n        </div>\r\n    </div>\r\n\r\n    <div class=\"form-group\">\r\n        <div class=\"exc-form-inner\">\r\n            <label class=\"required\">Is there any construction in the area?</label>\r\n            <div class=\"checkbox\">\r\n                <label>\r\n                    <input type=\"checkbox\" value=\"option1\"> Yes\r\n                </label>\r\n            </div>\r\n            <div class=\"checkbox\">\r\n                <label>\r\n                    <input type=\"checkbox\" value=\"option2\"> No\r\n                </label>\r\n            </div>\r\n            <div class=\"checkbox\">\r\n                <label>\r\n                    <input type=\"checkbox\" value=\"option3\"> Unsure\r\n                </label>\r\n            </div>\r\n        </div>\r\n    </div>\r\n\r\n    <div class=\"form-group\">\r\n        <div class=\"exc-form-inner exc-input-phone\">\r\n            <label class=\"required\" for=\"PhoneNumber1\">Phone Number:</label>\r\n            <input type=\"text\" class=\"form-control\" id=\"PhoneNumber1\" placeholder=\"xxx-xxx-xxxx\">\r\n            <span>ext.:</span>\r\n            <input type=\"text\" class=\"form-control\" id=\"PhoneExt1\" placeholder=\"\">\r\n        </div>\r\n    </div>\r\n\r\n    <div class=\"form-group\">\r\n        <div class=\"exc-form-inner\">\r\n            <label for=\"id1\">Email Address:</label>\r\n            <input type=\"text\" class=\"form-control\" id=\"id1\" placeholder=\"Email Address\">\r\n        </div>\r\n    </div>\r\n\r\n    <div class=\"exc-form-actions\">\r\n        <button type=\"button\" class=\"btn btn-default\">Cancel</button>\r\n        <button type=\"button\" class=\"btn btn-primary pull-right\">Submit<span class=\"caret-right\"></span></button>\r\n    </div>\r\n</div>" }, "UI-153-pay-by-echeck": { "name": "UI-153-pay-by-echeck", "title": "Ui 153 Pay By Echeck", "path": "/patterns/_scenarios/UI-153-pay-by-echeck", "html": "﻿<div class=\"exc-form-group-double exc-vertical-space-md\">\r\n    <div class=\"form-group exc-tooltip\">\r\n        <div class=\"exc-form-inner\">\r\n            <div class=\"exc-form-input\">\r\n                <label for=\"id1\" class=\"required\">Payment Date:</label>\r\n                <span class=\"exc-datepicker-icon\"><input type=\"text\" id=\"id1\" class=\"form-control exc-small exc-datepicker\"></span>\r\n                <div class=\"exc-tooltip-icon\" data-toggle=\"tooltip\" data-placement=\"left\" title=\"Tooltip text goes here.\">?</div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n    <div class=\"form-group exc-tooltip\">\r\n        <div class=\"exc-form-inner\">\r\n            <div class=\"exc-form-input\">\r\n                <label for=\"id2\" class=\"required\">Payment Amount:</label>\r\n                <input type=\"text\" class=\"form-control exc-small\" id=\"id2\" placeholder=\"Field 2\">\r\n                <div class=\"exc-tooltip-icon\" data-toggle=\"tooltip\" data-placement=\"left\" title=\"Tooltip text goes here.\">?</div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</div>\r\n<div class=\"form-group exc-payment-account\">\r\n    <label class=\"required\">Payment Account:</label>\r\n    <span class=\"exc-tooltip-icon\" data-toggle=\"tooltip\" data-placement=\"left\" title=\"Tooltip text goes here.\">?</span>\r\n    <div class=\"radio\">\r\n        <label>\r\n            <input type=\"radio\" name=\"radioExample\">\r\n            Federal Credit Union<br />\r\n            ACH ****XXXX<br />\r\n            <button type=\"button\" class=\"btn btn-default btn-xs\"><i class=\"exc-icon-circle-with-cross\"></i>Delete Account</button>\r\n        </label>\r\n    </div>\r\n    <div class=\"radio\">\r\n        <label>\r\n            <input type=\"radio\" name=\"radioExample\">\r\n            State Credit Union<br />\r\n            ACH ****XXXX<br />\r\n            <button type=\"button\" class=\"btn btn-default btn-xs\"><i class=\"exc-icon-circle-with-cross\"></i>Delete Account</button>\r\n        </label>\r\n    </div>\r\n    <div class=\"radio\">\r\n        <label>\r\n            <input type=\"radio\" name=\"radioExample\">\r\n            Use a Different Account\r\n        </label>\r\n    </div>\r\n</div>" }, "UI-160-expedited-credit-debit": { "name": "UI-160-expedited-credit-debit", "title": "Ui 160 Expedited Credit Debit", "path": "/patterns/_scenarios/UI-160-expedited-credit-debit", "html": "﻿<div class=\"form-group exc-vertical-space-md\">\r\n        <label>Payment Date:</label>    \r\n        <div class=\"exc-text-value\">05/28/15 <span class=\"exc-tooltip-icon\" data-toggle=\"tooltip\" data-placement=\"left\" title=\"Tooltip text goes here.\">?</span></div>\r\n</div>\r\n<div class=\"form-group exc-vertical-space-md exc-tooltip\">\r\n    <div class=\"exc-form-inner\">\r\n        <label for=\"id1\" class=\"required\">Payment Amount:</label>\r\n        <input type=\"text\" class=\"form-control exc-small\" id=\"id1\" placeholder=\"Payment Amount\">\r\n        <div class=\"exc-tooltip-icon\" data-toggle=\"tooltip\" data-placement=\"left\" title=\"Tooltip text goes here.\">?</div>\r\n        <div class=\"exc-credit-fee\">\r\n            <p class=\"small\">\r\n                There is a $2.50 convenience fee.\r\n                <span class=\"exc-tooltip-icon\" data-toggle=\"tooltip\" data-placement=\"left\" title=\"Tooltip text goes here.\">?</span>\r\n            </p>\r\n            <p>Your total payment will be <strong>$202.50</strong></p>\r\n        </div>\r\n    </div>\r\n</div>\r\n<div class=\"form-group exc-payment-account\">\r\n    <label class=\"required\">Payment Account:</label>\r\n    <span class=\"exc-tooltip-icon\" data-toggle=\"tooltip\" data-placement=\"left\" title=\"Tooltip text goes here.\">?</span>\r\n    <div class=\"radio\">\r\n        <label>\r\n            <input type=\"radio\" name=\"radioExample\">\r\n            US Bank<br />\r\n            VISA ****XXXX<br />\r\n            <button type=\"button\" class=\"btn btn-primary btn-xs\"><i class=\"exc-icon-edit\"></i>Edit</button>\r\n            <button type=\"button\" class=\"btn btn-default btn-xs\"><i class=\"exc-icon-circle-with-cross\"></i>Delete Account</button>     \r\n        </label>\r\n    </div>\r\n    <div class=\"radio\">\r\n        <label>\r\n            <input type=\"radio\" name=\"radioExample\">\r\n            Chase Credit Card<br />\r\n            VISA ****XXXX<br />\r\n            <button type=\"button\" class=\"btn btn-primary btn-xs\"><i class=\"exc-icon-edit\"></i>Edit</button>\r\n            <button type=\"button\" class=\"btn btn-default btn-xs\"><i class=\"exc-icon-circle-with-cross\"></i>Delete Account</button>\r\n        </label>\r\n    </div>\r\n    <div class=\"radio\">\r\n        <label>\r\n            <input type=\"radio\" name=\"radioExample\">\r\n            Use a Different Account\r\n        </label>\r\n    </div>    \r\n</div>\r\n" }, "UI-174-budget-plan-amount": { "name": "UI-174-budget-plan-amount", "title": "Ui 174 Budget Plan Amount", "path": "/patterns/_scenarios/UI-174-budget-plan-amount", "html": "﻿<div class=\"exc-button-box\">\r\n    <div class=\"exc-col1 exc-strong\">Budget Plan Amount: $200.00</div>\r\n    <div class=\"exc-col2\">\r\n        <button type=\"button\" class=\"btn btn-primary\">Enroll<span class=\"caret-right\"></span></button>\r\n    </div>\r\n</div>" }, "UI-195-196-monthly-usage-grid": { "name": "UI-195-196-monthly-usage-grid", "title": "Ui 195 196 Monthly Usage Grid", "path": "/patterns/_scenarios/UI-195-196-monthly-usage-grid", "html": "﻿<hr />\r\n<h4 class=\"exc-form-sub-hdr\">Enter usage for one or more months:</h4>\r\n<div class=\"exc-tcl\">\r\n    <div class=\"row exc-tcl-header\">\r\n        <div class=\"col-md-3\"></div>\r\n        <div class=\"col-md-4\">\r\n            kWh\r\n        </div>\r\n        <div class=\"col-md-4 exc-hide-kw\">\r\n            kW\r\n        </div>\r\n    </div>\r\n    <div class=\"row\">\r\n        <div class=\"col-xs-12 col-md-3\">\r\n            <label for=\"\">January<i> kWh</i>:</label>\r\n        </div>\r\n        <div class=\"col-xs-12 col-md-4\">\r\n            <input type=\"text\" class=\"form-control\" id=\"\">\r\n        </div>\r\n        <div class=\"col-xs-12 col-md-4 exc-hide-kw\">\r\n            <span class=\"exc-tcl-sub-label\" aria-hidden=\"true\">January kW:</span>\r\n            <label class=\"sr-only\" for=\"\">January kW:</label>\r\n            <input type=\"text\" class=\"form-control\" id=\"\">\r\n        </div>\r\n    </div>\r\n    <div class=\"row\">\r\n        <div class=\"col-xs-12 col-md-3\">\r\n            <label for=\"\">February<i> kWh</i>:</label>\r\n        </div>\r\n        <div class=\"col-xs-12 col-md-4\">\r\n            <input type=\"text\" class=\"form-control\" id=\"\">\r\n        </div>\r\n        <div class=\"col-xs-12 col-md-4 exc-hide-kw\">\r\n            <span class=\"exc-tcl-sub-label\" aria-hidden=\"true\">February kW:</span>\r\n            <label class=\"sr-only\" for=\"\">February kW:</label>\r\n            <input type=\"text\" class=\"form-control\" id=\"\">\r\n        </div>\r\n    </div>\r\n    <div class=\"row\">\r\n        <div class=\"col-xs-12 col-md-3\">\r\n            <label for=\"\">March<i> kWh</i>:</label>\r\n        </div>\r\n        <div class=\"col-xs-12 col-md-4\">\r\n            <input type=\"text\" class=\"form-control\" id=\"\">\r\n        </div>\r\n        <div class=\"col-xs-12 col-md-4 exc-hide-kw\">\r\n            <span class=\"exc-tcl-sub-label\" aria-hidden=\"true\">March kW:</span>\r\n            <label class=\"sr-only\" for=\"\">March kW:</label>\r\n            <input type=\"text\" class=\"form-control\" id=\"\">\r\n        </div>\r\n    </div>\r\n    <div class=\"row\">\r\n        <div class=\"col-xs-12 col-md-3\">\r\n            <label for=\"\">April<i> kWh</i>:</label>\r\n        </div>\r\n        <div class=\"col-xs-12 col-md-4\">\r\n            <input type=\"text\" class=\"form-control\" id=\"\">\r\n        </div>\r\n        <div class=\"col-xs-12 col-md-4 exc-hide-kw\">\r\n            <span class=\"exc-tcl-sub-label\" aria-hidden=\"true\">April kW:</span>\r\n            <label class=\"sr-only\" for=\"\">April kW:</label>\r\n            <input type=\"text\" class=\"form-control\" id=\"\">\r\n        </div>\r\n    </div>\r\n    <div class=\"row\">\r\n        <div class=\"col-xs-12 col-md-3\">\r\n            <label for=\"\">May<i> kWh</i>:</label>\r\n        </div>\r\n        <div class=\"col-xs-12 col-md-4\">\r\n            <input type=\"text\" class=\"form-control\" id=\"\">\r\n        </div>\r\n        <div class=\"col-xs-12 col-md-4 exc-hide-kw\">\r\n            <span class=\"exc-tcl-sub-label\" aria-hidden=\"true\">May kW:</span>\r\n            <label class=\"sr-only\" for=\"\">May kW:</label>\r\n            <input type=\"text\" class=\"form-control\" id=\"\">\r\n        </div>\r\n    </div>\r\n    <div class=\"row\">\r\n        <div class=\"col-xs-12 col-md-3\">\r\n            <label for=\"\"><sup>1</sup>June<i> kWh</i>:</label>\r\n        </div>\r\n        <div class=\"col-xs-12 col-md-4\">\r\n            <input type=\"text\" class=\"form-control\" id=\"\">\r\n        </div>\r\n        <div class=\"col-xs-12 col-md-4 exc-hide-kw\">\r\n            <span class=\"exc-tcl-sub-label\" aria-hidden=\"true\"><sup>1</sup>June kW:</span>\r\n            <label class=\"sr-only\" for=\"\"><sup>1</sup>June kW:</label>\r\n            <input type=\"text\" class=\"form-control\" id=\"\">\r\n        </div>\r\n    </div>\r\n    <div class=\"row\">\r\n        <div class=\"col-xs-12 col-md-3\">\r\n            <label for=\"\"><sup>1</sup>July<i> kWh</i>:</label>\r\n        </div>\r\n        <div class=\"col-xs-12 col-md-4\">\r\n            <input type=\"text\" class=\"form-control\" id=\"\">\r\n        </div>\r\n        <div class=\"col-xs-12 col-md-4 exc-hide-kw\">\r\n            <span class=\"exc-tcl-sub-label\" aria-hidden=\"true\"><sup>1</sup>July kW:</span>\r\n            <label class=\"sr-only\" for=\"\"><sup>1</sup>July kW:</label>\r\n            <input type=\"text\" class=\"form-control\" id=\"\">\r\n        </div>\r\n    </div>\r\n    <div class=\"row\">\r\n        <div class=\"col-xs-12 col-md-3\">\r\n            <label for=\"\"><sup>1</sup>August<i> kWh</i>:</label>\r\n        </div>\r\n        <div class=\"col-xs-12 col-md-4\">\r\n            <input type=\"text\" class=\"form-control\" id=\"\">\r\n        </div>\r\n        <div class=\"col-xs-12 col-md-4 exc-hide-kw\">\r\n            <span class=\"exc-tcl-sub-label\" aria-hidden=\"true\"><sup>1</sup>August kW:</span>\r\n            <label class=\"sr-only\" for=\"\"><sup>1</sup>August kW:</label>\r\n            <input type=\"text\" class=\"form-control\" id=\"\">\r\n        </div>\r\n    </div>\r\n    <div class=\"row\">\r\n        <div class=\"col-xs-12 col-md-3\">\r\n            <label for=\"\">September<i> kWh</i>:</label>\r\n        </div>\r\n        <div class=\"col-xs-12 col-md-4\">\r\n            <input type=\"text\" class=\"form-control\" id=\"\">\r\n        </div>\r\n        <div class=\"col-xs-12 col-md-4 exc-hide-kw\">\r\n            <span class=\"exc-tcl-sub-label\" aria-hidden=\"true\">September kW:</span>\r\n            <label class=\"sr-only\" for=\"\">September kW:</label>\r\n            <input type=\"text\" class=\"form-control\" id=\"\">\r\n        </div>\r\n    </div>\r\n    <div class=\"row\">\r\n        <div class=\"col-xs-12 col-md-3\">\r\n            <label for=\"\">October<i> kWh</i>:</label>\r\n        </div>\r\n        <div class=\"col-xs-12 col-md-4\">\r\n            <input type=\"text\" class=\"form-control\" id=\"\">\r\n        </div>\r\n        <div class=\"col-xs-12 col-md-4 exc-hide-kw\">\r\n            <span class=\"exc-tcl-sub-label\" aria-hidden=\"true\">October kW:</span>\r\n            <label class=\"sr-only\" for=\"\">October kW:</label>\r\n            <input type=\"text\" class=\"form-control\" id=\"\">\r\n        </div>\r\n    </div>\r\n    <div class=\"row\">\r\n        <div class=\"col-xs-12 col-md-3\">\r\n            <label for=\"\">November<i> kWh</i>:</label>\r\n        </div>\r\n        <div class=\"col-xs-12 col-md-4\">\r\n            <input type=\"text\" class=\"form-control\" id=\"\">\r\n        </div>\r\n        <div class=\"col-xs-12 col-md-4 exc-hide-kw\">\r\n            <span class=\"exc-tcl-sub-label\" aria-hidden=\"true\">November kW:</span>\r\n            <label class=\"sr-only\" for=\"\">November kW:</label>\r\n            <input type=\"text\" class=\"form-control\" id=\"\">\r\n        </div>\r\n    </div>\r\n    <div class=\"row\">\r\n        <div class=\"col-xs-12 col-md-3\">\r\n            <label for=\"\">December<i> kWh</i>:</label>\r\n        </div>\r\n        <div class=\"col-xs-12 col-md-4\">\r\n            <input type=\"text\" class=\"form-control\" id=\"\">\r\n        </div>\r\n        <div class=\"col-xs-12 col-md-4 exc-hide-kw\">\r\n            <span class=\"exc-tcl-sub-label\" aria-hidden=\"true\">December kW:</span>\r\n            <label class=\"sr-only\" for=\"\">December kW:</label>\r\n            <input type=\"text\" class=\"form-control\" id=\"\">\r\n        </div>\r\n    </div>\r\n</div>\r\n<p class=\"small\"><sup>1</sup> Summer Months</p>", "txt": "﻿The <div>s with class=\"exc-hide-kw\" should not display in the Residential tab.  The same <div>s with class=\"exc-hide-kw\" should not display in the Business tab if \"Delivery Service Class\" = \"Watt hour\" in the form." }, "UI-221-new-meter-building-info": { "name": "UI-221-new-meter-building-info", "title": "Ui 221 New Meter Building Info", "path": "/patterns/_scenarios/UI-221-new-meter-building-info", "html": "﻿<div class=\"exc-form-group-double\">\r\n    <div class=\"form-group form-inline\">\r\n        <div class=\"exc-form-inner\">\r\n            <label>Switch Rating:</label>\r\n            <label class=\"radio-inline\" for=\"\">\r\n                <input type=\"radio\" name=\"\" id=\"\" value=\"\"> 80%\r\n            </label>\r\n            <label class=\"radio-inline\" for=\"\">\r\n                <input type=\"radio\" name=\"\" id=\"\" value=\"\"> 100%\r\n            </label>\r\n        </div>\r\n    </div>\r\n    <div class=\"form-group\">\r\n        <div class=\"exc-form-inner\">\r\n            <label for=\"\"># of Sec. Conductors:</label>\r\n            <input type=\"text\" class=\"form-control\" id=\"\" placeholder=\"\">\r\n        </div>\r\n    </div>\r\n</div>\r\n<div class=\"exc-form-group-double\">\r\n    <div class=\"form-group form-inline\">\r\n        <div class=\"exc-form-inner\">\r\n            <label for=\"\">Sets of 3/C (Wire Size):</label>\r\n            <input type=\"text\" class=\"form-control exc-x-small\" id=\"\" placeholder=\"\">\r\n            <label class=\"radio-inline\" for=\"\">\r\n                <input type=\"radio\" name=\"\" id=\"\" value=\"\"> CU\r\n            </label>\r\n            <label class=\"radio-inline\" for=\"\">\r\n                <input type=\"radio\" name=\"\" id=\"\" value=\"\"> AL\r\n            </label>\r\n        </div>\r\n    </div>\r\n    <div class=\"form-group\">\r\n        <div class=\"exc-form-inner\">\r\n            <label for=\"\"># of Sec. Conductors:</label>\r\n            <input type=\"text\" class=\"form-control\" id=\"\" placeholder=\"\">\r\n        </div>\r\n    </div>\r\n</div>\r\n<div class=\"exc-form-group-double\">\r\n    <div class=\"form-group form-inline\">\r\n        <div class=\"exc-form-inner\">\r\n            <label for=\"\">Sets of 4/C (Wire Size):</label>\r\n            <input type=\"text\" class=\"form-control exc-x-small\" id=\"\" placeholder=\"\">\r\n            <label class=\"radio-inline\" for=\"\">\r\n                <input type=\"radio\" name=\"\" id=\"\" value=\"\"> CU\r\n            </label>\r\n            <label class=\"radio-inline\" for=\"\">\r\n                <input type=\"radio\" name=\"\" id=\"\" value=\"\"> AL\r\n            </label>\r\n        </div>\r\n    </div>\r\n    <div class=\"form-group\">\r\n        <div class=\"exc-form-inner\">\r\n            <label for=\"\">Residential Unit Type:</label>\r\n            <select class=\"form-control\" id=\"\">\r\n                <option>Option 1</option>\r\n                <option>Option 2</option>\r\n                <option>Option 3</option>\r\n                <option>Option 4</option>\r\n                <option>Option 5</option>\r\n            </select>\r\n        </div>\r\n    </div>\r\n</div>\r\n<div class=\"exc-form-group-double\">\r\n    <div class=\"form-group\">\r\n        <div class=\"exc-form-inner\">\r\n            <label for=\"\">Commercial Business Type:</label>\r\n            <select class=\"form-control\" id=\"\">\r\n                <option>Option 1</option>\r\n                <option>Option 2</option>\r\n                <option>Option 3</option>\r\n                <option>Option 4</option>\r\n                <option>Option 5</option>\r\n            </select>\r\n        </div>\r\n    </div>\r\n    <div class=\"form-group\">\r\n        <div class=\"exc-form-inner\">\r\n            <label for=\"\">Planned Hours of Operation:</label>\r\n            <div class=\"radio\">\r\n                <label for=\"\">\r\n                    <input type=\"radio\" name=\"\" id=\"\" value=\"\">\r\n                    8 Hrs\r\n                </label>\r\n            </div>\r\n            <div class=\"radio\">\r\n                <label for=\"\">\r\n                    <input type=\"radio\" name=\"\" id=\"\" value=\"\">\r\n                    12 Hrs\r\n                </label>\r\n            </div>\r\n            <div class=\"radio\">\r\n                <label for=\"\">\r\n                    <input type=\"radio\" name=\"\" id=\"\" value=\"\">\r\n                    16 Hrs\r\n                </label>\r\n            </div>\r\n            <div class=\"radio\">\r\n                <label for=\"\">\r\n                    <input type=\"radio\" name=\"\" id=\"\" value=\"\">\r\n                    24 Hrs\r\n                </label>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</div>" }, "UI-222-new-meter-metering-info": { "name": "UI-222-new-meter-metering-info", "title": "Ui 222 New Meter Metering Info", "path": "/patterns/_scenarios/UI-222-new-meter-metering-info", "html": "﻿<div class=\"exc-form-group-double\">\r\n    <div class=\"form-group form-inline\">\r\n        <div class=\"exc-form-inner\">\r\n            <label>1 phase CT-Rated Meters 400 Amp or Above:</label>\r\n            <label class=\"exc-sub-label\" for=\"\"># of Meters:</label>\r\n            <input type=\"text\" class=\"form-control exc-x-small\" id=\"\" placeholder=\"\">\r\n            <label class=\"exc-sub-label\" for=\"\">Amps:</label>\r\n            <input type=\"text\" class=\"form-control exc-x-small\" id=\"\" placeholder=\"\">\r\n        </div>\r\n    </div>\r\n    <div class=\"form-group form-inline\">\r\n        <div class=\"exc-form-inner\">\r\n            <label>3 phase CT-Rated Meters 400 Amp or Above:</label>\r\n            <label class=\"exc-sub-label\" for=\"\"># of Meters:</label>\r\n            <input type=\"text\" class=\"form-control exc-x-small\" id=\"\" placeholder=\"\">\r\n            <label class=\"exc-sub-label\" for=\"\">Amps:</label>\r\n            <input type=\"text\" class=\"form-control exc-x-small\" id=\"\" placeholder=\"\">\r\n        </div>\r\n    </div>\r\n</div>\r\n<div class=\"exc-form-group-double\">\r\n    <div class=\"form-group form-inline\">\r\n        <div class=\"exc-form-inner\">\r\n            <label>3 phase CT-Rated Meters 400 Amp or Above:</label>\r\n            <label class=\"exc-sub-label\" for=\"\"># of Meters:</label>\r\n            <input type=\"text\" class=\"form-control exc-x-small\" id=\"\" placeholder=\"\">\r\n            <label class=\"exc-sub-label\" for=\"\">Amps:</label>\r\n            <input type=\"text\" class=\"form-control exc-x-small\" id=\"\" placeholder=\"\">\r\n        </div>\r\n    </div>\r\n    <div class=\"form-group form-inline\">\r\n        <div class=\"exc-form-inner\">\r\n            <label>3 phase CT-Rated Meters 400 Amp or Above:</label>\r\n            <label class=\"exc-sub-label\" for=\"\"># of Meters:</label>\r\n            <input type=\"text\" class=\"form-control exc-x-small\" id=\"\" placeholder=\"\">\r\n            <label class=\"exc-sub-label\" for=\"\">Amps:</label>\r\n            <input type=\"text\" class=\"form-control exc-x-small\" id=\"\" placeholder=\"\">\r\n        </div>\r\n    </div>\r\n</div>\r\n" }, "UI-223-total-connected-load-info": { "name": "UI-223-total-connected-load-info", "title": "Ui 223 Total Connected Load Info", "path": "/patterns/_scenarios/UI-223-total-connected-load-info", "html": "﻿<div class=\"exc-tcl\">\r\n    <div class=\"row exc-tcl-header\">\r\n        <div class=\"col-md-3\">\r\n            (kW or HP)\r\n        </div>\r\n        <div class=\"col-md-5\">\r\n            Description\r\n        </div>\r\n        <div class=\"col-md-4\">\r\n            Connected Load in kW\r\n        </div>\r\n    </div>\r\n    <div class=\"row exc-tcl-header\">\r\n        <div class=\"col-md-8\">\r\n\r\n        </div>\r\n        <div class=\"col-md-2\">\r\n            1-Phase\r\n        </div>\r\n        <div class=\"col-md-2\">\r\n            3-Phase\r\n        </div>\r\n    </div>\r\n    <div class=\"row\">\r\n        <div class=\"col-xs-12 col-md-3\">\r\n            <label for=\"\">Lighting<i> Description</i>:</label>\r\n        </div>\r\n        <div class=\"col-xs-12 col-md-5\">\r\n            <input type=\"text\" class=\"form-control\" id=\"\">\r\n            <span class=\"exc-tcl-sub-label\" aria-hidden=\"true\">Lighting Connected Load in kW</span>\r\n        </div>\r\n        <div class=\"col-xs-6 col-md-2\">\r\n            <span class=\"exc-tcl-sub-label\" aria-hidden=\"true\">1-Phase:</span>\r\n            <label class=\"sr-only\" for=\"\">Lighting Connected Load in kW 1 Phase:</label>\r\n            <input type=\"text\" class=\"form-control\" id=\"\">\r\n        </div>\r\n        <div class=\"col-xs-6 col-md-2\">\r\n            <span class=\"exc-tcl-sub-label\" aria-hidden=\"true\">3-Phase:</span>\r\n            <label class=\"sr-only\" for=\"\">Lighting Connected Load in kW 3 Phase:</label>\r\n            <input type=\"text\" class=\"form-control\" id=\"\">\r\n        </div>\r\n    </div>\r\n    <div class=\"row\">\r\n        <div class=\"col-xs-12 col-md-3\">\r\n            <label for=\"\">VAC<i> Description</i>:</label>\r\n        </div>\r\n        <div class=\"col-xs-12 col-md-5\">\r\n            <input type=\"text\" class=\"form-control\" id=\"\">\r\n            <span class=\"exc-tcl-sub-label\" aria-hidden=\"true\">VAC Connected Load in kW</span>\r\n        </div>\r\n        <div class=\"col-xs-6 col-md-2\">\r\n            <span class=\"exc-tcl-sub-label\" aria-hidden=\"true\">1-Phase:</span>\r\n            <label class=\"sr-only\" for=\"\">VAC Connected Load in kW 1 Phase:</label>\r\n            <input type=\"text\" class=\"form-control\" id=\"\">\r\n        </div>\r\n        <div class=\"col-xs-6 col-md-2\">\r\n            <span class=\"exc-tcl-sub-label\" aria-hidden=\"true\">3-Phase:</span>\r\n            <label class=\"sr-only\" for=\"\">VAC Connected Load in kW 3 Phase:</label>\r\n            <input type=\"text\" class=\"form-control\" id=\"\">\r\n        </div>\r\n    </div>\r\n    <div class=\"row exc-tcl-total\">\r\n        <div class=\"col-xs-12 col-md-3\"></div>\r\n        <div class=\"col-xs-12 col-md-5\">\r\n            <span>Total Load<i>:</i></span>\r\n        </div>\r\n        <div class=\"col-xs-6 col-md-2\">\r\n            <span class=\"exc-tcl-sub-label\" aria-hidden=\"true\">1-Phase Total:</span>\r\n            <label class=\"sr-only\" for=\"\">Total Connected Load in kW 1 Phase:</label>\r\n            <input type=\"text\" class=\"form-control\" id=\"\">\r\n        </div>\r\n        <div class=\"col-xs-6 col-md-2\">\r\n            <span class=\"exc-tcl-sub-label\" aria-hidden=\"true\">3-Phase Total:</span>\r\n            <label class=\"sr-only\" for=\"\">Total Connected Load in kW 3 Phase:</label>\r\n            <input type=\"text\" class=\"form-control\" id=\"\">\r\n        </div>\r\n    </div>\r\n</div>\r\n" }, "UI-224-new-meter-motor-load-info": { "name": "UI-224-new-meter-motor-load-info", "title": "Ui 224 New Meter Motor Load Info", "path": "/patterns/_scenarios/UI-224-new-meter-motor-load-info", "html": "﻿<ol class=\"exc-input-wrap\">\r\n    <li>\r\n        <span class=\"exc-number\">1</span>\r\n        <div class=\"form-group\">\r\n            <div class=\"exc-form-inner\">\r\n                <div class=\"exc-label-center\">\r\n                    <label for=\"\"><i>#1 </i>Description:</label>\r\n                </div>\r\n                <input type=\"text\" class=\"form-control\" id=\"\" placeholder=\"\">\r\n            </div>\r\n        </div>\r\n        <div class=\"form-group\">\r\n            <div class=\"exc-form-inner\">\r\n                <div class=\"exc-label-center\">\r\n                    <label for=\"\"><i>#1 </i>Quantity:</label>\r\n                </div>\r\n                <input type=\"text\" class=\"form-control\" id=\"\" placeholder=\"\">\r\n            </div>\r\n        </div>\r\n        <div class=\"form-group\">\r\n            <div class=\"exc-form-inner\">\r\n                <div class=\"exc-label-center\">\r\n                    <label for=\"\"><i>#1 </i>Size (HP):</label>\r\n                </div>\r\n                <input type=\"text\" class=\"form-control\" id=\"\" placeholder=\"\">\r\n            </div>\r\n        </div>\r\n        <div class=\"form-group\">\r\n            <div class=\"exc-form-inner\">\r\n                <div class=\"exc-label-center\">\r\n                    <label for=\"\"><i>#1 </i>Efficency Rating:</label>\r\n                </div>\r\n                <input type=\"text\" class=\"form-control\" id=\"\" placeholder=\"\">\r\n            </div>\r\n        </div>\r\n        <div class=\"form-group\">\r\n            <div class=\"exc-form-inner\">\r\n                <div class=\"exc-label-center\">\r\n                    <label for=\"\"><i>#1 </i>Phase / Voltage:</label>\r\n                </div>\r\n                <input type=\"text\" class=\"form-control\" id=\"\" placeholder=\"\">\r\n            </div>\r\n        </div>\r\n        <div class=\"form-group\">\r\n            <div class=\"exc-form-inner\">\r\n                <div class=\"exc-label-center\">\r\n                    <label for=\"\"><i>#1 </i>Name Code:</label>\r\n                </div>\r\n                <input type=\"text\" class=\"form-control\" id=\"\" placeholder=\"\">\r\n            </div>\r\n        </div>\r\n        <div class=\"form-group\">\r\n            <div class=\"exc-form-inner\">\r\n                <div class=\"exc-label-center\">\r\n                    <label for=\"\"><i>#1 </i>Starts Per Hr. Or Day:</label>\r\n                </div>\r\n                <input type=\"text\" class=\"form-control\" id=\"\" placeholder=\"\">\r\n            </div>\r\n        </div>\r\n        <div class=\"form-group\">\r\n            <div class=\"exc-form-inner\">\r\n                <div class=\"exc-label-center\">\r\n                    <label for=\"\"><i>#1 </i>Starting Amps:</label>\r\n                </div>\r\n                <input type=\"text\" class=\"form-control\" id=\"\" placeholder=\"\">\r\n            </div>\r\n        </div>\r\n        <div class=\"form-group exc-sm-double\">\r\n            <div class=\"exc-form-inner\">\r\n                <div class=\"exc-label-center\">\r\n                    <label for=\"\"><i>#1 </i>Use:</label>\r\n                </div>\r\n                <input type=\"text\" class=\"form-control\" id=\"\" placeholder=\"\">\r\n            </div>\r\n        </div>\r\n    </li>\r\n    <li>\r\n        <span class=\"exc-number\">2</span>\r\n        <div class=\"form-group\">\r\n            <div class=\"exc-form-inner\">\r\n                <div class=\"exc-label-center\">\r\n                    <label for=\"\"><i>#2 </i>Description:</label>\r\n                </div>\r\n                <input type=\"text\" class=\"form-control\" id=\"\" placeholder=\"\">\r\n            </div>\r\n        </div>\r\n        <div class=\"form-group\">\r\n            <div class=\"exc-form-inner\">\r\n                <div class=\"exc-label-center\">\r\n                    <label for=\"\"><i>#2 </i>Quantity:</label>\r\n                </div>\r\n                <input type=\"text\" class=\"form-control\" id=\"\" placeholder=\"\">\r\n            </div>\r\n        </div>\r\n        <div class=\"form-group\">\r\n            <div class=\"exc-form-inner\">\r\n                <div class=\"exc-label-center\">\r\n                    <label for=\"\"><i>#2 </i>Size (HP):</label>\r\n                </div>\r\n                <input type=\"text\" class=\"form-control\" id=\"\" placeholder=\"\">\r\n            </div>\r\n        </div>\r\n        <div class=\"form-group\">\r\n            <div class=\"exc-form-inner\">\r\n                <div class=\"exc-label-center\">\r\n                    <label for=\"\"><i>#2 </i>Efficency Rating:</label>\r\n                </div>\r\n                <input type=\"text\" class=\"form-control\" id=\"\" placeholder=\"\">\r\n            </div>\r\n        </div>\r\n        <div class=\"form-group\">\r\n            <div class=\"exc-form-inner\">\r\n                <div class=\"exc-label-center\">\r\n                    <label for=\"\"><i>#2 </i>Phase / Voltage:</label>\r\n                </div>\r\n                <input type=\"text\" class=\"form-control\" id=\"\" placeholder=\"\">\r\n            </div>\r\n        </div>\r\n        <div class=\"form-group\">\r\n            <div class=\"exc-form-inner\">\r\n                <div class=\"exc-label-center\">\r\n                    <label for=\"\"><i>#2 </i>Name Code:</label>\r\n                </div>\r\n                <input type=\"text\" class=\"form-control\" id=\"\" placeholder=\"\">\r\n            </div>\r\n        </div>\r\n        <div class=\"form-group\">\r\n            <div class=\"exc-form-inner\">\r\n                <div class=\"exc-label-center\">\r\n                    <label for=\"\"><i>#2 </i>Starts Per Hr. Or Day:</label>\r\n                </div>\r\n                <input type=\"text\" class=\"form-control\" id=\"\" placeholder=\"\">\r\n            </div>\r\n        </div>\r\n        <div class=\"form-group\">\r\n            <div class=\"exc-form-inner\">\r\n                <div class=\"exc-label-center\">\r\n                    <label for=\"\"><i>#2 </i>Starting Amps:</label>\r\n                </div>\r\n                <input type=\"text\" class=\"form-control\" id=\"\" placeholder=\"\">\r\n            </div>\r\n        </div>\r\n        <div class=\"form-group exc-sm-double\">\r\n            <div class=\"exc-form-inner\">\r\n                <div class=\"exc-label-center\">\r\n                    <label for=\"\"><i>#2 </i>Use:</label>\r\n                </div>\r\n                <input type=\"text\" class=\"form-control\" id=\"\" placeholder=\"\">\r\n            </div>\r\n        </div>\r\n    </li>\r\n</ol>\r\n" }, "UI-225-new-meter-welder-detail": { "name": "UI-225-new-meter-welder-detail", "title": "Ui 225 New Meter Welder Detail", "path": "/patterns/_scenarios/UI-225-new-meter-welder-detail", "html": "﻿<ol class=\"exc-input-wrap\">\r\n    <li>\r\n        <span class=\"exc-number\">1</span>\r\n        <div class=\"form-group\">\r\n            <div class=\"exc-form-inner\">\r\n                <div class=\"exc-label-center\">\r\n                    <label for=\"\"><i>#1 </i>Description:</label>\r\n                </div>\r\n                <input type=\"text\" class=\"form-control\" id=\"\" placeholder=\"\">\r\n            </div>\r\n        </div>\r\n        <div class=\"form-group\">\r\n            <div class=\"exc-form-inner\">\r\n                <div class=\"exc-label-center\">\r\n                    <label for=\"\"><i>#1 </i>Quantity:</label>\r\n                </div>\r\n                <input type=\"text\" class=\"form-control\" id=\"\" placeholder=\"\">\r\n            </div>\r\n        </div>\r\n        <div class=\"form-group\">\r\n            <div class=\"exc-form-inner\">\r\n                <div class=\"exc-label-center\">\r\n                    <label for=\"\"><i>#1 </i>Size (kVA):</label>\r\n                </div>\r\n                <input type=\"text\" class=\"form-control\" id=\"\" placeholder=\"\">\r\n            </div>\r\n        </div>\r\n        <div class=\"form-group\">\r\n            <div class=\"exc-form-inner\">\r\n                <div class=\"exc-label-center\">\r\n                    <label for=\"\"><i>#1 </i>Type:</label>\r\n                </div>\r\n                <input type=\"text\" class=\"form-control\" id=\"\" placeholder=\"\">\r\n            </div>\r\n        </div>\r\n        <div class=\"form-group\">\r\n            <div class=\"exc-form-inner\">\r\n                <div class=\"exc-label-center\">\r\n                    <label for=\"\"><i>#1 </i>Max.Inst. Demand:</label>\r\n                </div>\r\n                <input type=\"text\" class=\"form-control\" id=\"\" placeholder=\"\">\r\n            </div>\r\n        </div>\r\n        <div class=\"form-group\">\r\n            <div class=\"exc-form-inner\">\r\n                <div class=\"exc-label-center\">\r\n                    <label for=\"\"><i>#1 </i>P.F. at Peak:</label>\r\n                </div>\r\n                <input type=\"text\" class=\"form-control\" id=\"\" placeholder=\"\">\r\n            </div>\r\n        </div>\r\n        <div class=\"form-group\">\r\n            <div class=\"exc-form-inner\">\r\n                <div class=\"exc-label-center\">\r\n                    <label for=\"\"><i>#1 </i>Welds Per Minute:</label>\r\n                </div>\r\n                <input type=\"text\" class=\"form-control\" id=\"\" placeholder=\"\">\r\n            </div>\r\n        </div>\r\n        <div class=\"form-group\">\r\n            <div class=\"exc-form-inner\">\r\n                <div class=\"exc-label-center\">\r\n                    <label for=\"\"><i>#1 </i>Cycles Per Weld:</label>\r\n                </div>\r\n                <input type=\"text\" class=\"form-control\" id=\"\" placeholder=\"\">\r\n            </div>\r\n        </div>\r\n        <div class=\"form-group\">\r\n            <div class=\"exc-form-inner\">\r\n                <div class=\"exc-label-center\">\r\n                    <label for=\"\"><i>#1 </i>Hrs. Per Day Use:</label>\r\n                </div>\r\n                <input type=\"text\" class=\"form-control\" id=\"\" placeholder=\"\">\r\n            </div>\r\n        </div>\r\n    </li>\r\n    <li>\r\n        <span class=\"exc-number\">2</span>\r\n        <div class=\"form-group\">\r\n            <div class=\"exc-form-inner\">\r\n                <div class=\"exc-label-center\">\r\n                    <label for=\"\"><i>#2 </i>Description:</label>\r\n                </div>\r\n                <input type=\"text\" class=\"form-control\" id=\"\" placeholder=\"\">\r\n            </div>\r\n        </div>\r\n        <div class=\"form-group\">\r\n            <div class=\"exc-form-inner\">\r\n                <div class=\"exc-label-center\">\r\n                    <label for=\"\"><i>#2 </i>Quantity:</label>\r\n                </div>\r\n                <input type=\"text\" class=\"form-control\" id=\"\" placeholder=\"\">\r\n            </div>\r\n        </div>\r\n        <div class=\"form-group\">\r\n            <div class=\"exc-form-inner\">\r\n                <div class=\"exc-label-center\">\r\n                    <label for=\"\"><i>#2 </i>Size (kVA):</label>\r\n                </div>\r\n                <input type=\"text\" class=\"form-control\" id=\"\" placeholder=\"\">\r\n            </div>\r\n        </div>\r\n        <div class=\"form-group\">\r\n            <div class=\"exc-form-inner\">\r\n                <div class=\"exc-label-center\">\r\n                    <label for=\"\"><i>#2 </i>Type:</label>\r\n                </div>\r\n                <input type=\"text\" class=\"form-control\" id=\"\" placeholder=\"\">\r\n            </div>\r\n        </div>\r\n        <div class=\"form-group\">\r\n            <div class=\"exc-form-inner\">\r\n                <div class=\"exc-label-center\">\r\n                    <label for=\"\"><i>#2 </i>Max.Inst. Demand:</label>\r\n                </div>\r\n                <input type=\"text\" class=\"form-control\" id=\"\" placeholder=\"\">\r\n            </div>\r\n        </div>\r\n        <div class=\"form-group\">\r\n            <div class=\"exc-form-inner\">\r\n                <div class=\"exc-label-center\">\r\n                    <label for=\"\"><i>#2 </i>P.F. at Peak:</label>\r\n                </div>\r\n                <input type=\"text\" class=\"form-control\" id=\"\" placeholder=\"\">\r\n            </div>\r\n        </div>\r\n        <div class=\"form-group\">\r\n            <div class=\"exc-form-inner\">\r\n                <div class=\"exc-label-center\">\r\n                    <label for=\"\"><i>#2 </i>Welds Per Minute:</label>\r\n                </div>\r\n                <input type=\"text\" class=\"form-control\" id=\"\" placeholder=\"\">\r\n            </div>\r\n        </div>\r\n        <div class=\"form-group\">\r\n            <div class=\"exc-form-inner\">\r\n                <div class=\"exc-label-center\">\r\n                    <label for=\"\"><i>#2 </i>Cycles Per Weld:</label>\r\n                </div>\r\n                <input type=\"text\" class=\"form-control\" id=\"\" placeholder=\"\">\r\n            </div>\r\n        </div>\r\n        <div class=\"form-group\">\r\n            <div class=\"exc-form-inner\">\r\n                <div class=\"exc-label-center\">\r\n                    <label for=\"\"><i>#2 </i>Hrs. Per Day Use:</label>\r\n                </div>\r\n                <input type=\"text\" class=\"form-control\" id=\"\" placeholder=\"\">\r\n            </div>\r\n        </div>\r\n    </li>\r\n</ol>" }, "UI-248-get-data-for-accounts": { "name": "UI-248-get-data-for-accounts", "title": "Ui 248 Get Data For Accounts", "path": "/patterns/_scenarios/UI-248-get-data-for-accounts", "html": "﻿<div class=\"form-group\">\r\n    <div class=\"exc-form-inner\">\r\n        <label class=\"required\">Request Options:</label>\r\n        <div class=\"radio\">\r\n            <label>\r\n                <input type=\"radio\" name=\"\" id=\"\" value=\"\" />\r\n                View Summary Data Online\r\n            </label>\r\n        </div>\r\n        <div class=\"radio\">\r\n            <label>\r\n                <input type=\"radio\" name=\"\" id=\"\" value=\"\" />\r\n                Order Interval Data\r\n            </label>\r\n        </div>\r\n    </div>\r\n</div>\r\n<div class=\"exc-form-group-double exc-add-remove-items\">\r\n    <div class=\"form-group\">\r\n        <div class=\"exc-form-inner\">\r\n            <label for=\"\">Account Number:</label>\r\n            <input type=\"text\" class=\"form-control\" id=\"\" placeholder=\"\" />\r\n            <button type=\"button\" class=\"btn btn-default btn-xs\">Add<span class=\"caret-right\"></span><span class=\"caret-right\"></span></button>\r\n        </div>\r\n    </div>\r\n    <div class=\"form-group\">\r\n        <div class=\"exc-form-inner\">\r\n            <textarea class=\"form-control exc-added-items\" id=\"\" placeholder=\"\"></textarea>\r\n            <div class=\"exc-remove-buttons\">\r\n                <button type=\"button\" class=\"btn btn-default btn-xs\"><span class=\"caret-left\"></span><span class=\"caret-left\"></span>Remove</button>\r\n                <button type=\"button\" class=\"btn btn-default btn-xs\"><i class=\"exc-icon-circle-with-cross\"></i>Remove All</button>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</div>\r\n<div class=\"exc-form-actions\"> \r\n    <button type=\"button\" class=\"btn btn-default\">View Usage Data</button>\r\n    <button type=\"button\" class=\"btn btn-default\"><i class=\"exc-icon-download\"></i>Download CSV Files</button>                    \r\n    <button type=\"button\" class=\"btn btn-primary pull-right\">Submit</button> \r\n</div>" }, "UI-249-summary-data-results": { "name": "UI-249-summary-data-results", "title": "Ui 249 Summary Data Results", "path": "/patterns/_scenarios/UI-249-summary-data-results", "html": "﻿<div class=\"exc-form-group-double\">\r\n    <div class=\"form-group\">\r\n        <div class=\"exc-form-inner\">\r\n            <label for=\"\">Select Account Number:</label>\r\n            <select class=\"form-control\" id=\"\"></select>\r\n        </div>\r\n    </div>\r\n    <div class=\"form-group\">\r\n        <div class=\"exc-form-inner\">\r\n            <button type=\"button\" class=\"btn btn-default btn-xs\"><i class=\"exc-icon-download\"></i>Download All Accounts to ZIP File</button>\r\n        </div>\r\n    </div>\r\n</div>\r\n<p class=\"exc-form-review\"><span>Summary Data for Account Number:</span>6001683009</p>\r\n<p class=\"exc-form-review\"><span>Meter Bill Group Number:</span>14</p>\r\n<p class=\"exc-form-review exc-vertical-space-md\"><span>Meter Reading Schedule:</span><a href=\"#\">View Schedule</a></p>\r\n\r\n<div class=\"exc-data-tool-slat\">\r\n    <table class=\"exc-data-tool-results-3-col\">\r\n        <thead>\r\n            <tr>\r\n                <th>Capacity PLC:</th>\r\n                <th>Start Date:</th>\r\n                <th>End Date:</th>\r\n                <th class=\"control\">More</th>\r\n            </tr>\r\n        </thead>\r\n        <tbody>\r\n            <tr>\r\n                <td>[data]</td>\r\n                <td>MM/DD/YYYY</td>\r\n                <td>MM/DD/YYYY</td>\r\n                <td></td>\r\n            </tr>\r\n        </tbody>\r\n    </table>\r\n</div>\r\n<div class=\"exc-data-tool-slat\">\r\n    <table class=\"exc-data-tool-results-3-col\">\r\n        <thead>\r\n            <tr>\r\n                <th>Network Service PLC:</th>\r\n                <th>Start Date:</th>\r\n                <th>End Date:</th>\r\n                <th class=\"control\">More</th>\r\n            </tr>\r\n        </thead>\r\n        <tbody>\r\n            <tr>\r\n                <td>[data]</td>\r\n                <td>MM/DD/YYYY</td>\r\n                <td>MM/DD/YYYY</td>\r\n                <td></td>\r\n            </tr>\r\n            <tr>\r\n                <td>[data]</td>\r\n                <td>MM/DD/YYYY</td>\r\n                <td>MM/DD/YYYY</td>\r\n                <td></td>\r\n            </tr>\r\n        </tbody>\r\n    </table>\r\n</div>\r\n<div class=\"exc-data-tool-slat\">\r\n    <table class=\"exc-data-tool-results-4-col\">\r\n        <thead>\r\n            <tr>\r\n                <th>Current Supply Grp.:</th>\r\n                <th>Effective Start Date:</th>\r\n                <th>Pending Supply Grp.:</th>\r\n                <th>Effective Start Date:</th>\r\n                <th class=\"control\">More</th>\r\n            </tr>\r\n        </thead>\r\n        <tbody>\r\n            <tr>\r\n                <td>CODE VALUE SPACE</td>\r\n                <td>MM/DD/YYYY</td>\r\n                <td>N/A</td>\r\n                <td>MM/DD/YYYY</td>\r\n                <td></td>\r\n            </tr>\r\n            <tr>\r\n                <td>[data]</td>\r\n                <td>MM/DD/YYYY</td>\r\n                <td>N/A</td>\r\n                <td>MM/DD/YYYY</td>\r\n                <td></td>\r\n            </tr>\r\n        </tbody>\r\n    </table>\r\n</div>\r\n" }, "UI-256-total-connected-load-panel": { "name": "UI-256-total-connected-load-panel", "title": "Ui 256 Total Connected Load Panel", "path": "/patterns/_scenarios/UI-256-total-connected-load-panel", "html": "﻿<div class=\"exc-panel panel panel-primary\">\r\n    <div class=\"panel-heading\">\r\n        <h3 class=\"panel-title\">Total Connected Load Information</h3>\r\n    </div>\r\n    <div class=\"panel-body\">\r\n\r\n        [TOTAL CONNECTED LOAD INFORMATION FIELDS GO HERE]<br>\r\n        [SEE PATTERN \"UI-223-total-connected-load-info\"]\r\n\r\n        <hr>\r\n        <h4 class=\"exc-form-sub-hdr\">Motor Load Information</h4>\r\n        <p>Fill out largest motor specifications.</p>\r\n\r\n        <div class=\"exc-input-wrap exc-plain\">\r\n            <div class=\"form-group\">\r\n                <div class=\"exc-form-inner\">\r\n                    <div class=\"exc-label-center\">\r\n                        <label for=\"\">Description:</label>\r\n                    </div>\r\n                    <input type=\"text\" class=\"form-control\" id=\"\" placeholder=\"\">\r\n                </div>\r\n            </div>\r\n            <div class=\"form-group\">\r\n                <div class=\"exc-form-inner\">\r\n                    <div class=\"exc-label-center\">\r\n                        <label for=\"\">Quantity:</label>\r\n                    </div>\r\n                    <input type=\"text\" class=\"form-control\" id=\"\" placeholder=\"\">\r\n                </div>\r\n            </div>\r\n            <div class=\"form-group\">\r\n                <div class=\"exc-form-inner\">\r\n                    <div class=\"exc-label-center\">\r\n                        <label for=\"\">Size (HP):</label>\r\n                    </div>\r\n                    <input type=\"text\" class=\"form-control\" id=\"\" placeholder=\"\">\r\n                </div>\r\n            </div>\r\n            <div class=\"form-group\">\r\n                <div class=\"exc-form-inner\">\r\n                    <div class=\"exc-label-center\">\r\n                        <label for=\"\">Efficency Rating:</label>\r\n                    </div>\r\n                    <input type=\"text\" class=\"form-control\" id=\"\" placeholder=\"\">\r\n                </div>\r\n            </div>\r\n            <div class=\"form-group\">\r\n                <div class=\"exc-form-inner\">\r\n                    <div class=\"exc-label-center\">\r\n                        <label for=\"\">Phase / Voltage:</label>\r\n                    </div>\r\n                    <input type=\"text\" class=\"form-control\" id=\"\" placeholder=\"\">\r\n                </div>\r\n            </div>\r\n            <div class=\"form-group\">\r\n                <div class=\"exc-form-inner\">\r\n                    <div class=\"exc-label-center\">\r\n                        <label for=\"\">Name Code:</label>\r\n                    </div>\r\n                    <input type=\"text\" class=\"form-control\" id=\"\" placeholder=\"\">\r\n                </div>\r\n            </div>\r\n            <div class=\"form-group\">\r\n                <div class=\"exc-form-inner\">\r\n                    <div class=\"exc-label-center\">\r\n                        <label for=\"\">Starts Per Hr. Or Day:</label>\r\n                    </div>\r\n                    <input type=\"text\" class=\"form-control\" id=\"\" placeholder=\"\">\r\n                </div>\r\n            </div>\r\n            <div class=\"form-group\">\r\n                <div class=\"exc-form-inner\">\r\n                    <div class=\"exc-label-center\">\r\n                        <label for=\"\">Starting Amps:</label>\r\n                    </div>\r\n                    <input type=\"text\" class=\"form-control\" id=\"\" placeholder=\"\">\r\n                </div>\r\n            </div>\r\n            <div class=\"form-group exc-sm-double\">\r\n                <div class=\"exc-form-inner\">\r\n                    <div class=\"exc-label-center\">\r\n                        <label for=\"\">Use:</label>\r\n                    </div>\r\n                    <input type=\"text\" class=\"form-control\" id=\"\" placeholder=\"\">\r\n                </div>\r\n            </div>\r\n        </div>\r\n        <hr />\r\n        <h4 class=\"exc-form-sub-hdr\">Welder Detail</h4>\r\n        <div class=\"exc-input-wrap exc-plain\">\r\n            <div class=\"form-group\">\r\n                <div class=\"exc-form-inner\">\r\n                    <div class=\"exc-label-center\">\r\n                        <label for=\"\">Description:</label>\r\n                    </div>\r\n                    <input type=\"text\" class=\"form-control\" id=\"\" placeholder=\"\">\r\n                </div>\r\n            </div>\r\n            <div class=\"form-group\">\r\n                <div class=\"exc-form-inner\">\r\n                    <div class=\"exc-label-center\">\r\n                        <label for=\"\">Quantity:</label>\r\n                    </div>\r\n                    <input type=\"text\" class=\"form-control\" id=\"\" placeholder=\"\">\r\n                </div>\r\n            </div>\r\n            <div class=\"form-group\">\r\n                <div class=\"exc-form-inner\">\r\n                    <div class=\"exc-label-center\">\r\n                        <label for=\"\">Size (kVA):</label>\r\n                    </div>\r\n                    <input type=\"text\" class=\"form-control\" id=\"\" placeholder=\"\">\r\n                </div>\r\n            </div>\r\n            <div class=\"form-group\">\r\n                <div class=\"exc-form-inner\">\r\n                    <div class=\"exc-label-center\">\r\n                        <label for=\"\">Type:</label>\r\n                    </div>\r\n                    <input type=\"text\" class=\"form-control\" id=\"\" placeholder=\"\">\r\n                </div>\r\n            </div>\r\n            <div class=\"form-group\">\r\n                <div class=\"exc-form-inner\">\r\n                    <div class=\"exc-label-center\">\r\n                        <label for=\"\">Max.Inst. Demand:</label>\r\n                    </div>\r\n                    <input type=\"text\" class=\"form-control\" id=\"\" placeholder=\"\">\r\n                </div>\r\n            </div>\r\n            <div class=\"form-group\">\r\n                <div class=\"exc-form-inner\">\r\n                    <div class=\"exc-label-center\">\r\n                        <label for=\"\">P.F. at Peak:</label>\r\n                    </div>\r\n                    <input type=\"text\" class=\"form-control\" id=\"\" placeholder=\"\">\r\n                </div>\r\n            </div>\r\n            <div class=\"form-group\">\r\n                <div class=\"exc-form-inner\">\r\n                    <div class=\"exc-label-center\">\r\n                        <label for=\"\">Welds Per Minute:</label>\r\n                    </div>\r\n                    <input type=\"text\" class=\"form-control\" id=\"\" placeholder=\"\">\r\n                </div>\r\n            </div>\r\n            <div class=\"form-group\">\r\n                <div class=\"exc-form-inner\">\r\n                    <div class=\"exc-label-center\">\r\n                        <label for=\"\">Cycles Per Weld:</label>\r\n                    </div>\r\n                    <input type=\"text\" class=\"form-control\" id=\"\" placeholder=\"\">\r\n                </div>\r\n            </div>\r\n            <div class=\"form-group\">\r\n                <div class=\"exc-form-inner\">\r\n                    <div class=\"exc-label-center\">\r\n                        <label for=\"\">Hrs. Per Day Use:</label>\r\n                    </div>\r\n                    <input type=\"text\" class=\"form-control\" id=\"\" placeholder=\"\">\r\n                </div>\r\n            </div>\r\n        </div>\r\n        <!-- end panel content -->\r\n    </div>\r\n</div> " }, "UI-260-equipment-info": { "name": "UI-260-equipment-info", "title": "Ui 260 Equipment Info", "path": "/patterns/_scenarios/UI-260-equipment-info", "html": "﻿<div class=\"exc-panel panel panel-primary\">\r\n    <div class=\"panel-heading\">\r\n        <h3 class=\"panel-title\">Equipment Information</h3>\r\n    </div>\r\n    <div class=\"panel-body\">\r\n        <div class=\"form-group\">\r\n            <div class=\"exc-form-inner\">\r\n                <div class=\"exc-label\">\r\n                    <label for=\"\">Number of Pieces to Itemize:</label>\r\n                </div>\r\n                <select class=\"form-control exc-small\" id=\"\">\r\n                    <option></option>\r\n                </select>\r\n            </div>\r\n        </div>\r\n        <hr>\r\n        <h4 class=\"exc-form-sub-hdr\">Equipment Item 1</h4>\r\n        <div class=\"exc-input-wrap exc-plain exc-equip-info\">\r\n            <div class=\"form-group\">\r\n                <div class=\"exc-form-inner\">\r\n                    <div class=\"exc-label-center\">\r\n                        <label for=\"\"><i>#1</i> New Or Existing:</label>\r\n                    </div>\r\n                    <select class=\"form-control\" id=\"\">\r\n                        <option></option>\r\n                    </select>\r\n                </div>\r\n            </div>\r\n            <div class=\"form-group\">\r\n                <div class=\"exc-form-inner\">\r\n                    <div class=\"exc-label-center\">\r\n                        <label for=\"\"><i>#1</i> BTU Input / Unit:</label>\r\n                    </div>\r\n                    <input type=\"text\" class=\"form-control\" id=\"\" placeholder=\"\">\r\n                </div>\r\n            </div>\r\n            <div class=\"form-group\">\r\n                <div class=\"exc-form-inner\">\r\n                    <div class=\"exc-label-center\">\r\n                        <label for=\"\"><i>#1</i> Fuel Type:</label>\r\n                    </div>\r\n                    <select class=\"form-control\" id=\"\">\r\n                        <option></option>\r\n                    </select>\r\n                </div>\r\n            </div>\r\n            <div class=\"form-group\">\r\n                <div class=\"exc-form-inner\">\r\n                    <div class=\"exc-label-center\">\r\n                        <label for=\"\"><i>#1</i> Equipment Pressure:</label>\r\n                    </div>\r\n                    <input type=\"text\" class=\"form-control\" id=\"\" placeholder=\"\">\r\n                </div>\r\n            </div>\r\n            <div class=\"form-group exc-sm-double\">\r\n                <div class=\"exc-form-inner\">\r\n                    <div class=\"exc-label-center\">\r\n                        <label for=\"\"><i>#1</i> Equipment Type:</label>\r\n                    </div>\r\n                    <select class=\"form-control\" id=\"\">\r\n                        <option></option>\r\n                    </select>\r\n                </div>\r\n            </div>\r\n            <div class=\"form-group exc-input-hint\">\r\n                <div class=\"exc-form-inner\">\r\n                    <label for=\"\"><i>#1</i> Hours Used Per Day:</label>\r\n                    <input type=\"text\" class=\"form-control\" id=\"\" placeholder=\"\">\r\n                    <span class=\"exc-input-hint-text\">(hrs/day)</span>\r\n                </div>\r\n            </div>\r\n            <div class=\"form-group\">\r\n                <div class=\"exc-form-inner\">\r\n                    <div class=\"exc-label-center\">\r\n                        <label for=\"\"><i>#1</i> Number of Units:</label>\r\n                    </div>\r\n                    <input type=\"text\" class=\"form-control\" id=\"\" placeholder=\"\">\r\n                </div>\r\n            </div>\r\n        </div>\r\n        <hr>\r\n        <h4 class=\"exc-form-sub-hdr\">Equipment Item 2</h4>\r\n        <div class=\"exc-input-wrap exc-plain exc-equip-info\">\r\n            <div class=\"form-group\">\r\n                <div class=\"exc-form-inner\">\r\n                    <div class=\"exc-label-center\">\r\n                        <label for=\"\"><i>#2</i> New Or Existing:</label>\r\n                    </div>\r\n                    <select class=\"form-control\" id=\"\">\r\n                        <option></option>\r\n                    </select>\r\n                </div>\r\n            </div>\r\n            <div class=\"form-group\">\r\n                <div class=\"exc-form-inner\">\r\n                    <div class=\"exc-label-center\">\r\n                        <label for=\"\"><i>#2</i> BTU Input / Unit:</label>\r\n                    </div>\r\n                    <input type=\"text\" class=\"form-control\" id=\"\" placeholder=\"\">\r\n                </div>\r\n            </div>\r\n            <div class=\"form-group\">\r\n                <div class=\"exc-form-inner\">\r\n                    <div class=\"exc-label-center\">\r\n                        <label for=\"\"><i>#2</i> Fuel Type:</label>\r\n                    </div>\r\n                    <select class=\"form-control\" id=\"\">\r\n                        <option></option>\r\n                    </select>\r\n                </div>\r\n            </div>\r\n            <div class=\"form-group\">\r\n                <div class=\"exc-form-inner\">\r\n                    <div class=\"exc-label-center\">\r\n                        <label for=\"\"><i>#2</i> Equipment Pressure:</label>\r\n                    </div>\r\n                    <input type=\"text\" class=\"form-control\" id=\"\" placeholder=\"\">\r\n                </div>\r\n            </div>\r\n            <div class=\"form-group exc-sm-double\">\r\n                <div class=\"exc-form-inner\">\r\n                    <div class=\"exc-label-center\">\r\n                        <label for=\"\"><i>#2</i> Equipment Type:</label>\r\n                    </div>\r\n                    <select class=\"form-control\" id=\"\">\r\n                        <option></option>\r\n                    </select>\r\n                </div>\r\n            </div>\r\n            <div class=\"form-group exc-input-hint\">\r\n                <div class=\"exc-form-inner\">\r\n                    <label for=\"\"><i>#2</i> Hours Used Per Day:</label>\r\n                    <input type=\"text\" class=\"form-control\" id=\"\" placeholder=\"\">\r\n                    <span class=\"exc-input-hint-text\">(hrs/day)</span>\r\n                </div>\r\n            </div>\r\n            <div class=\"form-group\">\r\n                <div class=\"exc-form-inner\">\r\n                    <div class=\"exc-label-center\">\r\n                        <label for=\"\"><i>#2</i> Number of Units:</label>\r\n                    </div>\r\n                    <input type=\"text\" class=\"form-control\" id=\"\" placeholder=\"\">\r\n                </div>\r\n            </div>\r\n        </div>\r\n        <!-- end panel content -->\r\n    </div>\r\n</div> ", "txt": "﻿The <i> tags within the labels contain numbers that only show on mobile view, to help the user know which equipment item they are entering data for. (The content in the <i> tag is also available to screen readers.)" }, "UI-268-fire-academy": { "name": "UI-268-fire-academy", "title": "Ui 268 Fire Academy", "path": "/patterns/_scenarios/UI-268-fire-academy", "html": "﻿<hr />\r\n<h4 class=\"exc-form-sub-hdr\">Schedule Information</h4>\r\n<p>Lorem ipsum.</p>\r\n\r\n<div class=\"exc-course-signup\">\r\n    <button class=\"btn btn-default btn-xs\"><i class=\"exc-icon-circle-with-plus\"></i>Add Training Participant</button>\r\n    <p class=\"exc-course-title\">[TITLE, DATE, TIME GOES HERE]</p>\r\n    <div class=\"exc-course-participant\">\r\n        <label>1. Participant's Name</label>\r\n        <input class=\"form-control\" />\r\n    </div>\r\n    <div class=\"exc-course-participant\">\r\n        <label>2. Participant's Name</label>\r\n        <input class=\"form-control\" />\r\n    </div>\r\n</div>\r\n<div class=\"exc-course-signup\">\r\n    <button class=\"btn btn-default btn-xs\"><i class=\"exc-icon-circle-with-plus\"></i>Add Training Participant</button>\r\n    <p class=\"exc-course-title\">[TITLE, DATE, TIME GOES HERE]</p>\r\n    <div class=\"exc-course-participant\">\r\n        <label>1. Participant's Name</label>\r\n        <input class=\"form-control\" />\r\n    </div>\r\n</div>" }, "UI-43-account-settings-slats": { "name": "UI-43-account-settings-slats", "title": "Ui 43 Account Settings Slats", "path": "/patterns/_scenarios/UI-43-account-settings-slats", "html": "﻿<div class=\"exc-account-slat\">\r\n    <label class=\"exc-account-slat-label\">Customer Name</label>\r\n    <div class=\"exc-account-slat-value\">Mark Sievers</div>\r\n</div>\r\n<div class=\"exc-account-slat\">\r\n    <div class=\"exc-account-info\">\r\n        <label class=\"exc-account-slat-label\">Account Number</label>\r\n        <div class=\"exc-account-slat-value\">1234567890</div>\r\n        <div class=\"exc-tooltip-icon\" data-toggle=\"tooltip\" data-placement=\"left\" title=\"Tooltip text goes here.\">?</div>\r\n    </div>\r\n</div>\r\n<div class=\"exc-account-slat\">\r\n    <label class=\"exc-account-slat-label\">Service Address</label>\r\n    <div class=\"exc-account-slat-value\">123 Main Street, Apt. 4b, Baltimore, MD 21230</div>\r\n</div>\r\n<div class=\"exc-account-slat\">\r\n    <div class=\"exc-account-info\">\r\n        <label class=\"exc-account-slat-label\">Username (Email Address)</label>\r\n        <div class=\"exc-account-slat-value\">msievers@gmail.com</div>\r\n        <button class=\"btn btn-default\"><i class=\"exc-icon-edit\"></i>Edit</button>\r\n    </div>\r\n    <div class=\"exc-account-edit\">\r\n        <div class=\"form-group\">\r\n            <div class=\"exc-form-inner\">\r\n                <label class=\"required\">Username:</label>\r\n                <input class=\"form-control\" />\r\n            </div>\r\n        </div>\r\n        <div class=\"form-group\">\r\n            <div class=\"exc-form-inner\">\r\n                <label class=\"required\">Confirm New Username:</label>\r\n                <input class=\"form-control\" />\r\n            </div>\r\n        </div>\r\n        <div class=\"exc-feedback exc-feedback-info\">\r\n            <div class=\"container\">\r\n                <i class=\"exc-icon-feedback\"></i>\r\n                <p>You will be logged out if you continue with this username change, and will be required to validate your email before taking any further action on your account.</p>\r\n                <p>Would you like to continue? <span class=\"exc-confirm-btns\"><button class=\"btn btn-default btn-xs\">Cancel</button><button class=\"btn btn-primary btn-xs\">Continue</button></span></p>\r\n            </div>\r\n        </div>\r\n        <div class=\"row\">\r\n            <div class=\"col-md-12\">\r\n                <button type=\"button\" class=\"btn btn-default\">Cancel</button>\r\n                <button type=\"button\" class=\"btn btn-primary pull-right\">Save<span class=\"caret-right\"></span></button>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</div>\r\n<div class=\"exc-account-slat\">\r\n    <div class=\"exc-account-info\">\r\n        <label class=\"exc-account-slat-label\">Password</label>\r\n        <div class=\"exc-account-slat-value\">********</div>\r\n        <button class=\"btn btn-default\"><i class=\"exc-icon-edit\"></i>Edit</button>\r\n    </div>\r\n    <div class=\"exc-account-edit\">\r\n        <div class=\"form-group exc-pw-blank\">\r\n            <div class=\"exc-form-inner\">\r\n                <label for=\"\" class=\"required\">Password:</label>\r\n                <input type=\"text\" class=\"form-control\" id=\"\" placeholder=\"\">\r\n                <div class=\"exc-pw-meter\">\r\n                    <span></span>\r\n                    <span></span>\r\n                    <span></span>\r\n                    <span></span>\r\n                    <span></span>\r\n                </div>\r\n                <div class=\"exc-pw-strength\"></div>\r\n            </div>\r\n        </div>\r\n        <div class=\"form-group\">\r\n            <div class=\"exc-form-inner\">\r\n                <label class=\"required\">Confirm Password:</label>\r\n                <input class=\"form-control\" />\r\n            </div>\r\n        </div>\r\n        <div class=\"row\">\r\n            <div class=\"col-md-12\">\r\n                <button type=\"button\" class=\"btn btn-default\">Cancel</button>\r\n                <button type=\"button\" class=\"btn btn-primary pull-right\">Save<span class=\"caret-right\"></span></button>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</div>   " } } }, "_style-guide": { "name": "_style-guide", "title": "Style Guide", "path": "/patterns/_style-guide" }, "_tables": { "name": "_tables", "title": "Tables", "path": "/patterns/_tables", "items": { "data-table": { "name": "data-table", "title": "Data Table", "path": "/patterns/_tables/data-table", "html": "<table id=\"dataTable\" class=\"table\" width=\"100%\">\r\n    <thead>\r\n        <tr>\r\n            <th>Date</th>\r\n            <th>Description</th>\r\n            <th class=\"table-col-sm\">kWh (Elec)</th>\r\n            <th class=\"table-col-sm\">Ccf (Gas)</th>\r\n            <th>Total Amount Due</th>\r\n            <th>Amount Paid</th>\r\n            <th>Outstanding Balance</th>\r\n            <th>Status</th>\r\n            <th>Action</th>\r\n            <th class=\"control\">More</th>\r\n        </tr>\r\n    </thead>\r\n    <tbody>\r\n        <tr>\r\n            <td>07/03/15</td>\r\n            <td>Payment</td>\r\n            <td>1855</td>\r\n            <td></td>\r\n            <td>$185.58</td>\r\n            <td>$185.58</td>\r\n            <td>$0.00</td>\r\n            <td>Scheduled</td>\r\n            <td class=\"action-cell\">\r\n                <button type=\"button\" class=\"btn btn-primary btn-sm\"><i class=\"exc-icon-edit\"></i>Edit</button>\r\n                <button type=\"button\" class=\"btn btn-default btn-sm\"><i class=\"exc-icon-circle-with-cross\"></i>Cancel</button>\r\n            </td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>07/03/15</td>\r\n            <td>Payment</td>\r\n            <td>1855</td>\r\n            <td></td>\r\n            <td>$185.58</td>\r\n            <td>$185.58</td>\r\n            <td>$0.00</td>\r\n            <td>Scheduled</td>\r\n            <td class=\"action-cell\">\r\n                <button type=\"button\" class=\"btn btn-primary btn-sm\"><i class=\"exc-icon-edit\"></i>Edit</button>\r\n                <button type=\"button\" class=\"btn btn-default btn-sm\"><i class=\"exc-icon-circle-with-cross\"></i>Cancel</button>\r\n            </td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>07/03/15</td>\r\n            <td>Payment</td>\r\n            <td>1855</td>\r\n            <td></td>\r\n            <td>$185.58</td>\r\n            <td>$185.58</td>\r\n            <td>$0.00</td>\r\n            <td>Scheduled</td>\r\n            <td class=\"action-cell\">\r\n                <button type=\"button\" class=\"btn btn-primary btn-sm\"><i class=\"exc-icon-edit\"></i>Edit</button>\r\n                <button type=\"button\" class=\"btn btn-default btn-sm\"><i class=\"exc-icon-circle-with-cross\"></i>Cancel</button>\r\n            </td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>06/02/15</td>\r\n            <td>Billing</td>\r\n            <td>1855</td>\r\n            <td></td>\r\n            <td>$185.58</td>\r\n            <td></td>\r\n            <td>$0.00</td>\r\n            <td></td>\r\n            <td class=\"action-cell\"><button type=\"button\" class=\"btn btn-primary btn-sm\"><i class=\"exc-icon-file-pdf\"></i>View</button></td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>06/03/15</td>\r\n            <td>Payment</td>\r\n            <td>2012</td>\r\n            <td></td>\r\n            <td>$240.02</td>\r\n            <td>$240.02</td>\r\n            <td>$0.000</td>\r\n            <td>Posted</td>\r\n            <td></td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>05/19/15</td>\r\n            <td>Billing</td>\r\n            <td>2012</td>\r\n            <td></td>\r\n            <td>$240.02</td>\r\n            <td></td>\r\n            <td>$0.00</td>\r\n            <td></td>\r\n            <td class=\"action-cell\"><button type=\"button\" class=\"btn btn-primary btn-sm\"><i class=\"exc-icon-file-pdf\"></i>View</button></td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>05/15/15</td>\r\n            <td>Payment</td>\r\n            <td>1700</td>\r\n            <td></td>\r\n            <td>$140.38</td>\r\n            <td>$140.38</td>\r\n            <td>$0.00</td>\r\n            <td>Posted</td>\r\n            <td></td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>04/20/15</td>\r\n            <td>Billing</td>\r\n            <td>1700</td>\r\n            <td></td>\r\n            <td>$140.38</td>\r\n            <td></td>\r\n            <td>$0.00</td>\r\n            <td></td>\r\n            <td class=\"action-cell\"><button type=\"button\" class=\"btn btn-primary btn-sm\"><i class=\"exc-icon-file-pdf\"></i>View</button></td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>04/02/15</td>\r\n            <td>Payment</td>\r\n            <td>1820</td>\r\n            <td></td>\r\n            <td>$150.59</td>\r\n            <td>$150.59</td>\r\n            <td>$0.000</td>\r\n            <td>Posted</td>\r\n            <td></td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>03/20/15</td>\r\n            <td>Billing</td>\r\n            <td>1820</td>\r\n            <td></td>\r\n            <td>$150.59</td>\r\n            <td></td>\r\n            <td>$0.00</td>\r\n            <td></td>\r\n            <td class=\"action-cell\"><button type=\"button\" class=\"btn btn-primary btn-sm\"><i class=\"exc-icon-file-pdf\"></i>View</button></td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>03/02/15</td>\r\n            <td>Payment</td>\r\n            <td>1990</td>\r\n            <td></td>\r\n            <td>$202.52</td>\r\n            <td>$202.52</td>\r\n            <td>$0.00</td>\r\n            <td>Posted</td>\r\n            <td></td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>03/01/15</td>\r\n            <td>Payment</td>\r\n            <td>1990</td>\r\n            <td></td>\r\n            <td>$202.52</td>\r\n            <td>$252.52</td>\r\n            <td>$0.00</td>\r\n            <td>Canceled</td>\r\n            <td></td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>02/21/15</td>\r\n            <td>Billing</td>\r\n            <td>1990</td>\r\n            <td></td>\r\n            <td>$202.52</td>\r\n            <td></td>\r\n            <td>$0.00</td>\r\n            <td></td>\r\n            <td class=\"action-cell\"><button type=\"button\" class=\"btn btn-primary btn-sm\"><i class=\"exc-icon-file-pdf\"></i>View</button></td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>07/03/15</td>\r\n            <td>Payment</td>\r\n            <td>1855</td>\r\n            <td></td>\r\n            <td>$185.58</td>\r\n            <td>$185.58</td>\r\n            <td>$0.00</td>\r\n            <td>Scheduled</td>\r\n            <td class=\"action-cell\">\r\n                <button type=\"button\" class=\"btn btn-primary btn-sm\"><i class=\"exc-icon-edit\"></i>Edit</button>\r\n                <button type=\"button\" class=\"btn btn-default btn-sm\"><i class=\"exc-icon-circle-with-cross\"></i>Cancel</button>\r\n            </td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>07/03/15</td>\r\n            <td>Payment</td>\r\n            <td>1855</td>\r\n            <td></td>\r\n            <td>$185.58</td>\r\n            <td>$185.58</td>\r\n            <td>$0.00</td>\r\n            <td>Scheduled</td>\r\n            <td class=\"action-cell\">\r\n                <button type=\"button\" class=\"btn btn-primary btn-sm\"><i class=\"exc-icon-edit\"></i>Edit</button>\r\n                <button type=\"button\" class=\"btn btn-default btn-sm\"><i class=\"exc-icon-circle-with-cross\"></i>Cancel</button>\r\n            </td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>07/03/15</td>\r\n            <td>Payment</td>\r\n            <td>1855</td>\r\n            <td></td>\r\n            <td>$185.58</td>\r\n            <td>$185.58</td>\r\n            <td>$0.00</td>\r\n            <td>Scheduled</td>\r\n            <td class=\"action-cell\">\r\n                <button type=\"button\" class=\"btn btn-primary btn-sm\"><i class=\"exc-icon-edit\"></i>Edit</button>\r\n                <button type=\"button\" class=\"btn btn-default btn-sm\"><i class=\"exc-icon-circle-with-cross\"></i>Cancel</button>\r\n            </td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>06/02/15</td>\r\n            <td>Billing</td>\r\n            <td>1855</td>\r\n            <td></td>\r\n            <td>$185.58</td>\r\n            <td></td>\r\n            <td>$0.00</td>\r\n            <td></td>\r\n            <td class=\"action-cell\"><button type=\"button\" class=\"btn btn-primary btn-sm\"><i class=\"exc-icon-file-pdf\"></i>View</button></td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>06/03/15</td>\r\n            <td>Payment</td>\r\n            <td>2012</td>\r\n            <td></td>\r\n            <td>$240.02</td>\r\n            <td>$240.02</td>\r\n            <td>$0.000</td>\r\n            <td>Posted</td>\r\n            <td></td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>05/19/15</td>\r\n            <td>Billing</td>\r\n            <td>2012</td>\r\n            <td></td>\r\n            <td>$240.02</td>\r\n            <td></td>\r\n            <td>$0.00</td>\r\n            <td></td>\r\n            <td class=\"action-cell\"><button type=\"button\" class=\"btn btn-primary btn-sm\"><i class=\"exc-icon-file-pdf\"></i>View</button></td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>05/15/15</td>\r\n            <td>Payment</td>\r\n            <td>1700</td>\r\n            <td></td>\r\n            <td>$140.38</td>\r\n            <td>$140.38</td>\r\n            <td>$0.00</td>\r\n            <td>Posted</td>\r\n            <td></td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>04/20/15</td>\r\n            <td>Billing</td>\r\n            <td>1700</td>\r\n            <td></td>\r\n            <td>$140.38</td>\r\n            <td></td>\r\n            <td>$0.00</td>\r\n            <td></td>\r\n            <td class=\"action-cell\"><button type=\"button\" class=\"btn btn-primary btn-sm\"><i class=\"exc-icon-file-pdf\"></i>View</button></td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>04/02/15</td>\r\n            <td>Payment</td>\r\n            <td>1820</td>\r\n            <td></td>\r\n            <td>$150.59</td>\r\n            <td>$150.59</td>\r\n            <td>$0.000</td>\r\n            <td>Posted</td>\r\n            <td></td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>03/20/15</td>\r\n            <td>Billing</td>\r\n            <td>1820</td>\r\n            <td></td>\r\n            <td>$150.59</td>\r\n            <td></td>\r\n            <td>$0.00</td>\r\n            <td></td>\r\n            <td class=\"action-cell\"><button type=\"button\" class=\"btn btn-primary btn-sm\"><i class=\"exc-icon-file-pdf\"></i>View</button></td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>03/02/15</td>\r\n            <td>Payment</td>\r\n            <td>1990</td>\r\n            <td></td>\r\n            <td>$202.52</td>\r\n            <td>$202.52</td>\r\n            <td>$0.00</td>\r\n            <td>Posted</td>\r\n            <td></td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>03/01/15</td>\r\n            <td>Payment</td>\r\n            <td>1990</td>\r\n            <td></td>\r\n            <td>$202.52</td>\r\n            <td>$252.52</td>\r\n            <td>$0.00</td>\r\n            <td>Canceled</td>\r\n            <td></td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>02/21/15</td>\r\n            <td>Billing</td>\r\n            <td>1990</td>\r\n            <td></td>\r\n            <td>$202.52</td>\r\n            <td></td>\r\n            <td>$0.00</td>\r\n            <td></td>\r\n            <td class=\"action-cell\"><button type=\"button\" class=\"btn btn-primary btn-sm\"><i class=\"exc-icon-file-pdf\"></i>View</button></td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>07/03/15</td>\r\n            <td>Payment</td>\r\n            <td>1855</td>\r\n            <td></td>\r\n            <td>$185.58</td>\r\n            <td>$185.58</td>\r\n            <td>$0.00</td>\r\n            <td>Scheduled</td>\r\n            <td class=\"action-cell\">\r\n                <button type=\"button\" class=\"btn btn-primary btn-sm\"><i class=\"exc-icon-edit\"></i>Edit</button>\r\n                <button type=\"button\" class=\"btn btn-default btn-sm\"><i class=\"exc-icon-circle-with-cross\"></i>Cancel</button>\r\n            </td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>07/03/15</td>\r\n            <td>Payment</td>\r\n            <td>1855</td>\r\n            <td></td>\r\n            <td>$185.58</td>\r\n            <td>$185.58</td>\r\n            <td>$0.00</td>\r\n            <td>Scheduled</td>\r\n            <td class=\"action-cell\">\r\n                <button type=\"button\" class=\"btn btn-primary btn-sm\"><i class=\"exc-icon-edit\"></i>Edit</button>\r\n                <button type=\"button\" class=\"btn btn-default btn-sm\"><i class=\"exc-icon-circle-with-cross\"></i>Cancel</button>\r\n            </td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>07/03/15</td>\r\n            <td>Payment</td>\r\n            <td>1855</td>\r\n            <td></td>\r\n            <td>$185.58</td>\r\n            <td>$185.58</td>\r\n            <td>$0.00</td>\r\n            <td>Scheduled</td>\r\n            <td class=\"action-cell\">\r\n                <button type=\"button\" class=\"btn btn-primary btn-sm\"><i class=\"exc-icon-edit\"></i>Edit</button>\r\n                <button type=\"button\" class=\"btn btn-default btn-sm\"><i class=\"exc-icon-circle-with-cross\"></i>Cancel</button>\r\n            </td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>06/02/15</td>\r\n            <td>Billing</td>\r\n            <td>1855</td>\r\n            <td></td>\r\n            <td>$185.58</td>\r\n            <td></td>\r\n            <td>$0.00</td>\r\n            <td></td>\r\n            <td class=\"action-cell\"><button type=\"button\" class=\"btn btn-primary btn-sm\"><i class=\"exc-icon-file-pdf\"></i>View</button></td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>06/03/15</td>\r\n            <td>Payment</td>\r\n            <td>2012</td>\r\n            <td></td>\r\n            <td>$240.02</td>\r\n            <td>$240.02</td>\r\n            <td>$0.000</td>\r\n            <td>Posted</td>\r\n            <td></td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>05/19/15</td>\r\n            <td>Billing</td>\r\n            <td>2012</td>\r\n            <td></td>\r\n            <td>$240.02</td>\r\n            <td></td>\r\n            <td>$0.00</td>\r\n            <td></td>\r\n            <td class=\"action-cell\"><button type=\"button\" class=\"btn btn-primary btn-sm\"><i class=\"exc-icon-file-pdf\"></i>View</button></td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>05/15/15</td>\r\n            <td>Payment</td>\r\n            <td>1700</td>\r\n            <td></td>\r\n            <td>$140.38</td>\r\n            <td>$140.38</td>\r\n            <td>$0.00</td>\r\n            <td>Posted</td>\r\n            <td></td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>04/20/15</td>\r\n            <td>Billing</td>\r\n            <td>1700</td>\r\n            <td></td>\r\n            <td>$140.38</td>\r\n            <td></td>\r\n            <td>$0.00</td>\r\n            <td></td>\r\n            <td class=\"action-cell\"><button type=\"button\" class=\"btn btn-primary btn-sm\"><i class=\"exc-icon-file-pdf\"></i>View</button></td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>04/02/15</td>\r\n            <td>Payment</td>\r\n            <td>1820</td>\r\n            <td></td>\r\n            <td>$150.59</td>\r\n            <td>$150.59</td>\r\n            <td>$0.000</td>\r\n            <td>Posted</td>\r\n            <td></td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>03/20/15</td>\r\n            <td>Billing</td>\r\n            <td>1820</td>\r\n            <td></td>\r\n            <td>$150.59</td>\r\n            <td></td>\r\n            <td>$0.00</td>\r\n            <td></td>\r\n            <td class=\"action-cell\"><button type=\"button\" class=\"btn btn-primary btn-sm\"><i class=\"exc-icon-file-pdf\"></i>View</button></td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>03/02/15</td>\r\n            <td>Payment</td>\r\n            <td>1990</td>\r\n            <td></td>\r\n            <td>$202.52</td>\r\n            <td>$202.52</td>\r\n            <td>$0.00</td>\r\n            <td>Posted</td>\r\n            <td></td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>03/01/15</td>\r\n            <td>Payment</td>\r\n            <td>1990</td>\r\n            <td></td>\r\n            <td>$202.52</td>\r\n            <td>$252.52</td>\r\n            <td>$0.00</td>\r\n            <td>Canceled</td>\r\n            <td></td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>02/21/15</td>\r\n            <td>Billing</td>\r\n            <td>1990</td>\r\n            <td></td>\r\n            <td>$202.52</td>\r\n            <td></td>\r\n            <td>$0.00</td>\r\n            <td></td>\r\n            <td class=\"action-cell\"><button type=\"button\" class=\"btn btn-primary btn-sm\"><i class=\"exc-icon-file-pdf\"></i>View</button></td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>07/03/15</td>\r\n            <td>Payment</td>\r\n            <td>1855</td>\r\n            <td></td>\r\n            <td>$185.58</td>\r\n            <td>$185.58</td>\r\n            <td>$0.00</td>\r\n            <td>Scheduled</td>\r\n            <td class=\"action-cell\">\r\n                <button type=\"button\" class=\"btn btn-primary btn-sm\"><i class=\"exc-icon-edit\"></i>Edit</button>\r\n                <button type=\"button\" class=\"btn btn-default btn-sm\"><i class=\"exc-icon-circle-with-cross\"></i>Cancel</button>\r\n            </td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>07/03/15</td>\r\n            <td>Payment</td>\r\n            <td>1855</td>\r\n            <td></td>\r\n            <td>$185.58</td>\r\n            <td>$185.58</td>\r\n            <td>$0.00</td>\r\n            <td>Scheduled</td>\r\n            <td class=\"action-cell\">\r\n                <button type=\"button\" class=\"btn btn-primary btn-sm\"><i class=\"exc-icon-edit\"></i>Edit</button>\r\n                <button type=\"button\" class=\"btn btn-default btn-sm\"><i class=\"exc-icon-circle-with-cross\"></i>Cancel</button>\r\n            </td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>07/03/15</td>\r\n            <td>Payment</td>\r\n            <td>1855</td>\r\n            <td></td>\r\n            <td>$185.58</td>\r\n            <td>$185.58</td>\r\n            <td>$0.00</td>\r\n            <td>Scheduled</td>\r\n            <td class=\"action-cell\">\r\n                <button type=\"button\" class=\"btn btn-primary btn-sm\"><i class=\"exc-icon-edit\"></i>Edit</button>\r\n                <button type=\"button\" class=\"btn btn-default btn-sm\"><i class=\"exc-icon-circle-with-cross\"></i>Cancel</button>\r\n            </td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>06/02/15</td>\r\n            <td>Billing</td>\r\n            <td>1855</td>\r\n            <td></td>\r\n            <td>$185.58</td>\r\n            <td></td>\r\n            <td>$0.00</td>\r\n            <td></td>\r\n            <td class=\"action-cell\"><button type=\"button\" class=\"btn btn-primary btn-sm\"><i class=\"exc-icon-file-pdf\"></i>View</button></td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>06/03/15</td>\r\n            <td>Payment</td>\r\n            <td>2012</td>\r\n            <td></td>\r\n            <td>$240.02</td>\r\n            <td>$240.02</td>\r\n            <td>$0.000</td>\r\n            <td>Posted</td>\r\n            <td></td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>05/19/15</td>\r\n            <td>Billing</td>\r\n            <td>2012</td>\r\n            <td></td>\r\n            <td>$240.02</td>\r\n            <td></td>\r\n            <td>$0.00</td>\r\n            <td></td>\r\n            <td class=\"action-cell\"><button type=\"button\" class=\"btn btn-primary btn-sm\"><i class=\"exc-icon-file-pdf\"></i>View</button></td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>05/15/15</td>\r\n            <td>Payment</td>\r\n            <td>1700</td>\r\n            <td></td>\r\n            <td>$140.38</td>\r\n            <td>$140.38</td>\r\n            <td>$0.00</td>\r\n            <td>Posted</td>\r\n            <td></td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>04/20/15</td>\r\n            <td>Billing</td>\r\n            <td>1700</td>\r\n            <td></td>\r\n            <td>$140.38</td>\r\n            <td></td>\r\n            <td>$0.00</td>\r\n            <td></td>\r\n            <td class=\"action-cell\"><button type=\"button\" class=\"btn btn-primary btn-sm\"><i class=\"exc-icon-file-pdf\"></i>View</button></td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>04/02/15</td>\r\n            <td>Payment</td>\r\n            <td>1820</td>\r\n            <td></td>\r\n            <td>$150.59</td>\r\n            <td>$150.59</td>\r\n            <td>$0.000</td>\r\n            <td>Posted</td>\r\n            <td></td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>03/20/15</td>\r\n            <td>Billing</td>\r\n            <td>1820</td>\r\n            <td></td>\r\n            <td>$150.59</td>\r\n            <td></td>\r\n            <td>$0.00</td>\r\n            <td></td>\r\n            <td class=\"action-cell\"><button type=\"button\" class=\"btn btn-primary btn-sm\"><i class=\"exc-icon-file-pdf\"></i>View</button></td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>03/02/15</td>\r\n            <td>Payment</td>\r\n            <td>1990</td>\r\n            <td></td>\r\n            <td>$202.52</td>\r\n            <td>$202.52</td>\r\n            <td>$0.00</td>\r\n            <td>Posted</td>\r\n            <td></td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>03/01/15</td>\r\n            <td>Payment</td>\r\n            <td>1990</td>\r\n            <td></td>\r\n            <td>$202.52</td>\r\n            <td>$252.52</td>\r\n            <td>$0.00</td>\r\n            <td>Canceled</td>\r\n            <td></td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>02/21/15</td>\r\n            <td>Billing</td>\r\n            <td>1990</td>\r\n            <td></td>\r\n            <td>$202.52</td>\r\n            <td></td>\r\n            <td>$0.00</td>\r\n            <td></td>\r\n            <td class=\"action-cell\"><button type=\"button\" class=\"btn btn-primary btn-sm\"><i class=\"exc-icon-file-pdf\"></i>View</button></td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>07/03/15</td>\r\n            <td>Payment</td>\r\n            <td>1855</td>\r\n            <td></td>\r\n            <td>$185.58</td>\r\n            <td>$185.58</td>\r\n            <td>$0.00</td>\r\n            <td>Scheduled</td>\r\n            <td class=\"action-cell\">\r\n                <button type=\"button\" class=\"btn btn-primary btn-sm\"><i class=\"exc-icon-edit\"></i>Edit</button>\r\n                <button type=\"button\" class=\"btn btn-default btn-sm\"><i class=\"exc-icon-circle-with-cross\"></i>Cancel</button>\r\n            </td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>07/03/15</td>\r\n            <td>Payment</td>\r\n            <td>1855</td>\r\n            <td></td>\r\n            <td>$185.58</td>\r\n            <td>$185.58</td>\r\n            <td>$0.00</td>\r\n            <td>Scheduled</td>\r\n            <td class=\"action-cell\">\r\n                <button type=\"button\" class=\"btn btn-primary btn-sm\"><i class=\"exc-icon-edit\"></i>Edit</button>\r\n                <button type=\"button\" class=\"btn btn-default btn-sm\"><i class=\"exc-icon-circle-with-cross\"></i>Cancel</button>\r\n            </td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>07/03/15</td>\r\n            <td>Payment</td>\r\n            <td>1855</td>\r\n            <td></td>\r\n            <td>$185.58</td>\r\n            <td>$185.58</td>\r\n            <td>$0.00</td>\r\n            <td>Scheduled</td>\r\n            <td class=\"action-cell\">\r\n                <button type=\"button\" class=\"btn btn-primary btn-sm\"><i class=\"exc-icon-edit\"></i>Edit</button>\r\n                <button type=\"button\" class=\"btn btn-default btn-sm\"><i class=\"exc-icon-circle-with-cross\"></i>Cancel</button>\r\n            </td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>06/02/15</td>\r\n            <td>Billing</td>\r\n            <td>1855</td>\r\n            <td></td>\r\n            <td>$185.58</td>\r\n            <td></td>\r\n            <td>$0.00</td>\r\n            <td></td>\r\n            <td class=\"action-cell\"><button type=\"button\" class=\"btn btn-primary btn-sm\"><i class=\"exc-icon-file-pdf\"></i>View</button></td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>06/03/15</td>\r\n            <td>Payment</td>\r\n            <td>2012</td>\r\n            <td></td>\r\n            <td>$240.02</td>\r\n            <td>$240.02</td>\r\n            <td>$0.000</td>\r\n            <td>Posted</td>\r\n            <td></td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>05/19/15</td>\r\n            <td>Billing</td>\r\n            <td>2012</td>\r\n            <td></td>\r\n            <td>$240.02</td>\r\n            <td></td>\r\n            <td>$0.00</td>\r\n            <td></td>\r\n            <td class=\"action-cell\"><button type=\"button\" class=\"btn btn-primary btn-sm\"><i class=\"exc-icon-file-pdf\"></i>View</button></td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>05/15/15</td>\r\n            <td>Payment</td>\r\n            <td>1700</td>\r\n            <td></td>\r\n            <td>$140.38</td>\r\n            <td>$140.38</td>\r\n            <td>$0.00</td>\r\n            <td>Posted</td>\r\n            <td></td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>04/20/15</td>\r\n            <td>Billing</td>\r\n            <td>1700</td>\r\n            <td></td>\r\n            <td>$140.38</td>\r\n            <td></td>\r\n            <td>$0.00</td>\r\n            <td></td>\r\n            <td class=\"action-cell\"><button type=\"button\" class=\"btn btn-primary btn-sm\"><i class=\"exc-icon-file-pdf\"></i>View</button></td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>04/02/15</td>\r\n            <td>Payment</td>\r\n            <td>1820</td>\r\n            <td></td>\r\n            <td>$150.59</td>\r\n            <td>$150.59</td>\r\n            <td>$0.000</td>\r\n            <td>Posted</td>\r\n            <td></td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>03/20/15</td>\r\n            <td>Billing</td>\r\n            <td>1820</td>\r\n            <td></td>\r\n            <td>$150.59</td>\r\n            <td></td>\r\n            <td>$0.00</td>\r\n            <td></td>\r\n            <td class=\"action-cell\"><button type=\"button\" class=\"btn btn-primary btn-sm\"><i class=\"exc-icon-file-pdf\"></i>View</button></td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>03/02/15</td>\r\n            <td>Payment</td>\r\n            <td>1990</td>\r\n            <td></td>\r\n            <td>$202.52</td>\r\n            <td>$202.52</td>\r\n            <td>$0.00</td>\r\n            <td>Posted</td>\r\n            <td></td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>03/01/15</td>\r\n            <td>Payment</td>\r\n            <td>1990</td>\r\n            <td></td>\r\n            <td>$202.52</td>\r\n            <td>$252.52</td>\r\n            <td>$0.00</td>\r\n            <td>Canceled</td>\r\n            <td></td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>02/21/15</td>\r\n            <td>Billing</td>\r\n            <td>1990</td>\r\n            <td></td>\r\n            <td>$202.52</td>\r\n            <td></td>\r\n            <td>$0.00</td>\r\n            <td></td>\r\n            <td class=\"action-cell\"><button type=\"button\" class=\"btn btn-primary btn-sm\"><i class=\"exc-icon-file-pdf\"></i>View</button></td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>07/03/15</td>\r\n            <td>Payment</td>\r\n            <td>1855</td>\r\n            <td></td>\r\n            <td>$185.58</td>\r\n            <td>$185.58</td>\r\n            <td>$0.00</td>\r\n            <td>Scheduled</td>\r\n            <td class=\"action-cell\">\r\n                <button type=\"button\" class=\"btn btn-primary btn-sm\"><i class=\"exc-icon-edit\"></i>Edit</button>\r\n                <button type=\"button\" class=\"btn btn-default btn-sm\"><i class=\"exc-icon-circle-with-cross\"></i>Cancel</button>\r\n            </td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>07/03/15</td>\r\n            <td>Payment</td>\r\n            <td>1855</td>\r\n            <td></td>\r\n            <td>$185.58</td>\r\n            <td>$185.58</td>\r\n            <td>$0.00</td>\r\n            <td>Scheduled</td>\r\n            <td class=\"action-cell\">\r\n                <button type=\"button\" class=\"btn btn-primary btn-sm\"><i class=\"exc-icon-edit\"></i>Edit</button>\r\n                <button type=\"button\" class=\"btn btn-default btn-sm\"><i class=\"exc-icon-circle-with-cross\"></i>Cancel</button>\r\n            </td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>07/03/15</td>\r\n            <td>Payment</td>\r\n            <td>1855</td>\r\n            <td></td>\r\n            <td>$185.58</td>\r\n            <td>$185.58</td>\r\n            <td>$0.00</td>\r\n            <td>Scheduled</td>\r\n            <td class=\"action-cell\">\r\n                <button type=\"button\" class=\"btn btn-primary btn-sm\"><i class=\"exc-icon-edit\"></i>Edit</button>\r\n                <button type=\"button\" class=\"btn btn-default btn-sm\"><i class=\"exc-icon-circle-with-cross\"></i>Cancel</button>\r\n            </td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>06/02/15</td>\r\n            <td>Billing</td>\r\n            <td>1855</td>\r\n            <td></td>\r\n            <td>$185.58</td>\r\n            <td></td>\r\n            <td>$0.00</td>\r\n            <td></td>\r\n            <td class=\"action-cell\"><button type=\"button\" class=\"btn btn-primary btn-sm\"><i class=\"exc-icon-file-pdf\"></i>View</button></td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>06/03/15</td>\r\n            <td>Payment</td>\r\n            <td>2012</td>\r\n            <td></td>\r\n            <td>$240.02</td>\r\n            <td>$240.02</td>\r\n            <td>$0.000</td>\r\n            <td>Posted</td>\r\n            <td></td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>05/19/15</td>\r\n            <td>Billing</td>\r\n            <td>2012</td>\r\n            <td></td>\r\n            <td>$240.02</td>\r\n            <td></td>\r\n            <td>$0.00</td>\r\n            <td></td>\r\n            <td class=\"action-cell\"><button type=\"button\" class=\"btn btn-primary btn-sm\"><i class=\"exc-icon-file-pdf\"></i>View</button></td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>05/15/15</td>\r\n            <td>Payment</td>\r\n            <td>1700</td>\r\n            <td></td>\r\n            <td>$140.38</td>\r\n            <td>$140.38</td>\r\n            <td>$0.00</td>\r\n            <td>Posted</td>\r\n            <td></td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>04/20/15</td>\r\n            <td>Billing</td>\r\n            <td>1700</td>\r\n            <td></td>\r\n            <td>$140.38</td>\r\n            <td></td>\r\n            <td>$0.00</td>\r\n            <td></td>\r\n            <td class=\"action-cell\"><button type=\"button\" class=\"btn btn-primary btn-sm\"><i class=\"exc-icon-file-pdf\"></i>View</button></td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>04/02/15</td>\r\n            <td>Payment</td>\r\n            <td>1820</td>\r\n            <td></td>\r\n            <td>$150.59</td>\r\n            <td>$150.59</td>\r\n            <td>$0.000</td>\r\n            <td>Posted</td>\r\n            <td></td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>03/20/15</td>\r\n            <td>Billing</td>\r\n            <td>1820</td>\r\n            <td></td>\r\n            <td>$150.59</td>\r\n            <td></td>\r\n            <td>$0.00</td>\r\n            <td></td>\r\n            <td class=\"action-cell\"><button type=\"button\" class=\"btn btn-primary btn-sm\"><i class=\"exc-icon-file-pdf\"></i>View</button></td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>03/02/15</td>\r\n            <td>Payment</td>\r\n            <td>1990</td>\r\n            <td></td>\r\n            <td>$202.52</td>\r\n            <td>$202.52</td>\r\n            <td>$0.00</td>\r\n            <td>Posted</td>\r\n            <td></td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>03/01/15</td>\r\n            <td>Payment</td>\r\n            <td>1990</td>\r\n            <td></td>\r\n            <td>$202.52</td>\r\n            <td>$252.52</td>\r\n            <td>$0.00</td>\r\n            <td>Canceled</td>\r\n            <td></td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>02/21/15</td>\r\n            <td>Billing</td>\r\n            <td>1990</td>\r\n            <td></td>\r\n            <td>$202.52</td>\r\n            <td></td>\r\n            <td>$0.00</td>\r\n            <td></td>\r\n            <td class=\"action-cell\"><button type=\"button\" class=\"btn btn-primary btn-sm\"><i class=\"exc-icon-file-pdf\"></i>View</button></td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>07/03/15</td>\r\n            <td>Payment</td>\r\n            <td>1855</td>\r\n            <td></td>\r\n            <td>$185.58</td>\r\n            <td>$185.58</td>\r\n            <td>$0.00</td>\r\n            <td>Scheduled</td>\r\n            <td class=\"action-cell\">\r\n                <button type=\"button\" class=\"btn btn-primary btn-sm\"><i class=\"exc-icon-edit\"></i>Edit</button>\r\n                <button type=\"button\" class=\"btn btn-default btn-sm\"><i class=\"exc-icon-circle-with-cross\"></i>Cancel</button>\r\n            </td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>07/03/15</td>\r\n            <td>Payment</td>\r\n            <td>1855</td>\r\n            <td></td>\r\n            <td>$185.58</td>\r\n            <td>$185.58</td>\r\n            <td>$0.00</td>\r\n            <td>Scheduled</td>\r\n            <td class=\"action-cell\">\r\n                <button type=\"button\" class=\"btn btn-primary btn-sm\"><i class=\"exc-icon-edit\"></i>Edit</button>\r\n                <button type=\"button\" class=\"btn btn-default btn-sm\"><i class=\"exc-icon-circle-with-cross\"></i>Cancel</button>\r\n            </td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>07/03/15</td>\r\n            <td>Payment</td>\r\n            <td>1855</td>\r\n            <td></td>\r\n            <td>$185.58</td>\r\n            <td>$185.58</td>\r\n            <td>$0.00</td>\r\n            <td>Scheduled</td>\r\n            <td class=\"action-cell\">\r\n                <button type=\"button\" class=\"btn btn-primary btn-sm\"><i class=\"exc-icon-edit\"></i>Edit</button>\r\n                <button type=\"button\" class=\"btn btn-default btn-sm\"><i class=\"exc-icon-circle-with-cross\"></i>Cancel</button>\r\n            </td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>06/02/15</td>\r\n            <td>Billing</td>\r\n            <td>1855</td>\r\n            <td></td>\r\n            <td>$185.58</td>\r\n            <td></td>\r\n            <td>$0.00</td>\r\n            <td></td>\r\n            <td class=\"action-cell\"><button type=\"button\" class=\"btn btn-primary btn-sm\"><i class=\"exc-icon-file-pdf\"></i>View</button></td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>06/03/15</td>\r\n            <td>Payment</td>\r\n            <td>2012</td>\r\n            <td></td>\r\n            <td>$240.02</td>\r\n            <td>$240.02</td>\r\n            <td>$0.000</td>\r\n            <td>Posted</td>\r\n            <td></td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>05/19/15</td>\r\n            <td>Billing</td>\r\n            <td>2012</td>\r\n            <td></td>\r\n            <td>$240.02</td>\r\n            <td></td>\r\n            <td>$0.00</td>\r\n            <td></td>\r\n            <td class=\"action-cell\"><button type=\"button\" class=\"btn btn-primary btn-sm\"><i class=\"exc-icon-file-pdf\"></i>View</button></td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>05/15/15</td>\r\n            <td>Payment</td>\r\n            <td>1700</td>\r\n            <td></td>\r\n            <td>$140.38</td>\r\n            <td>$140.38</td>\r\n            <td>$0.00</td>\r\n            <td>Posted</td>\r\n            <td></td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>04/20/15</td>\r\n            <td>Billing</td>\r\n            <td>1700</td>\r\n            <td></td>\r\n            <td>$140.38</td>\r\n            <td></td>\r\n            <td>$0.00</td>\r\n            <td></td>\r\n            <td class=\"action-cell\"><button type=\"button\" class=\"btn btn-primary btn-sm\"><i class=\"exc-icon-file-pdf\"></i>View</button></td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>04/02/15</td>\r\n            <td>Payment</td>\r\n            <td>1820</td>\r\n            <td></td>\r\n            <td>$150.59</td>\r\n            <td>$150.59</td>\r\n            <td>$0.000</td>\r\n            <td>Posted</td>\r\n            <td></td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>03/20/15</td>\r\n            <td>Billing</td>\r\n            <td>1820</td>\r\n            <td></td>\r\n            <td>$150.59</td>\r\n            <td></td>\r\n            <td>$0.00</td>\r\n            <td></td>\r\n            <td class=\"action-cell\"><button type=\"button\" class=\"btn btn-primary btn-sm\"><i class=\"exc-icon-file-pdf\"></i>View</button></td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>03/02/15</td>\r\n            <td>Payment</td>\r\n            <td>1990</td>\r\n            <td></td>\r\n            <td>$202.52</td>\r\n            <td>$202.52</td>\r\n            <td>$0.00</td>\r\n            <td>Posted</td>\r\n            <td></td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>03/01/15</td>\r\n            <td>Payment</td>\r\n            <td>1990</td>\r\n            <td></td>\r\n            <td>$202.52</td>\r\n            <td>$252.52</td>\r\n            <td>$0.00</td>\r\n            <td>Canceled</td>\r\n            <td></td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>02/21/15</td>\r\n            <td>Billing</td>\r\n            <td>1990</td>\r\n            <td></td>\r\n            <td>$202.52</td>\r\n            <td></td>\r\n            <td>$0.00</td>\r\n            <td></td>\r\n            <td class=\"action-cell\"><button type=\"button\" class=\"btn btn-primary btn-sm\"><i class=\"exc-icon-file-pdf\"></i>View</button></td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>07/03/15</td>\r\n            <td>Payment</td>\r\n            <td>1855</td>\r\n            <td></td>\r\n            <td>$185.58</td>\r\n            <td>$185.58</td>\r\n            <td>$0.00</td>\r\n            <td>Scheduled</td>\r\n            <td class=\"action-cell\">\r\n                <button type=\"button\" class=\"btn btn-primary btn-sm\"><i class=\"exc-icon-edit\"></i>Edit</button>\r\n                <button type=\"button\" class=\"btn btn-default btn-sm\"><i class=\"exc-icon-circle-with-cross\"></i>Cancel</button>\r\n            </td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>07/03/15</td>\r\n            <td>Payment</td>\r\n            <td>1855</td>\r\n            <td></td>\r\n            <td>$185.58</td>\r\n            <td>$185.58</td>\r\n            <td>$0.00</td>\r\n            <td>Scheduled</td>\r\n            <td class=\"action-cell\">\r\n                <button type=\"button\" class=\"btn btn-primary btn-sm\"><i class=\"exc-icon-edit\"></i>Edit</button>\r\n                <button type=\"button\" class=\"btn btn-default btn-sm\"><i class=\"exc-icon-circle-with-cross\"></i>Cancel</button>\r\n            </td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>07/03/15</td>\r\n            <td>Payment</td>\r\n            <td>1855</td>\r\n            <td></td>\r\n            <td>$185.58</td>\r\n            <td>$185.58</td>\r\n            <td>$0.00</td>\r\n            <td>Scheduled</td>\r\n            <td class=\"action-cell\">\r\n                <button type=\"button\" class=\"btn btn-primary btn-sm\"><i class=\"exc-icon-edit\"></i>Edit</button>\r\n                <button type=\"button\" class=\"btn btn-default btn-sm\"><i class=\"exc-icon-circle-with-cross\"></i>Cancel</button>\r\n            </td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>06/02/15</td>\r\n            <td>Billing</td>\r\n            <td>1855</td>\r\n            <td></td>\r\n            <td>$185.58</td>\r\n            <td></td>\r\n            <td>$0.00</td>\r\n            <td></td>\r\n            <td class=\"action-cell\"><button type=\"button\" class=\"btn btn-primary btn-sm\"><i class=\"exc-icon-file-pdf\"></i>View</button></td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>06/03/15</td>\r\n            <td>Payment</td>\r\n            <td>2012</td>\r\n            <td></td>\r\n            <td>$240.02</td>\r\n            <td>$240.02</td>\r\n            <td>$0.000</td>\r\n            <td>Posted</td>\r\n            <td></td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>05/19/15</td>\r\n            <td>Billing</td>\r\n            <td>2012</td>\r\n            <td></td>\r\n            <td>$240.02</td>\r\n            <td></td>\r\n            <td>$0.00</td>\r\n            <td></td>\r\n            <td class=\"action-cell\"><button type=\"button\" class=\"btn btn-primary btn-sm\"><i class=\"exc-icon-file-pdf\"></i>View</button></td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>05/15/15</td>\r\n            <td>Payment</td>\r\n            <td>1700</td>\r\n            <td></td>\r\n            <td>$140.38</td>\r\n            <td>$140.38</td>\r\n            <td>$0.00</td>\r\n            <td>Posted</td>\r\n            <td></td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>04/20/15</td>\r\n            <td>Billing</td>\r\n            <td>1700</td>\r\n            <td></td>\r\n            <td>$140.38</td>\r\n            <td></td>\r\n            <td>$0.00</td>\r\n            <td></td>\r\n            <td class=\"action-cell\"><button type=\"button\" class=\"btn btn-primary btn-sm\"><i class=\"exc-icon-file-pdf\"></i>View</button></td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>04/02/15</td>\r\n            <td>Payment</td>\r\n            <td>1820</td>\r\n            <td></td>\r\n            <td>$150.59</td>\r\n            <td>$150.59</td>\r\n            <td>$0.000</td>\r\n            <td>Posted</td>\r\n            <td></td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>03/20/15</td>\r\n            <td>Billing</td>\r\n            <td>1820</td>\r\n            <td></td>\r\n            <td>$150.59</td>\r\n            <td></td>\r\n            <td>$0.00</td>\r\n            <td></td>\r\n            <td class=\"action-cell\"><button type=\"button\" class=\"btn btn-primary btn-sm\"><i class=\"exc-icon-file-pdf\"></i>View</button></td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>03/02/15</td>\r\n            <td>Payment</td>\r\n            <td>1990</td>\r\n            <td></td>\r\n            <td>$202.52</td>\r\n            <td>$202.52</td>\r\n            <td>$0.00</td>\r\n            <td>Posted</td>\r\n            <td></td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>03/01/15</td>\r\n            <td>Payment</td>\r\n            <td>1990</td>\r\n            <td></td>\r\n            <td>$202.52</td>\r\n            <td>$252.52</td>\r\n            <td>$0.00</td>\r\n            <td>Canceled</td>\r\n            <td></td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>02/21/15</td>\r\n            <td>Billing</td>\r\n            <td>1990</td>\r\n            <td></td>\r\n            <td>$202.52</td>\r\n            <td></td>\r\n            <td>$0.00</td>\r\n            <td></td>\r\n            <td class=\"action-cell\"><button type=\"button\" class=\"btn btn-primary btn-sm\"><i class=\"exc-icon-file-pdf\"></i>View</button></td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>07/03/15</td>\r\n            <td>Payment</td>\r\n            <td>1855</td>\r\n            <td></td>\r\n            <td>$185.58</td>\r\n            <td>$185.58</td>\r\n            <td>$0.00</td>\r\n            <td>Scheduled</td>\r\n            <td class=\"action-cell\">\r\n                <button type=\"button\" class=\"btn btn-primary btn-sm\"><i class=\"exc-icon-edit\"></i>Edit</button>\r\n                <button type=\"button\" class=\"btn btn-default btn-sm\"><i class=\"exc-icon-circle-with-cross\"></i>Cancel</button>\r\n            </td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>07/03/15</td>\r\n            <td>Payment</td>\r\n            <td>1855</td>\r\n            <td></td>\r\n            <td>$185.58</td>\r\n            <td>$185.58</td>\r\n            <td>$0.00</td>\r\n            <td>Scheduled</td>\r\n            <td class=\"action-cell\">\r\n                <button type=\"button\" class=\"btn btn-primary btn-sm\"><i class=\"exc-icon-edit\"></i>Edit</button>\r\n                <button type=\"button\" class=\"btn btn-default btn-sm\"><i class=\"exc-icon-circle-with-cross\"></i>Cancel</button>\r\n            </td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>07/03/15</td>\r\n            <td>Payment</td>\r\n            <td>1855</td>\r\n            <td></td>\r\n            <td>$185.58</td>\r\n            <td>$185.58</td>\r\n            <td>$0.00</td>\r\n            <td>Scheduled</td>\r\n            <td class=\"action-cell\">\r\n                <button type=\"button\" class=\"btn btn-primary btn-sm\"><i class=\"exc-icon-edit\"></i>Edit</button>\r\n                <button type=\"button\" class=\"btn btn-default btn-sm\"><i class=\"exc-icon-circle-with-cross\"></i>Cancel</button>\r\n            </td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>06/02/15</td>\r\n            <td>Billing</td>\r\n            <td>1855</td>\r\n            <td></td>\r\n            <td>$185.58</td>\r\n            <td></td>\r\n            <td>$0.00</td>\r\n            <td></td>\r\n            <td class=\"action-cell\"><button type=\"button\" class=\"btn btn-primary btn-sm\"><i class=\"exc-icon-file-pdf\"></i>View</button></td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>06/03/15</td>\r\n            <td>Payment</td>\r\n            <td>2012</td>\r\n            <td></td>\r\n            <td>$240.02</td>\r\n            <td>$240.02</td>\r\n            <td>$0.000</td>\r\n            <td>Posted</td>\r\n            <td></td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>05/19/15</td>\r\n            <td>Billing</td>\r\n            <td>2012</td>\r\n            <td></td>\r\n            <td>$240.02</td>\r\n            <td></td>\r\n            <td>$0.00</td>\r\n            <td></td>\r\n            <td class=\"action-cell\"><button type=\"button\" class=\"btn btn-primary btn-sm\"><i class=\"exc-icon-file-pdf\"></i>View</button></td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>05/15/15</td>\r\n            <td>Payment</td>\r\n            <td>1700</td>\r\n            <td></td>\r\n            <td>$140.38</td>\r\n            <td>$140.38</td>\r\n            <td>$0.00</td>\r\n            <td>Posted</td>\r\n            <td></td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>04/20/15</td>\r\n            <td>Billing</td>\r\n            <td>1700</td>\r\n            <td></td>\r\n            <td>$140.38</td>\r\n            <td></td>\r\n            <td>$0.00</td>\r\n            <td></td>\r\n            <td class=\"action-cell\"><button type=\"button\" class=\"btn btn-primary btn-sm\"><i class=\"exc-icon-file-pdf\"></i>View</button></td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>04/02/15</td>\r\n            <td>Payment</td>\r\n            <td>1820</td>\r\n            <td></td>\r\n            <td>$150.59</td>\r\n            <td>$150.59</td>\r\n            <td>$0.000</td>\r\n            <td>Posted</td>\r\n            <td></td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>03/20/15</td>\r\n            <td>Billing</td>\r\n            <td>1820</td>\r\n            <td></td>\r\n            <td>$150.59</td>\r\n            <td></td>\r\n            <td>$0.00</td>\r\n            <td></td>\r\n            <td class=\"action-cell\"><button type=\"button\" class=\"btn btn-primary btn-sm\"><i class=\"exc-icon-file-pdf\"></i>View</button></td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>03/02/15</td>\r\n            <td>Payment</td>\r\n            <td>1990</td>\r\n            <td></td>\r\n            <td>$202.52</td>\r\n            <td>$202.52</td>\r\n            <td>$0.00</td>\r\n            <td>Posted</td>\r\n            <td></td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>03/01/15</td>\r\n            <td>Payment</td>\r\n            <td>1990</td>\r\n            <td></td>\r\n            <td>$202.52</td>\r\n            <td>$252.52</td>\r\n            <td>$0.00</td>\r\n            <td>Canceled</td>\r\n            <td></td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>02/21/15</td>\r\n            <td>Billing</td>\r\n            <td>1990</td>\r\n            <td></td>\r\n            <td>$202.52</td>\r\n            <td></td>\r\n            <td>$0.00</td>\r\n            <td></td>\r\n            <td class=\"action-cell\"><button type=\"button\" class=\"btn btn-primary btn-sm\"><i class=\"exc-icon-file-pdf\"></i>View</button></td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>07/03/15</td>\r\n            <td>Payment</td>\r\n            <td>1855</td>\r\n            <td></td>\r\n            <td>$185.58</td>\r\n            <td>$185.58</td>\r\n            <td>$0.00</td>\r\n            <td>Scheduled</td>\r\n            <td class=\"action-cell\">\r\n                <button type=\"button\" class=\"btn btn-primary btn-sm\"><i class=\"exc-icon-edit\"></i>Edit</button>\r\n                <button type=\"button\" class=\"btn btn-default btn-sm\"><i class=\"exc-icon-circle-with-cross\"></i>Cancel</button>\r\n            </td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>07/03/15</td>\r\n            <td>Payment</td>\r\n            <td>1855</td>\r\n            <td></td>\r\n            <td>$185.58</td>\r\n            <td>$185.58</td>\r\n            <td>$0.00</td>\r\n            <td>Scheduled</td>\r\n            <td class=\"action-cell\">\r\n                <button type=\"button\" class=\"btn btn-primary btn-sm\"><i class=\"exc-icon-edit\"></i>Edit</button>\r\n                <button type=\"button\" class=\"btn btn-default btn-sm\"><i class=\"exc-icon-circle-with-cross\"></i>Cancel</button>\r\n            </td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>07/03/15</td>\r\n            <td>Payment</td>\r\n            <td>1855</td>\r\n            <td></td>\r\n            <td>$185.58</td>\r\n            <td>$185.58</td>\r\n            <td>$0.00</td>\r\n            <td>Scheduled</td>\r\n            <td class=\"action-cell\">\r\n                <button type=\"button\" class=\"btn btn-primary btn-sm\"><i class=\"exc-icon-edit\"></i>Edit</button>\r\n                <button type=\"button\" class=\"btn btn-default btn-sm\"><i class=\"exc-icon-circle-with-cross\"></i>Cancel</button>\r\n            </td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>06/02/15</td>\r\n            <td>Billing</td>\r\n            <td>1855</td>\r\n            <td></td>\r\n            <td>$185.58</td>\r\n            <td></td>\r\n            <td>$0.00</td>\r\n            <td></td>\r\n            <td class=\"action-cell\"><button type=\"button\" class=\"btn btn-primary btn-sm\"><i class=\"exc-icon-file-pdf\"></i>View</button></td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>06/03/15</td>\r\n            <td>Payment</td>\r\n            <td>2012</td>\r\n            <td></td>\r\n            <td>$240.02</td>\r\n            <td>$240.02</td>\r\n            <td>$0.000</td>\r\n            <td>Posted</td>\r\n            <td></td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>05/19/15</td>\r\n            <td>Billing</td>\r\n            <td>2012</td>\r\n            <td></td>\r\n            <td>$240.02</td>\r\n            <td></td>\r\n            <td>$0.00</td>\r\n            <td></td>\r\n            <td class=\"action-cell\"><button type=\"button\" class=\"btn btn-primary btn-sm\"><i class=\"exc-icon-file-pdf\"></i>View</button></td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>05/15/15</td>\r\n            <td>Payment</td>\r\n            <td>1700</td>\r\n            <td></td>\r\n            <td>$140.38</td>\r\n            <td>$140.38</td>\r\n            <td>$0.00</td>\r\n            <td>Posted</td>\r\n            <td></td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>04/20/15</td>\r\n            <td>Billing</td>\r\n            <td>1700</td>\r\n            <td></td>\r\n            <td>$140.38</td>\r\n            <td></td>\r\n            <td>$0.00</td>\r\n            <td></td>\r\n            <td class=\"action-cell\"><button type=\"button\" class=\"btn btn-primary btn-sm\"><i class=\"exc-icon-file-pdf\"></i>View</button></td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>04/02/15</td>\r\n            <td>Payment</td>\r\n            <td>1820</td>\r\n            <td></td>\r\n            <td>$150.59</td>\r\n            <td>$150.59</td>\r\n            <td>$0.000</td>\r\n            <td>Posted</td>\r\n            <td></td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>03/20/15</td>\r\n            <td>Billing</td>\r\n            <td>1820</td>\r\n            <td></td>\r\n            <td>$150.59</td>\r\n            <td></td>\r\n            <td>$0.00</td>\r\n            <td></td>\r\n            <td class=\"action-cell\"><button type=\"button\" class=\"btn btn-primary btn-sm\"><i class=\"exc-icon-file-pdf\"></i>View</button></td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>03/02/15</td>\r\n            <td>Payment</td>\r\n            <td>1990</td>\r\n            <td></td>\r\n            <td>$202.52</td>\r\n            <td>$202.52</td>\r\n            <td>$0.00</td>\r\n            <td>Posted</td>\r\n            <td></td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>03/01/15</td>\r\n            <td>Payment</td>\r\n            <td>1990</td>\r\n            <td></td>\r\n            <td>$202.52</td>\r\n            <td>$252.52</td>\r\n            <td>$0.00</td>\r\n            <td>Canceled</td>\r\n            <td></td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>02/21/15</td>\r\n            <td>Billing</td>\r\n            <td>1990</td>\r\n            <td></td>\r\n            <td>$202.52</td>\r\n            <td></td>\r\n            <td>$0.00</td>\r\n            <td></td>\r\n            <td class=\"action-cell\"><button type=\"button\" class=\"btn btn-primary btn-sm\"><i class=\"exc-icon-file-pdf\"></i>View</button></td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>07/03/15</td>\r\n            <td>Payment</td>\r\n            <td>1855</td>\r\n            <td></td>\r\n            <td>$185.58</td>\r\n            <td>$185.58</td>\r\n            <td>$0.00</td>\r\n            <td>Scheduled</td>\r\n            <td class=\"action-cell\">\r\n                <button type=\"button\" class=\"btn btn-primary btn-sm\"><i class=\"exc-icon-edit\"></i>Edit</button>\r\n                <button type=\"button\" class=\"btn btn-default btn-sm\"><i class=\"exc-icon-circle-with-cross\"></i>Cancel</button>\r\n            </td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>07/03/15</td>\r\n            <td>Payment</td>\r\n            <td>1855</td>\r\n            <td></td>\r\n            <td>$185.58</td>\r\n            <td>$185.58</td>\r\n            <td>$0.00</td>\r\n            <td>Scheduled</td>\r\n            <td class=\"action-cell\">\r\n                <button type=\"button\" class=\"btn btn-primary btn-sm\"><i class=\"exc-icon-edit\"></i>Edit</button>\r\n                <button type=\"button\" class=\"btn btn-default btn-sm\"><i class=\"exc-icon-circle-with-cross\"></i>Cancel</button>\r\n            </td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>07/03/15</td>\r\n            <td>Payment</td>\r\n            <td>1855</td>\r\n            <td></td>\r\n            <td>$185.58</td>\r\n            <td>$185.58</td>\r\n            <td>$0.00</td>\r\n            <td>Scheduled</td>\r\n            <td class=\"action-cell\">\r\n                <button type=\"button\" class=\"btn btn-primary btn-sm\"><i class=\"exc-icon-edit\"></i>Edit</button>\r\n                <button type=\"button\" class=\"btn btn-default btn-sm\"><i class=\"exc-icon-circle-with-cross\"></i>Cancel</button>\r\n            </td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>06/02/15</td>\r\n            <td>Billing</td>\r\n            <td>1855</td>\r\n            <td></td>\r\n            <td>$185.58</td>\r\n            <td></td>\r\n            <td>$0.00</td>\r\n            <td></td>\r\n            <td class=\"action-cell\"><button type=\"button\" class=\"btn btn-primary btn-sm\"><i class=\"exc-icon-file-pdf\"></i>View</button></td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>06/03/15</td>\r\n            <td>Payment</td>\r\n            <td>2012</td>\r\n            <td></td>\r\n            <td>$240.02</td>\r\n            <td>$240.02</td>\r\n            <td>$0.000</td>\r\n            <td>Posted</td>\r\n            <td></td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>05/19/15</td>\r\n            <td>Billing</td>\r\n            <td>2012</td>\r\n            <td></td>\r\n            <td>$240.02</td>\r\n            <td></td>\r\n            <td>$0.00</td>\r\n            <td></td>\r\n            <td class=\"action-cell\"><button type=\"button\" class=\"btn btn-primary btn-sm\"><i class=\"exc-icon-file-pdf\"></i>View</button></td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>05/15/15</td>\r\n            <td>Payment</td>\r\n            <td>1700</td>\r\n            <td></td>\r\n            <td>$140.38</td>\r\n            <td>$140.38</td>\r\n            <td>$0.00</td>\r\n            <td>Posted</td>\r\n            <td></td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>04/20/15</td>\r\n            <td>Billing</td>\r\n            <td>1700</td>\r\n            <td></td>\r\n            <td>$140.38</td>\r\n            <td></td>\r\n            <td>$0.00</td>\r\n            <td></td>\r\n            <td class=\"action-cell\"><button type=\"button\" class=\"btn btn-primary btn-sm\"><i class=\"exc-icon-file-pdf\"></i>View</button></td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>04/02/15</td>\r\n            <td>Payment</td>\r\n            <td>1820</td>\r\n            <td></td>\r\n            <td>$150.59</td>\r\n            <td>$150.59</td>\r\n            <td>$0.000</td>\r\n            <td>Posted</td>\r\n            <td></td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>03/20/15</td>\r\n            <td>Billing</td>\r\n            <td>1820</td>\r\n            <td></td>\r\n            <td>$150.59</td>\r\n            <td></td>\r\n            <td>$0.00</td>\r\n            <td></td>\r\n            <td class=\"action-cell\"><button type=\"button\" class=\"btn btn-primary btn-sm\"><i class=\"exc-icon-file-pdf\"></i>View</button></td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>03/02/15</td>\r\n            <td>Payment</td>\r\n            <td>1990</td>\r\n            <td></td>\r\n            <td>$202.52</td>\r\n            <td>$202.52</td>\r\n            <td>$0.00</td>\r\n            <td>Posted</td>\r\n            <td></td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>03/01/15</td>\r\n            <td>Payment</td>\r\n            <td>1990</td>\r\n            <td></td>\r\n            <td>$202.52</td>\r\n            <td>$252.52</td>\r\n            <td>$0.00</td>\r\n            <td>Canceled</td>\r\n            <td></td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>02/21/15</td>\r\n            <td>Billing</td>\r\n            <td>1990</td>\r\n            <td></td>\r\n            <td>$202.52</td>\r\n            <td></td>\r\n            <td>$0.00</td>\r\n            <td></td>\r\n            <td class=\"action-cell\"><button type=\"button\" class=\"btn btn-primary btn-sm\"><i class=\"exc-icon-file-pdf\"></i>View</button></td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>07/03/15</td>\r\n            <td>Payment</td>\r\n            <td>1855</td>\r\n            <td></td>\r\n            <td>$185.58</td>\r\n            <td>$185.58</td>\r\n            <td>$0.00</td>\r\n            <td>Scheduled</td>\r\n            <td class=\"action-cell\">\r\n                <button type=\"button\" class=\"btn btn-primary btn-sm\"><i class=\"exc-icon-edit\"></i>Edit</button>\r\n                <button type=\"button\" class=\"btn btn-default btn-sm\"><i class=\"exc-icon-circle-with-cross\"></i>Cancel</button>\r\n            </td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>07/03/15</td>\r\n            <td>Payment</td>\r\n            <td>1855</td>\r\n            <td></td>\r\n            <td>$185.58</td>\r\n            <td>$185.58</td>\r\n            <td>$0.00</td>\r\n            <td>Scheduled</td>\r\n            <td class=\"action-cell\">\r\n                <button type=\"button\" class=\"btn btn-primary btn-sm\"><i class=\"exc-icon-edit\"></i>Edit</button>\r\n                <button type=\"button\" class=\"btn btn-default btn-sm\"><i class=\"exc-icon-circle-with-cross\"></i>Cancel</button>\r\n            </td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>07/03/15</td>\r\n            <td>Payment</td>\r\n            <td>1855</td>\r\n            <td></td>\r\n            <td>$185.58</td>\r\n            <td>$185.58</td>\r\n            <td>$0.00</td>\r\n            <td>Scheduled</td>\r\n            <td class=\"action-cell\">\r\n                <button type=\"button\" class=\"btn btn-primary btn-sm\"><i class=\"exc-icon-edit\"></i>Edit</button>\r\n                <button type=\"button\" class=\"btn btn-default btn-sm\"><i class=\"exc-icon-circle-with-cross\"></i>Cancel</button>\r\n            </td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>06/02/15</td>\r\n            <td>Billing</td>\r\n            <td>1855</td>\r\n            <td></td>\r\n            <td>$185.58</td>\r\n            <td></td>\r\n            <td>$0.00</td>\r\n            <td></td>\r\n            <td class=\"action-cell\"><button type=\"button\" class=\"btn btn-primary btn-sm\"><i class=\"exc-icon-file-pdf\"></i>View</button></td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>06/03/15</td>\r\n            <td>Payment</td>\r\n            <td>2012</td>\r\n            <td></td>\r\n            <td>$240.02</td>\r\n            <td>$240.02</td>\r\n            <td>$0.000</td>\r\n            <td>Posted</td>\r\n            <td></td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>05/19/15</td>\r\n            <td>Billing</td>\r\n            <td>2012</td>\r\n            <td></td>\r\n            <td>$240.02</td>\r\n            <td></td>\r\n            <td>$0.00</td>\r\n            <td></td>\r\n            <td class=\"action-cell\"><button type=\"button\" class=\"btn btn-primary btn-sm\"><i class=\"exc-icon-file-pdf\"></i>View</button></td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>05/15/15</td>\r\n            <td>Payment</td>\r\n            <td>1700</td>\r\n            <td></td>\r\n            <td>$140.38</td>\r\n            <td>$140.38</td>\r\n            <td>$0.00</td>\r\n            <td>Posted</td>\r\n            <td></td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>04/20/15</td>\r\n            <td>Billing</td>\r\n            <td>1700</td>\r\n            <td></td>\r\n            <td>$140.38</td>\r\n            <td></td>\r\n            <td>$0.00</td>\r\n            <td></td>\r\n            <td class=\"action-cell\"><button type=\"button\" class=\"btn btn-primary btn-sm\"><i class=\"exc-icon-file-pdf\"></i>View</button></td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>04/02/15</td>\r\n            <td>Payment</td>\r\n            <td>1820</td>\r\n            <td></td>\r\n            <td>$150.59</td>\r\n            <td>$150.59</td>\r\n            <td>$0.000</td>\r\n            <td>Posted</td>\r\n            <td></td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>03/20/15</td>\r\n            <td>Billing</td>\r\n            <td>1820</td>\r\n            <td></td>\r\n            <td>$150.59</td>\r\n            <td></td>\r\n            <td>$0.00</td>\r\n            <td></td>\r\n            <td class=\"action-cell\"><button type=\"button\" class=\"btn btn-primary btn-sm\"><i class=\"exc-icon-file-pdf\"></i>View</button></td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>03/02/15</td>\r\n            <td>Payment</td>\r\n            <td>1990</td>\r\n            <td></td>\r\n            <td>$202.52</td>\r\n            <td>$202.52</td>\r\n            <td>$0.00</td>\r\n            <td>Posted</td>\r\n            <td></td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>03/01/15</td>\r\n            <td>Payment</td>\r\n            <td>1990</td>\r\n            <td></td>\r\n            <td>$202.52</td>\r\n            <td>$252.52</td>\r\n            <td>$0.00</td>\r\n            <td>Canceled</td>\r\n            <td></td>\r\n            <td></td>\r\n        </tr>\r\n        <tr>\r\n            <td>02/21/15</td>\r\n            <td>Billing</td>\r\n            <td>1990</td>\r\n            <td></td>\r\n            <td>$202.52</td>\r\n            <td></td>\r\n            <td>$0.00</td>\r\n            <td></td>\r\n            <td class=\"action-cell\"><button type=\"button\" class=\"btn btn-primary btn-sm\"><i class=\"exc-icon-file-pdf\"></i>View</button></td>\r\n            <td></td>\r\n        </tr>\r\n    </tbody>\r\n</table>\r\n", "txt": "The last column with the class of \"control\" is required for the responsive functionality of all tables. The responsive data table is dependent upon javascripts/datatables.min.js. " }, "ebill-buttons-and-table": { "name": "ebill-buttons-and-table", "title": "Ebill Buttons And Table", "path": "/patterns/_tables/ebill-buttons-and-table", "html": "<p class=\"pull-right\">\r\n    <button type=\"button\" class=\"btn btn-primary\"><i class=\"exc-icon-circle-with-check\"></i>Enroll All</button>\r\n    <button type=\"button\" class=\"btn btn-default\"><i class=\"exc-icon-circle-with-cross\"></i>Unenroll All</button>\r\n</p>\r\n<table id=\"dataTable\" class=\"table\">\r\n    <thead>\r\n        <tr>\r\n            <th>Account Number</th>\r\n            <th>Address</th>\r\n            <th>Status</th>\r\n            <th></th>\r\n        </tr>\r\n    </thead>\r\n    <tbody>\r\n        <tr>\r\n            <td>1234567890</td>\r\n            <td>ADDRESS GOES HERE</td>\r\n            <td>Not Enrolled</td>\r\n            <td class=\"action-cell\">\r\n                <button type=\"button\" class=\"btn btn-primary btn-sm\"><i class=\"exc-icon-circle-with-check\"></i>Enroll</button>\r\n            </td>\r\n        </tr>\r\n        <tr>\r\n            <td>1234567890</td>\r\n            <td>ADDRESS GOES HERE</td>\r\n            <td>Enrolled</td>\r\n            <td class=\"action-cell\">\r\n                <button type=\"button\" class=\"btn btn-default btn-sm\"><i class=\"exc-icon-circle-with-cross\"></i>Unenroll</button>\r\n            </td>\r\n        </tr>\r\n    </tbody>\r\n</table>\r\n" } } }, "_typography": { "name": "_typography", "title": "Typography", "path": "/patterns/_typography", "items": { "fine-print": { "name": "fine-print", "title": "Fine Print", "path": "/patterns/_typography/fine-print", "html": "﻿<p class=\"exc-fine-print\">*This is an example of fine print that might appear below a form or below an article.</p>" }, "headings": { "name": "headings", "title": "Headings", "path": "/patterns/_typography/headings", "html": "<h1>Heading 1</h1>\r\n<h2>Heading 2</h2>\r\n<h3>Heading 3</h3>\r\n<h4>Heading 4</h4>\r\n<h5>Heading 5</h5>\r\n<h6>Heading 6</h6>" }, "strong-text": { "name": "strong-text", "title": "Strong Text", "path": "/patterns/_typography/strong-text", "html": "﻿<span class=\"exc-strong\">Total Amount: $200.00</span>\r\n" }, "text-colums": { "name": "text-colums", "title": "Text Colums", "path": "/patterns/_typography/text-colums", "html": "﻿<p>\r\n    <span class=\"exc-inline-column\">Amount Paid: </span>\r\n    <span class=\"exc-inline-column\">\r\n        <strong>$202.50</strong><br />\r\n        <small>(Your payment includes a $2.50 convenience fee)</small>\r\n    </span>\r\n</p>" } } } } } }, "site": { "components": { "name": "components", "title": "Components", "path": "/components", "rail": { "selector": "nav[rail]", "name": "rail", "title": "Rail", "path": "/components/rail", "html": "\r\n<div class=\"sidebar-offcanvas\" id=\"sidebar\">\r\n    <nav role=\"navigation\" class=\"pl-menu\">\r\n        <a class=\"block-link\" href=\"/index\">\r\n            <span class=\"caret-left\"></span>\r\n            Project Portal\r\n        </a>\r\n        <ul>\r\n            <template repeater='navRail' context=\"patterns\"></template>\r\n        </ul>\r\n    </nav>\r\n</div>" }, "patterns": { "selector": "[component='patterns']", "name": "patterns", "title": "Patterns", "path": "/components/patterns", "html": "<div class=\"pl-container\">\r\n    <header>\r\n        <menu-toggle></menu-toggle>\r\n        <div class=\"project-logo\">\r\n        \t<img src=\"http://placehold.it/200x100\">\r\n        </div>\r\n        <div class=\"pl-catalog\">\r\n            <div class=\"pl-title\">\r\n                <h2>{{title}}</h2>\r\n            </div>\r\n        </div>\r\n    </header>\r\n\r\n    <style-guide-component *ngIf=\"name === 'style-guide'\"></style-guide-component>\r\n    <template *ngIf=\"name !== 'style-guide'\" repeater=\"patterns\"></template>\r\n</div>" }, "menu-toggle": { "selector": "menu-toggle", "name": "menu-toggle", "title": "Menu Toggle", "path": "/components/menu-toggle", "html": "<p class=\"pl-menu-toggle\">\r\n    <button type=\"button\" class=\"navbar-toggle btn btn-primary btn-sm\" data-toggle=\"offcanvas\">\r\n        <span class=\"sr-only\">Toggle navigation</span>\r\n        <span class=\"icon-bar\"></span>\r\n        <span class=\"icon-bar\"></span>\r\n        <span class=\"icon-bar\"></span>\r\n    </button>\r\n</p>" }, "socialMediaBtn": { "name": "socialMediaBtn", "title": "Social Media Btn", "path": "/components/socialMediaBtn", "html": "<div>an isolated chunk of functionality</div>\r\n" }, "style-guide": { "name": "style-guide", "title": "Style Guide", "path": "/components/style-guide", "html": "<div repeater=\"colors\" context=\"patterns/style-guide/colors\"></div>" } }, "pages": { "name": "pages", "title": "Pages", "path": "/pages", "index": { "name": "index", "title": "Index", "path": "/pages/index", "html": "\r\n\r\n<!--<head>\r\n\t<link rel=\"icon\" href=\"assets/images/favicon.ico\">\r\n\t<meta charset=\"utf-8\"/>\r\n\t<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"/>\r\n\r\n\t<link rel=\"stylesheet\" href=\"../Exelon/exc-css/exc.peco.css\" type=\"text/css\"/>\r\n\t<link rel=\"stylesheet\" href=\"assets/css/pl.peco.css\" type=\"text/css\"/>\r\n</head>-->\r\n\r\n<body>\r\n\t<header role=\"header\">\r\n\t\t<div class=\"pl-band top\">\r\n\t\t\t<div class=\"container\">\r\n\t\t\t\t<img src=\"http://placehold.it/1170x70\">\r\n\t\t\t</div>\r\n\t\t</div>\r\n\t\t<div class=\"pl-band bottom\">\r\n\t\t\t<div class=\"container\">\r\n\t\t\t\t<h1>Web Development</h1>\r\n\t\t\t\t<h2>Style Guide &amp; Pattern Library</h2>\r\n\t\t\t</div>\t\t\t\r\n\t\t</div>\r\n\t</header>\r\n\t<main class=\"pl-main\" role=\"main\">\r\n\t\t<div class=\"container\">\t\t\t\r\n\t\t\t<div class=\"pl-portal-wrapper\">\r\n\t\t\t\t<div class=\"pl-portal\">\r\n\t\t\t\t\t<a href=\"/patterns\">\r\n\t\t\t\t\t\t<img src=\"http://placehold.it/350x150\">\r\n\t\t\t\t\t\t<span>View Pattern Library</span>\r\n\t\t\t\t\t</a>\r\n\t\t\t\t</div>\r\n\t\t\t\t<div class=\"pl-portal\">\r\n\t\t\t\t\t<a href=\"/patterns\">\r\n\t\t\t\t\t\t<img src=\"http://placehold.it/350x150\">\r\n\t\t\t\t\t\t<span>View Pattern Library</span>\r\n\t\t\t\t\t</a>\r\n\t\t\t\t</div>\r\n\t\t\t\t<div class=\"pl-portal\">\r\n\t\t\t\t\t<a href=\"/patterns\"> \r\n\t\t\t\t\t\t<img src=\"http://placehold.it/350x150\">\r\n\t\t\t\t\t\t<span>View Pattern Library</span>\r\n\t\t\t\t\t</a>\r\n\t\t\t\t</div>\r\n\t\t\t</div>\r\n\t\t</div>\r\n\t</main>\r\n\t<footer class=\"portal-footer\" role=\"footer\">\r\n\t\t<div class=\"container\">\r\n<p>&copy; <span id=\"currentYear\"></span> Sample Corporation</p>\r\n\t\t</div>\r\n\t</footer>\r\n\r\n\r\n \t<!-- jQuery -->\r\n    <script src=\"https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js\"></script>\r\n    <!-- Pattern Library JS -->\r\n    <script src=\"/assets/javascripts/pattern-library/pl.common.js\"></script>" }, "paths": { "name": "paths", "title": "Paths", "path": "/pages/paths", "$note": "you can set a url parameter with this syntax /:parameterName/ and that argument will become available to you in the application", "index": "", "info": "", "patterns": "patterns/:id" }, "patterns": { "name": "patterns", "title": "Patterns", "path": "/pages/patterns", "html": "<body class=\"language-markup\">\r\n<a name=\"0\" id=\"0\"></a>\r\n<div class=\"pl-main row-offcanvas row-offcanvas-right\" >\r\n  <nav rail context=\"patterns\"></nav>\r\n\r\n  <main role=\"main\" class=\"offcanvas-body\">\r\n    <patterns-component *ngIf=\"url.id\" context=\"patterns/{{url.id}}\"></patterns-component>\r\n  </main>\r\n\r\n  <div class=\"pl-container\">\r\n    <footer class=\"pl-footer\" role=\"footer\"></footer>\r\n  </div>\r\n</div>\r\n<a href=\"#0\" class=\"cd-top\">Top</a>\r\n</body>" }, "readme": { "name": "readme", "title": "Readme", "path": "/pages/readme", "html": "<!--<main-template>-->\r\n    <!--<markdown>-->\r\n        <!--This is the readme for the Pattern Library project-->\r\n        <!---->\r\n        <!---->\r\n        <!--Repeaters-->\r\n        <!--What does a repeater repeat?-->\r\n        <!---->\r\n            <!--There are 4 ways to use a repeater.-->\r\n            <!-- -by specifying it on the repeater-->\r\n                <!--angular 2 makes javascript variables available to your html. -->\r\n                <!--in this case, we are repeating on the *items* javascript object-->\r\n                <!--<example-repeater (on)=\"items\"></example-repeater>-->\r\n                <!--or we can repeat on an object referenced by name from the library.-->\r\n                <!--<example-repeater example-repeater (on)=\"patterns.example\"></example-repeater>-->\r\n            <!-- -by specifying what it should repeat in a configuration file-->\r\n            <!-- -by context. it will use the items property of the repeater it is inside of-->\r\n            <!---->\r\n        <!--The Pages folder defines site structure of your pattern library-->\r\n        <!---->\r\n        <!---->\r\n        <!---->\r\n        <!---->\r\n        <!---->\r\n    <!--</markdown>-->\r\n<!--</main-template>-->\r\n" } }, "repeaters": { "name": "repeaters", "title": "Repeaters", "path": "/repeaters", "colorCards": { "name": "colorCards", "title": "Color Cards", "path": "/repeaters/colorCards", "html": "<div class=\"color-card\">\r\n\t<div class=\"brand {{name}}\"></div>\r\n\t<p>Hex: {{Hex}}</p>\r\n\t<p>RGB: {{RGB}}</p>\r\n\t<p>SCSS: $brand-{{name}}</p>\r\n</div>\r\n" }, "colors": { "name": "colors", "title": "Colors", "path": "/repeaters/colors", "html": "<section class=\"{{name}}-colors\">\r\n\t<h3>{{title}} Colors</h3>\r\n\t<hr>\r\n\t<div class=\"color-wrapper\">\r\n\t\t<template repeater=\"colorCards\"></template>\r\n\t</div>\r\n</section>\r\n" }, "icons": { "name": "icons", "title": "Icons", "path": "/repeaters/icons", "html": "<div class=\"icon-preview\">\r\n\t<h4>{{title}}</h4>\r\n\t<i class=\"exc-icon-{{name}}\"></i>\r\n\t<pre><code><i class=\"exc-icon-{{name}}\"></i></code></pre>\r\n</div>\r\n" }, "navRail": { "name": "navRail", "title": "Nav Rail", "path": "/repeaters/navRail", "html": "<li><a href=\"/patterns/{{name}}\">{{title}}</a></li>\r\n" }, "patterns": { "name": "patterns", "title": "Patterns", "path": "/repeaters/patterns", "html": "<section class=\"pattern\">\n    <details class=\"primer\">\n        <summary title=\"Show markup and usage\">{{name}}</summary>\n        <section>\n            <p>\n                <strong>Usage:</strong> \n            </p>\n            <pre class=\"language-markup\">\n                <code class=\"language-markup\" preview-html>\n                </code>\n            </pre>\n        </section>\n    </details><!--/.primer-->\n    <div render-pattern></div> \n</section>\n" } } } });
         }
     }
 });
 
-$__System.register("1", ["2", "4", "be", "8", "ca", "c8", "f3", "11f", "c3"], function(exports_1, context_1) {
+$__System.register("1", ["2", "4", "be", "8", "c9", "c7", "f6", "122", "c2"], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var browser_1, core_1, RootComponent_1, DependencyTokens_1, globals_1, globalizeDirectives_1, metadata_1;
@@ -41227,7 +41901,12 @@ $__System.register("1", ["2", "4", "be", "8", "ca", "c8", "f3", "11f", "c3"], fu
             }],
         execute: function() {
             //enableProdMode();
-            browser_1.bootstrap(RootComponent_1.default, [globals_1.GlobalProviders, core_1.provide(DependencyTokens_1.LibraryMetadata, { useValue: metadata_1.metadata }), globalizeDirectives_1.default(globals_1.GlobalDirectives)]);
+            browser_1.bootstrap(RootComponent_1.default, [
+                globals_1.GlobalProviders,
+                globals_1.GlobalPipes,
+                core_1.provide(DependencyTokens_1.LibraryMetadata, { useValue: metadata_1.metadata }),
+                globalizeDirectives_1.default(globals_1.GlobalDirectives)
+            ]);
         }
     }
 });

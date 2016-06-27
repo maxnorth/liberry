@@ -1,0 +1,1 @@
+﻿If the user should not be allowed to close the message, remove <i class="exc-icon-close"></i>.

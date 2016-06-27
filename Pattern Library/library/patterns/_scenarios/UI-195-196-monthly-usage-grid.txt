@@ -1,0 +1,1 @@
+﻿The <div>s with class="exc-hide-kw" should not display in the Residential tab.  The same <div>s with class="exc-hide-kw" should not display in the Business tab if "Delivery Service Class" = "Watt hour" in the form.

@@ -1,0 +1,1 @@
+﻿This example shows an info bar below the confirmation text.  Not all confirmation screens have an info bar.

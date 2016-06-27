@@ -2,7 +2,7 @@ var gulp = require("gulp");
 var clean = require("gulp-clean");
 var Builder = require("systemjs-builder");
 global.ts = require("typescript");
-createMetadata = require("./module/build/createMetadata");
+createMetadata = require("./src/util/createMetadata");
 
 gulp.task('default', ["clean", "metadata"], function() {
 
@@ -10,7 +10,7 @@ gulp.task('default', ["clean", "metadata"], function() {
 
     builder.config({
         packages: {
-            'module': {
+            'src': {
                 //format: 'register',
                 defaultExtension: 'ts'
             },
@@ -29,9 +29,10 @@ gulp.task('default', ["clean", "metadata"], function() {
             'zone.js': 'node_modules/zone.js/dist/zone.js',
             'reflect-metadata': 'node_modules/reflect-metadata/Reflect.js',
             'crypto': 'node_modules/crypto/sha1.js',
-            'app/*': 'module/app/*.ts',
+            'app/*': 'src/app/*.ts',
             'symbol-observable': 'node_modules/symbol-observable/index.js',
-            'lodash': 'node_modules/lodash'
+            'lodash': 'node_modules/lodash',
+            "prismjs": 'node_modules/prismjs/prism.js'
         },
         transpiler: 'typescript',
         typescriptOptions: {
@@ -43,7 +44,7 @@ gulp.task('default', ["clean", "metadata"], function() {
         }
     });
 
-    builder.buildStatic("module/app/bootstrap.ts", "app.js", {
+    builder.buildStatic("src/app/bootstrap.ts", "app.js", {
         // minify: true,
         // sourceMaps: true
     });
@@ -54,7 +55,7 @@ gulp.task("clean", function() {
     .pipe(clean());
 })
 
-gulp.task("metadata", createMetadata.bind(createMetadata, "Pattern Library", "module/app/resources/metadata.ts"));
+gulp.task("metadata", createMetadata.bind(createMetadata, "Pattern Library", "src/app/resources/metadata.ts"));
 
-gulp.watch("module/**/*", ['default']);
+gulp.watch("src/**/*", ['default']);
 gulp.watch("Pattern Library/**/*", ['default']);

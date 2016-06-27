@@ -1,8 +1,13 @@
 {
-  "name": "ais-pattern-library",
-  "version": "1.0.0",
-  "description": "A framework for building web dev pattern libraries.",
-  "main": "build.js",
+  "name": "aispl",
+  "version": "0.0.3",
+  "description": "",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "bin": {
+    "aispl": "./src/util/commandLineController.js"
+  },
   "dependencies": {
     "angular2": "*",
     "async": "*",
@@ -19,12 +24,13 @@
     "systemjs-builder": "*",
     "typescript": "*",
     "zone": "*",
-    "zone.js": "*"
+    "zone.js": "*",
+    "minimist": "*"
   },
-  "devDependencies": {},
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "Max North",
-  "license": "ISC"
+  "keywords": [
+    "pattern",
+    "library",
+    "ais"
+  ],
+  "author": ""
 }

@@ -1,0 +1,1 @@
+PANELS SHOULD ONLY BE USED IN MULTI-STEP ACCORDION FORMS.  See more examples in Form Templates.

@@ -1,0 +1,1 @@
+﻿Some pages have the name of the form as the SharePoint Page Title, and therefore do not need a title in the form itself.  But some pages use a different SP Page Title, and have a title/header on the form itself <h3 class="exc-form-title">. <h3 class="exc-form-title"> should not be confused with the SharePoint Page Title.

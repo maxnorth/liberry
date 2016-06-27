@@ -1,0 +1,1 @@
+﻿For SharePoint implementation, change the image source to src="/Style Library/Exelon/exc-images/BMPoweredBy.gif"

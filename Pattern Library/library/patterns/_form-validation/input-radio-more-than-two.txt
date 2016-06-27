@@ -1,0 +1,1 @@
+For radio groups that have three or more options, the radio buttons will be stacked.

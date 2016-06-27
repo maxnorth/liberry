@@ -1,0 +1,1 @@
+The last column with the class of "control" is required for the responsive functionality of all tables. The responsive data table is dependent upon javascripts/datatables.min.js. 

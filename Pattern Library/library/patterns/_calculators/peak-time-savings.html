@@ -1,0 +1,77 @@
+<div class="exc-calc-pts">
+	<h2>Peak Time Savings Calculator</h2>
+	<p>Use the calculator below to estimate the amount of credits you could potentially earn on your electric bill.</p>
+
+	<ol class="exc-badge-ordered-list">
+		<li>
+			<span class="badge exc-badge">1</span>
+			<p><strong>Home Size: *</strong></p>
+			<p>Select the size that best represents your home.</p>
+			<div class="exc-calc-choice">
+				<div class="exc-calc-choice-option">
+					<div class="radio">
+					  <label>
+                        <input type="radio" name="excCalcPTSHomeSize" id="excCalcPTSHomeSize1" value="average" checked="checked">
+					    Average Home
+					  </label>
+					</div> 
+					<p>Avereage Home: 3000 square feet or smaller</p>
+				</div>
+				<div class="exc-calc-choice-option">
+					<div class="radio">
+					  <label>
+                        <input type="radio" name="excCalcPTSHomeSize" id="excCalcPTSHomeSize2" value="large">
+					    Large Home
+					  </label>
+					</div> 
+					<p>Large Home: larger than 3000 square feet</p>
+				</div>
+			</div>
+		</li>
+		<li>
+			<span class="badge exc-badge">2</span>
+			<p><strong>Energy-Saving Actions: *</strong></p>
+			<p>Select the actions your household can do during Peak Time Savings Hours.</p>
+			<div class="checkbox">
+		    	<label>
+                    <input type="checkbox" name="excCalcPTSAction" id="excCalcPTSAction1" value="3.40"> Set my thermostat 10 degrees higher
+		    	</label>
+		  	</div>
+		  	<div class="checkbox">
+		    	<label>
+                    <input type="checkbox" name="excCalcPTSAction" id="excCalcPTSAction2" value="4.5"> Delay using my dishwasher, oven and microwave
+		    	</label>
+		  	</div>
+		  	<div class="checkbox">
+		    	<label>
+                    <input type="checkbox" name="excCalcPTSAction" id="excCalcPTSAction3" value="3.7"> Hold off on doing my laundry
+		    	</label>
+		  	</div>
+		  	<div class="checkbox">
+		    	<label>
+                    <input type="checkbox" name="excCalcPTSAction" id="excCalcPTSAction4" value="0.9"> Avoid using electronics like my TV and stereo
+		    	</label>
+		  	</div>
+		  	<div class="checkbox">
+		    	<label>
+                    <input type="checkbox" name="excCalcPTSAction" id="excCalcPTSAction5" value="0.4"> Wait to use my vacuum cleaner
+		    	</label>
+		  	</div>
+            <div id="excCalcPTSError" style="display:none;">
+                <p class="exc-msg-error">Please select at least one action.</p>
+            </div>
+		</li>
+	</ol>
+
+    <div id="excCalcPTSResults" class="exc-calc-pts-results">
+        <div class="exc-calc-pts-savings">
+            <p>ComEd could announce 3-5 Peak Time Savings Hours this summer, and you could earn a <span class="exc-calc-highlight">$<span id="excCalcPTSEvent3">0</span> - $<span id="excCalcPTSEvent4">0</span> credit</span> <span class="exc-calc-highlight">on your summmer bills*</span></p>
+        </div>
+        <div class="exc-calc-pts-notice">
+            <p>* Potential credits are based on Peak Time Savings Hours lasting 3 hours each on 3-5 days during the summer. Each credit you receive will vary in amount based on the energy-saving actions you take, your historical electricity use, weather conditions and other factors.</p>
+        </div>
+    </div>
+
+    <button type="button" id="excCalcPTSCalculate" class="btn btn-primary">Calculate Savings</button>
+    <input type="hidden" id="excCalcPTSkwh">
+</div>

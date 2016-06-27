@@ -1,0 +1,1 @@
+﻿The <i> tags within the labels contain numbers that only show on mobile view, to help the user know which equipment item they are entering data for. (The content in the <i> tag is also available to screen readers.)

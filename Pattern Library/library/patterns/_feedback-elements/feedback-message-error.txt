@@ -1,0 +1,1 @@
+﻿This error message is NOT for forms validation--that is handled differently.  The style guide includes this error message component, but the usage is currenly unknown.

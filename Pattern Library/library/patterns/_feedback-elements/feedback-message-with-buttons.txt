@@ -1,0 +1,1 @@
+﻿Use the first version for one line of text with inline buttons.  Use the second version for multiple paragraphs of text / content, with buttons at the bottom.

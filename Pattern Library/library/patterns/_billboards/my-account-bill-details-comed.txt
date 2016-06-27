@@ -1,0 +1,1 @@
+﻿This pattern is the same as my-account-bill-details-bge-peco, except for two changes. 1) A CSS class name "exc-short" added here: <div class="exc-bill-details-box exc-short">, 2) An additional <div> for the Current Charges Summary: <div class="exc-current-charges-summary">...</div>

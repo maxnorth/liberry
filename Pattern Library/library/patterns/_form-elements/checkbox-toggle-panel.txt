@@ -1,0 +1,1 @@
+A toggle panel after the checkbox form-group is styled independently from the checkbox area.  Content hidden inside a checkbox group will be indented.

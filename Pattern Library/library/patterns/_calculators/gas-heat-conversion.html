@@ -1,0 +1,163 @@
+<ul class="exc-tabs exc-tiny-tabs">
+    <li class="exc-active" rel="exc-tab1">Oil vs. Natural Gas</li>
+    <li rel="exc-tab2">Propane vs. Natural Gas</li>
+    <li rel="exc-tab3">Electric Resistance Heat vs. Natural Gas</li>
+    <li rel="exc-tab4">Payback Calculator</li>
+</ul>
+<div class="exc-tab-container">
+    <div class="exc-active exc-acc-header" rel="exc-tab1">Oil vs. Natural Gas<i class="exc-icon-plus"></i></div>
+    <div id="exc-tab1" class="exc-tab-content">
+        <h2 class="exc-hide-acc">Oil vs. Natural Gas</h2>
+        <!-- begin Oil vs. Natural Gas form content -->
+        <p>Intro text.</p>
+        <div class="form-horizontal">
+            <hr />
+            <section>
+                <div class="form-group">
+                    <label for="id1" class="col-sm-9 control-label">Number of gallons of oil used in the last 12 months:</label>
+                    <div class="col-sm-3">
+                        <input type="text" class="form-control" id="id1" placeholder="0">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="id2" class="col-sm-9 control-label">Average price per gallon of oil:</label>
+                    <div class="col-sm-3">
+                        <input type="text" class="form-control" id="id2" placeholder="0">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <button type="button" class="btn btn-default">Reset</button>
+                        <button type="button" class="btn btn-primary pull-right">Calculate</button>
+                    </div>
+                </div>
+            </section>
+            <section>
+                <div class="form-group">
+                    <label for="id3" class="col-sm-9 control-label">Annual cost of oil:</label>
+                    <div class="col-sm-3">
+                        <span id="id3" class="exc-input-readonly">$0.00</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="id4" class="col-sm-9 control-label">Equivalent ccf of natural gas:</label>
+                    <div class="col-sm-3">
+                        <span id="id4" class="exc-input-readonly">0.00</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="id5" class="col-sm-9 control-label">Current price per ccf of natural gas:</label>
+                    <div class="col-sm-3">
+                        <span id="id5" class="exc-input-readonly">$0.00</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="id6" class="col-sm-9 control-label">Estimated annual cost of natural gas:</label>
+                    <div class="col-sm-3">
+                        <span id="id6" class="exc-input-readonly">$0.00</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="id7" class="col-sm-9 control-label exc-strong">Estimated annual savings using natural gas:</label>
+                    <div class="col-sm-3">
+                        <span id="id7" class="exc-input-readonly exc-strong">$0.00</span>
+                    </div>
+                </div>
+            </section>
+        </div>
+        <!-- end Oil vs. Natural Gas content -->
+    </div>  
+    <div class="exc-acc-header" rel="exc-tab2">Propane vs. Natural Gas<i class="exc-icon-plus"></i></div>
+    <div id="exc-tab2" class="exc-tab-content">
+        <h2 class="exc-hide-acc">Propane vs. Natural Gas</h2>
+    </div>
+    <div class="exc-acc-header" rel="exc-tab3">Electric Resistance Heat vs. Natural Gas<i class="exc-icon-plus"></i></div>
+    <div id="exc-tab3" class="exc-tab-content">
+        <h2 class="exc-hide-acc">Electric Resistance Heat vs. Natural Gas</h2>
+    </div>
+    <div class="exc-acc-header" rel="exc-tab4">Payback Calculator<i class="exc-icon-plus"></i></div>
+    <div id="exc-tab4" class="exc-tab-content">
+        <h2 class="exc-hide-acc">Payback Calculator</h2>
+        <!-- begin Payback Calculator content -->
+        <div class="form-horizontal">
+            <section>
+                <h3>First Costs/Capital Costs/Upfront Costs</h3>
+                <h4 class="exc-form-sub-hdr">PECO Charges</h4>
+                <div class="form-group">
+                    <label for="id1" class="col-sm-9 control-label">PECO charge for gas line installation:</label>
+                    <div class="col-sm-3">
+                        <input type="text" class="form-control" id="id1" placeholder="0">
+                    </div>
+                </div>
+                <!--  <hr /> -->
+                <h4 class="exc-form-sub-hdr">Appliance Costs</h4>
+                <div class="form-group">
+                    <label for="id2" class="col-sm-9 control-label">Heater/hot water heater/appliance equipment and installation:</label>
+                    <div class="col-sm-3">
+                        <input type="text" class="form-control" id="id2" placeholder="0">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="id3" class="col-sm-9 control-label">Oil/propane tank remove:</label>
+                    <div class="col-sm-3">
+                        <input type="text" class="form-control" id="id3" placeholder="0">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="id4" class="col-sm-9 control-label">Additional related costs:</label>
+                    <div class="col-sm-3">
+                        <input type="text" class="form-control" id="id4" placeholder="0">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="id5" class="col-sm-9 control-label exc-strong">Total Appliance Costs:</label>
+                    <div class="col-sm-3">
+                        <span id="id5" class="exc-input-readonly exc-strong">$0.00</span>
+                    </div>
+                </div>
+            </section>
+            <section>
+                <h3>Fuel Commodity Costs/Savings</h3>
+                <h4 class="exc-form-sub-hdr">Oil vs. Natural Gas</h4>
+                <div class="form-group">
+                    <label for="id6" class="col-sm-9 control-label">Number of gallons of oil used in the last 12 months:</label>
+                    <div class="col-sm-3">
+                        <input type="text" class="form-control" id="id6" placeholder="0">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <button type="button" class="btn btn-default">Reset</button>
+                        <button type="button" class="btn btn-primary pull-right">Calculate</button>
+                    </div>
+                </div>
+            </section>
+            <section>
+                <div class="form-group">
+                    <label for="id3" class="col-sm-9 control-label">Annual Costs:</label>
+                    <div class="col-sm-3">
+                        <span id="id3" class="exc-input-readonly">$0.00</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="id4" class="col-sm-9 control-label">Savings vs. Oil:</label>
+                    <div class="col-sm-3">
+                        <span id="id4" class="exc-input-readonly">$0.00</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="id5" class="col-sm-9 control-label">Savings vs Propane:</label>
+                    <div class="col-sm-3">
+                        <span id="id5" class="exc-input-readonly">$0.00</span>
+                    </div>
+                </div>
+            </section>
+        </div>
+        <!-- end Payback Calculator content -->
+    </div>
+</div>
+
+
+
+
+

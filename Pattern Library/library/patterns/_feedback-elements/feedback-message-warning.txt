@@ -1,0 +1,1 @@
+﻿This pattern is ONLY used for the global warning message that appears above the header in the Master Page.

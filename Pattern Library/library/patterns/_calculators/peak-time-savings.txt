@@ -1,0 +1,1 @@
+The JS for this calculator will be included with the web part. For it to function in the Pattern Library, the JS has also been included in pl.common.js in pattern-library/assets/js.

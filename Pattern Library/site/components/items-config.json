@@ -2,8 +2,8 @@
   "rail": {
     "selector": "nav[rail]"
   },
-  "pattern-display": {
-    "selector": "pattern-display"
+  "patterns": {
+    "selector": "[component='patterns']"
   },
   "menu-toggle": {
     "selector": "menu-toggle"

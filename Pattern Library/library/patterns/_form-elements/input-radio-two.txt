@@ -1,0 +1,1 @@
+For radio groups that have only two options, we use an inline layout.
