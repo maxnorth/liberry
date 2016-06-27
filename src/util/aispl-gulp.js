@@ -19,7 +19,7 @@ gulp.task('default', ["clean", "metadata"], function() {
 });
 
 gulp.task("clean", function() {
-     gulp.src("app.j*", {read: false})
+     gulp.src("app.js", {read: false})
     .pipe(clean());
 })
 
