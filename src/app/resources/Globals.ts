@@ -1,7 +1,7 @@
 import {RepeaterComponents} from "app/components/RepeaterComponents";
 import {RepeaterManager} from "app/components/RepeaterManager";
 import {SiteComponents} from "../components/SiteComponents";
-import {ROUTER_DIRECTIVES, ROUTER_PROVIDERS} from "angular2/router";
+import {ROUTER_DIRECTIVES, ROUTER_PROVIDERS} from "@angular/router";
 //import {ParentComponent} from "app/components/TestParentComponent";
 import {HrefRouter} from 'app/directives/HrefRouter';
 import {PreviewHtml} from 'app/directives/PreviewHtml';

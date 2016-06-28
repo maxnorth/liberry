@@ -1,4 +1,4 @@
-import { Component, ElementRef, DynamicComponentLoader, Input, ViewContainerRef } from 'angular2/core';
+import { Component, ElementRef, DynamicComponentLoader, Input, ViewContainerRef } from '@angular/core';
 import {metadata} from "app/resources/metadata";
 import {objectPath} from "app/utilities/objectPath";
 

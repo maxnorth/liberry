@@ -1,4 +1,4 @@
-import {PLATFORM_DIRECTIVES, provide} from 'angular2/core';
+import {PLATFORM_DIRECTIVES, provide} from '@angular/core';
 
 export default function globalizeDirectives(directives) {
     var PlatformDirectives = [];

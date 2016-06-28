@@ -1,4 +1,4 @@
-import {Directive, Input, Inject, SkipSelf, ViewContainerRef, ComponentResolver } from "angular2/core";
+import {Directive, Input, Inject, SkipSelf, ViewContainerRef, ComponentResolver } from "@angular/core";
 import {metadata} from "app/resources/metadata";
 import createPrototypeChain from "app/utilities/createPrototypeChain";
 import {objectPath} from "app/utilities/objectPath";

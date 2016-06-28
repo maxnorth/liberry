@@ -1,7 +1,7 @@
-import {Component, provide, SkipSelf, Optional, Inject, Input, forwardRef} from 'angular2/core';
+import {Component, provide, SkipSelf, Optional, Inject, Input, forwardRef} from '@angular/core';
 import {metadata} from 'app/resources/metadata';
 import {RepeaterManager} from "app/components/RepeaterManager";
-import {RouteParams} from 'angular2/router';
+import {RouteParams} from '@angular/router';
 import {LibraryContext} from "app/providers/LibraryContext";
 import createPrototypeChain from "app/utilities/createPrototypeChain";
 import {objectPath} from "app/utilities/objectPath";

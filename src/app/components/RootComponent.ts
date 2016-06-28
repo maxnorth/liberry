@@ -1,8 +1,8 @@
-import { Component } from 'angular2/core';
+import { Component } from '@angular/core';
 import { TemplateUrls, PatternLibrary } from '../resources/resource';
 import {RepeaterComponents} from "RepeaterComponents";
 import {RepeaterManager} from "RepeaterManager";
-import {RouteConfig, ROUTER_DIRECTIVES} from "angular2/router";
+import {RouteConfig, ROUTER_DIRECTIVES} from "@angular/router";
 import {PageComponentRoutes} from "app/components/PageComponents";
 import provideAsParent from 'app/providers/provideAsParent';
 import {LibraryMetadata} from 'app/constants/DependencyTokens';

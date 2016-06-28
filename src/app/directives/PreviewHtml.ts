@@ -1,4 +1,4 @@
-import { Directive, ElementRef, Injector } from 'angular2/core';
+import { Directive, ElementRef, Injector } from '@angular/core';
 import Prism from 'prismjs';
 import {Parent} from '../constants/DependencyTokens';
 

@@ -1,4 +1,4 @@
-import {provide, forwardRef} from 'angular2/core';
+import {provide, forwardRef} from '@angular/core';
 import {Parent} from '../constants/DependencyTokens';
 
 export default function provideAsParent(component) {

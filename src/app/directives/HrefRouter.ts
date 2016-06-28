@@ -1,5 +1,5 @@
-import { Directive, ElementRef, Input, SimpleChange, HostListener, HostBinding } from 'angular2/core';
-import {Router} from "angular2/router";
+import { Directive, ElementRef, Input, SimpleChange, HostListener, HostBinding } from '@angular/core';
+import {Router} from "@angular/router";
 import {metadata} from "app/resources/metadata";
 //import {$} from "jquery";
 

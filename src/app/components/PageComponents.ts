@@ -1,5 +1,5 @@
-import {Component, Optional, SkipSelf, Inject} from "angular2/core";
-import {RouteParams} from 'angular2/router';
+import {Component, Optional, SkipSelf, Inject} from "@angular/core";
+import {RouteParams} from '@angular/router';
 import {metadata} from "app/resources/metadata";
 import BaseLibraryComponent from 'app/classes/BaseLibraryComponent';
 import {LibraryContext} from "app/providers/LibraryContext";

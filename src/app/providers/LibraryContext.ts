@@ -1,4 +1,4 @@
-import {provide, Injector} from 'angular2/core';
+import {provide, Injector} from '@angular/core';
 import {objectPath} from "app/utilities/objectPath";
 import {BehaviorSubject} from "rxjs/BehaviorSubject";
 

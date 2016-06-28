@@ -13,7 +13,7 @@
         }
     },
     "paths": {
-        "angular2/*": "node_modules/angular2/*.js",
+        "@angular/*": "node_modules/@angular/*/index.js",
         "rxjs/*": "node_modules/rxjs/*.js",
         "zone.js": "node_modules/zone.js/dist/zone.js",
         "reflect-metadata": "node_modules/reflect-metadata/Reflect.js",

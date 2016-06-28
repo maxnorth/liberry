@@ -1,4 +1,4 @@
-import { Directive, ElementRef, DynamicComponentLoader } from 'angular2/core';
+import { Directive, ElementRef, DynamicComponentLoader } from '@angular/core';
 
 @Directive({
     selector: "[pattern][page]",

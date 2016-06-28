@@ -1,7 +1,5 @@
-import 'zone.js';
-import 'reflect-metadata';
-import {bootstrap} from 'angular2/platform/browser';
-import {provide, enableProdMode} from 'angular2/core';
+import {bootstrap} from '@angular/platform-browser';
+import {provide, enableProdMode} from '@angular/core';
 import RootComponent from 'app/components/RootComponent'
 import {Parent, LibraryMetadata} from 'app/constants/DependencyTokens';
 import provideAsParent from 'app/providers/provideAsParent';
