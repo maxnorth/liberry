@@ -1,4 +1,6 @@
-import {bootstrap} from '@angular/platform-browser';
+import "reflect-metadata";
+import "zone.js";
+import {bootstrap} from '@angular/platform-browser-dynamic';
 import {provide, enableProdMode} from '@angular/core';
 import RootComponent from 'app/components/RootComponent'
 import {Parent, LibraryMetadata} from 'app/constants/DependencyTokens';

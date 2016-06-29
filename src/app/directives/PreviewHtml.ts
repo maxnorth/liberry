@@ -16,7 +16,7 @@ export class PreviewHtml {
    private renderPreview(context) {
         if (context) {
             if (context.html) {
-                return Prism.highlight(context.html, Prism.languages.html);
+                return Prism.highlight(context.html, Prism.languages.html, true);
             }
             return `[No Html available for ${context.title}]`;
         }

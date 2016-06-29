@@ -37,7 +37,10 @@
     "typescript": "*",
     "minimist": "*",
     "lodash": "*",
-    "prismjs": "*"
+    "prismjs": "*",
+    "express": "*",
+    "crypto": "*",
+    "zone": "*"
   },
   "keywords": [
     "pattern",
