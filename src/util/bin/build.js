@@ -19,7 +19,7 @@ function buildApp() {
 
     var configPath = path.resolve(__dirname, "./../config/systemjs-config.json"),
         buildSource = path.resolve("/", __dirname, "./../../app/bootstrap.ts"),
-    	buildOutput = path.resolve(buildConfig.outputLocation, buildConfig.appName);
+    	buildOutput = path.resolve(aisplConfig.root, "app.js");
 
     systemJsConfig = jsonfile.readFileSync(configPath);
     
@@ -29,11 +29,3 @@ function buildApp() {
         // sourceMaps: true
     });
 }
-var specConfig = {
-
-};
-
-var buildConfig = {
-    outputLocation: specConfig.whatever || "./",
-    appName: specConfig.name || "app.js"
-};

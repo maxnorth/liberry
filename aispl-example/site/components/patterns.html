@@ -6,11 +6,11 @@
         </div>
         <div class="pl-catalog">
             <div class="pl-title">
-                <h2>{{title}}</h2>
+                <h2>{{title}} yo</h2>
             </div>
         </div>
     </header>
 
-    <style-guide-component *ngIf="name === 'style-guide'"></style-guide-component>
+    <template *ngIf="name === 'style-guide'" repeater="colors" context="patterns/style-guide"></template>
     <template *ngIf="name !== 'style-guide'" repeater="patterns"></template>
 </div>
