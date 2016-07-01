@@ -3,6 +3,7 @@
   "version": "0.0.11",
   "description": "",
   "scripts": {
+    "start": "npm run cli serve",
     "test": "echo \"Error: no test specified\" && exit 1",
     "server": "npm run cli serve",
     "build": "npm run cli build",
