@@ -15,5 +15,5 @@ module.exports = function() {
         res.sendFile("/" + indexLocation);
     });
 
-    app.listen(8080);
+    app.listen(process.env.port);
 }
