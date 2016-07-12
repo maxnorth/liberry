@@ -10,4 +10,6 @@ desktop.ini
 .vscode
 /dev notes
 
-.npmignore
+/.npmignore
+
+/gulpfile.js

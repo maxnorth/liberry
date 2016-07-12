@@ -1,16 +1,16 @@
 {
-  "name": "aispl",
+  "name": "liberry",
   "version": "0.0.11",
   "description": "",
-  "scripts": {
-    "start": "npm run cli serve",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "server": "npm run cli serve",
-    "build": "npm run cli build",
-    "cli": "node ./src/util/cli.js"
-  },
+  // "scripts": {
+  //   "start": "npm run cli serve",
+  //   "test": "echo \"Error: no test specified\" && exit 1",
+  //   "server": "npm run cli serve",
+  //   "build": "npm run cli build",
+  //   "cli": "node ./src/util/cli.js"
+  // },
   "bin": {
-    "aispl": "./src/util/cli.js"
+    "liberry": "./src/util/cli-controller.js"
   },
   "dependencies": {
     "@angular/common": "2.0.0-rc.3",

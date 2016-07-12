@@ -1,12 +1,12 @@
 var express = require('express');
 var app = express();
 var path = require('path');
-var aisplConfig = require("./../aispl-config");
+var liberryConfig = require("./../userConfig");
 
 module.exports = function() {
     // viewed at http://localhost:8080
-    var staticServeRoot = path.resolve("./", aisplConfig.root),
-        indexLocation = path.resolve("./", aisplConfig.root, './index.html').slice(3);
+    var staticServeRoot = path.resolve("./", liberryConfig.root),
+        indexLocation = path.resolve("./", liberryConfig.root, './index.html').slice(3);
 
     app.use(express.static(staticServeRoot));
 
@@ -15,5 +15,5 @@ module.exports = function() {
         res.sendFile("/" + indexLocation);
     });
 
-    app.listen(process.env.port);
+    app.listen(process.env.PORT || 8080);
 }

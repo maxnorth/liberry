@@ -10,7 +10,7 @@ import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 
 
 @Component({
-    selector: 'pattern-library',
+    selector: 'liberry',//TODO: allow configurable selector
     template: `<router-outlet></router-outlet>`,
     providers: [provideAsParent(RootComponent)]
 })

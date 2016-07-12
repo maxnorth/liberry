@@ -4,12 +4,12 @@ var Builder = require("systemjs-builder"),
     merge = require("deepmerge"),
     createMetadata = require("./../createMetadata");
     global.ts = require("typescript"),
-    aisplConfig = require("./../aispl-config")
+    liberryConfig = require("./../userConfig")
 
-console.log(aisplConfig);
+//console.log(liberryConfig);
 
 module.exports = function() {
-    createMetadata(aisplConfig.root, aisplConfig.root + "/bin/aispl-metadata.ts");
+    createMetadata(liberryConfig.root, liberryConfig.root + "/bin/liberry-metadata.ts");
     buildApp();
 }
 
@@ -17,9 +17,9 @@ function buildApp() {
 
     var builder = new Builder();
 
-    var configPath = path.resolve(__dirname, "./../config/systemjs-config.json"),
+    var configPath = path.resolve(__dirname, "./../systemjsConfig.json"),
         buildSource = path.resolve("/", __dirname, "./../../app/bootstrap.ts"),
-    	buildOutput = path.resolve(aisplConfig.root, "app.js");
+    	buildOutput = path.resolve(liberryConfig.root, "app.js");
 
     systemJsConfig = jsonfile.readFileSync(configPath);
     
