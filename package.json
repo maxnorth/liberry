@@ -1,9 +1,9 @@
 {
   "name": "liberry",
-  "version": "0.0.14",
+  "version": "0.0.15",
   "description": "",
   "bin": {
-    "liberry": "./src/util/cli-controller.js"
+    "liberry": "./src/util/cliController.js"
   },
   "dependencies": {
     "@angular/common": "2.0.0-rc.3",
