@@ -1,6 +1,6 @@
 {
   "name": "liberry",
-  "version": "0.0.7",
+  "version": "0.0.14",
   "description": "",
   "bin": {
     "liberry": "./src/util/cli-controller.js"
