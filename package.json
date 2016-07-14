@@ -1,6 +1,6 @@
 {
-  "name": "aispl",
-  "version": "0.0.12",
+  "name": "liberry",
+  "version": "0.0.3",
   "description": "",
   "bin": {
     "liberry": "./src/util/cli-controller.js"
