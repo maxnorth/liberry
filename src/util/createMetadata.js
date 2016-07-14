@@ -97,7 +97,7 @@ function run(targetPath, resultPath) {
               isFolder = fs.lstatSync(path +"/"+ file).isDirectory();
 
           if (extensionIndex !== file.lastIndexOf(".")) {
-              throw new Error(path +"/"+ file +" - Library files may not have multi-part extensions. Please include only one period per file name.");
+              //throw new Error(path +"/"+ file +" - Library files may not have multi-part extensions. Please include only one period per file name.");
           }
           if (extensionIndex === 0) {
               throw new Error(path +"/"+ file +" - Library files must have names.");

@@ -1,14 +1,7 @@
 {
   "name": "liberry",
-  "version": "0.0.11",
+  "version": "0.0.2",
   "description": "",
-  // "scripts": {
-  //   "start": "npm run cli serve",
-  //   "test": "echo \"Error: no test specified\" && exit 1",
-  //   "server": "npm run cli serve",
-  //   "build": "npm run cli build",
-  //   "cli": "node ./src/util/cli.js"
-  // },
   "bin": {
     "liberry": "./src/util/cli-controller.js"
   },
