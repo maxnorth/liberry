@@ -1,1 +1,0 @@
-﻿"exc-slats-box" is used for My Wallet, and may be used in other cases where slats are needed.

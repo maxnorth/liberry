@@ -1,5 +1,5 @@
 import {Directive, Input, Inject, SkipSelf, ViewContainerRef, ComponentResolver } from "@angular/core";
-import {metadata} from "app/resources/metadata";
+import metadata from "liberry";
 import createPrototypeChain from "app/utilities/createPrototypeChain";
 import {objectPath} from "app/utilities/objectPath";
 import _ from "lodash";
@@ -27,6 +27,7 @@ export class RepeaterManager extends BaseLibraryComponent {
 
     @Input() public repeater;
     @Input("context") public contextDef;
+    @Input() public filter = "";
     public url;
     public library;
     public observableContext = new BehaviorSubject<Object>(undefined);
@@ -53,6 +54,7 @@ export class RepeaterManager extends BaseLibraryComponent {
             this.componentResolver.resolveComponent(component).then((componentFactory) => {
                 var items = context.items || this.libraryMetadata.library.items;
                 //iterate through library items and add them to the viewContainer
+                items = filterItems(items, this.filter);
                 for (var i in items) {
                     var item = items[i];
                     var componentRef = this.viewContainerRef.createComponent(componentFactory);
@@ -68,3 +70,36 @@ export class RepeaterManager extends BaseLibraryComponent {
         }
     }
 }
+
+function filterItems(items, filter) {
+        //separate by a space delimiter
+        var filters = filter.split(" ").filter(x => !!x);
+
+        if (items && filters.length > 0) {
+            var filteredItems = filterPoly(items, x => {
+                for (var key in filters){
+                    if (typeof(x) === "object" && x.hasOwnProperty(filters[key])) {
+                        return true;
+                    }
+                }
+                return false;
+            });
+            return filteredItems;
+        }
+        return items;
+
+        function filterPoly(items, condition) {
+            if (typeof(items) === "object" && items.hasOwnProperty("length")) {
+                return items.filter(items, condition);
+            }
+
+            var filteredItems = [];
+            for (let key in items) {
+                let item = items[key];
+                if (condition(item)) {
+                    filteredItems.push(item);
+                }
+            }
+            return filteredItems;
+        }
+    }

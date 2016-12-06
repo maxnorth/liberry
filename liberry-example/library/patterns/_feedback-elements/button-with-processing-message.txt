@@ -1,1 +1,0 @@
-﻿Use Javascript as needed to display a spinner in the button during processing.  The button should be disabled during processing. The processing text may be changed as needed, for example for a Calculate button, it could say "Calculating..." 

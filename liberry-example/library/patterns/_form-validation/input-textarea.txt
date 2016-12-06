@@ -1,1 +1,0 @@
-This should be used in a single column only (one per row).

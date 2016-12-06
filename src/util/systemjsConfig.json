@@ -1,35 +1,33 @@
 {
     "packages": {
-        "src": {
+        "src/app": {
             "defaultExtension": "ts"
         },
         "node_modules": {
             "defaultExtension": "js"
         },
-        "lodash": {
-            "defaultExtension": "js",
-            "main": "lodash",
-            "format": "cjs"
+        "liberry": {
+            "format": "global"
         }
     },
-    "paths": {
-        "@angular/router": "node_modules/@angular/router-deprecated/index.js",
-        "@angular/router": "node_modules/@angular/router-deprecated/index.js",
-        "@angular/*": "node_modules/@angular/*/index.js",
-        "rxjs/*": "node_modules/rxjs/*.js",
+    "map": {
         "zone.js": "node_modules/zone.js/dist/zone.js",
         "reflect-metadata": "node_modules/reflect-metadata/Reflect.js",
         "crypto": "node_modules/crypto/sha1.js",
-        "app/*": "src/app/*.ts",
+        "app": "src/app",
         "symbol-observable": "node_modules/symbol-observable/index.js",
-        "lodash": "node_modules/lodash",
-        "prismjs": "node_modules/prismjs/prism.js"
+        "lodash": "node_modules/lodash/lodash.js",
+        "prismjs": "node_modules/prismjs/prism.js",
+        "@angular/router": "@angular/router-deprecated",
+        "ie-shim": "node_modules/ie-shim/dist/browser.js"
+    },
+    "paths": {
+        "@angular/*": "node_modules/@angular/*/index.js",
+        "rxjs/*": "node_modules/rxjs/*.js"
     },
     "transpiler": "typescript",
     "typescriptOptions": {
         "emitDecoratorMetadata": true,
         "experimentalDecorators": true
-    },
-    "map": {
     }
 }

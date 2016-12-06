@@ -1,4 +1,4 @@
-import {metadata} from "app/resources/metadata";
+import metadata from "liberry";
 
 export default function componentBuilder(items, type, defineComponent) {
     var builtComponents = [];

@@ -1,1 +1,0 @@
-Nest two <div class="form-group"> inside one <div class="exc-form-group-double"> to create one row.  To add another row, start with <div class="exc-form-group-double"> again.

@@ -1,1 +1,0 @@
-﻿The hidden label is for screen readers.  (class="sr-only")

@@ -1,6 +1,6 @@
 import {Component, SkipSelf, Input, Host, ViewChildren, Inject, Injector, forwardRef, QueryList, HostListener} from '@angular/core';
 import {RouteParams} from '@angular/router';
-import {metadata} from 'app/resources/metadata';
+import metadata from 'liberry';
 import createPrototypeChain from "app/utilities/createPrototypeChain";
 import componentBuilder from 'app/utilities/componentBuilder';
 import {objectPath} from "app/utilities/objectPath";

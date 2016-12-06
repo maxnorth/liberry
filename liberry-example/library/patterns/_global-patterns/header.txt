@@ -1,1 +1,0 @@
-The file "exc.common.js" is required for responsive functionality of the Header and Top Navigation.

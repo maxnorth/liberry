@@ -1,5 +1,5 @@
 import { Component, ElementRef, DynamicComponentLoader, Input, ViewContainerRef } from '@angular/core';
-import {metadata} from "app/resources/metadata";
+import metadata from "liberry";
 import {objectPath} from "app/utilities/objectPath";
 
 const {site, library} = metadata;

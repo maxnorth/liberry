@@ -1,5 +1,0 @@
-﻿To hide elements in accordion view (such as the content title), use class="exc-hide-acc".
-
-For basic tabbing functionality, link to the exc.tabs.js file.  Please note that this will reset the tabs to open the first tab (and its content) any time the page reloads.
-
-For customized functionality, such as when a related form causes a postback and you need the correct tab to stay open, copy the javascript from exc.tabs.js, use it as your base, and customize as needed.  In that case you would not need to link to exc.tabs.js.

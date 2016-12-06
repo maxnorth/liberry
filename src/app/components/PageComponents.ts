@@ -1,6 +1,6 @@
 import {Component, Optional, SkipSelf, Inject} from "@angular/core";
 import {RouteParams} from '@angular/router';
-import {metadata} from "app/resources/metadata";
+import metadata from "liberry";
 import BaseLibraryComponent from 'app/classes/BaseLibraryComponent';
 import {LibraryContext} from "app/providers/LibraryContext";
 import _ from "lodash";
@@ -12,7 +12,7 @@ import provideAsParent from 'app/providers/provideAsParent';
 export var PageComponentRoutes = [];
 var site : any = metadata.site;
 
-for (var i in site.pages) {
+for (var i in site.pages.routes) {
     if (site.pages[i].html) {
         var page = site.pages[i];
 
@@ -56,23 +56,32 @@ for (var i in site.pages) {
         });
 
         var RouteConfig = {
-            path: site.pages[i].path.slice(6, Infinity) + "/:id",
-            name: site.pages[i].title,
-            component: PageComponent
-        };
-        var NoArgRouteConfig = {
             path: site.pages[i].path.slice(6, Infinity),
             name: site.pages[i].title,
-            component: PageComponent
+            component: PageComponent,
+            useAsDefault: false
         };
 
-        if (i === "index") NoArgRouteConfig.useAsDefault = true;
-
-        PageComponentRoutes.push(RouteConfig);
-        PageComponentRoutes.push(NoArgRouteConfig);
-    };
-
-
-}
-}
-
+        var routes = site.pages.routes;
+        if (typeof(routes) === "object") {
+            //set custom route
+            if (routes.hasOwnProperty(i)) {
+                RouteConfig.path = routes[i];
+            }
+            //determine if this should be the default route
+            if (site.pages.hasOwnProperty("default") 
+                && routes.hasOwnProperty(site.pages.default)
+                && site.pages.default === i)  {
+                RouteConfig.useAsDefault = true;
+            }
+            else if (i.toLowerCase() === "index") {
+                RouteConfig.useAsDefault = true;
+            }
+        }
+        else if (i.toLowerCase() === "index") {
+            RouteConfig.useAsDefault = true;
+        }
+    }
+    
+    PageComponentRoutes.push(RouteConfig);
+};

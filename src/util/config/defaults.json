@@ -1,0 +1,13 @@
+{
+  "project": {
+    "root": "./",
+    "css": "",
+    "watch": "**/*.css",
+    "tasks": ""
+  },
+  "liberry": {
+    "root": "./",
+    "css": "site/styles/liberry.css",
+    "watch": ["site/**", "library/**"]
+  }
+}

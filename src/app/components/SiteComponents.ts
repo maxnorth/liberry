@@ -1,5 +1,5 @@
 import {Component, provide, SkipSelf, Optional, Inject, Input, forwardRef} from '@angular/core';
-import {metadata} from 'app/resources/metadata';
+import metadata from 'liberry';
 import {RepeaterManager} from "app/components/RepeaterManager";
 import {RouteParams} from '@angular/router';
 import {LibraryContext} from "app/providers/LibraryContext";

@@ -1,6 +1,6 @@
 import {Pipe} from '@angular/core';
 import {objectPath} from "app/utilities/objectPath";
-import {metadata} from "app/resources/metadata";
+import metadata from "liberry";
 
 @Pipe({
     name: "path"

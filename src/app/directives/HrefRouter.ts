@@ -1,6 +1,6 @@
 import { Directive, ElementRef, Input, SimpleChange, HostListener, HostBinding } from '@angular/core';
 import {Router} from "@angular/router";
-import {metadata} from "app/resources/metadata";
+import metadata from "liberry";
 //import {$} from "jquery";
 
 var site = metadata.site;
@@ -19,7 +19,14 @@ export class HrefRouter {
     onClick($event) {
         //TODO: make routing more flexible
         $event.preventDefault();
-        this.router.navigateByUrl(this.route);
+        
+        var target = parseRoute(this.route);
+        if (location.origin === target.origin){
+            this.router.navigateByUrl(this.route);
+        }
+        else {
+            location.href = this.route;
+        }
     }
 
     //set href attribute for the sake of default styling and transparency when examining element
@@ -37,4 +44,10 @@ function matchRoute(value, routes) {
 
 
     }
+}
+
+function parseRoute(route) {
+    var a = document.createElement("a");
+    a.href = route;
+    return a;
 }
