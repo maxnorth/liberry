@@ -1,0 +1,18 @@
+
+/node_modules/
+
+/npm-debug.log
+
+desktop.ini
+
+.idea
+.vs
+.vscode
+/dev notes
+/dev_notes
+
+/liberry-example
+
+/.npmignore
+
+/gulpfile.js
